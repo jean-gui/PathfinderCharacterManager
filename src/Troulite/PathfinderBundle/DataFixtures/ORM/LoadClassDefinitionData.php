@@ -14,7 +14,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
      */
     public function load(ObjectManager $manager)
     {
-        $bba = array();
+        $bab = array();
         $reflexes = array();
         $fortitude = array();
         $will = array();
@@ -36,7 +36,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName("Ranger")
             ->setHpDice(10)
             ->setSkillPoints(6)
-            ->setBba($bba)
+            ->setBab($bab)
             ->setReflexes($reflexes)
             ->setFortitude($fortitude)
             ->setWill($will)

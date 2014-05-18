@@ -555,7 +555,7 @@ class Character
         return $max;
     }
 
-    public function getBba()
+    public function getBab()
     {
         $bba = 0;
         foreach ($this->getMaxLevelPerClass() as $level) {

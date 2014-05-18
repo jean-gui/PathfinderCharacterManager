@@ -48,7 +48,7 @@ class ClassDefinition
      *
      * @ORM\Column(type="json_array")
      */
-    private $bba;
+    private $bab;
 
     /**
      * @var integer[]
@@ -163,26 +163,26 @@ class ClassDefinition
     }
 
     /**
-     * Set bba
+     * Set bab
      *
-     * @param array $bba
+     * @param array $bab
      * @return ClassDefinition
      */
-    public function setBba($bba)
+    public function setBab($bab)
     {
-        $this->bba = $bba;
+        $this->bab = $bab;
 
         return $this;
     }
 
     /**
-     * Get bba
+     * Get bab
      *
      * @return array
      */
-    public function getBba()
+    public function getBab()
     {
-        return $this->bba;
+        return $this->bab;
     }
 
     /**
