@@ -1,6 +1,8 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block title "Character - " ~ entity.name %}
+
+{% block content -%}
     <h1>{{ entity.name }}</h1>
 
     <table class="record_properties">
