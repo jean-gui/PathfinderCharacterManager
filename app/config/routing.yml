@@ -1,0 +1,5 @@
+troulite_pathfinder:
+    resource: "@TroulitePathfinderBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
