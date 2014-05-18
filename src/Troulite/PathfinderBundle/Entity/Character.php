@@ -557,12 +557,12 @@ class Character
 
     public function getBab()
     {
-        $bba = 0;
+        $bab = 0;
         foreach ($this->getMaxLevelPerClass() as $level) {
-            $bba += $level->getClassDefinition()->getBba()[$level->getLevel() - 1];
+            $bab += $level->getClassDefinition()->getBab()[$level->getLevel() - 1];
         }
 
-        return $bba;
+        return $bab;
     }
 
     public function getBaseReflexes()

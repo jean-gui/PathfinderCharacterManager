@@ -19,7 +19,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $fortitude = array();
         $will = array();
         for ($i = 0; $i < 20; $i++) {
-            $bba[] = $i + 1;
+            $bab[] = $i + 1;
             $reflexes[] = ((int)(($i + 1) / 2)) + 2;
             $fortitude[] = ((int)(($i + 1) / 2)) + 2;
             $will[] = (int)(($i + 1) / 3);
