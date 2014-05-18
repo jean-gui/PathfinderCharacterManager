@@ -545,7 +545,9 @@ class Character
     {
         $max = array();
         foreach ($this->getLevels() as $level) {
-            if ($level->getLevel() > $max[$level->getClassDefinition()->getId()]) {
+            if (!array_key_exists($level->getClassDefinition()->getId(), $max)
+                || $level->getLevel() > $max[$level->getClassDefinition()->getId()]->getLevel()
+            ) {
                 $max[$level->getClassDefinition()->getId()] = $level;
             }
         }

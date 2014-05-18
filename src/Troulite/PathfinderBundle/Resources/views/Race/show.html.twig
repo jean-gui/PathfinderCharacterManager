@@ -1,29 +1,33 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>{{ entity.name }}</h1>
+    <h1>Race</h1>
 
     <table class="record_properties">
         <tbody>
         <tr>
-            <th>Race</th>
-            <td>{{ entity.race }}</td>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
         </tr>
         <tr>
-            <th>Level</th>
-            <td>{{ entity.level }}</td>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Modifiers</th>
+            <td>{{ entity.modifiers }}</td>
         </tr>
         </tbody>
     </table>
 
     <ul class="record_actions">
         <li>
-            <a href="{{ path('characters') }}">
+            <a href="{{ path('races') }}">
                 Back to the list
             </a>
         </li>
         <li>
-            <a href="{{ path('characters_edit', { 'id': entity.id }) }}">
+            <a href="{{ path('races_edit', { 'id': entity.id }) }}">
                 Edit
             </a>
         </li>
