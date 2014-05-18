@@ -24,6 +24,44 @@
         </tbody>
     </table>
 
+    <table>
+        <tr>
+            <th>Ability</th>
+            <th>Value</th>
+            <th>Modifier</th>
+        </tr>
+        <tr>
+            <th>Strength</th>
+            <td>{{ entity.strength }}</td>
+            <td>{{ entity.abilityModifier(entity.strength) }}</td>
+        </tr>
+        <tr>
+            <th>Dexterity</th>
+            <td>{{ entity.dexterity }}</td>
+            <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+        </tr>
+        <tr>
+            <th>Constitution</th>
+            <td>{{ entity.constitution }}</td>
+            <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+        </tr>
+        <tr>
+            <th>Intelligence</th>
+            <td>{{ entity.intelligence }}</td>
+            <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
+        </tr>
+        <tr>
+            <th>Wisdom</th>
+            <td>{{ entity.wisdom }}</td>
+            <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+        </tr>
+        <tr>
+            <th>Charisma</th>
+            <td>{{ entity.charisma }}</td>
+            <td>{{ entity.abilityModifier(entity.charisma) }}</td>
+        </tr>
+    </table>
+
     <ul class="record_actions">
         <li>
             <a href="{{ path('characters') }}">
