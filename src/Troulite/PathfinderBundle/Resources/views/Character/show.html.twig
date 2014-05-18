@@ -23,10 +23,6 @@
             <th>Max HP</th>
             <td>{{ entity.maxHp }}</td>
         </tr>
-        <tr>
-            <th>BBA</th>
-            <td>{{ entity.bba }}</td>
-        </tr>
         </tbody>
     </table>
 
@@ -66,6 +62,33 @@
             <td>{{ entity.charisma }}</td>
             <td>{{ entity.abilityModifier(entity.charisma) }}</td>
         </tr>
+    </table>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>BBA</th>
+            <td>
+                {{ entity.bba }}
+                {% if entity.bba > 5 -%} / {{ entity.bba - 5 }}{% endif %}
+                {% if entity.bba > 10 -%} / {{ entity.bba - 10 }} {% endif %}
+                {% if entity.bba > 15 -%} / {{ entity.bba - 15 }}{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Reflexes</th>
+            <td>{{ entity.reflexes }} = {{ entity.baseReflexes }} + {{ entity.abilityModifier(entity.dexterity) }}</td>
+        </tr>
+        <tr>
+            <th>Fortitude</th>
+            <td>{{ entity.fortitude }} = {{ entity.baseFortitude }}
+                + {{ entity.abilityModifier(entity.constitution) }}</td>
+        </tr>
+        <tr>
+            <th>Will</th>
+            <td>{{ entity.will }} = {{ entity.baseWill }} + {{ entity.abilityModifier(entity.wisdom) }}</td>
+        </tr>
+        </tbody>
     </table>
 
     <ul class="record_actions">

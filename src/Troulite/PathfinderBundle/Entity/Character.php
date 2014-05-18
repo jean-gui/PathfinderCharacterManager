@@ -564,4 +564,49 @@ class Character
 
         return $bba;
     }
+
+    public function getBaseReflexes()
+    {
+        $reflexes = 0;
+        foreach ($this->getMaxLevelPerClass() as $level) {
+            $reflexes += $level->getClassDefinition()->getReflexes()[$level->getLevel() - 1];
+        }
+
+        return $reflexes;
+    }
+
+    public function getReflexes()
+    {
+        return $this->getBaseReflexes() + $this->getAbilityModifier($this->getDexterity());
+    }
+
+    public function getBaseFortitude()
+    {
+        $fortitude = 0;
+        foreach ($this->getMaxLevelPerClass() as $level) {
+            $fortitude += $level->getClassDefinition()->getFortitude()[$level->getLevel() - 1];
+        }
+
+        return $fortitude;
+    }
+
+    public function getFortitude()
+    {
+        return $this->getBaseFortitude() + $this->getAbilityModifier($this->getConstitution());
+    }
+
+    public function getBaseWill()
+    {
+        $will = 0;
+        foreach ($this->getMaxLevelPerClass() as $level) {
+            $will += $level->getClassDefinition()->getWill()[$level->getLevel() - 1];
+        }
+
+        return $will;
+    }
+
+    public function getWill()
+    {
+        return $this->getBaseWill() + $this->getAbilityModifier($this->getWisdom());
+    }
 }
