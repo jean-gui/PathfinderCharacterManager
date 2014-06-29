@@ -7,22 +7,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Troulite\PathfinderBundle\Entity\Character;
-use Troulite\PathfinderBundle\Form\CharacterType;
-use Troulite\PathfinderBundle\Form\FeatsActivationType;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Form\CharacterFeatType;
 
 /**
- * Character controller.
+ * CharacterFeat controller.
  *
- * @Route("/characters")
+ * @Route("/characterfeats")
  */
-class CharacterController extends Controller
+class CharacterFeatController extends Controller
 {
 
     /**
-     * Lists all Character entities.
+     * Lists all CharacterFeat entities.
      *
-     * @Route("/", name="characters")
+     * @Route("/", name="characterfeats")
      * @Method("GET")
      * @Template()
      */
@@ -30,7 +29,7 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TroulitePathfinderBundle:Character')->findAll();
+        $entities = $em->getRepository('TroulitePathfinderBundle:CharacterFeat')->findAll();
 
         return array(
             'entities' => $entities,
@@ -38,15 +37,15 @@ class CharacterController extends Controller
     }
 
     /**
-     * Creates a new Character entity.
+     * Creates a new CharacterFeat entity.
      *
-     * @Route("/", name="characters_create")
+     * @Route("/", name="characterfeats_create")
      * @Method("POST")
-     * @Template("TroulitePathfinderBundle:Character:new.html.twig")
+     * @Template("TroulitePathfinderBundle:CharacterFeat:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Character();
+        $entity = new CharacterFeat();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -55,7 +54,7 @@ class CharacterController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('characterfeats_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -65,19 +64,19 @@ class CharacterController extends Controller
     }
 
     /**
-     * Creates a form to create a Character entity.
+     * Creates a form to create a CharacterFeat entity.
      *
-     * @param Character $entity The entity
+     * @param CharacterFeat $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Character $entity)
+    private function createCreateForm(CharacterFeat $entity)
     {
         $form = $this->createForm(
-            new CharacterType(),
+            new CharacterFeatType(),
             $entity,
             array(
-                'action' => $this->generateUrl('characters_create'),
+                'action' => $this->generateUrl('characterfeats_create'),
                 'method' => 'POST',
             )
         );
@@ -88,15 +87,15 @@ class CharacterController extends Controller
     }
 
     /**
-     * Displays a form to create a new Character entity.
+     * Displays a form to create a new CharacterFeat entity.
      *
-     * @Route("/new", name="characters_new")
+     * @Route("/new", name="characterfeats_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Character();
+        $entity = new CharacterFeat();
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -106,34 +105,34 @@ class CharacterController extends Controller
     }
 
     /**
-     * Finds and displays a Character entity.
+     * Finds and displays a CharacterFeat entity.
      *
-     * @Route("/{id}", name="characters_show")
+     * @Route("/{id}", name="characterfeats_show")
+     * @Method("GET")
      * @Template()
      */
-    public function showAction(Character $entity, Request $request)
+    public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $featsActivationForm = $this->createForm(new FeatsActivationType(), $entity);
-        $featsActivationForm->handleRequest($request);
+        $entity = $em->getRepository('TroulitePathfinderBundle:CharacterFeat')->find($id);
 
-        if ($featsActivationForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find CharacterFeat entity.');
         }
+
+        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity' => $entity,
-            'feats_activation_form' => $featsActivationForm->createView()
+            'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-     * Displays a form to edit an existing Character entity.
+     * Displays a form to edit an existing CharacterFeat entity.
      *
-     * @Route("/{id}/edit", name="characters_edit")
+     * @Route("/{id}/edit", name="characterfeats_edit")
      * @Method("GET")
      * @Template()
      */
@@ -141,10 +140,10 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
+        $entity = $em->getRepository('TroulitePathfinderBundle:CharacterFeat')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Character entity.');
+            throw $this->createNotFoundException('Unable to find CharacterFeat entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -158,19 +157,19 @@ class CharacterController extends Controller
     }
 
     /**
-     * Creates a form to edit a Character entity.
+     * Creates a form to edit a CharacterFeat entity.
      *
-     * @param Character $entity The entity
+     * @param CharacterFeat $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Character $entity)
+    private function createEditForm(CharacterFeat $entity)
     {
         $form = $this->createForm(
-            new CharacterType(),
+            new CharacterFeatType(),
             $entity,
             array(
-                'action' => $this->generateUrl('characters_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('characterfeats_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             )
         );
@@ -181,20 +180,20 @@ class CharacterController extends Controller
     }
 
     /**
-     * Edits an existing Character entity.
+     * Edits an existing CharacterFeat entity.
      *
-     * @Route("/{id}", name="characters_update")
+     * @Route("/{id}", name="characterfeats_update")
      * @Method("PUT")
-     * @Template("TroulitePathfinderBundle:Character:edit.html.twig")
+     * @Template("TroulitePathfinderBundle:CharacterFeat:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
+        $entity = $em->getRepository('TroulitePathfinderBundle:CharacterFeat')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Character entity.');
+            throw $this->createNotFoundException('Unable to find CharacterFeat entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -204,9 +203,7 @@ class CharacterController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Update successful');
-
-            return $this->redirect($this->generateUrl('characters_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('characterfeats_edit', array('id' => $id)));
         }
 
         return array(
@@ -217,9 +214,9 @@ class CharacterController extends Controller
     }
 
     /**
-     * Deletes a Character entity.
+     * Deletes a CharacterFeat entity.
      *
-     * @Route("/{id}", name="characters_delete")
+     * @Route("/{id}", name="characterfeats_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -229,21 +226,21 @@ class CharacterController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
+            $entity = $em->getRepository('TroulitePathfinderBundle:CharacterFeat')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Character entity.');
+                throw $this->createNotFoundException('Unable to find CharacterFeat entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('characters'));
+        return $this->redirect($this->generateUrl('characterfeats'));
     }
 
     /**
-     * Creates a form to delete a Character entity by id.
+     * Creates a form to delete a CharacterFeat entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -252,7 +249,7 @@ class CharacterController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('characters_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('characterfeats_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();

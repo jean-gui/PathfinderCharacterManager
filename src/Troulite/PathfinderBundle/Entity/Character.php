@@ -3,8 +3,10 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 
 /**
  * Character
@@ -41,7 +43,7 @@ class Character
     private $race;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|Level[]
+     * @var Collection|Level[]
      *
      * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
      */
@@ -109,6 +111,112 @@ class Character
      * @Assert\NotBlank()
      */
     private $baseCharisma;
+
+    /**
+     * @var Collection|Feat[]
+     *
+     * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="character", cascade={"all"})
+     */
+    private $feats;
+
+    /**
+     * @var Collection|Feat[]
+     *
+     * @ORM\ManyToMany(targetEntity="Item")
+     * @ORM\JoinTable(name="inventories",
+     *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")}
+     *      )
+     */
+    private $inventory;
+
+    /**
+     * @var Weapon $leftWeapon
+     *
+     * @ORM\ManyToOne(targetEntity="Weapon")
+     * @ORM\JoinColumn(name="left_weapon_item_id", referencedColumnName="id")
+     */
+    private $leftWeapon;
+
+    /**
+     * @var Weapon $rightWeapon
+     *
+     * @ORM\ManyToOne(targetEntity="Weapon")
+     * @ORM\JoinColumn(name="right_weapon_item_id", referencedColumnName="id")
+     */
+    private $rightWeapon;
+
+    /**
+     * @var Item $body
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="body_item_id", referencedColumnName="id")
+     */
+    private $body;
+
+    /**
+     * @var Item $leftFinger
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="left_finger_item_id", referencedColumnName="id")
+     */
+    private $leftFinger;
+
+    /**
+     * @var Item $rightFinger
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="right_finger_item_id", referencedColumnName="id")
+     */
+    private $rightFinger;
+
+    /**
+     * @var Item $feet
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="feet_item_id", referencedColumnName="id")
+     */
+    private $feet;
+
+    /**
+     * @var Item $neck
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="neck_item_id", referencedColumnName="id")
+     */
+    private $neck;
+
+    /**
+     * @var Item $back
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="back_item_id", referencedColumnName="id")
+     */
+    private $back;
+
+    /**
+     * @var Item $head
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="head_item_id", referencedColumnName="id")
+     */
+    private $head;
+
+    /**
+     * @var Item $belt
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="belt_item_id", referencedColumnName="id")
+     */
+    private $belt;
+
+    /**
+     * @var Item $hands
+     *
+     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\JoinColumn(name="hands_item_id", referencedColumnName="id")
+     */
+    private $hands;
 
     /**
      * Get id
@@ -201,7 +309,7 @@ class Character
     /**
      * Get level
      *
-     * @return \Doctrine\Common\Collections\Collection|Level[]
+     * @return Collection|Level[]
      */
     public function getLevels()
     {
@@ -543,6 +651,7 @@ class Character
      */
     private function getMaxLevelPerClass()
     {
+        /** @var $max Level[] */
         $max = array();
         foreach ($this->getLevels() as $level) {
             if (!array_key_exists($level->getClassDefinition()->getId(), $max)
@@ -577,7 +686,24 @@ class Character
 
     public function getReflexes()
     {
-        return $this->getBaseReflexes() + $this->getAbilityModifier($this->getDexterity());
+        $reflexes = $this->getBaseReflexes() + $this->getAbilityModifier($this->getDexterity());
+
+        $language = new ExpressionLanguage();
+        foreach ($this->getFeats() as $feat) {
+            if (!$feat->isActive()) {
+                continue;
+            }
+
+            if (array_key_exists("reflexes", $feat->getFeat()->getEffect())) {
+                $bonus = (int)$language->evaluate(
+                    $feat->getFeat()->getEffect()["reflexes"],
+                    array("c" => $this)
+                );
+                $reflexes += $bonus;
+            }
+        }
+
+        return $reflexes;
     }
 
     public function getBaseFortitude()
@@ -608,5 +734,446 @@ class Character
     public function getWill()
     {
         return $this->getBaseWill() + $this->getAbilityModifier($this->getWisdom());
+    }
+
+    private function getAttackRoll($type, $modifier)
+    {
+        $language = new ExpressionLanguage();
+        $bab = $this->getBab();
+        $ar = $bab + $modifier;
+        $bonusAttacks = 0;
+        foreach ($this->getFeats() as $feat) {
+            if (!$feat->isActive() || ($feat->getFeat()->getWorksIf() && !in_array(
+                        $type,
+                        $feat->getFeat()->getWorksIf()
+                    ))
+            ) {
+                continue;
+            }
+
+            if (array_key_exists("attack-roll", $feat->getFeat()->getEffect())) {
+                $bonus = (int)$language->evaluate(
+                    $feat->getFeat()->getEffect()["attack-roll"],
+                    array("c" => $this)
+                );
+                $ar += $bonus;
+            }
+            if (array_key_exists('attacks', $feat->getFeat()->getEffect())) {
+                $bonusAttacks += $feat->getFeat()->getEffect()['attacks'];
+            }
+        }
+
+        $weapon = $this->getLeftWeapon();
+        if ($weapon) {
+            $bonus = (int)$language->evaluate(
+                $weapon->getEffect()["attack-roll"],
+                array("c" => $this)
+            );
+            $ar += $bonus;
+        }
+
+        $ars = array();
+        for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
+            $ars[] = $ar;
+        }
+        for ($bab; $bab >= 0; $bab -= 5) {
+            $ars[] = $ar;
+            $ar -= 5;
+        }
+
+        return $ars;
+    }
+
+    public function getMeleeAttackRoll()
+    {
+        return $this->getAttackRoll("melee", $this->getAbilityModifier($this->getStrength()));
+    }
+
+    public function getRangedAttackRoll()
+    {
+        return $this->getAttackRoll("ranged", $this->getAbilityModifier($this->getDexterity()));
+    }
+
+    public function getDamageRoll($type, $modifier)
+    {
+        $language = new ExpressionLanguage();
+        $drb = $modifier;
+
+        foreach ($this->getFeats() as $feat) {
+            if (!$feat->isActive() || ($feat->getFeat()->getWorksIf() && !in_array(
+                        $type,
+                        $feat->getFeat()->getWorksIf()
+                    ))
+            ) {
+                continue;
+            }
+
+            if (array_key_exists("damage-roll", $feat->getFeat()->getEffect())) {
+
+                $bonus = (int)$language->evaluate(
+                    $feat->getFeat()->getEffect()["damage-roll"],
+                    array("c" => $this)
+                );
+
+                $drb += $bonus;
+            }
+        }
+
+        $weapon = $this->getLeftWeapon();
+        if ($weapon &&
+            (
+                ($type == 'ranged' && $weapon->getRange() > 0) ||
+                ($type == 'melee' && $weapon->getRange() === 0))
+        ) {
+            $bonus = (int)$language->evaluate(
+                $weapon->getEffect()["damage-roll"],
+                array("c" => $this)
+            );
+            $drb += $bonus;
+        }
+
+        return $drb;
+    }
+
+    public function getMeleeDamageRoll()
+    {
+        return $this->getDamageRoll("melee", $this->getAbilityModifier($this->getStrength()));
+    }
+
+    public function getRangedDamageRoll()
+    {
+        return $this->getDamageRoll("ranged", 0);
+    }
+
+    /**
+     * Add feats
+     *
+     * @param CharacterFeat $feat
+     * @return Character
+     */
+    public function addFeat(CharacterFeat $feat)
+    {
+        $feat->setCharacter($this);
+        $this->feats[] = $feat;
+
+        return $this;
+    }
+
+    /**
+     * Remove feat
+     *
+     * @param CharacterFeat $feat
+     */
+    public function removeFeat(CharacterFeat $feat)
+    {
+        $this->feats->removeElement($feat);
+    }
+
+    /**
+     * Get feats
+     *
+     * @return Collection|CharacterFeat[]
+     */
+    public function getFeats()
+    {
+        return $this->feats;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Add inventory
+     *
+     * @param Item $inventory
+     * @return Character
+     */
+    public function addInventory(Item $inventory)
+    {
+        $this->inventory[] = $inventory;
+
+        return $this;
+    }
+
+    /**
+     * Remove inventory
+     *
+     * @param Item $inventory
+     */
+    public function removeInventory(Item $inventory)
+    {
+        $this->inventory->removeElement($inventory);
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
+    }
+
+    /**
+     * Set leftWeapon
+     *
+     * @param Weapon $leftWeapon
+     * @return Character
+     */
+    public function setLeftWeapon(Weapon $leftWeapon = null)
+    {
+        // Unequip right-hand weapon if this weapon is dual-weilded
+        if ($leftWeapon && $leftWeapon->isDualWield()) {
+            $this->setRightWeapon(null);
+        }
+        $this->leftWeapon = $leftWeapon;
+
+        return $this;
+    }
+
+    /**
+     * Get leftWeapon
+     *
+     * @return Weapon
+     */
+    public function getLeftWeapon()
+    {
+        return $this->leftWeapon;
+    }
+
+    /**
+     * Set rightHand
+     *
+     * @param Weapon $rightWeapon
+     * @return Character
+     */
+    public function setRightWeapon(Weapon $rightWeapon = null)
+    {
+        if ($rightWeapon && $rightWeapon->isDualWield()) {
+            $this->setLeftWeapon(null);
+        }
+        $this->rightFinger = $rightWeapon;
+
+        return $this;
+    }
+
+    /**
+     * Get rightWeapon
+     *
+     * @return Weapon
+     */
+    public function getRightWeapon()
+    {
+        return $this->rightWeapon;
+    }
+
+    /**
+     * Set body
+     *
+     * @param Item $body
+     * @return Character
+     */
+    public function setBody(Item $body = null)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return Item
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set leftFinger
+     *
+     * @param Item $leftFinger
+     * @return Character
+     */
+    public function setLeftFinger(Item $leftFinger = null)
+    {
+        $this->leftFinger = $leftFinger;
+
+        return $this;
+    }
+
+    /**
+     * Get leftFinger
+     *
+     * @return Item
+     */
+    public function getLeftFinger()
+    {
+        return $this->leftFinger;
+    }
+
+    /**
+     * Set rightFinger
+     *
+     * @param Item $rightFinger
+     * @return Character
+     */
+    public function setRightFinger(Item $rightFinger = null)
+    {
+        $this->rightFinger = $rightFinger;
+
+        return $this;
+    }
+
+    /**
+     * Get rightFinger
+     *
+     * @return Item
+     */
+    public function getRightFinger()
+    {
+        return $this->rightFinger;
+    }
+
+    /**
+     * Set feet
+     *
+     * @param Item $feet
+     * @return Character
+     */
+    public function setFeet(Item $feet = null)
+    {
+        $this->feet = $feet;
+
+        return $this;
+    }
+
+    /**
+     * Get feet
+     *
+     * @return Item
+     */
+    public function getFeet()
+    {
+        return $this->feet;
+    }
+
+    /**
+     * Set neck
+     *
+     * @param Item $neck
+     * @return Character
+     */
+    public function setNeck(Item $neck = null)
+    {
+        $this->neck = $neck;
+
+        return $this;
+    }
+
+    /**
+     * Get neck
+     *
+     * @return Item
+     */
+    public function getNeck()
+    {
+        return $this->neck;
+    }
+
+    /**
+     * Set back
+     *
+     * @param Item $back
+     * @return Character
+     */
+    public function setBack(Item $back = null)
+    {
+        $this->back = $back;
+
+        return $this;
+    }
+
+    /**
+     * Get back
+     *
+     * @return Item
+     */
+    public function getBack()
+    {
+        return $this->back;
+    }
+
+    /**
+     * Set head
+     *
+     * @param Item $head
+     * @return Character
+     */
+    public function setHead(Item $head = null)
+    {
+        $this->head = $head;
+
+        return $this;
+    }
+
+    /**
+     * Get head
+     *
+     * @return Item
+     */
+    public function getHead()
+    {
+        return $this->head;
+    }
+
+    /**
+     * Set belt
+     *
+     * @param Item $belt
+     * @return Character
+     */
+    public function setBelt(Item $belt = null)
+    {
+        $this->belt = $belt;
+
+        return $this;
+    }
+
+    /**
+     * Get belt
+     *
+     * @return Item
+     */
+    public function getBelt()
+    {
+        return $this->belt;
+    }
+
+    /**
+     * Set hands
+     *
+     * @param Item $hands
+     * @return Character
+     */
+    public function setHands(Item $hands = null)
+    {
+        $this->hands = $hands;
+
+        return $this;
+    }
+
+    /**
+     * Get hands
+     *
+     * @return Item
+     */
+    public function getHands()
+    {
+        return $this->hands;
     }
 }

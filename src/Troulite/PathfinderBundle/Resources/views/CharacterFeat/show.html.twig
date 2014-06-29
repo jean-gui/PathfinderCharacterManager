@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+    <h1>CharacterFeat</h1>
+
+    <table class="record_properties">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Active</th>
+            <td>{{ entity.active }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('characterfeats') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('characterfeats_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+{% endblock %}

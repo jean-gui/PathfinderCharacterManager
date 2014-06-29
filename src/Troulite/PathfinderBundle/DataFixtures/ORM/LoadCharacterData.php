@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 
 class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterface
@@ -119,7 +120,35 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
                     ->setLevel(13)
                     ->setHpRoll(1)
                     ->setExtraHp(1)
-            );
+            )
+            ->addLevel(
+                (new Level())
+                    ->setClassDefinition($this->getReference('ranger'))
+                    ->setLevel(14)
+                    ->setHpRoll(8)
+                    ->setExtraHp(1)
+            )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("deadly-aim"))
+                    ->setActive(true)
+            )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("lightning-reflexes"))
+                    ->setActive(true)
+            )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("rapid-shot"))
+                    ->setActive(false)
+            )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("weapon-focus"))
+                    ->setActive(false)
+            )
+            ->setLeftWeapon($this->getReference('longbow +2'));
 
         $manager->persist($gwendae);
         $manager->flush();
@@ -134,6 +163,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
      */
     function getOrder()
     {
-        return 3;
+        return 5;
     }
 }

@@ -1,11 +1,32 @@
 {% extends '::base.html.twig' %}
 
+{% form_theme feats_activation_form _self %}
+
 {% block title "Character - " ~ entity.name %}
 
-{% block content -%}
-    <h1>{{ entity.name }}</h1>
+{% block navbar_current -%}
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ entity.name }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#information" data-toggle="tab">Information</a></li>
+                <li><a href="#abilities" data-toggle="tab">Abilities</a></li>
+                <li><a href="#attack" data-toggle="tab">Attack Rolls</a></li>
+                <li><a href="#damage" data-toggle="tab">Damage Rolls</a></li>
+                <li><a href="#saving" data-toggle="tab">Saving Throws</a></li>
+                <li><a href="#equipment" data-toggle="tab">Equipment</a></li>
+                <li><a href="#feats" data-toggle="tab">Feats</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}
 
-    <table class="record_properties">
+{% block content -%}
+    <div class="tab-content">
+        <div id="information" class="tab-pane active">
+            <h2>Basic information</h2>
+
+            <table class="record_properties">
         <tbody>
         <tr>
             <th>Race</th>
@@ -25,8 +46,10 @@
         </tr>
         </tbody>
     </table>
-
-    <table>
+        </div>
+        <div id="abilities" class="tab-pane">
+            <h2>Abilities</h2>
+            <table>
         <tr>
             <th>Ability</th>
             <th>Value</th>
@@ -63,8 +86,10 @@
             <td>{{ entity.abilityModifier(entity.charisma) }}</td>
         </tr>
     </table>
-
-    <table class="record_properties">
+        </div>
+        <div id="attack" class="tab-pane">
+            <h2>Attack Rolls</h2>
+            <table class="record_properties">
         <tbody>
         <tr>
             <th>BAB</th>
@@ -76,32 +101,115 @@
             </td>
         </tr>
         <tr>
-            <th>Reflexes</th>
-            <td>{{ entity.reflexes }} = {{ entity.baseReflexes }} + {{ entity.abilityModifier(entity.dexterity) }}</td>
+            <th>Melee attack rolls</th>
+            <td>
+                {{ entity.meleeAttackRoll|join(' / ') }}
+            </td>
         </tr>
         <tr>
+            <th>Ranged attack rolls</th>
+            <td>
+                {{ entity.rangedAttackRoll|join(' / ') }}
+            </td>
+        </tr>
+        </tbody>
+            </table>
+        </div>
+        <div id="damage" class="tab-pane">
+            <h2>Damage Rolls</h2>
+            <table class="record_properties">
+                <tbody>
+                <tr>
+                    <th>Melee damage roll</th>
+                    <td>
+                        {{ entity.meleeDamageRoll }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Ranged damage roll</th>
+                    <td>
+                        {{ entity.rangedDamageRoll }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="saving" class="tab-pane">
+            <h2>Saving throws</h2>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Reflexes</th>
+                    <td>{{ entity.reflexes }} = {{ entity.baseReflexes }} +
+                        {{ entity.abilityModifier(entity.dexterity) }} +
+                        Misc
+                    </td>
+                </tr>
+        <tr>
             <th>Fortitude</th>
-            <td>{{ entity.fortitude }} = {{ entity.baseFortitude }}
-                + {{ entity.abilityModifier(entity.constitution) }}</td>
+            <td>{{ entity.fortitude }} = {{ entity.baseFortitude }} +
+                {{ entity.abilityModifier(entity.constitution) }} +
+                Misc
+            </td>
         </tr>
         <tr>
             <th>Will</th>
-            <td>{{ entity.will }} = {{ entity.baseWill }} + {{ entity.abilityModifier(entity.wisdom) }}</td>
+            <td>{{ entity.will }} = {{ entity.baseWill }} +
+                {{ entity.abilityModifier(entity.wisdom) }} +
+                Misc
+            </td>
         </tr>
         </tbody>
     </table>
-
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('characters') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('characters_edit', { 'id': entity.id }) }}">
-                Edit
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+        </div>
+        <div id="equipment" class="tab-pane">
+            <h2>Equipment</h2>
+            <dl>
+                <dt>Left weapon</dt>
+                <dd>{{ entity.leftWeapon.name }}</dd>
+                <dt>Right weapon</dt>
+                <dd>{{ entity.rightWeapon }}</dd>
+                <dt>Body</dt>
+                <dd>{{ entity.body }}</dd>
+                <dt>Feet</dt>
+                <dd>{{ entity.feet }}</dd>
+                <dt>Hands</dt>
+                <dd>{{ entity.hands }}</dd>
+                <dt>Head</dt>
+                <dd>{{ entity.head }}</dd>
+                <dt>Back</dt>
+                <dd>{{ entity.back }}</dd>
+                <dt>Belt</dt>
+                <dd>{{ entity.belt }}</dd>
+                <dt>Left finger</dt>
+                <dd>{{ entity.leftFinger }}</dd>
+                <dt>Right finger</dt>
+                <dd>{{ entity.rightFinger }}</dd>
+                <dt>Neck</dt>
+                <dd>{{ entity.neck }}</dd>
+            </dl>
+        </div>
+        <div id="feats" class="tab-pane">
+            <h2>Feats</h2>
+            {{ form_start(feats_activation_form) }}
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Active?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for feat in feats_activation_form.feats %}
+                    <tr>
+                        <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
+                        <td>{{ form_widget(feat.active) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ form_end(feats_activation_form) }}
+        </div>
+    </div>
 {% endblock %}
+

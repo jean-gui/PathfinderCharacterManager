@@ -1,29 +1,55 @@
-{% extends "TwigBundle::layout.html.twig" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title "Pathfinder Character Manager" %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
 
-{% block head %}
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}"/>
-    <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}"/>
-{% endblock %}
+    <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+    {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+</head>
 
-{% block title 'Pathfinder character management' %}
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Pathfinder Character Manager</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% block navbar_current %}{% endblock %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="{{ path('characters') }}">Characters</a></li>
+                <li><a href="{{ path('races') }}">Races</a></li>
+                <li><a href="{{ path('characterfeats') }}">Character feats</a></li>
+                {% render(controller("TroulitePathfinderBundle:Security:login")) %}
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
 
 {% block body %}
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="flash-message">
-            <em>Notice</em>: {{ flashMessage }}
-        </div>
+    {% for type, messages in app.session.flashbag.all %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                <strong>Notice</strong>: {{ message }}
+            </div>
+        {% endfor %}
     {% endfor %}
-
-    {% block content_header %}
-        <ul id="menu">
-            {% block content_header_more %}
-                <li><a href="{{ path('characters') }}">Characters</a></li>
-                <li><a href="{{ path('races') }}">Races</a></li>
-            {% endblock %}
-        </ul>
-
-        <div style="clear: both"></div>
-    {% endblock %}
 
     <div class="block">
         {% block content %}{% endblock %}
@@ -36,3 +62,9 @@
         </div>
     {% endif %}
 {% endblock %}
+<!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<!-- Include all JavaScripts, compiled by Assetic -->
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CharacterType extends AbstractType
+class FeatActivationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,16 +15,11 @@ class CharacterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('lostHP')
-            ->add('baseStrength')
-            ->add('baseDexterity')
-            ->add('baseConstitution')
-            ->add('baseIntelligence')
-            ->add('baseWisdom')
-            ->add('baseCharisma')
-            ->add('race')
-            ->add('favoredClass');
+            ->add(
+                'active',
+                null,
+                array("required" => false)
+            );
     }
 
     /**
@@ -34,7 +29,7 @@ class CharacterType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterFeat'
             )
         );
     }
@@ -44,6 +39,6 @@ class CharacterType extends AbstractType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_character';
+        return 'featactivation';
     }
 }
