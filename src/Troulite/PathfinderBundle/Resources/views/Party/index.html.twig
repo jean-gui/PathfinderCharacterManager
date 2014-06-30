@@ -1,33 +1,29 @@
 {% extends '::base.html.twig' %}
 
-{% block title "Character List" %}
-
-{% block content -%}
+{% block body -%}
     <div class="container">
-        <h1>Character list</h1>
+        <h1>Party list</h1>
 
         <table class="records_list">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Level</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ path('characters_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td><a href="{{ path('parties_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                     <td>{{ entity.name }}</td>
-                    <td>{{ entity.level }}</td>
                     <td>
                         <ul>
                             <li>
-                                <a href="{{ path('characters_show', { 'id': entity.id }) }}">show</a>
+                                <a href="{{ path('parties_show', { 'id': entity.id }) }}">show</a>
                             </li>
                             <li>
-                                <a href="{{ path('characters_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('parties_edit', { 'id': entity.id }) }}">edit</a>
                             </li>
                         </ul>
                     </td>
@@ -38,7 +34,7 @@
 
         <ul>
             <li>
-                <a href="{{ path('characters_new') }}">
+                <a href="{{ path('parties_new') }}">
                     Create a new entry
                 </a>
             </li>

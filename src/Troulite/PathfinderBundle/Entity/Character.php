@@ -26,6 +26,14 @@ class Character
     private $id;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="characters")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -217,6 +225,14 @@ class Character
      * @ORM\JoinColumn(name="hands_item_id", referencedColumnName="id")
      */
     private $hands;
+
+    /**
+     * @var Party
+     *
+     * @ORM\ManyToOne(targetEntity="Party", inversedBy="characters")
+     * @ORM\JoinColumn(name="party_id", referencedColumnName="id")
+     */
+    private $party;
 
     /**
      * Get id
@@ -718,7 +734,24 @@ class Character
 
     public function getFortitude()
     {
-        return $this->getBaseFortitude() + $this->getAbilityModifier($this->getConstitution());
+        $fortitude = $this->getBaseFortitude() + $this->getAbilityModifier($this->getConstitution());
+
+        $language = new ExpressionLanguage();
+        foreach ($this->getFeats() as $feat) {
+            if (!$feat->isActive()) {
+                continue;
+            }
+
+            if (array_key_exists("fortitude", $feat->getFeat()->getEffect())) {
+                $bonus = (int)$language->evaluate(
+                    $feat->getFeat()->getEffect()["fortitude"],
+                    array("c" => $this)
+                );
+                $fortitude += $bonus;
+            }
+        }
+
+        return $fortitude;
     }
 
     public function getBaseWill()
@@ -733,7 +766,24 @@ class Character
 
     public function getWill()
     {
-        return $this->getBaseWill() + $this->getAbilityModifier($this->getWisdom());
+        $will = $this->getBaseWill() + $this->getAbilityModifier($this->getWisdom());
+
+        $language = new ExpressionLanguage();
+        foreach ($this->getFeats() as $feat) {
+            if (!$feat->isActive()) {
+                continue;
+            }
+
+            if (array_key_exists("will", $feat->getFeat()->getEffect())) {
+                $bonus = (int)$language->evaluate(
+                    $feat->getFeat()->getEffect()["will"],
+                    array("c" => $this)
+                );
+                $will += $bonus;
+            }
+        }
+
+        return $will;
     }
 
     private function getAttackRoll($type, $modifier)
@@ -764,7 +814,11 @@ class Character
         }
 
         $weapon = $this->getLeftWeapon();
-        if ($weapon) {
+        if ($weapon && (
+                ($type == 'ranged' && $weapon->getRange() > 0) ||
+                ($type == 'melee' && $weapon->getRange() === 0)
+            )
+        ) {
             $bonus = (int)$language->evaluate(
                 $weapon->getEffect()["attack-roll"],
                 array("c" => $this)
@@ -1175,5 +1229,51 @@ class Character
     public function getHands()
     {
         return $this->hands;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return Character
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set party
+     *
+     * @param Party $party
+     * @return Character
+     */
+    public function setParty(Party $party = null)
+    {
+        $this->party = $party;
+
+        return $this;
+    }
+
+    /**
+     * Get party
+     *
+     * @return Party
+     */
+    public function getParty()
+    {
+        return $this->party;
     }
 }

@@ -1,15 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <h1>Race creation</h1>
+    <div class="container">
+        <h1>Race creation</h1>
 
-    {{ form(form) }}
+        {{ form(form) }}
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('races') }}">
-                Back to the list
-            </a>
-        </li>
-    </ul>
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('races') }}">
+                    Back to the list
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

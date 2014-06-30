@@ -1,0 +1,68 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        <h1>{{ entity.name }}</h1>
+
+        <dl class="dl-horizontal">
+            <dt>Hit Die</dt>
+            <dd>d{{ entity.hpDice }}</dd>
+            <dt>Skill Ranks per Level</dt>
+            <dd>{{ entity.skillPoints }} + INT modifier</dd>
+        </dl>
+
+        <table class="table table-condensed table-striped table-hover">
+            <thead>
+            <tr>
+                <th rowspan="2">Level</th>
+                <th rowspan="2">BAB</th>
+                <th rowspan="2">Reflexes</th>
+                <th rowspan="2">Fortitude</th>
+                <th rowspan="2">Will</th>
+                <th rowspan="2">Special</th>
+                <th colspan="{{ entity.spellsPerDay|length }}">Spells per day</th>
+            </tr>
+            <tr>
+                {% for spellLevel in entity.spellsPerDay|keys %}
+                    <td>{{ spellLevel }}</td>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for level in 0..19 %}
+                <tr>
+                    <td>{{ level + 1 }}</td>
+                    <td>{{ entity.bab[level] }}</td>
+                    <td>{{ entity.reflexes[level] }}</td>
+                    <td>{{ entity.fortitude[level] }}</td>
+                    <td>{{ entity.will[level] }}</td>
+                    <td>TODO</td>
+                    {% for spellLevel in entity.spellsPerDay|keys %}
+                        <td>
+                            {% if entity.spellsPerDay[spellLevel][level] < 0 %}
+                                -
+                            {% else %}
+                                {{ entity.spellsPerDay[spellLevel][level] }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="list-inline">
+            <li>
+                <a href="{{ path('classes') }}" class="btn btn-primary">
+                    Back to the list
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('classes_edit', { 'id': entity.id }) }}" class="btn btn-primary">
+                    Edit
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
+{% endblock %}

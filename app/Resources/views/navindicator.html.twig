@@ -1,11 +1,11 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }} <span
-                    class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
+            {{ app.user.username }} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-            <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+            <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
             <li class="divider"></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
         </ul>
     </li>
 
@@ -40,4 +40,5 @@
             </form>
         </div>
     </li>
+    <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
 {% endif %}

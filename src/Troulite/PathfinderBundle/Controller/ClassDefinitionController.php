@@ -7,21 +7,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Troulite\PathfinderBundle\Entity\Race;
-use Troulite\PathfinderBundle\Form\RaceType;
+use Troulite\PathfinderBundle\Entity\ClassDefinition;
+use Troulite\PathfinderBundle\Form\ClassDefinitionType;
 
 /**
- * Race controller.
+ * ClassDefinition controller.
  *
- * @Route("/races")
+ * @Route("/classes")
  */
-class RaceController extends Controller
+class ClassDefinitionController extends Controller
 {
 
     /**
-     * Lists all Race entities.
+     * Lists all ClassDefinition entities.
      *
-     * @Route("/", name="races")
+     * @Route("/", name="classes")
      * @Method("GET")
      * @Template()
      */
@@ -29,7 +29,7 @@ class RaceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TroulitePathfinderBundle:Race')->findAll();
+        $entities = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->findAll();
 
         return array(
             'entities' => $entities,
@@ -37,15 +37,15 @@ class RaceController extends Controller
     }
 
     /**
-     * Creates a new Race entity.
+     * Creates a new ClassDefinition entity.
      *
-     * @Route("/", name="races_create")
+     * @Route("/", name="classes_create")
      * @Method("POST")
-     * @Template("TroulitePathfinderBundle:Race:new.html.twig")
+     * @Template("TroulitePathfinderBundle:ClassDefinition:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Race();
+        $entity = new ClassDefinition();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -54,7 +54,7 @@ class RaceController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('races_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('classes_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -64,19 +64,19 @@ class RaceController extends Controller
     }
 
     /**
-     * Creates a form to create a Race entity.
+     * Creates a form to create a ClassDefinition entity.
      *
-     * @param Race $entity The entity
+     * @param ClassDefinition $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Race $entity)
+    private function createCreateForm(ClassDefinition $entity)
     {
         $form = $this->createForm(
-            new RaceType(),
+            new ClassDefinitionType(),
             $entity,
             array(
-                'action' => $this->generateUrl('races_create'),
+                'action' => $this->generateUrl('classes_create'),
                 'method' => 'POST',
             )
         );
@@ -87,15 +87,15 @@ class RaceController extends Controller
     }
 
     /**
-     * Displays a form to create a new Race entity.
+     * Displays a form to create a new ClassDefinition entity.
      *
-     * @Route("/new", name="races_new")
+     * @Route("/new", name="classes_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Race();
+        $entity = new ClassDefinition();
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -105,9 +105,9 @@ class RaceController extends Controller
     }
 
     /**
-     * Finds and displays a Race entity.
+     * Finds and displays a ClassDefinition entity.
      *
-     * @Route("/{id}", name="races_show")
+     * @Route("/{id}", name="classes_show")
      * @Method("GET")
      * @Template()
      */
@@ -115,10 +115,10 @@ class RaceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Race')->find($id);
+        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
+            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -130,9 +130,9 @@ class RaceController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Race entity.
+     * Displays a form to edit an existing ClassDefinition entity.
      *
-     * @Route("/{id}/edit", name="races_edit")
+     * @Route("/{id}/edit", name="classes_edit")
      * @Method("GET")
      * @Template()
      */
@@ -140,10 +140,10 @@ class RaceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Race')->find($id);
+        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
+            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -157,19 +157,19 @@ class RaceController extends Controller
     }
 
     /**
-     * Creates a form to edit a Race entity.
+     * Creates a form to edit a ClassDefinition entity.
      *
-     * @param Race $entity The entity
+     * @param ClassDefinition $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Race $entity)
+    private function createEditForm(ClassDefinition $entity)
     {
         $form = $this->createForm(
-            new RaceType(),
+            new ClassDefinitionType(),
             $entity,
             array(
-                'action' => $this->generateUrl('races_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('classes_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             )
         );
@@ -180,20 +180,20 @@ class RaceController extends Controller
     }
 
     /**
-     * Edits an existing Race entity.
+     * Edits an existing ClassDefinition entity.
      *
-     * @Route("/{id}", name="races_update")
+     * @Route("/{id}", name="classes_update")
      * @Method("PUT")
-     * @Template("TroulitePathfinderBundle:Race:edit.html.twig")
+     * @Template("TroulitePathfinderBundle:ClassDefinition:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Race')->find($id);
+        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
+            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -203,7 +203,7 @@ class RaceController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('races_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('classes_edit', array('id' => $id)));
         }
 
         return array(
@@ -214,9 +214,9 @@ class RaceController extends Controller
     }
 
     /**
-     * Deletes a Race entity.
+     * Deletes a ClassDefinition entity.
      *
-     * @Route("/{id}", name="races_delete")
+     * @Route("/{id}", name="classes_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -226,21 +226,21 @@ class RaceController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroulitePathfinderBundle:Race')->find($id);
+            $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Race entity.');
+                throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('races'));
+        return $this->redirect($this->generateUrl('classes'));
     }
 
     /**
-     * Creates a form to delete a Race entity by id.
+     * Creates a form to delete a ClassDefinition entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -249,7 +249,7 @@ class RaceController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('races_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('classes_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn-danger')))
             ->getForm();

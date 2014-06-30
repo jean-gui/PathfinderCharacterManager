@@ -54,6 +54,19 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($lightningReflexes);
         $this->addReference('lightning-reflexes', $lightningReflexes);
 
+        $ironwill = new Feat();
+        $ironwill
+            ->setName("Iron will")
+            ->setDescription("You are more resistant to mental effects.")
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    "will" => 2
+                )
+            );
+        $manager->persist($ironwill);
+        $this->addReference('iron-will', $ironwill);
+
         $rapidShot = new Feat();
         $rapidShot
             ->setName('Rapid shot')

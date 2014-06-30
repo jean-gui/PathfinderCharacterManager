@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FeatsActivationType extends AbstractType
+class PartyType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,8 +15,8 @@ class FeatsActivationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('feats', 'collection', ['type' => new FeatActivationType()])
-            ->add('submit', 'submit', ['label' => '(De)Activate Feats']);
+            ->add('name')
+            ->add('dungeonMaster');
     }
 
     /**
@@ -26,7 +26,7 @@ class FeatsActivationType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\Party'
             )
         );
     }
@@ -36,7 +36,6 @@ class FeatsActivationType extends AbstractType
      */
     public function getName()
     {
-        return 'featsactivation';
+        return 'troulite_pathfinderbundle_party';
     }
-
-} 
+}

@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
-{% block content -%}
+{% block body -%}
     <div class="container">
-        <h1>Character creation</h1>
+        <h1>ClassDefinition creation</h1>
 
         {{ form(form) }}
 
         <ul class="record_actions">
             <li>
-                <a href="{{ path('characters') }}">
+                <a href="{{ path('classes') }}">
                     Back to the list
                 </a>
             </li>

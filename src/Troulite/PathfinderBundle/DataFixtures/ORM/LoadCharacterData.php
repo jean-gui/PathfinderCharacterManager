@@ -19,6 +19,8 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $gwendae = new Character();
         $gwendae
             ->setName("Gwendaë")
+            ->setUser($this->getReference('jean-gui'))
+            ->setParty($this->getReference('sit'))
             ->setRace($this->getReference('elf'))
             ->setFavoredClass($this->getReference('ranger'))
             ->setBaseStrength(10)
@@ -146,7 +148,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("weapon-focus"))
-                    ->setActive(false)
+                    ->setActive(true)
+            )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("iron-will"))
+                    ->setActive(true)
             )
             ->setLeftWeapon($this->getReference('longbow +2'));
 
@@ -163,6 +170,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
      */
     function getOrder()
     {
-        return 5;
+        return 8;
     }
 }

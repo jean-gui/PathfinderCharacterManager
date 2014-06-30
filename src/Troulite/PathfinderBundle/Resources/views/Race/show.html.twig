@@ -1,36 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <h1>Race</h1>
+    <div class="container">
+        <h1>{{ entity.name }}</h1>
 
-    <table class="record_properties">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ entity.name }}</td>
-        </tr>
-        <tr>
-            <th>Modifiers</th>
-            <td>{{ entity.modifiers }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('races') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('races_edit', { 'id': entity.id }) }}">
-                Edit
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+        <h2>Modifiers</h2>
+        <ul>
+            {% for attribute, value in entity.modifiers %}
+                <li>{% if value > 0 %}+{% endif %}{{ value }} {{ attribute }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Actions</h2>
+        <ul class="list-inline">
+            <li>
+                <a href="{{ path('races') }}" class="btn btn-primary">
+                    Back to the list
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('races_edit', { 'id': entity.id }) }}" class="btn btn-primary">
+                    Edit
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
 {% endblock %}

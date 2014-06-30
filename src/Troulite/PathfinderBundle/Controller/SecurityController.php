@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class SecurityController extends BaseSecurity
 {
     /**
-     * @Route("/login", name="monlogin")
+     * @Route("/embedded_login", name="embedded_login")
      * @Method("GET")
      * @return \Symfony\Component\HttpFoundation\Response
      */
