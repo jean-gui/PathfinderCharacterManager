@@ -2,6 +2,8 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -77,6 +79,17 @@ class ClassDefinition
      * @ORM\Column(type="json_array")
      */
     private $spellsPerDay;
+
+    /**
+     * @var Collection|Skill[]
+     *
+     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="classes")
+     * @ORM\JoinTable(name="class_skills",
+     *      joinColumns={@ORM\JoinColumn(name="class_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
+     *      )
+     */
+    private $classSkills;
 
     /**
      * Get id
@@ -275,5 +288,46 @@ class ClassDefinition
     public function getSpellsPerDay()
     {
         return $this->spellsPerDay;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->classSkills = new ArrayCollection();
+    }
+
+    /**
+     * Add classSkills
+     *
+     * @param Skill $classSkills
+     * @return ClassDefinition
+     */
+    public function addClassSkill(Skill $classSkills)
+    {
+        $this->classSkills[] = $classSkills;
+
+        return $this;
+    }
+
+    /**
+     * Remove classSkills
+     *
+     * @param Skill $classSkills
+     */
+    public function removeClassSkill(Skill $classSkills)
+    {
+        $this->classSkills->removeElement($classSkills);
+    }
+
+    /**
+     * Get classSkills
+     *
+     * @return Collection
+     */
+    public function getClassSkills()
+    {
+        return $this->classSkills;
     }
 }
