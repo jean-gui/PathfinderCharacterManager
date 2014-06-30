@@ -1276,4 +1276,49 @@ class Character
     {
         return $this->party;
     }
+
+    public function getSkillRank(Skill $skill)
+    {
+        $rank = 0;
+        foreach ($this->getLevels() as $level) {
+            foreach ($level->getSkills() as $levelSkill) {
+                if ($levelSkill->getSkill() === $skill) {
+                    $rank += $levelSkill->getValue();
+                    break;
+                }
+            }
+        }
+
+        return $rank;
+    }
+
+    public function getModifierByAbility($ability)
+    {
+        switch ($ability) {
+            case 'strength':
+                return $this->getAbilityModifier($this->getStrength());
+            case 'dexterity':
+                return $this->getAbilityModifier($this->getDexterity());
+            case 'constitution':
+                return $this->getAbilityModifier($this->getConstitution());
+            case 'intelligence':
+                return $this->getAbilityModifier($this->getIntelligence());
+            case 'wisdom':
+                return $this->getAbilityModifier($this->getWisdom());
+            case 'charisma':
+                return $this->getAbilityModifier($this->getCharisma());
+        }
+        return 0;
+    }
+
+    public function hasClassBonus(Skill $skill)
+    {
+        foreach ($this->getLevels() as $level) {
+            if ($level->getClassDefinition()->getClassSkills()->contains($skill)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

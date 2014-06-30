@@ -124,9 +124,12 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
+        $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+
         return array(
             'entity' => $entity,
-            'feats_activation_form' => $featsActivationForm->createView()
+            'feats_activation_form' => $featsActivationForm->createView(),
+            'skills' => $skills
         );
     }
 
@@ -183,7 +186,7 @@ class CharacterController extends Controller
     /**
      * Edits an existing Character entity.
      *
-     * @Route("/{id}", name="characters_update")
+     * @Route("/{id}/update", name="characters_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:Character:edit.html.twig")
      */

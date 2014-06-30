@@ -4,41 +4,16 @@
     <div class="container">
         <h1>Race list</h1>
 
-        <table class="records_list">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Modifiers</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+        <ul class="list-group">
             {% for entity in entities %}
-                <tr>
-                    <td><a href="{{ path('races_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                    <td>{{ entity.name }}</td>
-                    <td>{{ entity.modifiers|join(', ') }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('races_show', { 'id': entity.id }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('races_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
+                <li class="list-group-item">
+                    <a href="{{ path('races_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                </li>
             {% endfor %}
-            </tbody>
-        </table>
-
-        <ul>
+        </ul>
+        <ul class="list-inline">
             <li>
-                <a href="{{ path('races_new') }}">
-                    Create a new entry
-                </a>
+                <a href="{{ path('races_new') }}" class="btn btn-primary">Create a new race</a>
             </li>
         </ul>
     </div>

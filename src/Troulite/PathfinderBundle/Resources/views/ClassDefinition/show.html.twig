@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block content -%}
     <div class="container">
         <h1>{{ entity.name }}</h1>
 
@@ -9,6 +9,8 @@
             <dd>d{{ entity.hpDice }}</dd>
             <dt>Skill Ranks per Level</dt>
             <dd>{{ entity.skillPoints }} + INT modifier</dd>
+            <dt>Class Skills</dt>
+            <dd>{{ entity.classSkills|join(', ') }}</dd>
         </dl>
 
         <table class="table table-condensed table-striped table-hover">

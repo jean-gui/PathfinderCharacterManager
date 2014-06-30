@@ -40,7 +40,22 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setReflexes($reflexes)
             ->setFortitude($fortitude)
             ->setWill($will)
-            ->setSpellsPerDay($spellsPerDay);;
+            ->setSpellsPerDay($spellsPerDay)
+            ->addClassSkill($this->getReference('climb'))
+            ->addClassSkill($this->getReference('craft'))
+            ->addClassSkill($this->getReference('handleAnimal'))
+            ->addClassSkill($this->getReference('heal'))
+            ->addClassSkill($this->getReference('intimidate'))
+            ->addClassSkill($this->getReference('knowledgeDungeoneering'))
+            ->addClassSkill($this->getReference('knowledgeGeography'))
+            ->addClassSkill($this->getReference('knowledgeNature'))
+            ->addClassSkill($this->getReference('perception'))
+            ->addClassSkill($this->getReference('profession'))
+            ->addClassSkill($this->getReference('ride'))
+            ->addClassSkill($this->getReference('spellcraft'))
+            ->addClassSkill($this->getReference('stealth'))
+            ->addClassSkill($this->getReference('survival'))
+            ->addClassSkill($this->getReference('swim'));
 
         $manager->persist($ranger);
         $manager->flush();

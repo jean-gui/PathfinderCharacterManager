@@ -2,6 +2,8 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -81,6 +83,13 @@ class Level
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $modifiers;
+
+    /**
+     * @var Collection|LevelSkill[]
+     *
+     * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level")
+     */
+    private $skills;
 
     /**
      * Get id
@@ -251,5 +260,47 @@ class Level
     public function getModifiers()
     {
         return $this->modifiers;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->skills = new ArrayCollection();
+    }
+
+    /**
+     * Add skills
+     *
+     * @param LevelSkill $skill
+     * @return Level
+     */
+    public function addSkill(LevelSkill $skill)
+    {
+        $skill->setLevel($this);
+        $this->skills[] = $skill;
+
+        return $this;
+    }
+
+    /**
+     * Remove skills
+     *
+     * @param LevelSkill $skills
+     */
+    public function removeSkill(LevelSkill $skills)
+    {
+        $this->skills->removeElement($skills);
+    }
+
+    /**
+     * Get skills
+     *
+     * @return Collection|LevelSkill[]
+     */
+    public function getSkills()
+    {
+        return $this->skills;
     }
 }

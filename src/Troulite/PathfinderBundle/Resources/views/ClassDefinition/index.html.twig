@@ -1,55 +1,21 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block content -%}
     <div class="container">
-        <h1>ClassDefinition list</h1>
+        <h1>Classes</h1>
 
-        <table class="records_list">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Hpdice</th>
-                <th>Skillpoints</th>
-                <th>Bab</th>
-                <th>Reflexes</th>
-                <th>Fortitude</th>
-                <th>Will</th>
-                <th>Spellsperday</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+        <ul class="list-group">
             {% for entity in entities %}
-                <tr>
-                    <td><a href="{{ path('classes_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                    <td>{{ entity.name }}</td>
-                    <td>{{ entity.hpDice }}</td>
-                    <td>{{ entity.skillPoints }}</td>
-                    <td>{{ entity.bab }}</td>
-                    <td>{{ entity.reflexes }}</td>
-                    <td>{{ entity.fortitude }}</td>
-                    <td>{{ entity.will }}</td>
-                    <td>{{ entity.spellsPerDay }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('classes_show', { 'id': entity.id }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('classes_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
+                <li class="list-group-item">
+                    <a href="{{ path('classes_show', { 'id': entity.id }) }}">{{ entity }}</a>
+                </li>
             {% endfor %}
-            </tbody>
-        </table>
+        </ul>
 
-        <ul>
+        <ul class="list-inline">
             <li>
-                <a href="{{ path('classes_new') }}">
-                    Create a new entry
+                <a href="{{ path('classes_new') }}" class="btn btn-primary">
+                Create a new entry
                 </a>
             </li>
         </ul>

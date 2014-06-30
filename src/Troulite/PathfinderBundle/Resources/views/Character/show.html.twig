@@ -24,6 +24,8 @@
         <h1>
             {{ entity.name }}
             <small>
+                <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+                            class="glyphicon glyphicon-edit"></span></a>
                 Level {{ entity.level }}
                 <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
                 <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
@@ -196,6 +198,42 @@
                     </table>
                     {{ form_end(feats_activation_form) }}
                 </div>
+            </div>
+            <div id="skills" class="tab-pane">
+                <h2>Skills</h2>
+                <table class="table table-hover table-striped table-condensed table-responsive">
+                    <thead>
+                    <th><a href="{{ path('skills') }}">Skill</a></th>
+                    <th>Total Bonus</th>
+                    <th>Ability Modifier</th>
+                    <th>Ranks</th>
+                    <th>Misc Modifiers</th>
+                    </thead>
+                    <tbody>
+                    {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
+                        <tr>
+                            <td>
+                                {% if entity.hasClassBonus(skill) -%}
+                                    <span class="glyphicon glyphicon-check"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                {% endif %}
+                                {{ skill }}
+                            </td>
+                            <td>
+                                {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
+                                    {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) + 3 }}
+                                {% else %}
+                                    {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) }}
+                                {% endif %}
+                            </td>
+                            <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
+                            <td>{{ entity.skillRank(skill) }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         <div id="equipment" class="tab-pane">
             <h2>Equipment</h2>
