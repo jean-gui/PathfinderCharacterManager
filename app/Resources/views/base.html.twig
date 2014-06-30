@@ -29,9 +29,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {% block navbar_current %}{% endblock %}
             <ul class="nav navbar-nav navbar-right">
-                {#<li class="active"><a href="{{ path('characters') }}">Characters</a></li>
                 <li><a href="{{ path('races') }}">Races</a></li>
-                <li><a href="{{ path('characterfeats') }}">Character feats</a></li>#}
+                <li><a href="{{ path('classes') }}">Classes</a></li>
+                <li><a href="{{ path('skills') }}">Skills</a></li>
                 {% render(controller("TroulitePathfinderBundle:Security:login")) %}
             </ul>
         </div>
