@@ -10,6 +10,8 @@
                         <li class="list-group-item">
                             <a href="{{ path('characters_show', { 'id': character.id}) }}">
                                 {{ character }}
+                                <span class="badge pull-right">{{ character.favoredClass }}</span>
+                                <span class="badge pull-right">{{ character.race }}</span>
                                 <span class="badge pull-right">Level {{ character.level }}</span>
                             </a>
                         </li>
