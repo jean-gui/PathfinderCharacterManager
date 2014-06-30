@@ -111,20 +111,12 @@ class ClassDefinitionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(ClassDefinition $classDefinition)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($classDefinition->getId());
 
         return array(
-            'entity' => $entity,
+            'entity' => $classDefinition,
             'delete_form' => $deleteForm->createView(),
         );
     }
