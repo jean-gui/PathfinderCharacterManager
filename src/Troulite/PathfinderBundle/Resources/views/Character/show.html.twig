@@ -21,247 +21,247 @@
 
 {% block content -%}
     <div class="container">
-        <h1>
-            {{ entity.name }}
-            <small>
-                <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
-                            class="glyphicon glyphicon-edit"></span></a>
-                Level {{ entity.level }}
-                <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
-                <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
-            </small>
-        </h1>
-        <div class="tab-content">
-            <div id="main" class="tab-pane active">
-                <h2>Main Profile</h2>
+    <h1>
+        {{ entity.name }}
+        <small>
+            <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+                        class="glyphicon glyphicon-edit"></span></a>
+            Level {{ entity.level }}
+            <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
+            <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
+        </small>
+    </h1>
+    <div class="tab-content">
+    <div id="main" class="tab-pane active">
+        <h2>Main Profile</h2>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <table id="abilities" class="table table-striped table-hover table-responsive">
-                            <thead>
-                            <th>Ability</th>
-                            <th>Value</th>
-                            <th>Modifier</th>
-                            </thead>
-                            <tr>
-                                <th>Strength</th>
-                                <td>{{ entity.strength }}</td>
-                                <td>{{ entity.abilityModifier(entity.strength) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Dexterity</th>
-                                <td>{{ entity.dexterity }}</td>
-                                <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Constitution</th>
-                                <td>{{ entity.constitution }}</td>
-                                <td>{{ entity.abilityModifier(entity.constitution) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Intelligence</th>
-                                <td>{{ entity.intelligence }}</td>
-                                <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Wisdom</th>
-                                <td>{{ entity.wisdom }}</td>
-                                <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
-                            </tr>
-                            <tr>
-                                <th>Charisma</th>
-                                <td>{{ entity.charisma }}</td>
-                                <td>{{ entity.abilityModifier(entity.charisma) }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-md-6">
-                        <dl class="dl-horizontal">
-                            <dt>Max Hit Points</dt>
-                            <dd>{{ entity.maxHp }}</dd>
-                            <dt>Losts Hit Points</dt>
-                            <dd>{{ entity.lostHP }}</dd>
-                            <dt>Current Hit Points</dt>
-                            <dd>{{ entity.maxHp - entity.lostHP }}</dd>
-                            <dt>HP Rolls per level</dt>
-                            <dd>
-                                {% for level in entity.levels %}
-                                    {{ level.hpRoll }}
-                                {% endfor %}
-                            </dd>
-                            <dt data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per
-                                level
-                            </dt>
-                            <dd>
-                                {% set sumhp = 0 %}
-                                {% for level in entity.levels|slice(1) %}
-                                    {% set sumhp = sumhp + level.hpRoll %}
-                                {% endfor %}
-                                {{ (sumhp / (entity.levels|length)-1)|number_format(1) }}
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <table id="saving-throws" class="table table-striped table-condensed table-responsive">
-                            <tr>
-                                <th>Reflexes</th>
-                                <td>{{ entity.reflexes }}</td>
-                                <td>=</td>
-                                <td>{{ entity.baseReflexes }}</td>
-                                <td>+</td>
-                                <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
-                                <td>+</td>
-                                <td>Misc</td>
-                            </tr>
-                            <tr>
-                                <th>Fortitude</th>
-                                <td>{{ entity.fortitude }}</td>
-                                <td>=</td>
-                                <td>{{ entity.baseFortitude }}</td>
-                                <td>+</td>
-                                <td>{{ entity.abilityModifier(entity.constitution) }}</td>
-                                <td>+</td>
-                                <td>Misc</td>
-                            </tr>
-                            <tr>
-                                <th>Will</th>
-                                <td>{{ entity.will }}</td>
-                                <td>=</td>
-                                <td>{{ entity.baseWill }}</td>
-                                <td>+</td>
-                                <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
-                                <td>+</td>
-                                <td>Misc</td>
-                            </tr>
-                        </table>
-                        <table id="attack-rolls" class="table table-hover table-condensed table-responsive">
-                            <tr>
-                                <th>BAB</th>
-                                <td>{{ entity.bab }}</td>
-                                {% if entity.bab > 5 -%}
-                                    <td>{{ entity.bab - 5 }}</td>{% endif %}
-                                {% if entity.bab > 10 -%}
-                                    <td>{{ entity.bab - 10 }}</td>{% endif %}
-                                {% if entity.bab > 15 -%}
-                                    <td>{{ entity.bab - 15 }}</td>{% endif %}
-                            </tr>
-                            <tr>
-                                <th>Melee attack rolls</th>
-                                {% for ar in entity.meleeAttackRoll %}
-                                    <td>{{ ar }}</td>
-                                {% endfor %}
-                            </tr>
-                            <tr>
-                                <th>Ranged attack rolls</th>
-                                {% for ar in entity.rangedAttackRoll %}
-                                    <td>{{ ar }}</td>
-                                {% endfor %}
-                            </tr>
-                        </table>
-                        <table id="damage-bonus" class="table table-hover table-condensed table-responsive">
-                            <tr>
-                                <th>Melee damage bonus</th>
-                                <td>
-                                    {% if entity.meleeDamageRoll > 0 %}+{% endif %}{{ entity.meleeDamageRoll }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Ranged damage bonus</th>
-                                <td>
-                                    {% if entity.rangedAttackRoll > 0 %}+{% endif %}{{ entity.rangedDamageRoll }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <h2 id="feats">Feats</h2>
-                    {{ form_start(feats_activation_form) }}
-                    <table>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Active?</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for feat in feats_activation_form.feats %}
-                            <tr>
-                                <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
-                                <td>{{ form_widget(feat.active) }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {{ form_end(feats_activation_form) }}
-                </div>
-            </div>
-            <div id="skills" class="tab-pane">
-                <h2>Skills</h2>
-                <table class="table table-hover table-striped table-condensed table-responsive">
+        <div class="row">
+            <div class="col-md-3">
+                <table id="abilities" class="table table-striped table-hover table-responsive">
                     <thead>
-                    <th><a href="{{ path('skills') }}">Skill</a></th>
-                    <th>Total Bonus</th>
-                    <th>Ability Modifier</th>
-                    <th>Ranks</th>
-                    <th>Misc Modifiers</th>
+                    <th>Ability</th>
+                    <th>Value</th>
+                    <th>Modifier</th>
                     </thead>
-                    <tbody>
-                    {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
-                        <tr>
-                            <td>
-                                {% if entity.hasClassBonus(skill) -%}
-                                    <span class="glyphicon glyphicon-check"></span>
-                                {% else %}
-                                    <span class="glyphicon glyphicon-unchecked"></span>
-                                {% endif %}
-                                {{ skill }}
-                            </td>
-                            <td>
-                                {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
-                                    {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) + 3 }}
-                                {% else %}
-                                    {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) }}
-                                {% endif %}
-                            </td>
-                            <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
-                            <td>{{ entity.skillRank(skill) }}</td>
-                            <td></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
+                    <tr>
+                        <th>Strength</th>
+                        <td>{{ entity.strength }}</td>
+                        <td>{{ entity.abilityModifier(entity.strength) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dexterity</th>
+                        <td>{{ entity.dexterity }}</td>
+                        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Constitution</th>
+                        <td>{{ entity.constitution }}</td>
+                        <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Intelligence</th>
+                        <td>{{ entity.intelligence }}</td>
+                        <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Wisdom</th>
+                        <td>{{ entity.wisdom }}</td>
+                        <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Charisma</th>
+                        <td>{{ entity.charisma }}</td>
+                        <td>{{ entity.abilityModifier(entity.charisma) }}</td>
+                    </tr>
                 </table>
             </div>
-        <div id="equipment" class="tab-pane">
-            <h2>Equipment</h2>
-            <dl>
-                <dt>Left weapon</dt>
-                <dd>{{ entity.leftWeapon.name }}</dd>
-                <dt>Right weapon</dt>
-                <dd>{{ entity.rightWeapon }}</dd>
-                <dt>Body</dt>
-                <dd>{{ entity.body }}</dd>
-                <dt>Feet</dt>
-                <dd>{{ entity.feet }}</dd>
-                <dt>Hands</dt>
-                <dd>{{ entity.hands }}</dd>
-                <dt>Head</dt>
-                <dd>{{ entity.head }}</dd>
-                <dt>Back</dt>
-                <dd>{{ entity.back }}</dd>
-                <dt>Belt</dt>
-                <dd>{{ entity.belt }}</dd>
-                <dt>Left finger</dt>
-                <dd>{{ entity.leftFinger }}</dd>
-                <dt>Right finger</dt>
-                <dd>{{ entity.rightFinger }}</dd>
-                <dt>Neck</dt>
-                <dd>{{ entity.neck }}</dd>
-            </dl>
+            <div class="col-md-6">
+                <dl class="dl-horizontal">
+                    <dt>Max Hit Points</dt>
+                    <dd>{{ entity.maxHp }}</dd>
+                    <dt>Losts Hit Points</dt>
+                    <dd>{{ entity.lostHP }}</dd>
+                    <dt>Current Hit Points</dt>
+                    <dd>{{ entity.maxHp - entity.lostHP }}</dd>
+                    <dt>HP Rolls per level</dt>
+                    <dd>
+                        {% for level in entity.levels %}
+                            {{ level.hpRoll }}
+                        {% endfor %}
+                    </dd>
+                    <dt data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per
+                        level
+                    </dt>
+                    <dd>
+                        {% set sumhp = 0 %}
+                        {% for level in entity.levels|slice(1) %}
+                            {% set sumhp = sumhp + level.hpRoll %}
+                        {% endfor %}
+                        {{ (sumhp / (entity.levels|length)-1)|number_format(1) }}
+                    </dd>
+                </dl>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <table id="saving-throws" class="table table-striped table-condensed table-responsive">
+                    <tr>
+                        <th>Reflexes</th>
+                        <td>{{ entity.reflexes }}</td>
+                        <td>=</td>
+                        <td>{{ entity.baseReflexes }}</td>
+                        <td>+</td>
+                        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+                        <td>+</td>
+                        <td>Misc</td>
+                    </tr>
+                    <tr>
+                        <th>Fortitude</th>
+                        <td>{{ entity.fortitude }}</td>
+                        <td>=</td>
+                        <td>{{ entity.baseFortitude }}</td>
+                        <td>+</td>
+                        <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+                        <td>+</td>
+                        <td>Misc</td>
+                    </tr>
+                    <tr>
+                        <th>Will</th>
+                        <td>{{ entity.will }}</td>
+                        <td>=</td>
+                        <td>{{ entity.baseWill }}</td>
+                        <td>+</td>
+                        <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+                        <td>+</td>
+                        <td>Misc</td>
+                    </tr>
+                </table>
+                <table id="attack-rolls" class="table table-hover table-condensed table-responsive">
+                    <tr>
+                        <th>BAB</th>
+                        <td>{{ entity.bab }}</td>
+                        {% if entity.bab > 5 -%}
+                            <td>{{ entity.bab - 5 }}</td>{% endif %}
+                        {% if entity.bab > 10 -%}
+                            <td>{{ entity.bab - 10 }}</td>{% endif %}
+                        {% if entity.bab > 15 -%}
+                            <td>{{ entity.bab - 15 }}</td>{% endif %}
+                    </tr>
+                    <tr>
+                        <th>Melee attack rolls</th>
+                        {% for ar in entity.meleeAttackRoll %}
+                            <td>{{ ar }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>Ranged attack rolls</th>
+                        {% for ar in entity.rangedAttackRoll %}
+                            <td>{{ ar }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+                <table id="damage-bonus" class="table table-hover table-condensed table-responsive">
+                    <tr>
+                        <th>Melee damage bonus</th>
+                        <td>
+                            {% if entity.meleeDamageRoll > 0 %}+{% endif %}{{ entity.meleeDamageRoll }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Ranged damage bonus</th>
+                        <td>
+                            {% if entity.rangedAttackRoll > 0 %}+{% endif %}{{ entity.rangedDamageRoll }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <h2 id="feats">Feats</h2>
+            {{ form_start(feats_activation_form) }}
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Active?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for feat in feats_activation_form.feats %}
+                    <tr>
+                        <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
+                        <td>{{ form_widget(feat.active) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ form_end(feats_activation_form) }}
+        </div>
+    </div>
+    <div id="skills" class="tab-pane">
+        <h2>Skills</h2>
+        <table class="table table-hover table-striped table-condensed table-responsive">
+            <thead>
+            <th><a href="{{ path('skills') }}">Skill</a></th>
+            <th>Total Bonus</th>
+            <th>Ability Modifier</th>
+            <th>Ranks</th>
+            <th>Misc Modifiers</th>
+            </thead>
+            <tbody>
+            {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
+                <tr>
+                    <td>
+                        {% if entity.hasClassBonus(skill) -%}
+                            <span class="glyphicon glyphicon-check"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-unchecked"></span>
+                        {% endif %}
+                        {{ skill }}
+                    </td>
+                    <td>
+                        {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
+                            {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) + 3 }}
+                        {% else %}
+                            {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) }}
+                        {% endif %}
+                    </td>
+                    <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
+                    <td>{{ entity.skillRank(skill) }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="equipment" class="tab-pane">
+        <h2>Equipment</h2>
+        <dl>
+            <dt>Left weapon</dt>
+            <dd>{{ entity.leftWeapon.name }}</dd>
+            <dt>Right weapon</dt>
+            <dd>{{ entity.rightWeapon }}</dd>
+            <dt>Body</dt>
+            <dd>{{ entity.body }}</dd>
+            <dt>Feet</dt>
+            <dd>{{ entity.feet }}</dd>
+            <dt>Hands</dt>
+            <dd>{{ entity.hands }}</dd>
+            <dt>Head</dt>
+            <dd>{{ entity.head }}</dd>
+            <dt>Back</dt>
+            <dd>{{ entity.back }}</dd>
+            <dt>Belt</dt>
+            <dd>{{ entity.belt }}</dd>
+            <dt>Left finger</dt>
+            <dd>{{ entity.leftFinger }}</dd>
+            <dt>Right finger</dt>
+            <dd>{{ entity.rightFinger }}</dd>
+            <dt>Neck</dt>
+            <dd>{{ entity.neck }}</dd>
+        </dl>
+    </div>
     </div>
     </div>
 {% endblock %}
