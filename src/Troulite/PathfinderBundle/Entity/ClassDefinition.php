@@ -76,7 +76,7 @@ class ClassDefinition
     /**
      * @var integer[]
      *
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true)
      */
     private $spellsPerDay;
 
