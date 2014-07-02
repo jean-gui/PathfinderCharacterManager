@@ -22,7 +22,8 @@
                 <th rowspan="2">Fortitude</th>
                 <th rowspan="2">Will</th>
                 <th rowspan="2">Special</th>
-                <th colspan="{{ entity.spellsPerDay|length }}">Spells per day</th>
+                {% if entity.spellsPerDay %}
+                    <th colspan="{{ entity.spellsPerDay|length }}">Spells per day</th>{% endif %}
             </tr>
             <tr>
                 {% for spellLevel in entity.spellsPerDay|keys %}
@@ -39,7 +40,7 @@
                     <td>{{ entity.fortitude[level] }}</td>
                     <td>{{ entity.will[level] }}</td>
                     <td>TODO</td>
-                    {% for spellLevel in entity.spellsPerDay|keys %}
+                    {% for spellLevel in entity.spellsPerDay|keys if entity.spellsPerDay %}
                         <td>
                             {% if entity.spellsPerDay[spellLevel][level] < 0 %}
                                 -
