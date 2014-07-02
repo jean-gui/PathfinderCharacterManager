@@ -61,6 +61,42 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $manager->flush();
 
         $this->addReference('ranger', $ranger);
+
+        $bab = array();
+        $reflexes = array();
+        $fortitude = array();
+        $will = array();
+        for ($i = 0; $i < 20; $i++) {
+            $bab[] = $i + 1;
+            $reflexes[] = (int)(($i + 1) / 3);
+            $fortitude[] = ((int)(($i + 1) / 2)) + 2;
+            $will[] = (int)(($i + 1) / 3);
+        }
+
+        $barbarian = new ClassDefinition();
+        $barbarian
+            ->setName("Barbarian")
+            ->setHpDice(12)
+            ->setSkillPoints(4)
+            ->setBab($bab)
+            ->setReflexes($reflexes)
+            ->setFortitude($fortitude)
+            ->setWill($will)
+            ->addClassSkill($this->getReference('climb'))
+            ->addClassSkill($this->getReference('craft'))
+            ->addClassSkill($this->getReference('handleAnimal'))
+            ->addClassSkill($this->getReference('acrobatics'))
+            ->addClassSkill($this->getReference('intimidate'))
+            ->addClassSkill($this->getReference('knowledgeNature'))
+            ->addClassSkill($this->getReference('perception'))
+            ->addClassSkill($this->getReference('ride'))
+            ->addClassSkill($this->getReference('survival'))
+            ->addClassSkill($this->getReference('swim'));
+
+        $manager->persist($barbarian);
+        $manager->flush();
+
+        $this->addReference('barbarian', $barbarian);
     }
 
     /**
