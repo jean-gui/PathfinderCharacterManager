@@ -8,10 +8,10 @@
                 <ul class="list-group">
                     {% for character in user.characters %}
                         <li class="list-group-item">
-                            <a href="{{ path('characters_show', { 'id': character.id}) }}">
+                            <a href="{{ path('characters_show', { 'id': character.baseCharacter.id}) }}">
                                 {{ character }}
-                                <span class="badge pull-right">{{ character.favoredClass }}</span>
-                                <span class="badge pull-right">{{ character.race }}</span>
+                                <span class="badge pull-right">{{ character.baseCharacter.favoredClass }}</span>
+                                <span class="badge pull-right">{{ character.baseCharacter.race }}</span>
                                 <span class="badge pull-right">Level {{ character.level }}</span>
                             </a>
                         </li>

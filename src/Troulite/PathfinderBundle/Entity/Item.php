@@ -58,7 +58,7 @@ class Item
      *
      * @ORM\Column(type="json_array", nullable=true)
      */
-    private $effect;
+    private $effects;
 
     /**
      * Get id
@@ -74,6 +74,7 @@ class Item
      * Set name
      *
      * @param string $name
+     *
      * @return Weapon
      */
     public function setName($name)
@@ -97,6 +98,7 @@ class Item
      * Set description
      *
      * @param string $description
+     *
      * @return Weapon
      */
     public function setDescription($description)
@@ -120,6 +122,7 @@ class Item
      * Set cost
      *
      * @param integer $cost
+     *
      * @return Weapon
      */
     public function setCost($cost)
@@ -143,6 +146,7 @@ class Item
      * Set weight
      *
      * @param double $weight
+     *
      * @return Weapon
      */
     public function setWeight($weight)
@@ -163,14 +167,15 @@ class Item
     }
 
     /**
-     * Set special
+     * Set effects
      *
-     * @param array $special
+     * @param array $effects
+     *
      * @return Weapon
      */
-    public function setSpecial($special)
+    public function setEffects($effects)
     {
-        $this->special = $special;
+        $this->effects = $effects;
 
         return $this;
     }
@@ -180,20 +185,21 @@ class Item
      *
      * @return array
      */
-    public function getSpecial()
+    public function getEffects()
     {
-        return $this->special;
+        return $this->effects;
     }
 
     /**
      * Set effect
      *
      * @param array $effect
+     *
      * @return Weapon
      */
     public function setEffect($effect)
     {
-        $this->effect = $effect;
+        $this->effects = $effect;
 
         return $this;
     }
@@ -205,7 +211,7 @@ class Item
      */
     public function getEffect()
     {
-        return $this->effect;
+        return $this->effects;
     }
 
     public function __toString()

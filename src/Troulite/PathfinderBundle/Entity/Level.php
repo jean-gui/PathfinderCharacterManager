@@ -25,16 +25,16 @@ class Level
     private $id;
 
     /**
-     * @var Character
+     * @var BaseCharacter
      *
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="levels")
+     * @ORM\ManyToOne(targetEntity="BaseCharacter", inversedBy="levels")
      * @ORM\JoinColumn(name="character", referencedColumnName="id")
      * @Assert\NotBlank()
      */
     private $character;
 
     /**
-     * @var Character
+     * @var BaseCharacter
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="class", referencedColumnName="id")
@@ -105,6 +105,7 @@ class Level
      * Set level
      *
      * @param integer $level
+     *
      * @return Level
      */
     public function setLevel($level)
@@ -127,10 +128,11 @@ class Level
     /**
      * Set character
      *
-     * @param Character $character
+     * @param BaseCharacter $character
+     *
      * @return Level
      */
-    public function setCharacter(Character $character)
+    public function setCharacter(BaseCharacter $character)
     {
         $this->character = $character;
 
@@ -140,7 +142,7 @@ class Level
     /**
      * Get character
      *
-     * @return Character
+     * @return BaseCharacter
      */
     public function getCharacter()
     {
@@ -151,6 +153,7 @@ class Level
      * Set classDefinition
      *
      * @param ClassDefinition $classDefinition
+     *
      * @return Level
      */
     public function setClassDefinition(ClassDefinition $classDefinition)
@@ -174,6 +177,7 @@ class Level
      * Set hpRoll
      *
      * @param integer $hpRoll
+     *
      * @return Level
      */
     public function setHpRoll($hpRoll)
@@ -197,6 +201,7 @@ class Level
      * Set extraHp
      *
      * @param integer $extraHp
+     *
      * @return Level
      */
     public function setExtraHp($extraHp)
@@ -220,6 +225,7 @@ class Level
      * Set extraSkill
      *
      * @param integer $extraSkill
+     *
      * @return Level
      */
     public function setExtraSkill($extraSkill)
@@ -243,6 +249,7 @@ class Level
      * Set modifiers
      *
      * @param array $modifiers
+     *
      * @return Level
      */
     public function setModifiers($modifiers)
@@ -274,6 +281,7 @@ class Level
      * Add skills
      *
      * @param LevelSkill $skill
+     *
      * @return Level
      */
     public function addSkill(LevelSkill $skill)

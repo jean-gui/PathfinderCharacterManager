@@ -17,12 +17,12 @@ class CharacterType extends AbstractType
         $builder
             ->add('name')
             ->add('lostHP')
-            ->add('baseStrength')
-            ->add('baseDexterity')
-            ->add('baseConstitution')
-            ->add('baseIntelligence')
-            ->add('baseWisdom')
-            ->add('baseCharisma')
+            ->add('strength')
+            ->add('dexterity')
+            ->add('constitution')
+            ->add('intelligence')
+            ->add('wisdom')
+            ->add('charisma')
             ->add('race')
             ->add('favoredClass');
     }
@@ -34,7 +34,7 @@ class CharacterType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\BaseCharacter'
             )
         );
     }

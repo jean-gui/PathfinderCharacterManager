@@ -78,6 +78,7 @@ class Feat
      * Set name
      *
      * @param string $name
+     *
      * @return Feat
      */
     public function setName($name)
@@ -101,6 +102,7 @@ class Feat
      * Set description
      *
      * @param string $description
+     *
      * @return Feat
      */
     public function setDescription($description)
@@ -124,6 +126,7 @@ class Feat
      * Set passive
      *
      * @param boolean $passive
+     *
      * @return Feat
      */
     public function setPassive($passive)
@@ -138,7 +141,7 @@ class Feat
      *
      * @return boolean
      */
-    public function getPassive()
+    public function isPassive()
     {
         return $this->passive;
     }
@@ -147,6 +150,7 @@ class Feat
      * Set effect
      *
      * @param array $effect
+     *
      * @return Feat
      */
     public function setEffect($effect)
@@ -166,10 +170,16 @@ class Feat
         return $this->effect;
     }
 
+    public function hasEffects()
+    {
+        return $this->getEffect()->count() > 0;
+    }
+
     /**
      * Set prerequisities
      *
      * @param array $prerequisities
+     *
      * @return Feat
      */
     public function setPrerequisities($prerequisities)
@@ -198,6 +208,7 @@ class Feat
      * Set worksIf
      *
      * @param array $worksIf
+     *
      * @return Feat
      */
     public function setWorksIf($worksIf)

@@ -23,9 +23,9 @@ class CharacterFeat
     private $id;
 
     /**
-     * @var Character
+     * @var BaseCharacter
      *
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="feats")
+     * @ORM\ManyToOne(targetEntity="BaseCharacter", inversedBy="feats")
      * @ORM\JoinColumn(name="character", referencedColumnName="id")
      * @Assert\NotBlank()
      */
@@ -60,10 +60,11 @@ class CharacterFeat
     /**
      * Set character
      *
-     * @param Character $character
+     * @param BaseCharacter $character
+     *
      * @return CharacterFeat
      */
-    public function setCharacter(Character $character = null)
+    public function setCharacter(BaseCharacter $character = null)
     {
         $this->character = $character;
 
@@ -73,7 +74,7 @@ class CharacterFeat
     /**
      * Get character
      *
-     * @return Character
+     * @return BaseCharacter
      */
     public function getCharacter()
     {
@@ -84,6 +85,7 @@ class CharacterFeat
      * Set feat
      *
      * @param Feat $feat
+     *
      * @return CharacterFeat
      */
     public function setFeat(Feat $feat = null)
@@ -107,6 +109,7 @@ class CharacterFeat
      * Set active
      *
      * @param boolean $active
+     *
      * @return CharacterFeat
      */
     public function setActive($active)

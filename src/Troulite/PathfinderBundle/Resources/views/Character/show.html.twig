@@ -2,12 +2,12 @@
 
 {% form_theme feats_activation_form _self %}
 
-{% block title "Character - " ~ entity.name %}
+{% block title "BaseCharacter - " ~ entity %}
 
 {% block navbar_current -%}
     <ul class="nav navbar-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ entity.name }} <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ entity }} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="#main" data-toggle="tab">Main Profile</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
@@ -22,13 +22,13 @@
 {% block content -%}
     <div class="container">
     <h1>
-        {{ entity.name }}
+        {{ entity }}
         <small>
-            <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+            <a href="{{ path('characters_edit', {'id': entity.baseCharacter.id}) }}"><span
                         class="glyphicon glyphicon-edit"></span></a>
             Level {{ entity.level }}
-            <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
-            <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
+            <a href="{{ path('races_show', {'id': entity.baseCharacter.race.id}) }}">{{ entity.baseCharacter.race }}</a>
+            <a href="{{ path('classes_show', {'id': entity.baseCharacter.favoredClass.id}) }}">{{ entity.baseCharacter.favoredClass }}</a>
         </small>
     </h1>
     <div class="tab-content">
@@ -80,12 +80,12 @@
                     <dt>Max Hit Points</dt>
                     <dd>{{ entity.maxHp }}</dd>
                     <dt>Losts Hit Points</dt>
-                    <dd>{{ entity.lostHP }}</dd>
+                    <dd>{{ entity.baseCharacter.lostHP }}</dd>
                     <dt>Current Hit Points</dt>
-                    <dd>{{ entity.maxHp - entity.lostHP }}</dd>
+                    <dd>{{ entity.maxHp - entity.baseCharacter.lostHP }}</dd>
                     <dt>HP Rolls per level</dt>
                     <dd>
-                        {% for level in entity.levels %}
+                        {% for level in entity.baseCharacter.levels %}
                             {{ level.hpRoll }}
                         {% endfor %}
                     </dd>
@@ -94,10 +94,10 @@
                     </dt>
                     <dd>
                         {% set sumhp = 0 %}
-                        {% for level in entity.levels|slice(1) %}
+                        {% for level in entity.baseCharacter.levels|slice(1) %}
                             {% set sumhp = sumhp + level.hpRoll %}
                         {% endfor %}
-                        {{ (sumhp / (entity.levels|length)-1)|number_format(1) }}
+                        {{ (sumhp / (entity.baseCharacter.levels|length)-1)|number_format(1) }}
                     </dd>
                 </dl>
             </div>
@@ -114,7 +114,7 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
                         <td>+</td>
-                        <td>Misc</td>
+                        <td>{{ entity.reflexesBonus|default(0) }}</td>
                     </tr>
                     <tr>
                         <th>Fortitude</th>
@@ -124,7 +124,7 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.constitution) }}</td>
                         <td>+</td>
-                        <td>Misc</td>
+                        <td>{{ entity.fortitudeBonus|default(0) }}</td>
                     </tr>
                     <tr>
                         <th>Will</th>
@@ -134,7 +134,7 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
                         <td>+</td>
-                        <td>Misc</td>
+                        <td>{{ entity.willBonus|default(0) }}</td>
                     </tr>
                 </table>
                 <table id="attack-rolls" class="table table-hover table-condensed table-responsive">
@@ -222,12 +222,12 @@
                     </td>
                     <td>
                         {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
-                            {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) + 3 }}
+                            {{ ability_tools.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) + 3 }}
                         {% else %}
-                            {{ entity.modifierByAbility(skill.keyAbility) + entity.skillRank(skill) }}
+                            {{ ability_tools.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) }}
                         {% endif %}
                     </td>
-                    <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
+                    <td>{{ skill.keyAbility }} {{ ability_tools.modifierByAbility(skill.keyAbility, entity) }}</td>
                     <td>{{ entity.skillRank(skill) }}</td>
                     <td></td>
                 </tr>
@@ -239,30 +239,29 @@
         <h2>Equipment</h2>
         <dl>
             <dt>Left weapon</dt>
-            <dd>{{ entity.leftWeapon.name }}</dd>
+            <dd>{{ entity.baseCharacter.leftWeapon.name }}</dd>
             <dt>Right weapon</dt>
-            <dd>{{ entity.rightWeapon }}</dd>
+            <dd>{{ entity.baseCharacter.rightWeapon }}</dd>
             <dt>Body</dt>
-            <dd>{{ entity.body }}</dd>
+            <dd>{{ entity.baseCharacter.body }}</dd>
             <dt>Feet</dt>
-            <dd>{{ entity.feet }}</dd>
+            <dd>{{ entity.baseCharacter.feet }}</dd>
             <dt>Hands</dt>
-            <dd>{{ entity.hands }}</dd>
+            <dd>{{ entity.baseCharacter.hands }}</dd>
             <dt>Head</dt>
-            <dd>{{ entity.head }}</dd>
+            <dd>{{ entity.baseCharacter.head }}</dd>
             <dt>Back</dt>
-            <dd>{{ entity.back }}</dd>
+            <dd>{{ entity.baseCharacter.back }}</dd>
             <dt>Belt</dt>
-            <dd>{{ entity.belt }}</dd>
+            <dd>{{ entity.baseCharacter.belt }}</dd>
             <dt>Left finger</dt>
-            <dd>{{ entity.leftFinger }}</dd>
+            <dd>{{ entity.baseCharacter.leftFinger }}</dd>
             <dt>Right finger</dt>
-            <dd>{{ entity.rightFinger }}</dd>
+            <dd>{{ entity.baseCharacter.rightFinger }}</dd>
             <dt>Neck</dt>
-            <dd>{{ entity.neck }}</dd>
+            <dd>{{ entity.baseCharacter.neck }}</dd>
         </dl>
     </div>
     </div>
     </div>
 {% endblock %}
-

@@ -23,19 +23,14 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPrerequisities(
                 array(
                     "dexterity" => 13,
-                    "bab" => 1
+                    "bab"       => 1
                 )
             )
             ->setPassive(false)
             ->setEffect(
                 array(
-                    "attack-roll" => "-1 - div(c.getBab(), 4)",
-                    "damage-roll" => "2 + 2 * div(c.getBab(), 4)"
-                )
-            )
-            ->setWorksIf(
-                array(
-                    "attack-type" => "ranged"
+                    "ranged-attack-roll" => "-1 - div(c.getBab(), 4)",
+                    "ranged-damage-roll" => "2 + 2 * div(c.getBab(), 4)"
                 )
             );
         $manager->persist($deadlyAim);
@@ -74,13 +69,8 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(false)
             ->setEffect(
                 array(
-                    'attacks' => 1,
-                    'attack-roll' => -2
-                )
-            )
-            ->setWorksIf(
-                array(
-                    "attack-type" => "ranged"
+                    'ranged-attacks'     => 1,
+                    'ranged-attack-roll' => -2
                 )
             );
         $manager->persist($rapidShot);
@@ -95,12 +85,11 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(false)
             ->setEffect(
                 array(
-                    'attack-roll' => 1
+                    'ranged-attack-roll' => 1
                 )
             )
             ->setWorksIf(
                 array(
-                    "attack-type" => "ranged",
                     'weapon-type' => 'longbow'
                 )
             );

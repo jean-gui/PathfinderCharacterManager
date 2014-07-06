@@ -5,7 +5,7 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
@@ -17,19 +17,19 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
      */
     public function load(ObjectManager $manager)
     {
-        $gwendae = new Character();
+        $gwendae = new BaseCharacter();
         $gwendae
             ->setName("Gwendaë")
             ->setUser($this->getReference('jean-gui'))
             ->setParty($this->getReference('sit'))
             ->setRace($this->getReference('elf'))
             ->setFavoredClass($this->getReference('ranger'))
-            ->setBaseStrength(10)
-            ->setBaseDexterity(16)
-            ->setBaseConstitution(12)
-            ->setBaseIntelligence(10)
-            ->setBaseWisdom(13)
-            ->setBaseCharisma(10)
+            ->setStrength(10)
+            ->setDexterity(16)
+            ->setConstitution(12)
+            ->setIntelligence(10)
+            ->setWisdom(13)
+            ->setCharisma(10)
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("deadly-aim"))

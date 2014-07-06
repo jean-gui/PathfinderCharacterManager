@@ -12,9 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Troulite\PathfinderBundle\Model\Character;
 
 /**
- * Character
+ * BaseCharacter
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -45,19 +46,20 @@ class Party
     private $dungeonMaster;
 
     /**
-     * @var Collection|Character[]
+     * @var Collection|BaseCharacter[]
      *
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="party")
+     * @ORM\OneToMany(targetEntity="BaseCharacter", mappedBy="party")
      */
     private $characters;
 
     /**
      * Add characters
      *
-     * @param Character $character
+     * @param BaseCharacter $character
+     *
      * @return Group
      */
-    public function addCharacter(Character $character)
+    public function addCharacter(BaseCharacter $character)
     {
         $this->characters[] = $character;
 
@@ -67,9 +69,9 @@ class Party
     /**
      * Remove characters
      *
-     * @param Character $character
+     * @param BaseCharacter $character
      */
-    public function removeCharacter(Character $character)
+    public function removeCharacter(BaseCharacter $character)
     {
         $this->characters->removeElement($character);
     }
@@ -77,11 +79,24 @@ class Party
     /**
      * Get characters
      *
+     * @return Collection|BaseCharacter[]
+     */
+    public function getBaseCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
      * @return Collection|Character[]
      */
     public function getCharacters()
     {
-        return $this->characters;
+        $characters = new ArrayCollection();
+        foreach ($this->characters as $character) {
+            $characters->add(new Character($character));
+        }
+
+        return $characters;
     }
 
     /**
@@ -106,6 +121,7 @@ class Party
      * Set name
      *
      * @param string $name
+     *
      * @return Party
      */
     public function setName($name)
@@ -134,6 +150,7 @@ class Party
      * Set dungeonMaster
      *
      * @param User $dungeonMaster
+     *
      * @return Party
      */
     public function setDungeonMaster(User $dungeonMaster = null)

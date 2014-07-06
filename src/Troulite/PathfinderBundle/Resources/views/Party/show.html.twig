@@ -2,7 +2,7 @@
 
 {% block content -%}
     <div class="container">
-        <h1>{{ entity.name }}</h1>
+        <h1>{{ entity }}</h1>
 
         <h2>Dungeon Master</h2>
 
@@ -20,13 +20,16 @@
             <tbody>
             {% for character in entity.characters %}
                 <tr>
-                    <td><a href="{{ path('characters_show', {'id': character.id}) }}">{{ character }}</a></td>
-                    <td><a href="{{ path('races_show', {'id': character.race.id}) }}">{{ character.race }}</a></td>
+                    <td><a href="{{ path('characters_show', {'id': character.baseCharacter.id}) }}">{{ character }}</a>
+                    </td>
                     <td>
-                        <a href="{{ path('classes_show', {'id': character.favoredClass.id}) }}">{{ character.favoredClass }}</a>
+                        <a href="{{ path('races_show', {'id': character.baseCharacter.race.id}) }}">{{ character.baseCharacter.race }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('classes_show', {'id': character.baseCharacter.favoredClass.id}) }}">{{ character.baseCharacter.favoredClass }}</a>
                     </td>
                     <td>{{ character.level }}</td>
-                    <td>{{ character.user }}</td>
+                    <td>{{ character.baseCharacter.user }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
+use Troulite\PathfinderBundle\Model\Character;
 
 /**
  * @ORM\Entity
@@ -34,12 +35,15 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * @var Collection|Character[]
+     * @var Collection|BaseCharacter[]
      *
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="BaseCharacter", mappedBy="user")
      */
     private $characters;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -61,6 +65,7 @@ class User extends BaseUser
      * Add groups
      *
      * @param GroupInterface $groups
+     *
      * @return User
      */
     public function addGroup(GroupInterface $groups)
@@ -74,6 +79,8 @@ class User extends BaseUser
      * Remove groups
      *
      * @param GroupInterface $groups
+     *
+     * @return $this|void
      */
     public function removeGroup(GroupInterface $groups)
     {
@@ -93,10 +100,11 @@ class User extends BaseUser
     /**
      * Add characters
      *
-     * @param Character $characters
+     * @param BaseCharacter $characters
+     *
      * @return User
      */
-    public function addCharacter(Character $characters)
+    public function addBaseCharacter(BaseCharacter $characters)
     {
         $this->characters[] = $characters;
 
@@ -106,9 +114,9 @@ class User extends BaseUser
     /**
      * Remove characters
      *
-     * @param Character $characters
+     * @param BaseCharacter $characters
      */
-    public function removeCharacter(Character $characters)
+    public function removeBaseCharacter(BaseCharacter $characters)
     {
         $this->characters->removeElement($characters);
     }
@@ -116,11 +124,24 @@ class User extends BaseUser
     /**
      * Get characters
      *
+     * @return Collection|BaseCharacter[]
+     */
+    public function getBaseCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
      * @return Collection|Character[]
      */
     public function getCharacters()
     {
-        return $this->characters;
+        $characters = new ArrayCollection();
+        foreach ($this->characters as $character) {
+            $characters->add(new Character($character));
+        }
+
+        return $characters;
     }
 
     /**
@@ -131,8 +152,7 @@ class User extends BaseUser
     public function getParties()
     {
         $parties = new ArrayCollection();
-        foreach ($this->getCharacters() as $character) {
-            ;
+        foreach ($this->getBaseCharacters() as $character) {
             if ($character->getParty()) {
                 $parties->add($character->getParty());
             }

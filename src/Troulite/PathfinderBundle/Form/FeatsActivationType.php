@@ -26,7 +26,7 @@ class FeatsActivationType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\BaseCharacter'
             )
         );
     }

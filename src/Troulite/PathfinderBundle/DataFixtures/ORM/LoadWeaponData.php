@@ -47,8 +47,8 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setWeight(1.5)
             ->setEffect(
                 array(
-                    'attack-roll' => '2',
-                    'damage-roll' => '2'
+                    'ranged-attack-roll' => '2',
+                    'ranged-damage-roll' => '2'
                 )
             );
 
