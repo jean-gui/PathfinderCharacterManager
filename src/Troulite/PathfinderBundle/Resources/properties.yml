@@ -1,0 +1,61 @@
+abilities:
+  strength
+  dexterity
+  constitution
+  intelligence
+  wisdom
+  charisma
+saving-throws:
+  fortitude
+  reflexes
+  will
+combat:
+  initiative
+  ac
+  spell-resistance
+  cmb
+  cmd
+  melee-attack-roll
+  melee-damage-roll
+  melee-attacks
+  ranged-attack-roll
+  ranged-damage-roll
+  ranged-attacks
+skills:
+  acrobatics
+  appraise
+  bluff
+  climb
+  craft
+  diplomacy
+  disable-device
+  disguise
+  escape-artist
+  fly
+  handle-animal
+  heal
+  intimidate
+  knowledge-arcana
+  knowledge-dungeoneering
+  knowledge-geography
+  knowledge-history
+  knowledge-local
+  knowledge-nature
+  knwoledge-nobility
+  knowledge-planes
+  knowledge-religion
+  linguistics
+  perception
+  perform
+  profession
+  ride
+  sense-motive
+  sleight-of-hand
+  spellcraft
+  stealth
+  survival
+  swim
+  use-magic-device
+misc:
+  hp
+  speed
