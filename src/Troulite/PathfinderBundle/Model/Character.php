@@ -252,6 +252,7 @@ class Character
 
     /**
      * @param int $meleeDamageBonus
+     * @todo one bonus per attack?
      */
     public function setMeleeDamageBonus($meleeDamageBonus)
     {
@@ -268,6 +269,7 @@ class Character
 
     /**
      * @param int $rangedAttackRollsBonus
+     * @todo one bonus per attack?
      */
     public function setRangedAttackRollsBonus($rangedAttackRollsBonus)
     {
