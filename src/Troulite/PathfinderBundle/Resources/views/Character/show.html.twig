@@ -91,6 +91,7 @@
                             {{ level.hpRoll }}
                         {% endfor %}
                     </dd>
+                    {% if entity.level > 1 %}
                     <dt data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per
                         level
                     </dt>
@@ -101,6 +102,7 @@
                         {% endfor %}
                         {{ (sumhp / ((entity.baseCharacter.levels|length)-1))|number_format(1) }}
                     </dd>
+                    {% endif %}
                 </dl>
             </div>
             <div class="col-md-3">
