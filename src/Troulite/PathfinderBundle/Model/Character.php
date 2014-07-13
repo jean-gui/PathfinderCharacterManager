@@ -621,13 +621,17 @@ class Character
     }
 
     /**
+     * Get this character's maximumhit points
+     *
      * @return int
      */
     public function getMaxHp()
     {
         $hp = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            $hp += $level->getHpRoll() + $level->getExtraHp();
+            $hp += $level->getHpRoll() +
+                $level->getExtraHp() +
+                $this->getAbilityModifier($this->getConstitution());
         }
 
         return $hp;
