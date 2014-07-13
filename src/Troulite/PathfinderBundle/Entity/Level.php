@@ -85,6 +85,13 @@ class Level
     private $modifiers;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $extraAbility;
+
+    /**
      * @var Collection|LevelSkill[]
      *
      * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level")
@@ -310,5 +317,28 @@ class Level
     public function getSkills()
     {
         return $this->skills;
+    }
+
+    /**
+     * Set extraAbility
+     *
+     * @param string $extraAbility
+     * @return Level
+     */
+    public function setExtraAbility($extraAbility)
+    {
+        $this->extraAbility = $extraAbility;
+
+        return $this;
+    }
+
+    /**
+     * Get extraAbility
+     *
+     * @return string 
+     */
+    public function getExtraAbility()
+    {
+        return $this->extraAbility;
     }
 }

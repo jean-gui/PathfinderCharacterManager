@@ -8,6 +8,7 @@
 
 namespace Troulite\PathfinderBundle\Model;
 
+use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\Skill;
@@ -450,8 +451,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("strength", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["strength"];
+            if ($level->getExtraAbility() == Abilities::STRENGTH) {
+                $levelBonus += 1;
             }
         }
 
@@ -471,8 +472,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("dexterity", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["dexterity"];
+            if ($level->getExtraAbility() == Abilities::DEXTERITY) {
+                $levelBonus += 1;
             }
         }
 
@@ -492,8 +493,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("constitution", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["constitution"];
+            if ($level->getExtraAbility() == Abilities::CONSTITUTION) {
+                $levelBonus += 1;
             }
         }
 
@@ -513,8 +514,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("intelligence", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["intelligence"];
+            if ($level->getExtraAbility() == Abilities::INTELLIGENCE) {
+                $levelBonus += 1;
             }
         }
 
@@ -534,8 +535,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("wisdom", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["wisdom"];
+            if ($level->getExtraAbility() == Abilities::WISDOM) {
+                $levelBonus += 1;
             }
         }
 
@@ -555,8 +556,8 @@ class Character
         }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (array_key_exists("charisma", $level->getModifiers())) {
-                $levelBonus += $level->getModifiers()["charisma"];
+            if ($level->getExtraAbility() == Abilities::CHARISMA) {
+                $levelBonus += 1;
             }
         }
 

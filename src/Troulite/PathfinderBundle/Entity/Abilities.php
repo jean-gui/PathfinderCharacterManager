@@ -21,6 +21,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Abilities
 {
+    const STRENGTH     = 'strength';
+    const DEXTERITY    = 'dexterity';
+    const CONSTITUTION = 'constitution';
+    const INTELLIGENCE = 'intelligence';
+    const WISDOM       = 'wisdom';
+    const CHARISMA     = 'charisma';
+
     /**
      * @var integer
      *

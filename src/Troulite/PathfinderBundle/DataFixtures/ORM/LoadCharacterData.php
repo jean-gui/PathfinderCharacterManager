@@ -184,7 +184,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setLevel(4)
             ->setHpRoll(4)
             ->setExtraHp(1)
-            ->setModifiers(array("dexterity" => 1));
+            ->setExtraAbility(Abilities::DEXTERITY);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -353,7 +353,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setLevel(8)
             ->setHpRoll(2)
             ->setExtraHp(1)
-            ->setModifiers(array("dexterity" => 1));
+            ->setExtraAbility(Abilities::DEXTERITY);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -517,7 +517,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setLevel(12)
             ->setHpRoll(9)
             ->setExtraHp(1)
-            ->setModifiers(array("wisdom" => 1));
+            ->setExtraAbility(Abilities::WISDOM);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
