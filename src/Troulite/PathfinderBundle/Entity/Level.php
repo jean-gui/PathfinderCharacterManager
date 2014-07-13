@@ -64,27 +64,6 @@ class Level
     private $hpRoll;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $extraHp = 0;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $extraSkill = 0;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(type="json_array", nullable=true)
-     */
-    private $modifiers;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -205,78 +184,6 @@ class Level
     }
 
     /**
-     * Set extraHp
-     *
-     * @param integer $extraHp
-     *
-     * @return Level
-     */
-    public function setExtraHp($extraHp)
-    {
-        $this->extraHp = $extraHp;
-
-        return $this;
-    }
-
-    /**
-     * Get extraHp
-     *
-     * @return integer
-     */
-    public function getExtraHp()
-    {
-        return $this->extraHp;
-    }
-
-    /**
-     * Set extraSkill
-     *
-     * @param integer $extraSkill
-     *
-     * @return Level
-     */
-    public function setExtraSkill($extraSkill)
-    {
-        $this->extraSkill = $extraSkill;
-
-        return $this;
-    }
-
-    /**
-     * Get extraSkill
-     *
-     * @return integer
-     */
-    public function getExtraSkill()
-    {
-        return $this->extraSkill;
-    }
-
-    /**
-     * Set modifiers
-     *
-     * @param array $modifiers
-     *
-     * @return Level
-     */
-    public function setModifiers($modifiers)
-    {
-        $this->modifiers = $modifiers;
-
-        return $this;
-    }
-
-    /**
-     * Get modifiers
-     *
-     * @return array
-     */
-    public function getModifiers()
-    {
-        return $this->modifiers;
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -340,5 +247,15 @@ class Level
     public function getExtraAbility()
     {
         return $this->extraAbility;
+    }
+
+    /**
+     * Whether this level is in the favored class
+     *
+     * @return bool
+     */
+    public function isFavoredClass()
+    {
+        return $this->getClassDefinition() === $this->getCharacter()->getFavoredClass();
     }
 }

@@ -630,9 +630,12 @@ class Character
     {
         $hp = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
-            $hp += $level->getHpRoll() +
-                $level->getExtraHp() +
-                $this->getAbilityModifier($this->getConstitution());
+            $hp += $level->getHpRoll() + $this->getAbilityModifier($this->getConstitution());
+
+            // Extra hit point if favored class
+            if ($this->baseCharacter->getExtraPoint() === 'hp' && $level->isFavoredClass()) {
+                $hp += 1;
+            }
         }
 
         return $hp;

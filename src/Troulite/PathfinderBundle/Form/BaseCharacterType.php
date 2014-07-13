@@ -18,6 +18,7 @@ class BaseCharacterType extends AbstractType
             ->add('name')
             ->add('race')
             ->add('favoredClass')
+            ->add('extraPoint', 'choice', array('choices' => array('hp' => 'Hit Point', 'skill' => 'Skill')))
             ->add('abilities', new AbilitiesType())
             ->add(
                 'levels',
