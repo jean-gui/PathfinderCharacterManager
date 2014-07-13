@@ -37,12 +37,12 @@ class LevelType extends AbstractType
                             'extraAbility',
                             'choice',
                             array('choices' => array(
-                                Abilities::STRENGTH,
-                                Abilities::DEXTERITY,
-                                Abilities::CONSTITUTION,
-                                Abilities::INTELLIGENCE,
-                                Abilities::WISDOM,
-                                Abilities::CHARISMA
+                                Abilities::STRENGTH => mb_convert_case(Abilities::STRENGTH, MB_CASE_TITLE),
+                                Abilities::DEXTERITY => mb_convert_case(Abilities::DEXTERITY, MB_CASE_TITLE),
+                                Abilities::CONSTITUTION => mb_convert_case(Abilities::CONSTITUTION, MB_CASE_TITLE),
+                                Abilities::INTELLIGENCE => mb_convert_case(Abilities::INTELLIGENCE, MB_CASE_TITLE),
+                                Abilities::WISDOM => mb_convert_case(Abilities::WISDOM, MB_CASE_TITLE),
+                                Abilities::CHARISMA => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
                             ))
                         );
                     }
