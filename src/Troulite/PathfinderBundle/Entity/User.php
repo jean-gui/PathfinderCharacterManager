@@ -153,7 +153,7 @@ class User extends BaseUser
     {
         $parties = new ArrayCollection();
         foreach ($this->getBaseCharacters() as $character) {
-            if ($character->getParty()) {
+            if ($character->getParty() && !$parties->contains($character->getParty())) {
                 $parties->add($character->getParty());
             }
         }
