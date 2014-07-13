@@ -27,30 +27,6 @@ class Character
     /**
      * @var int
      */
-    private $strengthBonus = 0;
-    /**
-     * @var int
-     */
-    private $dexterityBonus = 0;
-    /**
-     * @var int
-     */
-    private $constitutionBonus = 0;
-    /**
-     * @var int
-     */
-    private $intelligenceBonus = 0;
-    /**
-     * @var int
-     */
-    private $wisdomBonus = 0;
-    /**
-     * @var int
-     */
-    private $charismaBonus = 0;
-    /**
-     * @var int
-     */
     private $fortitudeBonus = 0;
     /**
      * @var int
@@ -162,22 +138,6 @@ class Character
     }
 
     /**
-     * @param int $charismaBonus
-     */
-    public function setCharismaBonus($charismaBonus)
-    {
-        $this->charismaBonus = $charismaBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCharismaBonus()
-    {
-        return $this->charismaBonus;
-    }
-
-    /**
      * @param int $cmbBonus
      */
     public function setCmbBonus($cmbBonus)
@@ -207,38 +167,6 @@ class Character
     public function getCmdBonus()
     {
         return $this->cmdBonus;
-    }
-
-    /**
-     * @param int $constitutionBonus
-     */
-    public function setConstitutionBonus($constitutionBonus)
-    {
-        $this->constitutionBonus = $constitutionBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getConstitutionBonus()
-    {
-        return $this->constitutionBonus;
-    }
-
-    /**
-     * @param int $dexterityBonus
-     */
-    public function setDexterityBonus($dexterityBonus)
-    {
-        $this->dexterityBonus = $dexterityBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDexterityBonus()
-    {
-        return $this->dexterityBonus;
     }
 
     /**
@@ -287,22 +215,6 @@ class Character
     public function getInitiativeBonus()
     {
         return $this->initiativeBonus;
-    }
-
-    /**
-     * @param int $intelligenceBonus
-     */
-    public function setIntelligenceBonus($intelligenceBonus)
-    {
-        $this->intelligenceBonus = $intelligenceBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIntelligenceBonus()
-    {
-        return $this->intelligenceBonus;
     }
 
     /**
@@ -450,22 +362,6 @@ class Character
     }
 
     /**
-     * @param int $strengthBonus
-     */
-    public function setStrengthBonus($strengthBonus)
-    {
-        $this->strengthBonus = $strengthBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getStrengthBonus()
-    {
-        return $this->strengthBonus;
-    }
-
-    /**
      * @param int $willBonus
      */
     public function setWillBonus($willBonus)
@@ -479,22 +375,6 @@ class Character
     public function getWillBonus()
     {
         return $this->willBonus;
-    }
-
-    /**
-     * @param int $wisdomBonus
-     */
-    public function setWisdomBonus($wisdomBonus)
-    {
-        $this->wisdomBonus = $wisdomBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWisdomBonus()
-    {
-        return $this->wisdomBonus;
     }
 
     /**
@@ -575,7 +455,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getStrength() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseStrength() + $racialBonus + $levelBonus;
     }
 
     /**
@@ -596,7 +476,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getDexterity() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseDexterity() + $racialBonus + $levelBonus;
     }
 
     /**
@@ -617,7 +497,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getConstitution() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseConstitution() + $racialBonus + $levelBonus;
     }
 
     /**
@@ -638,7 +518,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getIntelligence() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseIntelligence() + $racialBonus + $levelBonus;
     }
 
     /**
@@ -659,7 +539,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getWisdom() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseWisdom() + $racialBonus + $levelBonus;
     }
 
     /**
@@ -680,7 +560,7 @@ class Character
             }
         }
 
-        return $this->baseCharacter->getCharisma() + $racialBonus + $levelBonus;
+        return $this->baseCharacter->getAbilities()->getBaseCharisma() + $racialBonus + $levelBonus;
     }
 
     /**

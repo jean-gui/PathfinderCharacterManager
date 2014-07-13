@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+    <div class="container">
+        <h1>Level Up</h1>
+
+        {{ form(form) }}
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('characters') }}">
+                    Back to the list
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

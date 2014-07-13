@@ -3,14 +3,17 @@
 namespace Troulite\PathfinderBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\BaseCharacter as BaseCharacter;
-use Troulite\PathfinderBundle\Form\CharacterType;
+use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\FeatsActivationType;
+use Troulite\PathfinderBundle\Form\LevelType;
 use Troulite\PathfinderBundle\Model\Character;
 
 /**
@@ -50,6 +53,7 @@ class CharacterController extends Controller
      * @Route("/", name="characters_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:Character:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -58,6 +62,10 @@ class CharacterController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $entity->setUser($this->get('security.context')->getToken()->getUser());
+            // Max HP for first level
+            $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -75,13 +83,12 @@ class CharacterController extends Controller
      * Creates a form to create a BaseCharacter entity.
      *
      * @param BaseCharacter $entity The entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(BaseCharacter $entity)
     {
         $form = $this->createForm(
-            new CharacterType(),
+            new BaseCharacterType(),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_create'),
@@ -100,10 +107,14 @@ class CharacterController extends Controller
      * @Route("/new", name="characters_new")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
         $entity = new BaseCharacter();
+        $firstLevel = new Level();
+        $firstLevel->setLevel(1);
+        $entity->addLevel($firstLevel);
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -180,7 +191,7 @@ class CharacterController extends Controller
     private function createEditForm(BaseCharacter $entity)
     {
         $form = $this->createForm(
-            new CharacterType(),
+            new BaseCharacterType(),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_update', array('id' => $entity->getId())),
@@ -227,6 +238,38 @@ class CharacterController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
+    }
+
+    /**
+     * Edits an existing BaseCharacter entity.
+     *
+     * @Route("/{id}/levelup", name="characters_levelup")
+     * @Template()
+     */
+    public function levelUpAction(BaseCharacter $entity, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $level = new Level();
+        $entity->addLevel($level);
+
+        $form = $this->createForm(
+            new LevelType(),
+            $level
+        );
+
+        if($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $level->getLevel());
+
+                //return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            }
+        }
+
+        return array('form' => $form->createView());
     }
 
     /**

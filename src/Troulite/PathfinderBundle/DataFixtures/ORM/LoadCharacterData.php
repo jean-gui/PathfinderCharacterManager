@@ -5,8 +5,10 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\Equipment;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
 
@@ -24,12 +26,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setParty($this->getReference('sit'))
             ->setRace($this->getReference('elf'))
             ->setFavoredClass($this->getReference('ranger'))
-            ->setStrength(10)
-            ->setDexterity(16)
-            ->setConstitution(12)
-            ->setIntelligence(10)
-            ->setWisdom(13)
-            ->setCharisma(10)
+            ->setAbilities(new Abilities(10, 16, 12, 10, 13, 10))
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("deadly-aim"))
@@ -55,7 +52,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
                     ->setFeat($this->getReference("iron-will"))
                     ->setActive(true)
             )
-            ->setLeftWeapon($this->getReference('longbow +2'));
+            ->setEquipment((new Equipment())->setMainWeapon($this->getReference('longbow +2')));
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setLevel(1)

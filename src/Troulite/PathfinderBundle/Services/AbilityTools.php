@@ -8,6 +8,8 @@
 
 namespace Troulite\PathfinderBundle\Services;
 
+use Troulite\PathfinderBundle\Model\Character;
+
 
 /**
  * Class AbilityTools
@@ -21,7 +23,7 @@ class AbilityTools
      *
      * @return int
      */
-    public function getModifierByAbility($ability, $character)
+    public function getModifierByAbility($ability, Character $character)
     {
         switch ($ability) {
             case 'strength':

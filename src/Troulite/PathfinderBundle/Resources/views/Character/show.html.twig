@@ -33,15 +33,16 @@
     </h1>
     <div class="tab-content">
     <div id="main" class="tab-pane active">
-        <h2>Main Profile</h2>
-
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <h2>Main Profile</h2>
                 <table id="abilities" class="table table-striped table-hover table-responsive">
                     <thead>
-                    <th>Ability</th>
-                    <th>Value</th>
-                    <th>Modifier</th>
+                    <tr>
+                        <th>Ability</th>
+                        <th>Value</th>
+                        <th>Modifier</th>
+                    </tr>
                     </thead>
                     <tr>
                         <th>Strength</th>
@@ -75,7 +76,8 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
+                <h2>Hit Points</h2>
                 <dl class="dl-horizontal">
                     <dt>Max Hit Points</dt>
                     <dd>{{ entity.maxHp }}</dd>
@@ -97,9 +99,30 @@
                         {% for level in entity.baseCharacter.levels|slice(1) %}
                             {% set sumhp = sumhp + level.hpRoll %}
                         {% endfor %}
-                        {{ (sumhp / (entity.baseCharacter.levels|length)-1)|number_format(1) }}
+                        {{ (sumhp / ((entity.baseCharacter.levels|length)-1))|number_format(1) }}
                     </dd>
                 </dl>
+            </div>
+            <div class="col-md-3">
+                <h2 id="feats">Feats</h2>
+                {{ form_start(feats_activation_form) }}
+                <table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Active?</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for feat in feats_activation_form.feats %}
+                        <tr>
+                            <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
+                            <td>{{ form_widget(feat.active) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {{ form_end(feats_activation_form) }}
             </div>
         </div>
 
@@ -177,37 +200,18 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <h2 id="feats">Feats</h2>
-            {{ form_start(feats_activation_form) }}
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Active?</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for feat in feats_activation_form.feats %}
-                    <tr>
-                        <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
-                        <td>{{ form_widget(feat.active) }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ form_end(feats_activation_form) }}
-        </div>
     </div>
     <div id="skills" class="tab-pane">
         <h2>Skills</h2>
         <table class="table table-hover table-striped table-condensed table-responsive">
             <thead>
-            <th><a href="{{ path('skills') }}">Skill</a></th>
-            <th>Total Bonus</th>
-            <th>Ability Modifier</th>
-            <th>Ranks</th>
-            <th>Misc Modifiers</th>
+            <tr>
+                <th><a href="{{ path('skills') }}">Skill</a></th>
+                <th>Total Bonus</th>
+                <th>Ability Modifier</th>
+                <th>Ranks</th>
+                <th>Misc Modifiers</th>
+            </tr>
             </thead>
             <tbody>
             {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
@@ -239,27 +243,27 @@
         <h2>Equipment</h2>
         <dl>
             <dt>Left weapon</dt>
-            <dd>{{ entity.baseCharacter.leftWeapon.name }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.mainWeapon }}</dd>
             <dt>Right weapon</dt>
-            <dd>{{ entity.baseCharacter.rightWeapon }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.offhandWeapon }}</dd>
             <dt>Body</dt>
-            <dd>{{ entity.baseCharacter.body }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.body }}</dd>
             <dt>Feet</dt>
-            <dd>{{ entity.baseCharacter.feet }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.feet }}</dd>
             <dt>Hands</dt>
-            <dd>{{ entity.baseCharacter.hands }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.hands }}</dd>
             <dt>Head</dt>
-            <dd>{{ entity.baseCharacter.head }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.head }}</dd>
             <dt>Back</dt>
-            <dd>{{ entity.baseCharacter.back }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.back }}</dd>
             <dt>Belt</dt>
-            <dd>{{ entity.baseCharacter.belt }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.belt }}</dd>
             <dt>Left finger</dt>
-            <dd>{{ entity.baseCharacter.leftFinger }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.leftFinger }}</dd>
             <dt>Right finger</dt>
-            <dd>{{ entity.baseCharacter.rightFinger }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.rightFinger }}</dd>
             <dt>Neck</dt>
-            <dd>{{ entity.baseCharacter.neck }}</dd>
+            <dd>{{ entity.baseCharacter.equipment.neck }}</dd>
         </dl>
     </div>
     </div>
