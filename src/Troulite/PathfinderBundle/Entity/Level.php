@@ -43,7 +43,7 @@ class Level
     private $classDefinition;
 
     /**
-     * @var integer
+     * @var integer Value of this level in the corresponding class
      *
      * @ORM\Column(name="level", type="integer")
      * @Assert\NotBlank()
