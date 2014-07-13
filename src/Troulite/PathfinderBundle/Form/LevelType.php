@@ -18,8 +18,6 @@ class LevelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('extraHp')
-            ->add('extraSkill')
             ->add('classDefinition')
         ;
 
@@ -29,23 +27,29 @@ class LevelType extends AbstractType
                 $level = $event->getData();
                 $form  = $event->getForm();
 
+                // First level hpRoll should always be maxed out, so do not add the field in this case
                 if ($level && $level->getCharacter()->getLevels()->count() > 0) {
                     $form->add('hpRoll');
+                }
 
-                    if ($level->getCharacter()->getLevels()->count() % 4 == 0) {
-                        $form->add(
-                            'extraAbility',
-                            'choice',
-                            array('choices' => array(
-                                Abilities::STRENGTH => mb_convert_case(Abilities::STRENGTH, MB_CASE_TITLE),
-                                Abilities::DEXTERITY => mb_convert_case(Abilities::DEXTERITY, MB_CASE_TITLE),
-                                Abilities::CONSTITUTION => mb_convert_case(Abilities::CONSTITUTION, MB_CASE_TITLE),
-                                Abilities::INTELLIGENCE => mb_convert_case(Abilities::INTELLIGENCE, MB_CASE_TITLE),
-                                Abilities::WISDOM => mb_convert_case(Abilities::WISDOM, MB_CASE_TITLE),
-                                Abilities::CHARISMA => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
-                            ))
-                        );
-                    }
+                // One extra ability point every four levels
+                if (
+                    $level &&
+                    $level->getCharacter()->getLevels()->count() > 0 &&
+                    $level->getCharacter()->getLevels()->count() % 4 == 0
+                ) {
+                    $form->add(
+                        'extraAbility',
+                        'choice',
+                        array('choices' => array(
+                            Abilities::STRENGTH => mb_convert_case(Abilities::STRENGTH, MB_CASE_TITLE),
+                            Abilities::DEXTERITY => mb_convert_case(Abilities::DEXTERITY, MB_CASE_TITLE),
+                            Abilities::CONSTITUTION => mb_convert_case(Abilities::CONSTITUTION, MB_CASE_TITLE),
+                            Abilities::INTELLIGENCE => mb_convert_case(Abilities::INTELLIGENCE, MB_CASE_TITLE),
+                            Abilities::WISDOM => mb_convert_case(Abilities::WISDOM, MB_CASE_TITLE),
+                            Abilities::CHARISMA => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
+                        ))
+                    );
                 }
             }
         );
