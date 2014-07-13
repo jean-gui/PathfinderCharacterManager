@@ -11,9 +11,11 @@ use Troulite\PathfinderBundle\Entity\Abilities;
 
 class LevelType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     *
+     * @todo use advancement table for extra ability point
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
