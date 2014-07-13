@@ -48,38 +48,6 @@ class CharacterController extends Controller
     }
 
     /**
-     * Creates a new BaseCharacter entity.
-     *
-     * @Route("/", name="characters_create")
-     * @Method("POST")
-     * @Template("TroulitePathfinderBundle:Character:new.html.twig")
-     * @Secure(roles="ROLE_USER")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new BaseCharacter();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $entity->setUser($this->get('security.context')->getToken()->getUser());
-            // Max HP for first level
-            $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
      * Creates a form to create a BaseCharacter entity.
      *
      * @param BaseCharacter $entity The entity
@@ -91,7 +59,7 @@ class CharacterController extends Controller
             new BaseCharacterType(),
             $entity,
             array(
-                'action' => $this->generateUrl('characters_create'),
+                'action' => $this->generateUrl('characters_new'),
                 'method' => 'POST',
             )
         );
@@ -105,17 +73,33 @@ class CharacterController extends Controller
      * Displays a form to create a new BaseCharacter entity.
      *
      * @Route("/new", name="characters_new")
-     * @Method("GET")
      * @Template()
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $entity = new BaseCharacter();
         $firstLevel = new Level();
         $firstLevel->setLevel(1);
         $entity->addLevel($firstLevel);
         $form = $this->createCreateForm($entity);
+
+        if($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $entity->setUser($this->get('security.context')->getToken()->getUser());
+                $entity->getLevels()[0]->setLevel(1);
+                // Max HP for first level
+                $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            }
+        }
 
         return array(
             'entity' => $entity,
@@ -250,13 +234,16 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $currentLevel = $entity->getLevels()->count() + 1;
         $level = new Level();
+        $level->setLevel($currentLevel);
         $entity->addLevel($level);
 
         $form = $this->createForm(
             new LevelType(),
             $level
         );
+        $form->add('submit', 'submit', array('label' => 'Level Up'));
 
         if($request->getMethod() === 'POST') {
             $form->handleRequest($request);

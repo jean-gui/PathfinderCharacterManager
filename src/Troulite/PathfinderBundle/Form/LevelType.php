@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\Abilities;
 
 class LevelType extends AbstractType
 {
@@ -17,12 +18,9 @@ class LevelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('level')
             ->add('extraHp')
             ->add('extraSkill')
-            ->add('modifiers')
             ->add('classDefinition')
-            ->add('submit', 'submit', array('label' => 'Create'))
         ;
 
         $builder->addEventListener(
@@ -33,6 +31,21 @@ class LevelType extends AbstractType
 
                 if ($level && $level->getCharacter()->getLevels()->count() > 0) {
                     $form->add('hpRoll');
+
+                    if ($level->getCharacter()->getLevels()->count() % 4 == 0) {
+                        $form->add(
+                            'extraAbility',
+                            'choice',
+                            array('choices' => array(
+                                Abilities::STRENGTH,
+                                Abilities::DEXTERITY,
+                                Abilities::CONSTITUTION,
+                                Abilities::INTELLIGENCE,
+                                Abilities::WISDOM,
+                                Abilities::CHARISMA
+                            ))
+                        );
+                    }
                 }
             }
         );
