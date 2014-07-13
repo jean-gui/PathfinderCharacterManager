@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+<table id="abilities" class="table table-striped table-hover table-responsive">
+    <thead>
+    <tr>
+        <th>Character Level</th>
+        <th>Slow</th>
+        <th>Medium</th>
+        <th>Fast</th>
+        <th>New Feat</th>
+        <th>Ability Increase</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key,level in advancement %}
+    <tr>
+        <td>{{ key }}</td>
+        <td>{% if level.xp_slow > 0 %}{{ level.xp_slow }}{% else %}—{% endif %}</td>
+        <td>{% if level.xp_medium > 0 %}{{ level.xp_medium }}{% else %}—{% endif %}</td>
+        <td>{% if level.xp_fast > 0 %}{{ level.xp_fast }}{% else %}—{% endif %}</td>
+        <td>{% if level.feat %}✓{% else %}—{% endif %}</td>
+        <td>{% if level.ability %}✓{% else %}—{% endif %}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -31,4 +31,14 @@ class DefaultController extends Controller
 
         return array('user' => $user);
     }
+
+    /**
+     *
+     * @Route("/character-advancement", name="character_advancement")
+     * @Template()
+     */
+    public function characterAdvancementAction()
+    {
+        return array('advancement' => $this->container->getParameter('character_advancement'));
+    }
 } 
