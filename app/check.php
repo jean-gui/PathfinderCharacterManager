@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/SymfonyRequirements.php';
+require_once dirname(__FILE__).'/SymfonyRequirements.php';
 
 $symfonyRequirements = new SymfonyRequirements();
 
@@ -12,10 +12,7 @@ echo "*  Symfony requirements check  *\n";
 echo "*                              *\n";
 echo "********************************\n\n";
 
-echo $iniPath ? sprintf(
-    "* Configuration file used by PHP: %s\n\n",
-    $iniPath
-) : "* WARNING: No configuration file (php.ini) used by PHP!\n\n";
+echo $iniPath ? sprintf("* Configuration file used by PHP: %s\n\n", $iniPath) : "* WARNING: No configuration file (php.ini) used by PHP!\n\n";
 
 echo "** ATTENTION **\n";
 echo "*  The PHP CLI can use a different php.ini file\n";
