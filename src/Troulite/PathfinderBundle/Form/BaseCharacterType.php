@@ -6,9 +6,28 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class BaseCharacterType
+ *
+ * @package Troulite\PathfinderBundle\Form
+ * @todo For some reason, xdebug.max_nesting_level needs to be set to at least 104 in dev environment
+ */
 class BaseCharacterType extends AbstractType
 {
-        /**
+    /**
+     * @var
+     */
+    private $advancement;
+
+    /**
+     * @param $advancement
+     */
+    public function __construct($advancement)
+    {
+        $this->advancement = $advancement;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -23,7 +42,12 @@ class BaseCharacterType extends AbstractType
             ->add(
                 'levels',
                 'collection',
-                array('type' => new LevelType(), 'allow_add' => true))
+                array(
+                    'type' => new LevelType($this->advancement),
+                    'options' => array('label' => false),
+                    'label' => false
+                )
+            )
             ->add('equipment', new EquipmentType())
             ->add('party')
         ;

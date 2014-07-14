@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\BaseCharacter as BaseCharacter;
 use Troulite\PathfinderBundle\Entity\Level;
@@ -51,12 +52,12 @@ class CharacterController extends Controller
      * Creates a form to create a BaseCharacter entity.
      *
      * @param BaseCharacter $entity The entity
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createCreateForm(BaseCharacter $entity)
     {
         $form = $this->createForm(
-            new BaseCharacterType(),
+            new BaseCharacterType($this->container->getParameter('character_advancement')),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_new'),
@@ -166,14 +167,14 @@ class CharacterController extends Controller
     /**
      * Creates a form to edit a BaseCharacter entity.
      *
-     * @param Character $entity The entity
+     * @param BaseCharacter $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createEditForm(BaseCharacter $entity)
     {
         $form = $this->createForm(
-            new BaseCharacterType(),
+            new BaseCharacterType($this->container->getParameter('character_advancement')),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_update', array('id' => $entity->getId())),
@@ -245,6 +246,12 @@ class CharacterController extends Controller
         if($request->getMethod() === 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                // Cleanup empty feats that may have been added by the form
+                foreach($level->getFeats() as $feat) {
+                    if($feat === null || $feat->getFeat() === null) {
+                        $level->removeFeat($feat);
+                    }
+                }
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $character->getLevel());
@@ -287,7 +294,7 @@ class CharacterController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id)
     {
