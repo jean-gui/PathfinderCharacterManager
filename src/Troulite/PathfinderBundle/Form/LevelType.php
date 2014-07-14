@@ -83,12 +83,14 @@ class LevelType extends AbstractType
                         'feats',
                         'collection',
                         array(
+                            'label' => 'New Feat',
                             'type' => 'addcharacterfeat',
                             'options' => array(
                                 'class' => 'TroulitePathfinderBundle:Feat',
                                 'query_builder' => function (FeatRepository $er) use ($level) {
                                         return $er->queryAvailableFor($level->getCharacter());
                                 },
+                                'label' => false,
                                 'required' => false,
                                 'level' => $level
                             )
