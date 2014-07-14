@@ -48,7 +48,7 @@ class LevelType extends AbstractType
                 $form  = $event->getForm();
 
                 // First level hpRoll should always be maxed out, so do not add the field in this case
-                if ($level && $level->getCharacter()->getLevel() > 0) {
+                if ($level && $level->getCharacter()->getLevel() > 1) {
                     $form->add('hpRoll');
                 }
 
@@ -79,6 +79,7 @@ class LevelType extends AbstractType
                     $this->advancement[$level->getCharacter()->getLevel()]['feat']
                 ) {
                     $level->addFeat(new CharacterFeat());
+
                     $form->add(
                         'feats',
                         'collection',
