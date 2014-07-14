@@ -764,7 +764,7 @@ class Character
      */
     public function getLevel()
     {
-        return $this->baseCharacter->getLevels()->count();
+        return $this->baseCharacter->getLevel();
     }
 
     /**

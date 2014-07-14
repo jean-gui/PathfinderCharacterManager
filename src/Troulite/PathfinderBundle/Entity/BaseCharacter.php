@@ -186,6 +186,16 @@ class BaseCharacter
     }
 
     /**
+     * Get this character's current level
+     *
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->getLevels()->count();
+    }
+
+    /**
      * Get currentHP
      *
      * @return string
