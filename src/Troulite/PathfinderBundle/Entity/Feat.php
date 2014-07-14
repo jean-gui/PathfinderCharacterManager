@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Feat
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Troulite\PathfinderBundle\Repository\FeatRepository")
  */
 class Feat
 {
