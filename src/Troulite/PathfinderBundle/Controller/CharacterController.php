@@ -117,7 +117,8 @@ class CharacterController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $featsActivationForm = $this->createForm(new FeatsActivationType(), $entity);
+        $featsActivationForm = $this->createForm(new FeatsActivationType());
+        $featsActivationForm->get('feats')->setData($character->getFeats());
         $featsActivationForm->handleRequest($request);
 
         if ($featsActivationForm->isValid()) {

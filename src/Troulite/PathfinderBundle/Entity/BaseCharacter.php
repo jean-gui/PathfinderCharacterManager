@@ -92,13 +92,6 @@ class BaseCharacter
     /**
      * @var Collection|Feat[]
      *
-     * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="character", cascade={"all"})
-     */
-    private $feats;
-
-    /**
-     * @var Collection|Feat[]
-     *
      * @ORM\ManyToMany(targetEntity="Item")
      * @ORM\JoinTable(name="inventories",
      *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
@@ -265,41 +258,6 @@ class BaseCharacter
         $this->race = $race;
 
         return $this;
-    }
-
-    /**
-     * Add feats
-     *
-     * @param CharacterFeat $feat
-     *
-     * @return BaseCharacter
-     */
-    public function addFeat(CharacterFeat $feat)
-    {
-        $feat->setCharacter($this);
-        $this->feats[] = $feat;
-
-        return $this;
-    }
-
-    /**
-     * Remove feat
-     *
-     * @param CharacterFeat $feat
-     */
-    public function removeFeat(CharacterFeat $feat)
-    {
-        $this->feats->removeElement($feat);
-    }
-
-    /**
-     * Get feats
-     *
-     * @return Collection|CharacterFeat[]
-     */
-    public function getFeats()
-    {
-        return $this->feats;
     }
 
     /**

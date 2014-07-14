@@ -8,6 +8,7 @@
 
 namespace Troulite\PathfinderBundle\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\Level;
@@ -788,5 +789,19 @@ class Character
         }
 
         return 0;
+    }
+
+    /**
+     * Return all feats this character possesses
+     * @return ArrayCollection
+     */
+    public function getFeats()
+    {
+        $feats = array();
+        foreach($this->getBaseCharacter()->getLevels() as $level) {
+            $feats = array_merge($feats, $level->getFeats()->toArray());
+        }
+
+        return new ArrayCollection($feats);
     }
 }

@@ -57,6 +57,13 @@ class Level
     private $extraAbility;
 
     /**
+     * @var Collection|Feat[]
+     *
+     * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="level", cascade={"all"})
+     */
+    private $feats;
+
+    /**
      * @var Collection|LevelSkill[]
      *
      * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level")
@@ -209,6 +216,41 @@ class Level
     public function getExtraAbility()
     {
         return $this->extraAbility;
+    }
+
+    /**
+     * Add feats
+     *
+     * @param CharacterFeat $feat
+     *
+     * @return BaseCharacter
+     */
+    public function addFeat(CharacterFeat $feat)
+    {
+        $feat->setLevel($this);
+        $this->feats[] = $feat;
+
+        return $this;
+    }
+
+    /**
+     * Remove feat
+     *
+     * @param CharacterFeat $feat
+     */
+    public function removeFeat(CharacterFeat $feat)
+    {
+        $this->feats->removeElement($feat);
+    }
+
+    /**
+     * Get feats
+     *
+     * @return Collection|CharacterFeat[]
+     */
+    public function getFeats()
+    {
+        return $this->feats;
     }
 
     /**

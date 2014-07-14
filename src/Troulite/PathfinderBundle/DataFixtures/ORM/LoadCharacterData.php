@@ -28,35 +28,15 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setFavoredClass($this->getReference('ranger'))
             ->setExtraPoint('hp')
             ->setAbilities(new Abilities(10, 16, 12, 10, 13, 10))
-            ->addFeat(
-                (new CharacterFeat())
-                    ->setFeat($this->getReference("deadly-aim"))
-                    ->setActive(true)
-            )
-            ->addFeat(
-                (new CharacterFeat())
-                    ->setFeat($this->getReference("lightning-reflexes"))
-                    ->setActive(true)
-            )
-            ->addFeat(
-                (new CharacterFeat())
-                    ->setFeat($this->getReference("rapid-shot"))
-                    ->setActive(false)
-            )
+            ->setEquipment((new Equipment())->setMainWeapon($this->getReference('longbow +2')));
+        $level = (new Level())
+            ->setClassDefinition($this->getReference('ranger'))
+            ->setHpRoll(10)
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("weapon-focus"))
                     ->setActive(true)
-            )
-            ->addFeat(
-                (new CharacterFeat())
-                    ->setFeat($this->getReference("iron-will"))
-                    ->setActive(true)
-            )
-            ->setEquipment((new Equipment())->setMainWeapon($this->getReference('longbow +2')));
-        $level = (new Level())
-            ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(10);
+            );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -96,7 +76,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(5);
+            ->setHpRoll(5)
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("rapid-shot"))
+                    ->setActive(false)
+            );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -136,7 +121,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(2);
+            ->setHpRoll(2)
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("deadly-aim"))
+                    ->setActive(true)
+            );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -458,7 +448,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(10);
+            ->setHpRoll(10)
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("lightning-reflexes"))
+                    ->setActive(true)
+            );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -529,7 +524,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(1);
+            ->setHpRoll(1)
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("iron-will"))
+                    ->setActive(true)
+            );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)

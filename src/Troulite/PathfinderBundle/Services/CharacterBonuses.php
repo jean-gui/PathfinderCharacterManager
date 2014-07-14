@@ -65,7 +65,7 @@ class CharacterBonuses
      */
     public function applyFeats(Character $character)
     {
-        foreach ($character->getBaseCharacter()->getFeats() as $feat) {
+        foreach ($character->getFeats() as $feat) {
             if ($feat->isActive()) {
                 $this->applyFeat($character, $feat->getFeat());
             }

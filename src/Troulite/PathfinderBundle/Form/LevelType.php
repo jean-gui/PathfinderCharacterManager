@@ -39,7 +39,7 @@ class LevelType extends AbstractType
                     $form->add('hpRoll');
                 }
 
-                // One extra ability point every four levels
+                // Extra ability point
                 if (
                     $level &&
                     $level->getCharacter()->getLevel() > 0 &&
@@ -57,6 +57,15 @@ class LevelType extends AbstractType
                             Abilities::CHARISMA => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
                         ))
                     );
+                }
+
+                // Extra feat
+                if (
+                    $level &&
+                    $level->getCharacter()->getLevel() > 0 &&
+                    $this->advancement[$level->getCharacter()->getLevel()]['feat']
+                ) {
+                    $form->add('feat');
                 }
             }
         );
