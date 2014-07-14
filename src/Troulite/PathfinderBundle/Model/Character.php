@@ -11,6 +11,7 @@ namespace Troulite\PathfinderBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\BaseCharacter;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\Skill;
 
@@ -793,7 +794,7 @@ class Character
 
     /**
      * Return all feats this character possesses
-     * @return ArrayCollection
+     * @return ArrayCollection|CharacterFeat[]
      */
     public function getFeats()
     {
