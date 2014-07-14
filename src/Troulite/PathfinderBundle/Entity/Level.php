@@ -71,6 +71,15 @@ class Level
     private $skills;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->skills = new ArrayCollection();
+        $this->feats  = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -153,15 +162,6 @@ class Level
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->skills = new ArrayCollection();
-        $this->feats  = new ArrayCollection();
-    }
-
-    /**
      * Add skills
      *
      * @param LevelSkill $skill
@@ -226,7 +226,7 @@ class Level
      *
      * @return BaseCharacter
      */
-    public function addFeat(CharacterFeat $feat)
+    public function addFeat(CharacterFeat $feat = null)
     {
         $feat->setLevel($this);
         $this->feats[] = $feat;
@@ -239,7 +239,7 @@ class Level
      *
      * @param CharacterFeat $feat
      */
-    public function removeFeat(CharacterFeat $feat)
+    public function removeFeat(CharacterFeat $feat = null)
     {
         $this->feats->removeElement($feat);
     }
