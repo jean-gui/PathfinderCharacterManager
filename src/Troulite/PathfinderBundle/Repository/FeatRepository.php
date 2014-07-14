@@ -35,14 +35,15 @@ class FeatRepository extends EntityRepository
         $characterFeats = $character->getFeats();
         $feats          = array();
 
+        $qb = $this->_em->createQueryBuilder()->select('f')->from('TroulitePathfinderBundle:Feat', 'f');
         foreach ($characterFeats as $characterFeat) {
             if ($characterFeat->getFeat()) {
                 $feats[] = $characterFeat->getFeat()->getId();
             }
         }
-
-        $qb = $this->_em->createQueryBuilder()->select('f')->from('TroulitePathfinderBundle:Feat', 'f');
-        $qb->where($qb->expr()->notIn('f.id', $feats));
+        if(count($feats) > 0) {
+            $qb->where($qb->expr()->notIn('f.id', $feats));
+        }
 
         return $qb;
     }
