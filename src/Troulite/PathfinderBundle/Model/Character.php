@@ -616,8 +616,8 @@ class Character
     public function getBab()
     {
         $bab = 0;
-        foreach ($this->getMaxLevelPerClass() as $level) {
-            $bab += $level->getClassDefinition()->getBab()[$level->getLevel() - 1];
+        foreach ($this->getLevelPerClass() as $classLevel) {
+            $bab += $classLevel['class']->getBab()[$classLevel['level'] - 1];
         }
 
         return $bab;
@@ -644,21 +644,24 @@ class Character
     }
 
     /**
-     * @return Level[]
+     * @return array
      */
-    private function getMaxLevelPerClass()
+    public function getLevelPerClass()
     {
         /** @var $max Level[] */
-        $max = array();
+        $levels = array();
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if (!array_key_exists($level->getClassDefinition()->getId(), $max)
-                || $level->getLevel() > $max[$level->getClassDefinition()->getId()]->getLevel()
-            ) {
-                $max[$level->getClassDefinition()->getId()] = $level;
+            if(array_key_exists($level->getClassDefinition()->getId(), $levels)) {
+                $levels[$level->getClassDefinition()->getId()]['level']++;
+            } else {
+                $levels[$level->getClassDefinition()->getId()] = array(
+                    'class' => $level->getClassDefinition(),
+                    'level' => 1
+                );
             }
         }
 
-        return $max;
+        return $levels;
     }
 
     /**
@@ -681,8 +684,8 @@ class Character
     public function getBaseReflexes()
     {
         $reflexes = 0;
-        foreach ($this->getMaxLevelPerClass() as $level) {
-            $reflexes += $level->getClassDefinition()->getReflexes()[$level->getLevel() - 1];
+        foreach ($this->getLevelPerClass() as $classLevel) {
+            $reflexes += $classLevel['class']->getReflexes()[$classLevel['level'] - 1];
         }
 
         return $reflexes;
@@ -708,8 +711,8 @@ class Character
     public function getBaseFortitude()
     {
         $fortitude = 0;
-        foreach ($this->getMaxLevelPerClass() as $level) {
-            $fortitude += $level->getClassDefinition()->getFortitude()[$level->getLevel() - 1];
+        foreach ($this->getLevelPerClass() as $classLevel) {
+            $fortitude += $classLevel['class']->getFortitude()[$classLevel['level'] - 1];
         }
 
         return $fortitude;
@@ -735,8 +738,8 @@ class Character
     public function getBaseWill()
     {
         $will = 0;
-        foreach ($this->getMaxLevelPerClass() as $level) {
-            $will += $level->getClassDefinition()->getWill()[$level->getLevel() - 1];
+        foreach ($this->getLevelPerClass() as $classLevel) {
+            $will += $classLevel['class']->getWill()[$classLevel['level'] - 1];
         }
 
         return $will;

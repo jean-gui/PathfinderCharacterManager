@@ -43,20 +43,6 @@ class Level
     private $classDefinition;
 
     /**
-     * @var integer Value of this level in the corresponding class
-     *
-     * @ORM\Column(name="level", type="integer")
-     * @Assert\NotBlank()
-     * @Assert\Range(
-     *      min = 1,
-     *      max = 20,
-     *      minMessage = "Characters must be at least level 1",
-     *      maxMessage = "Maximum level of a character is 20"
-     * )
-     */
-    private $level;
-
-    /**
      * @var integer
      *
      * @ORM\Column(type="integer")
@@ -85,30 +71,6 @@ class Level
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set level
-     *
-     * @param integer $level
-     *
-     * @return Level
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
     }
 
     /**

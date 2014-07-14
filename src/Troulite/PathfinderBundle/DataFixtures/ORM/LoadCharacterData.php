@@ -56,7 +56,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setEquipment((new Equipment())->setMainWeapon($this->getReference('longbow +2')));
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(1)
             ->setHpRoll(10);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -97,7 +96,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(2)
             ->setHpRoll(5);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -138,7 +136,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(3)
             ->setHpRoll(2);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -179,7 +176,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(4)
             ->setHpRoll(4)
             ->setExtraAbility(Abilities::DEXTERITY);
         $gwendae->addLevel($level);
@@ -221,7 +217,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(5)
             ->setHpRoll(4);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -262,7 +257,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(6)
             ->setHpRoll(7);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -303,7 +297,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(7)
             ->setHpRoll(6);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -344,7 +337,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(8)
             ->setHpRoll(2)
             ->setExtraAbility(Abilities::DEXTERITY);
         $gwendae->addLevel($level);
@@ -386,7 +378,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(9)
             ->setHpRoll(3);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -427,7 +418,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(10)
             ->setHpRoll(8);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -468,7 +458,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(11)
             ->setHpRoll(10);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -504,7 +493,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(12)
             ->setHpRoll(9)
             ->setExtraAbility(Abilities::WISDOM);
         $gwendae->addLevel($level);
@@ -541,7 +529,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(13)
             ->setHpRoll(1);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
@@ -572,7 +559,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setLevel(14)
             ->setHpRoll(8);
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())

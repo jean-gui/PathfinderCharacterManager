@@ -79,9 +79,7 @@ class CharacterController extends Controller
     public function newAction(Request $request)
     {
         $entity = new BaseCharacter();
-        $firstLevel = new Level();
-        $firstLevel->setLevel(1);
-        $entity->addLevel($firstLevel);
+        $entity->addLevel(new Level());
         $form = $this->createCreateForm($entity);
 
         if($request->getMethod() == 'POST') {
@@ -89,7 +87,6 @@ class CharacterController extends Controller
 
             if ($form->isValid()) {
                 $entity->setUser($this->get('security.context')->getToken()->getUser());
-                $entity->getLevels()[0]->setLevel(1);
                 // Max HP for first level
                 $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
 
@@ -234,10 +231,9 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $currentLevel = $entity->getLevels()->count() + 1;
         $level = new Level();
-        $level->setLevel($currentLevel);
         $entity->addLevel($level);
+        $character = new Character($entity);
 
         $form = $this->createForm(
             new LevelType(),
@@ -250,7 +246,7 @@ class CharacterController extends Controller
             if ($form->isValid()) {
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $level->getLevel());
+                $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $character->getLevel());
 
                 //return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
             }

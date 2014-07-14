@@ -53,6 +53,7 @@ class BaseCharacter
      * @var Collection|Level[]
      *
      * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
+     * @ORM\OrderBy({"id": "ASC"})
      */
     private $levels;
 
