@@ -7,13 +7,16 @@
     <parameters>
         <parameter key="troulite_pathfinder.characterbonuses.class">Troulite\PathfinderBundle\Services\CharacterBonuses</parameter>
         <parameter key="troulite_pathfinder.abilitytools.class">Troulite\PathfinderBundle\Services\AbilityTools</parameter>
-
+        <parameter key="troulite_pathfinder.addcharacterfeat_type.class">Troulite\PathfinderBundle\Form\Type\AddCharacterFeatType</parameter>
     </parameters>
 
     <services>
         <service id="troulite_pathfinder.character_bonuses" class="%troulite_pathfinder.characterbonuses.class%">
         </service>
         <service id="troulite_pathfinder.ability_tools" class="%troulite_pathfinder.abilitytools.class%">
+        </service>
+        <service id="troulite_pathfinder.addcharacterfeat_type" class="%troulite_pathfinder.addcharacterfeat_type.class%">
+            <tag name="form.type" alias="addcharacterfeat"/>
         </service>
     </services>
 </container>

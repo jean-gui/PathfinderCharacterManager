@@ -8,11 +8,24 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Abilities;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Repository\FeatRepository;
 
+/**
+ * Class LevelType
+ *
+ * @package Troulite\PathfinderBundle\Form
+ */
 class LevelType extends AbstractType
 {
+    /**
+     * @var
+     */
     private $advancement;
 
+    /**
+     * @param $advancement
+     */
     public function __construct($advancement)
     {
         $this->advancement = $advancement;
@@ -65,7 +78,22 @@ class LevelType extends AbstractType
                     $level->getCharacter()->getLevel() > 0 &&
                     $this->advancement[$level->getCharacter()->getLevel()]['feat']
                 ) {
-                    $form->add('feat');
+                    $level->addFeat(new CharacterFeat());
+                    $form->add(
+                        'feats',
+                        'collection',
+                        array(
+                            'type' => 'addcharacterfeat',
+                            'options' => array(
+                                'class' => 'TroulitePathfinderBundle:Feat',
+                                'query_builder' => function (FeatRepository $er) use ($level) {
+                                        return $er->queryAvailableFor($level->getCharacter());
+                                },
+                                'required' => false,
+                                'level' => $level
+                            )
+                        )
+                    );
                 }
             }
         );
