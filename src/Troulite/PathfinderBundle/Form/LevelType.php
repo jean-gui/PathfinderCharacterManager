@@ -11,11 +11,16 @@ use Troulite\PathfinderBundle\Entity\Abilities;
 
 class LevelType extends AbstractType
 {
+    private $advancement;
+
+    public function __construct($advancement)
+    {
+        $this->advancement = $advancement;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
-     *
-     * @todo use advancement table for extra ability point
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -30,15 +35,15 @@ class LevelType extends AbstractType
                 $form  = $event->getForm();
 
                 // First level hpRoll should always be maxed out, so do not add the field in this case
-                if ($level && $level->getCharacter()->getLevels()->count() > 0) {
+                if ($level && $level->getCharacter()->getLevel() > 0) {
                     $form->add('hpRoll');
                 }
 
                 // One extra ability point every four levels
                 if (
                     $level &&
-                    $level->getCharacter()->getLevels()->count() > 0 &&
-                    $level->getCharacter()->getLevels()->count() % 4 == 0
+                    $level->getCharacter()->getLevel() > 0 &&
+                    $this->advancement[$level->getCharacter()->getLevel()]['ability']
                 ) {
                     $form->add(
                         'extraAbility',

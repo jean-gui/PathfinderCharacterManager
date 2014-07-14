@@ -236,7 +236,7 @@ class CharacterController extends Controller
         $character = new Character($entity);
 
         $form = $this->createForm(
-            new LevelType(),
+            new LevelType($this->container->getParameter('character_advancement')),
             $level
         );
         $form->add('submit', 'submit', array('label' => 'Level Up'));
@@ -248,7 +248,7 @@ class CharacterController extends Controller
 
                 $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $character->getLevel());
 
-                //return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
             }
         }
 
