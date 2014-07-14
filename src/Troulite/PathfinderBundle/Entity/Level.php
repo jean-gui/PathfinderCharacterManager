@@ -57,7 +57,7 @@ class Level
     private $extraAbility;
 
     /**
-     * @var Collection|Feat[]
+     * @var Collection|CharacterFeat[]
      *
      * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="level", cascade={"all"})
      */
@@ -158,6 +158,7 @@ class Level
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->feats  = new ArrayCollection();
     }
 
     /**
