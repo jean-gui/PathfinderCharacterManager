@@ -9,7 +9,6 @@
 namespace Troulite\PathfinderBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Level;
@@ -57,7 +56,6 @@ class FeatToCharacterFeatTransformer implements DataTransformerInterface
      * @param Feat $feat
      *
      * @return CharacterFeat|null
-     * @throws TransformationFailedException if object (issue) is not found.
      */
     public function reverseTransform($feat)
     {
