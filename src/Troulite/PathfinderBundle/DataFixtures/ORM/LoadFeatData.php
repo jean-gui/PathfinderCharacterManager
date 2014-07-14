@@ -62,6 +62,19 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($ironwill);
         $this->addReference('iron-will', $ironwill);
 
+        $greatFortitude = new Feat();
+        $greatFortitude
+            ->setName("Great Fortitude")
+            ->setDescription("You are resistant to poisons, diseases, and other maladies.")
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    "fortitude" => 2
+                )
+            );
+        $manager->persist($greatFortitude);
+        $this->addReference('great-fortitude', $greatFortitude);
+
         $rapidShot = new Feat();
         $rapidShot
             ->setName('Rapid shot')
