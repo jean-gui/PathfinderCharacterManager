@@ -4,119 +4,119 @@ parameters:
       xp_slow: 0
       xp_medium: 0
       xp_fast: 0
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     2:
       xp_slow: 3000
       xp_medium: 2000
       xp_fast: 1300
-      feat: 0
-      ability: 0
+      feat: false
+      ability: false
     3:
       xp_slow: 7500
       xp_medium: 5000
       xp_fast: 3300
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     4:
       xp_slow: 14000
       xp_medium: 9000
       xp_fast: 6000
-      feat: 0
-      ability: 1
+      feat: false
+      ability: true
     5:
       xp_slow: 23000
       xp_medium: 15000
       xp_fast: 10000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     6:
       xp_slow: 35000
       xp_medium: 23000
       xp_fast: 15000
-      feat: 0
-      ability: 0
+      feat: false
+      ability: false
     7:
       xp_slow: 53000
       xp_medium: 35000
       xp_fast: 23000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     8:
       xp_slow: 77000
       xp_medium: 51000
       xp_fast: 34000
-      feat: 0
-      ability: 1
+      feat: false
+      ability: true
     9:
       xp_slow: 115000
       xp_medium: 75000
       xp_fast: 50000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     10:
       xp_slow: 160000
       xp_medium: 105000
       xp_fast: 71000
-      feat: 0
-      ability: 0
+      feat: false
+      ability: false
     11:
       xp_slow: 235000
       xp_medium: 155000
       xp_fast: 105000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     12:
       xp_slow: 330000
       xp_medium: 220000
       xp_fast: 145000
-      feat: 0
-      ability: 1
+      feat: false
+      ability: true
     13:
       xp_slow: 475000
       xp_medium: 315000
       xp_fast: 210000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     14:
       xp_slow: 665000
       xp_medium: 445000
       xp_fast: 295000
-      feat: 0
-      ability: 0
+      feat: false
+      ability: false
     15:
       xp_slow: 955000
       xp_medium: 635000
       xp_fast: 425000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     16:
       xp_slow: 1350000
       xp_medium: 890000
       xp_fast: 600000
-      feat: 0
-      ability: 1
+      feat: false
+      ability: true
     17:
       xp_slow: 1900000
       xp_medium: 1300000
       xp_fast: 850000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     18:
       xp_slow: 2700000
       xp_medium: 1800000
       xp_fast: 1200000
-      feat: 0
-      ability: 0
+      feat: false
+      ability: false
     19:
       xp_slow: 3850000
       xp_medium: 2550000
       xp_fast: 1700000
-      feat: 1
-      ability: 0
+      feat: true
+      ability: false
     20:
       xp_slow: 5350000
       xp_medium: 3600000
       xp_fast: 2400000
-      feat: 0
-      ability: 1
+      feat: false
+      ability: true
