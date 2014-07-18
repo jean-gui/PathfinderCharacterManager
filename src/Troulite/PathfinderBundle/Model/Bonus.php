@@ -34,11 +34,13 @@ class Bonus
     /**
      * @param object $source
      * @param int $value
+     * @param null $type
      */
-    public function __construct($source, $value)
+    public function __construct($source, $value, $type = null)
     {
         $this->source = $source;
         $this->value  = $value;
+        $this->type = $type;
     }
 
     /**
