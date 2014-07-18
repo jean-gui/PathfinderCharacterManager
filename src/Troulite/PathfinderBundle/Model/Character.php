@@ -677,12 +677,23 @@ class Character
     }
 
     /**
-     * @todo bonuses
+     * Flat-footed AC doesn't take dexterity or dodge bonus
      * @return int
      */
     public function getFlatFootedAc()
     {
-        return 10 +$this->getDefenseBonuses()->ac->getBonus();
+        /** @var $dodgeBonuses Bonus[] */
+        $dodgeBonuses = array_filter(
+            $this->getDefenseBonuses()->ac->getBonuses(),
+            function(Bonus $bonus) {
+                return $bonus->getType() === 'dodge';
+            }
+        );
+        $dodgeBonus = 0;
+        foreach ($dodgeBonuses as $db) {
+            $dodgeBonus += $db->getValue();
+        }
+        return 10 + $this->getDefenseBonuses()->ac->getBonus() - $dodgeBonus;
     }
 
     /**
