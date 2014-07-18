@@ -12,6 +12,11 @@ use Troulite\PathfinderBundle\Entity\Equipment;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
 
+/**
+ * Class LoadCharacterData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
@@ -28,7 +33,11 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setFavoredClass($this->getReference('ranger'))
             ->setExtraPoint('hp')
             ->setAbilities(new Abilities(10, 16, 12, 10, 13, 10))
-            ->setEquipment((new Equipment())->setMainWeapon($this->getReference('longbow +2')));
+            ->setEquipment(
+                (new Equipment())
+                    ->setMainWeapon($this->getReference('longbow +2'))
+                    ->setBody($this->getReference('mithral chain mail +5'))
+            );
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(10)

@@ -9,10 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\MappedSuperclass()
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"weapon" = "Weapon"})
+ * @ORM\DiscriminatorMap({"weapon" = "Weapon", "armor" = "Armor"})
  */
 class Item
 {
@@ -75,7 +74,7 @@ class Item
      *
      * @param string $name
      *
-     * @return Weapon
+     * @return Item
      */
     public function setName($name)
     {
@@ -99,7 +98,7 @@ class Item
      *
      * @param string $description
      *
-     * @return Weapon
+     * @return Item
      */
     public function setDescription($description)
     {
@@ -123,7 +122,7 @@ class Item
      *
      * @param integer $cost
      *
-     * @return Weapon
+     * @return Item
      */
     public function setCost($cost)
     {
@@ -147,7 +146,7 @@ class Item
      *
      * @param double $weight
      *
-     * @return Weapon
+     * @return Item
      */
     public function setWeight($weight)
     {
@@ -171,7 +170,7 @@ class Item
      *
      * @param array $effects
      *
-     * @return Weapon
+     * @return Armor
      */
     public function setEffects($effects)
     {
@@ -195,7 +194,7 @@ class Item
      *
      * @param array $effect
      *
-     * @return Weapon
+     * @return Item
      */
     public function setEffect($effect)
     {
@@ -214,6 +213,9 @@ class Item
         return $this->effects;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
