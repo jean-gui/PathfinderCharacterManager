@@ -84,3 +84,6 @@ fos_user:
           enabled:    true
     group:
         group_class: Troulite\PathfinderBundle\Entity\Group
+    from_email:
+        address:        jean-gui@troulite.fr
+        sender_name:    Pathfinder Character Manager Admin
