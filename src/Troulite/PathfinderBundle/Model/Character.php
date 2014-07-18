@@ -697,6 +697,15 @@ class Character
     }
 
     /**
+     * @return int
+     */
+    public function getInitiative()
+    {
+        return $this->getAbilityModifier($this->getDexterity()) +
+            $this->getAttackBonuses()->initiative->getBonus();
+    }
+
+    /**
      * @param string $ability
      *
      * @return int
