@@ -11,6 +11,8 @@ namespace Troulite\PathfinderBundle\Services;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
+use Troulite\PathfinderBundle\Model\Bonus;
+use Troulite\PathfinderBundle\Model\Bonuses;
 use Troulite\PathfinderBundle\Model\Character;
 
 /**
@@ -84,7 +86,7 @@ class CharacterBonuses
      */
     public function applyFeat(Character $character, Feat $feat)
     {
-        return $this->applyEffects($character, $feat->getEffect());
+        return $this->applyEffects($character, $feat->getEffect(), $feat);
     }
 
     /**
@@ -98,7 +100,7 @@ class CharacterBonuses
     public function applyItem(Character $character, Item $item = null)
     {
         if ($item) {
-            return $this->applyEffects($character, $item->getEffects());
+            return $this->applyEffects($character, $item->getEffects(), $item);
         }
 
         return $character;
@@ -109,246 +111,132 @@ class CharacterBonuses
      *
      * @param Character $character
      * @param array $effects
+     * @param mixed $source
      *
      * @return Character
+     *
+     * @todo Handle bonus type
      */
-    private function applyEffects(Character $character, array $effects)
+    private function applyEffects(Character $character, array $effects, $source)
     {
         foreach ($effects as $stat => $effect) {
-            $bonus = (int)$this->expressionLanguage->evaluate(
+            $value = (int)$this->expressionLanguage->evaluate(
                 $effect,
                 array("c" => $character)
             );
 
+            $type = null;
+            $bonus = new Bonus($source, $value, $type);
+
             switch ($stat) {
                 case 'strength':
                     $character->getBaseCharacter()->getAbilities()->setStrengthBonus(
-                        $character->getBaseCharacter()->getAbilities()->getStrengthBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getStrengthBonus() + $value);
                     break;
                 case 'dexterity':
                     $character->getBaseCharacter()->getAbilities()->setDexterityBonus(
-                        $character->getBaseCharacter()->getAbilities()->getDexterityBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getDexterityBonus() + $value);
                     break;
                 case 'constitution':
                     $character->getBaseCharacter()->getAbilities()->setConstitutionBonus(
-                        $character->getBaseCharacter()->getAbilities()->getConstitutionBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getConstitutionBonus() + $value);
                     break;
                 case 'intelligence':
                     $character->getBaseCharacter()->getAbilities()->setIntelligenceBonus(
-                        $character->getBaseCharacter()->getAbilities()->getIntelligenceBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getIntelligenceBonus() + $value);
                     break;
                 case 'wisdom':
                     $character->getBaseCharacter()->getAbilities()->setWisdomBonus(
-                        $character->getBaseCharacter()->getAbilities()->getWisdomBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getWisdomBonus() + $value);
                     break;
                 case 'charisma':
                     $character->getBaseCharacter()->getAbilities()->setCharismaBonus(
-                        $character->getBaseCharacter()->getAbilities()->getCharismaBonus() + $bonus);
+                        $character->getBaseCharacter()->getAbilities()->getCharismaBonus() + $value);
                     break;
                 case 'fortitude':
-                    $character->setFortitudeBonus($character->getFortitudeBonus() + $bonus);
+                    $character->getDefenseBonuses()->fortitude->add($bonus);
                     break;
                 case 'reflexes':
-                    $character->setReflexesBonus($character->getReflexesBonus() + $bonus);
+                    $character->getDefenseBonuses()->reflexes->add($bonus);
                     break;
                 case 'will':
-                    $character->setWillBonus($character->getWillBonus() + $bonus);
+                    $character->getDefenseBonuses()->will->add($bonus);
                     break;
                 case 'initiative':
-                    $character->setInitiativeBonus($character->getInitiativeBonus() + $bonus);
+                    $character->setInitiativeBonus($character->getInitiativeBonus() + $value);
                     break;
                 case 'ac':
-                    $character->setAcBonus($character->getAcBonus() + $bonus);
+                    $character->getDefenseBonuses()->ac->add($bonus);
                     break;
                 case 'spell-resistance':
-                    $character->setSpellResitanceBonus($character->getSpellResitanceBonus() + $bonus);
+                    $character->getDefenseBonuses()->spellResitance->add($bonus);
                     break;
                 case 'cmb':
-                    $character->setCmbBonus($character->getCmbBonus() + $bonus);
+                    $character->setCmbBonus($character->getCmbBonus() + $value);
                     break;
                 case 'cmd':
-                    $character->setCmdBonus($character->getCmdBonus() + $bonus);
+                    $character->getDefenseBonuses()->setCmdBonus(
+                        $character->getDefenseBonuses()->getCmdBonus() + $value
+                    );
                     break;
                 case 'melee-attack-roll':
-                    $character->setMeleeAttackRollsBonus($character->getMeleeAttackRollsBonus() + $bonus);
+                    $character->getAttackBonuses()->meleeAttackRolls->add($bonus);
                     break;
                 case 'melee-damage-roll':
-                    $character->setMeleeDamageBonus($character->getMeleeDamageBonus() + $bonus);
+                    $character->getAttackBonuses()->meleeDamage->add($bonus);
                     break;
                 case 'melee-attacks':
-                    $character->setMeleeAttacksBonus($character->getMeleeAttacksBonus() + $bonus);
+                    $character->getAttackBonuses()->meleeAttacks->add($bonus);
                     break;
                 case 'ranged-attack-roll':
-                    $character->setRangedAttackRollsBonus($character->getRangedAttackRollsBonus() + $bonus);
+                    $character->getAttackBonuses()->rangedAttackRolls->add($bonus);
                     break;
                 case 'ranged-damage-roll':
-                    $character->setRangedDamageBonus($character->getRangedDamageBonus() + $bonus);
+                    $character->getAttackBonuses()->rangedDamage->add($bonus);
                     break;
                 case 'ranged-attacks':
-                    $character->setRangedAttacksBonus($character->getRangedAttacksBonus() + $bonus);
+                    $character->getAttackBonuses()->rangedAttacks->add($bonus);
                     break;
                 case 'acrobatics':
-                    $character->setSkillBonus('acrobatics', $character->getSkillBonus('acrobatics') + $bonus);
-
-                    break;
                 case 'appraise':
-                    $character->setSkillBonus('appraise', $character->getSkillBonus('appraise') + $bonus);
-
-                    break;
                 case 'bluff':
-                    $character->setSkillBonus('bluff', $character->getSkillBonus('bluff') + $bonus);
-
-                    break;
                 case 'climb':
-                    $character->setSkillBonus('climb', $character->getSkillBonus('climb') + $bonus);
-
-                    break;
                 case 'craft':
-                    $character->setSkillBonus('craft', $character->getSkillBonus('craft') + $bonus);
-
-                    break;
                 case 'diplomacy':
-                    $character->setSkillBonus('diplomacy', $character->getSkillBonus('diplomacy') + $bonus);
-
-                    break;
                 case 'disable-device':
-                    $character->setSkillBonus('disable-device', $character->getSkillBonus('disable-device') + $bonus);
-
-                    break;
                 case 'disguise':
-                    $character->setSkillBonus('disguise', $character->getSkillBonus('disguise') + $bonus);
-
-                    break;
                 case 'escape-artist':
-                    $character->setSkillBonus('escape-artist', $character->getSkillBonus('escape-artist') + $bonus);
-
-                    break;
                 case 'fly':
-                    $character->setSkillBonus('fly', $character->getSkillBonus('fly') + $bonus);
-
-                    break;
                 case 'handle-animal':
-                    $character->setSkillBonus('handle-animal', $character->getSkillBonus('handle-animal') + $bonus);
-
-                    break;
                 case 'heal':
-                    $character->setSkillBonus('heal', $character->getSkillBonus('heal') + $bonus);
-
-                    break;
                 case 'intimidate':
-                    $character->setSkillBonus('intimidate', $character->getSkillBonus('intimidate') + $bonus);
-
-                    break;
                 case 'knowledge-arcana':
-                    $character->setSkillBonus(
-                        'knowledge-arcana',
-                        $character->getSkillBonus('knowledge-arcana') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-dungeoneering':
-                    $character->setSkillBonus(
-                        'knowledge-dungeoneering',
-                        $character->getSkillBonus('knowledge-dungeoneering') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-geography':
-                    $character->setSkillBonus(
-                        'knowledge-geography',
-                        $character->getSkillBonus('knowledge-geography') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-history':
-                    $character->setSkillBonus(
-                        'knowledge-history',
-                        $character->getSkillBonus('knowledge-history') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-local':
-                    $character->setSkillBonus('knowledge-local', $character->getSkillBonus('knowledge-local') + $bonus);
-
-                    break;
                 case 'knowledge-nature':
-                    $character->setSkillBonus(
-                        'knowledge-nature',
-                        $character->getSkillBonus('knowledge-nature') + $bonus
-                    );
-
-                    break;
                 case 'knwoledge-nobility':
-                    $character->setSkillBonus(
-                        'knwoledge-nobility',
-                        $character->getSkillBonus('knwoledge-nobility') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-planes':
-                    $character->setSkillBonus(
-                        'knowledge-planes',
-                        $character->getSkillBonus('knowledge-planes') + $bonus
-                    );
-
-                    break;
                 case 'knowledge-religion':
-                    $character->setSkillBonus(
-                        'knowledge-religion',
-                        $character->getSkillBonus('knowledge-religion') + $bonus
-                    );
-
-                    break;
                 case 'linguistics':
-                    $character->setSkillBonus('linguistics', $character->getSkillBonus('linguistics') + $bonus);
-
-                    break;
                 case 'perception':
-                    $character->setSkillBonus('perception', $character->getSkillBonus('perception') + $bonus);
-
-                    break;
                 case 'perform':
-                    $character->setSkillBonus('perform', $character->getSkillBonus('perform') + $bonus);
-
-                    break;
                 case 'profession':
-                    $character->setSkillBonus('profession', $character->getSkillBonus('profession') + $bonus);
-
-                    break;
                 case 'ride':
-                    $character->setSkillBonus('ride', $character->getSkillBonus('ride') + $bonus);
-
-                    break;
                 case 'sense-motive':
-                    $character->setSkillBonus('sense-motive', $character->getSkillBonus('sense-motive') + $bonus);
-
-                    break;
                 case 'sleight-of-hand':
-                    $character->setSkillBonus('sleight-of-hand', $character->getSkillBonus('sleight-of-hand') + $bonus);
-
-                    break;
                 case 'spellcraft':
-                    $character->setSkillBonus('spellcraft', $character->getSkillBonus('spellcraft') + $bonus);
-
-                    break;
                 case 'stealth':
-                    $character->setSkillBonus('stealth', $character->getSkillBonus('stealth') + $bonus);
-
-                    break;
                 case 'survival':
-                    $character->setSkillBonus('survival', $character->getSkillBonus('survival') + $bonus);
-
-                    break;
                 case 'swim':
-                    $character->setSkillBonus('swim', $character->getSkillBonus('swim') + $bonus);
-
-                    break;
                 case 'use-magic-device':
-                    $character->setSkillBonus(
-                        'use-magic-device',
-                        $character->getSkillBonus('use-magic-device') + $bonus
-                    );
-
+                    if (!array_key_exists($stat, $character->getSkillsBonuses())) {
+                        $character->getSkillsBonuses()[$stat] = new Bonuses();
+                    }
+                    /** @var $bonuses Bonuses */
+                    $bonuses = $character->getSkillsBonuses()[$stat];
+                    $bonuses->add($bonus);
                     break;
                 case 'hp':
                     break;

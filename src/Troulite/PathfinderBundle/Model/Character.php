@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
-use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\Skill;
 
 /**
@@ -28,41 +28,15 @@ class Character
     private $baseCharacter;
 
     /**
-     * @var int
+     * @var AttackBonuses
      */
-    private $fortitudeBonus = 0;
+    private $attackBonuses;
+
     /**
-     * @var int
+     * @var DefenseBonuses
      */
-    private $reflexesBonus = 0;
-    /**
-     * @var int
-     */
-    private $willBonus = 0;
-    /**
-     * @var int
-     */
-    private $rangedAttackRollsBonus = 0;
-    /**
-     * @var int
-     */
-    private $meleeAttackRollsBonus = 0;
-    /**
-     * @var int
-     */
-    private $rangedAttacksBonus = 0;
-    /**
-     * @var int
-     */
-    private $meleeAttacksBonus = 0;
-    /**
-     * @var int
-     */
-    private $rangedDamageBonus = 0;
-    /**
-     * @var int
-     */
-    private $meleeDamageBonus = 0;
+    private $defenseBonuses;
+
     /**
      * @var int
      */
@@ -74,14 +48,6 @@ class Character
     /**
      * @var int
      */
-    private $acBonus = 0;
-    /**
-     * @var int
-     */
-    private $spellResitanceBonus = 0;
-    /**
-     * @var int
-     */
     private $cmbBonus = 0;
     /**
      * @var int
@@ -90,7 +56,7 @@ class Character
     /**
      * @var array
      */
-    private $skillsBonuses = array();
+    private $skillsBonuses;
 
     /**
      * @param BaseCharacter $baseCharacter
@@ -98,6 +64,9 @@ class Character
     public function __construct(BaseCharacter $baseCharacter)
     {
         $this->baseCharacter = $baseCharacter;
+        $this->defenseBonuses = new DefenseBonuses();
+        $this->attackBonuses = new AttackBonuses();
+        $this->skillsBonuses = array();
     }
 
     /**
@@ -106,22 +75,6 @@ class Character
     public function __toString()
     {
         return $this->baseCharacter->__toString();
-    }
-
-    /**
-     * @param int $acBonus
-     */
-    public function setAcBonus($acBonus)
-    {
-        $this->acBonus = $acBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAcBonus()
-    {
-        return $this->acBonus;
     }
 
     /**
@@ -157,38 +110,6 @@ class Character
     }
 
     /**
-     * @param int $cmdBonus
-     */
-    public function setCmdBonus($cmdBonus)
-    {
-        $this->cmdBonus = $cmdBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCmdBonus()
-    {
-        return $this->cmdBonus;
-    }
-
-    /**
-     * @param int $fortitudeBonus
-     */
-    public function setFortitudeBonus($fortitudeBonus)
-    {
-        $this->fortitudeBonus = $fortitudeBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFortitudeBonus()
-    {
-        return $this->fortitudeBonus;
-    }
-
-    /**
      * @param int $hpBonus
      */
     public function setHpBonus($hpBonus)
@@ -221,120 +142,6 @@ class Character
     }
 
     /**
-     * @param int $meleeAttackRollsBonus
-     */
-    public function setMeleeAttackRollsBonus($meleeAttackRollsBonus)
-    {
-        $this->meleeAttackRollsBonus = $meleeAttackRollsBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMeleeAttackRollsBonus()
-    {
-        return $this->meleeAttackRollsBonus;
-    }
-
-    /**
-     * @param int $meleeAttacksBonus
-     */
-    public function setMeleeAttacksBonus($meleeAttacksBonus)
-    {
-        $this->meleeAttacksBonus = $meleeAttacksBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMeleeAttacksBonus()
-    {
-        return $this->meleeAttacksBonus;
-    }
-
-    /**
-     * @param int $meleeDamageBonus
-     * @todo one bonus per attack?
-     */
-    public function setMeleeDamageBonus($meleeDamageBonus)
-    {
-        $this->meleeDamageBonus = $meleeDamageBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMeleeDamageBonus()
-    {
-        return $this->meleeDamageBonus;
-    }
-
-    /**
-     * @param int $rangedAttackRollsBonus
-     * @todo one bonus per attack?
-     */
-    public function setRangedAttackRollsBonus($rangedAttackRollsBonus)
-    {
-        $this->rangedAttackRollsBonus = $rangedAttackRollsBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRangedAttackRollsBonus()
-    {
-        return $this->rangedAttackRollsBonus;
-    }
-
-    /**
-     * @param int $rangedAttacksBonus
-     */
-    public function setRangedAttacksBonus($rangedAttacksBonus)
-    {
-        $this->rangedAttacksBonus = $rangedAttacksBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRangedAttacksBonus()
-    {
-        return $this->rangedAttacksBonus;
-    }
-
-    /**
-     * @param int $rangedDamageBonus
-     */
-    public function setRangedDamageBonus($rangedDamageBonus)
-    {
-        $this->rangedDamageBonus = $rangedDamageBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRangedDamageBonus()
-    {
-        return $this->rangedDamageBonus;
-    }
-
-    /**
-     * @param int $reflexesBonus
-     */
-    public function setReflexesBonus($reflexesBonus)
-    {
-        $this->reflexesBonus = $reflexesBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getReflexesBonus()
-    {
-        return $this->reflexesBonus;
-    }
-
-    /**
      * @param array $skillsBonuses
      */
     public function setSkillsBonuses($skillsBonuses)
@@ -345,41 +152,61 @@ class Character
     /**
      * @return array
      */
-    public function getSkillsBonuses()
+    public function &getSkillsBonuses()
     {
         return $this->skillsBonuses;
     }
 
     /**
-     * @param int $spellResitanceBonus
+     * @param AttackBonuses $attackBonuses
      */
-    public function setSpellResitanceBonus($spellResitanceBonus)
+    public function setAttackBonuses($attackBonuses)
     {
-        $this->spellResitanceBonus = $spellResitanceBonus;
+        $this->attackBonuses = $attackBonuses;
+    }
+
+    /**
+     * @return AttackBonuses
+     */
+    public function getAttackBonuses()
+    {
+        return $this->attackBonuses;
+    }
+
+    /**
+     * @param DefenseBonuses $defenseBonuses
+     *
+     * @return $this
+     */
+    public function setDefenseBonuses(DefenseBonuses $defenseBonuses)
+    {
+        $this->defenseBonuses = $defenseBonuses;
+
+        return $this;
+    }
+
+    /**
+     * @return DefenseBonuses
+     */
+    public function getDefenseBonuses()
+    {
+        return $this->defenseBonuses;
+    }
+
+    /**
+     * @param int $cmdBonus
+     */
+    public function setCmdBonus($cmdBonus)
+    {
+        $this->cmdBonus = $cmdBonus;
     }
 
     /**
      * @return int
      */
-    public function getSpellResitanceBonus()
+    public function getCmdBonus()
     {
-        return $this->spellResitanceBonus;
-    }
-
-    /**
-     * @param int $willBonus
-     */
-    public function setWillBonus($willBonus)
-    {
-        $this->willBonus = $willBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWillBonus()
-    {
-        return $this->willBonus;
+        return $this->cmdBonus;
     }
 
     /**
@@ -431,7 +258,7 @@ class Character
      */
     public function getMeleeDamageRoll()
     {
-        return $this->getMeleeDamageBonus() + $this->getAbilityModifier($this->getStrength());
+        return $this->attackBonuses->meleeDamage->getBonus() + $this->getAbilityModifier($this->getStrength());
     }
 
     /**
@@ -439,7 +266,7 @@ class Character
      */
     public function getRangedDamageRoll()
     {
-        return $this->getRangedDamageBonus();
+        return $this->attackBonuses->rangedDamage->getBonus();
     }
 
     /**
@@ -591,12 +418,12 @@ class Character
 
         switch ($type) {
             case 'ranged':
-                $ar += $this->getRangedAttackRollsBonus();
-                $bonusAttacks = $this->getRangedAttacksBonus();
+                $ar += $this->attackBonuses->rangedAttackRolls->getBonus();
+                $bonusAttacks = $this->attackBonuses->rangedAttacks->getBonus();
                 break;
             case 'melee':
-                $ar += $this->getMeleeAttackRollsBonus();
-                $bonusAttacks = $this->getMeleeAttacksBonus();
+                $ar += $this->attackBonuses->meleeAttackRolls->getBonus();
+                $bonusAttacks = $this->attackBonuses->meleeAttacks->getBonus();
         }
 
         /** @noinspection PhpExpressionResultUnusedInspection */
@@ -619,7 +446,9 @@ class Character
     {
         $bab = 0;
         foreach ($this->getLevelPerClass() as $classLevel) {
-            $bab += $classLevel['class']->getBab()[$classLevel['level'] - 1];
+            /** @var $class ClassDefinition */
+            $class = $classLevel['class'];
+            $bab += $class->getBab()[$classLevel['level'] - 1];
         }
 
         return $bab;
@@ -650,7 +479,7 @@ class Character
      */
     public function getLevelPerClass()
     {
-        /** @var $max Level[] */
+        /** @var $levels array */
         $levels = array();
         foreach ($this->baseCharacter->getLevels() as $level) {
             if(array_key_exists($level->getClassDefinition()->getId(), $levels)) {
@@ -687,7 +516,9 @@ class Character
     {
         $reflexes = 0;
         foreach ($this->getLevelPerClass() as $classLevel) {
-            $reflexes += $classLevel['class']->getReflexes()[$classLevel['level'] - 1];
+            /** @var $class ClassDefinition */
+            $class = $classLevel['class'];
+            $reflexes += $class->getReflexes()[$classLevel['level'] - 1];
         }
 
         return $reflexes;
@@ -702,7 +533,7 @@ class Character
     {
         return $this->getBaseReflexes()
         + $this->getAbilityModifier($this->getDexterity())
-        + $this->getReflexesBonus();
+        + $this->getDefenseBonuses()->reflexes->getBonus();
     }
 
     /**
@@ -714,7 +545,9 @@ class Character
     {
         $fortitude = 0;
         foreach ($this->getLevelPerClass() as $classLevel) {
-            $fortitude += $classLevel['class']->getFortitude()[$classLevel['level'] - 1];
+            /** @var $class ClassDefinition */
+            $class = $classLevel['class'];
+            $fortitude += $class->getFortitude()[$classLevel['level'] - 1];
         }
 
         return $fortitude;
@@ -729,7 +562,7 @@ class Character
     {
         return $this->getBaseFortitude()
         + $this->getAbilityModifier($this->getConstitution())
-        + $this->getFortitudeBonus();
+        + $this->getDefenseBonuses()->fortitude->getBonus();
     }
 
     /**
@@ -741,7 +574,9 @@ class Character
     {
         $will = 0;
         foreach ($this->getLevelPerClass() as $classLevel) {
-            $will += $classLevel['class']->getWill()[$classLevel['level'] - 1];
+            /** @var $class ClassDefinition */
+            $class = $classLevel['class'];
+            $will += $class->getWill()[$classLevel['level'] - 1];
         }
 
         return $will;
@@ -756,7 +591,7 @@ class Character
     {
         return $this->getBaseWill()
         + $this->getAbilityModifier($this->getWisdom())
-        + $this->getWillBonus();
+        + $this->getDefenseBonuses()->will->getBonus();
     }
 
     /**
@@ -804,5 +639,36 @@ class Character
         }
 
         return new ArrayCollection($feats);
+    }
+
+    /**
+     * @todo dexterity modifier limited by armor
+     * @todo bonuses
+     * @return int
+     */
+    public function getAc()
+    {
+        return
+            10 +
+            $this->getAbilityModifier($this->getDexterity()) +
+            $this->getDefenseBonuses()->ac->getBonus();
+    }
+
+    /**
+     * @todo bonuses
+     * @return int
+     */
+    public function getTouchAc()
+    {
+        return 10 + $this->getAbilityModifier($this->getDexterity());
+    }
+
+    /**
+     * @todo bonuses
+     * @return int
+     */
+    public function getFlatFootedAc()
+    {
+        return 10 +$this->getDefenseBonuses()->ac->getBonus();
     }
 }

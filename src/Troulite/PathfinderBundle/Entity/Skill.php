@@ -92,6 +92,17 @@ class Skill
     }
 
     /**
+     * @return string
+     */
+    public function getShortname()
+    {
+        $shortname = preg_replace('/[^a-zA-Z]/', '', $this->getName());
+        $shortname = lcfirst($shortname);
+
+        return $shortname;
+    }
+
+    /**
      * Set untrained
      *
      * @param boolean $untrained
@@ -201,6 +212,9 @@ class Skill
         return $this->classes;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();

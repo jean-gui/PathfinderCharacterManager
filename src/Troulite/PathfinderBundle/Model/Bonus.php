@@ -20,10 +20,16 @@ class Bonus
      * @var object
      */
     private $source;
+
     /**
      * @var int
      */
     private $value;
+
+    /**
+     * @var string
+     */
+    private $type;
 
     /**
      * @param object $source
@@ -49,5 +55,21 @@ class Bonus
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 } 
