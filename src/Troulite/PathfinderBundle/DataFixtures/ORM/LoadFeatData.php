@@ -109,6 +109,24 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($weaponFocus);
         $this->addReference('weapon-focus', $weaponFocus);
 
+        $dodge = new Feat();
+        $dodge
+            ->setName('Dodge')
+            ->setDescription(
+                "Your training and reflexes allow you to react swiftly to avoid an opponents' attacks ."
+            )
+            ->setPassive(true)
+            ->setPrerequisities(
+                array("dexterity" => 13)
+            )
+            ->setEffect(
+                array(
+                    'ac' => ['type' => 'dodge', 'value' => 1]
+                )
+            );
+        $manager->persist($dodge);
+        $this->addReference('dodge', $dodge);
+
         $manager->flush();
     }
 

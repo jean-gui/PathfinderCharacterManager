@@ -375,9 +375,11 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setValue(1);
         $manager->persist($skill);
 
+        // Level 9
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
-            ->setHpRoll(3);
+            ->setHpRoll(3)
+            ->addFeat((new CharacterFeat())->setFeat($this->getReference('dodge'))->setActive(true));
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
             ->setLevel($level)
@@ -415,6 +417,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setValue(1);
         $manager->persist($skill);
 
+        // Level 10
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(8);
