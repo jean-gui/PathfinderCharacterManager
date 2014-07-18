@@ -47,25 +47,17 @@ class Bonuses {
     }
 
     /**
-     * Remove a bonus from the list of bonuses
+     * Remove bonuses from a specific source from the list of bonuses
      *
-     * @param Bonus $bonus
+     * @param mixed $source The source can be pretty much anything (a feat, item, simple string, ...)
      *
      * @return Collection|Bonus[]
      */
-    public function remove(Bonus $bonus)
+    public function remove($source)
     {
-        // Try to find and remove the selected bonus
-        // We can't really rely on object equality as they may be created from different places
         foreach ($this->bonuses as $currentBonus) {
-            if (
-                $currentBonus->getType() === $bonus->getType() &&
-                $currentBonus->getSource() === $bonus->getSource() &&
-                $currentBonus->getValue() === $bonus->getValue()
-            ) {
+            if ($currentBonus->getSource() === $source) {
                 $this->bonuses->remove($currentBonus);
-
-                return $this->bonuses;
             }
         }
 
