@@ -46,6 +46,20 @@ class AttackBonuses
      */
     public $meleeDamage;
 
+    /**
+     * @var Bonuses
+     */
+    public $initiative;
+
+    /**
+     * @var Bonuses
+     */
+    public $cmb;
+
+    /**
+     * @var Bonuses
+     */
+    public $cmd;
 
     /**
      * Create a new AttackBonuses instance
@@ -55,8 +69,13 @@ class AttackBonuses
         $this->meleeAttackRolls = new Bonuses();
         $this->meleeAttacks = new Bonuses();
         $this->meleeDamage = new Bonuses();
+
         $this->rangedAttackRolls = new Bonuses();
         $this->rangedAttacks = new Bonuses();
         $this->rangedDamage = new Bonuses();
+
+        $this->initiative = new Bonuses();
+        $this->cmb = new Bonuses();
+        $this->cmd = new Bonuses();
     }
 } 

@@ -130,28 +130,22 @@ class CharacterBonuses
 
             switch ($stat) {
                 case 'strength':
-                    $character->getBaseCharacter()->getAbilities()->setStrengthBonus(
-                        $character->getBaseCharacter()->getAbilities()->getStrengthBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->strength->add($bonus);
                     break;
                 case 'dexterity':
-                    $character->getBaseCharacter()->getAbilities()->setDexterityBonus(
-                        $character->getBaseCharacter()->getAbilities()->getDexterityBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->dexterity->add($bonus);
                     break;
                 case 'constitution':
-                    $character->getBaseCharacter()->getAbilities()->setConstitutionBonus(
-                        $character->getBaseCharacter()->getAbilities()->getConstitutionBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->constitution->add($bonus);
                     break;
                 case 'intelligence':
-                    $character->getBaseCharacter()->getAbilities()->setIntelligenceBonus(
-                        $character->getBaseCharacter()->getAbilities()->getIntelligenceBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->intelligence->add($bonus);
                     break;
                 case 'wisdom':
-                    $character->getBaseCharacter()->getAbilities()->setWisdomBonus(
-                        $character->getBaseCharacter()->getAbilities()->getWisdomBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->wisdom->add($bonus);
                     break;
                 case 'charisma':
-                    $character->getBaseCharacter()->getAbilities()->setCharismaBonus(
-                        $character->getBaseCharacter()->getAbilities()->getCharismaBonus() + $value);
+                    $character->getBaseCharacter()->getAbilities()->getBonuses()->charisma->add($bonus);
                     break;
                 case 'fortitude':
                     $character->getDefenseBonuses()->fortitude->add($bonus);
@@ -163,7 +157,7 @@ class CharacterBonuses
                     $character->getDefenseBonuses()->will->add($bonus);
                     break;
                 case 'initiative':
-                    $character->setInitiativeBonus($character->getInitiativeBonus() + $value);
+                    $character->getAttackBonuses()->initiative->add($bonus);
                     break;
                 case 'ac':
                     $character->getDefenseBonuses()->ac->add($bonus);
@@ -172,12 +166,10 @@ class CharacterBonuses
                     $character->getDefenseBonuses()->spellResitance->add($bonus);
                     break;
                 case 'cmb':
-                    $character->setCmbBonus($character->getCmbBonus() + $value);
+                    $character->getAttackBonuses()->cmb->add($bonus);
                     break;
                 case 'cmd':
-                    $character->getDefenseBonuses()->setCmdBonus(
-                        $character->getDefenseBonuses()->getCmdBonus() + $value
-                    );
+                    $character->getAttackBonuses()->cmd->add($bonus);
                     break;
                 case 'melee-attack-roll':
                     $character->getAttackBonuses()->meleeAttackRolls->add($bonus);

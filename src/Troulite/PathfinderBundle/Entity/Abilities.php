@@ -10,6 +10,7 @@ namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Troulite\PathfinderBundle\Model\AbilitiesBonuses;
 
 /**
  * Class Abilities
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Abilities
 {
@@ -86,29 +88,9 @@ class Abilities
     private $baseCharisma;
 
     /**
-     * @var int
+     * @var AbilitiesBonuses
      */
-    private $strengthBonus = 0;
-    /**
-     * @var int
-     */
-    private $dexterityBonus = 0;
-    /**
-     * @var int
-     */
-    private $constitutionBonus = 0;
-    /**
-     * @var int
-     */
-    private $intelligenceBonus = 0;
-    /**
-     * @var int
-     */
-    private $wisdomBonus = 0;
-    /**
-     * @var int
-     */
-    private $charismaBonus = 0;
+    private $bonuses;
 
     /**
      * @param $strength
@@ -132,6 +114,16 @@ class Abilities
         $this->baseIntelligence = $intelligence;
         $this->baseWisdom       = $wisdom;
         $this->baseCharisma     = $charisma;
+
+        $this->bonuses = new AbilitiesBonuses();
+    }
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function postLoad()
+    {
+        $this->bonuses = new AbilitiesBonuses();
     }
 
     /**
@@ -289,98 +281,22 @@ class Abilities
     }
 
     /**
-     * @param int $strengthBonus
+     * @return AbilitiesBonuses
      */
-    public function setStrengthBonus($strengthBonus)
+    public function getBonuses()
     {
-        $this->strengthBonus = $strengthBonus;
+        return $this->bonuses;
     }
 
     /**
-     * @return int
+     * @param AbilitiesBonuses $bonuses
+     *
+     * @return $this
      */
-    public function getStrengthBonus()
+    public function setBonuses($bonuses)
     {
-        return $this->strengthBonus;
-    }
+        $this->bonuses = $bonuses;
 
-    /**
-     * @param int $dexterityBonus
-     */
-    public function setDexterityBonus($dexterityBonus)
-    {
-        $this->dexterityBonus = $dexterityBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDexterityBonus()
-    {
-        return $this->dexterityBonus;
-    }
-
-    /**
-     * @param int $constitutionBonus
-     */
-    public function setConstitutionBonus($constitutionBonus)
-    {
-        $this->constitutionBonus = $constitutionBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getConstitutionBonus()
-    {
-        return $this->constitutionBonus;
-    }
-
-    /**
-     * @param int $intelligenceBonus
-     */
-    public function setIntelligenceBonus($intelligenceBonus)
-    {
-        $this->intelligenceBonus = $intelligenceBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIntelligenceBonus()
-    {
-        return $this->intelligenceBonus;
-    }
-
-    /**
-     * @param int $wisdomBonus
-     */
-    public function setWisdomBonus($wisdomBonus)
-    {
-        $this->wisdomBonus = $wisdomBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWisdomBonus()
-    {
-        return $this->wisdomBonus;
-    }
-
-    /**
-     * @param int $charismaBonus
-     */
-    public function setCharismaBonus($charismaBonus)
-    {
-        $this->charismaBonus = $charismaBonus;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCharismaBonus()
-    {
-        return $this->charismaBonus;
+        return $this;
     }
 }
