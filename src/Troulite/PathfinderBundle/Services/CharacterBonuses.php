@@ -121,11 +121,10 @@ class CharacterBonuses
     {
         foreach ($effects as $stat => $effect) {
             $value = (int)$this->expressionLanguage->evaluate(
-                $effect,
+                $effect['value'],
                 array("c" => $character)
             );
-
-            $type = null;
+            $type = $effect['type'];
             $bonus = new Bonus($source, $value, $type);
 
             switch ($stat) {

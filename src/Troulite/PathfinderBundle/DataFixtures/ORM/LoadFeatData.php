@@ -29,8 +29,8 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(false)
             ->setEffect(
                 array(
-                    "ranged-attack-roll" => "-1 - div(c.getBab(), 4)",
-                    "ranged-damage-roll" => "2 + 2 * div(c.getBab(), 4)"
+                    "ranged-attack-roll" => ['type' => null, 'value' => "-1 - div(c.getBab(), 4)"],
+                    "ranged-damage-roll" => ['type' => null, 'value' => "2 + 2 * div(c.getBab(), 4)"]
                 )
             );
         $manager->persist($deadlyAim);
@@ -43,7 +43,7 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(true)
             ->setEffect(
                 array(
-                    "reflexes" => 2
+                    "reflexes" => ['type' => null, 'value' => 2]
                 )
             );
         $manager->persist($lightningReflexes);
@@ -56,7 +56,7 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(true)
             ->setEffect(
                 array(
-                    "will" => 2
+                    "will" => ['type' => null, 'value' => 2]
                 )
             );
         $manager->persist($ironwill);
@@ -69,7 +69,7 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(true)
             ->setEffect(
                 array(
-                    "fortitude" => 2
+                    "fortitude" => ['type' => null, 'value' => 2]
                 )
             );
         $manager->persist($greatFortitude);
@@ -82,8 +82,8 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(false)
             ->setEffect(
                 array(
-                    'ranged-attacks'     => 1,
-                    'ranged-attack-roll' => -2
+                    'ranged-attacks'     => ['type' => null, 'value' => 1],
+                    'ranged-attack-roll' => ['type' => null, 'value' => -2]
                 )
             );
         $manager->persist($rapidShot);
@@ -98,7 +98,7 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(false)
             ->setEffect(
                 array(
-                    'ranged-attack-roll' => 1
+                    'ranged-attack-roll' => ['type' => null, 'value' => 1]
                 )
             )
             ->setWorksIf(
