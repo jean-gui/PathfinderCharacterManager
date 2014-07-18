@@ -238,7 +238,7 @@
             {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
                 {%- set shortname = skill.shortname -%}
                 {%- spaceless -%}
-                    {% set value = ability_tools.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
+                    {% set value = entity.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
                     {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
                         {% set value = value + 3 %}
                     {% endif %}
@@ -257,7 +257,7 @@
                         {{ skill }}
                     </td>
                     <td>{{ value }}</td>
-                    <td>{{ skill.keyAbility }} {{ ability_tools.modifierByAbility(skill.keyAbility, entity) }}</td>
+                    <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
                     <td>{{ entity.skillRank(skill) }}</td>
                     <td>{{ bonus|default(0) }}</td>
                 </tr>

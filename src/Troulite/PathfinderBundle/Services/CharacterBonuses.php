@@ -231,8 +231,10 @@ class CharacterBonuses
                     $bonuses->add($bonus);
                     break;
                 case 'hp':
+                    $character->getHpBonuses()->add($bonus);
                     break;
                 case 'speed':
+                    $character->getSpeedBonuses()->add($bonus);
                     break;
             }
         }

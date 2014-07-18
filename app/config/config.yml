@@ -28,8 +28,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    globals:
-      ability_tools: @troulite_pathfinder.ability_tools
 
 # Assetic Configuration
 assetic:

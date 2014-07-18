@@ -43,14 +43,19 @@ class Character
     private $defenseBonuses;
 
     /**
-     * @var int
+     * @var Bonuses
      */
-    private $hpBonus = 0;
+    private $hpBonuses;
 
     /**
      * @var array
      */
     private $skillsBonuses;
+
+    /**
+     * @var Bonuses
+     */
+    private $speedBonuses;
 
     /**
      * @param BaseCharacter $baseCharacter
@@ -60,7 +65,9 @@ class Character
         $this->baseCharacter = $baseCharacter;
         $this->defenseBonuses = new DefenseBonuses();
         $this->attackBonuses = new AttackBonuses();
+        $this->hpBonuses = new Bonuses();
         $this->skillsBonuses = array();
+        $this->speedBonuses = new Bonuses();
     }
 
     /**
@@ -104,19 +111,23 @@ class Character
     }
 
     /**
-     * @param int $hpBonus
+     * @param Bonuses $hpBonuses
+     *
+     * @return $this
      */
-    public function setHpBonus($hpBonus)
+    public function setHpBonuses(Bonuses $hpBonuses)
     {
-        $this->hpBonus = $hpBonus;
+        $this->hpBonuses = $hpBonuses;
+
+        return $this;
     }
 
     /**
-     * @return int
+     * @return Bonuses
      */
-    public function getHpBonus()
+    public function getHpBonuses()
     {
-        return $this->hpBonus;
+        return $this->hpBonuses;
     }
 
     /**
@@ -447,7 +458,7 @@ class Character
      */
     public function getMaxHp()
     {
-        $hp = 0;
+        $hp = $this->getHpBonuses()->getBonus();
         foreach ($this->baseCharacter->getLevels() as $level) {
             $hp += $level->getHpRoll() + $this->getAbilityModifier($this->getConstitution());
 
@@ -614,6 +625,22 @@ class Character
     }
 
     /**
+     * @param Bonuses $speedBonuses
+     */
+    public function setSpeedBonuses($speedBonuses)
+    {
+        $this->speedBonuses = $speedBonuses;
+    }
+
+    /**
+     * @return Bonuses
+     */
+    public function getSpeedBonuses()
+    {
+        return $this->speedBonuses;
+    }
+
+    /**
      * Return all feats this character possesses
      * @return ArrayCollection|CharacterFeat[]
      */
@@ -656,5 +683,29 @@ class Character
     public function getFlatFootedAc()
     {
         return 10 +$this->getDefenseBonuses()->ac->getBonus();
+    }
+
+    /**
+     * @param string $ability
+     *
+     * @return int
+     */
+    public function getModifierByAbility($ability)
+    {
+        switch ($ability) {
+            case 'strength':
+                return $this->getAbilityModifier($this->getStrength());
+            case 'dexterity':
+                return $this->getAbilityModifier($this->getDexterity());
+            case 'constitution':
+                return $this->getAbilityModifier($this->getConstitution());
+            case 'intelligence':
+                return $this->getAbilityModifier($this->getIntelligence());
+            case 'wisdom':
+                return $this->getAbilityModifier($this->getWisdom());
+            case 'charisma':
+                return $this->getAbilityModifier($this->getCharisma());
+        }
+        return 0;
     }
 }
