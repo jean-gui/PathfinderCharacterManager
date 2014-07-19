@@ -3,8 +3,10 @@
 <head>
     <title>{% block title "Pathfinder Character Manager" %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    {% stylesheets '@CraueFormFlowBundle/Resources/assets/css/buttons.css' %}
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 
     <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
     {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
@@ -52,16 +54,9 @@
         {% endfor %}
     {% endfor %}
 
-    <div class="block">
+    <div class="container">
         {% block content %}{% endblock %}
     </div>
-
-    {% if code is defined %}
-        <h2>Code behind this page</h2>
-        <div class="block">
-            <div class="symfony-content">{{ code|raw }}</div>
-        </div>
-    {% endif %}
 {% endblock %}
 <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
 <script src="{{ asset('js/jquery.js') }}"></script>

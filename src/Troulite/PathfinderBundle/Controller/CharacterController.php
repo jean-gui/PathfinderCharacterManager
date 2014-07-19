@@ -10,12 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\BaseCharacter as BaseCharacter;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\FeatsActivationType;
-use Troulite\PathfinderBundle\Form\LevelType;
+use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Model\Character;
 
 /**
@@ -81,22 +82,21 @@ class CharacterController extends Controller
     public function newAction(Request $request)
     {
         $entity = new BaseCharacter();
-        $entity->addLevel(new Level());
         $form = $this->createCreateForm($entity);
 
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $entity->setUser($this->get('security.context')->getToken()->getUser());
-                // Max HP for first level
-                $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
+                /** @var $token TokenInterface */
+                $token = $this->get('security.context')->getToken();
+                $entity->setUser($token->getUser());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($entity);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('characters_levelup', array('id' => $entity->getId())));
             }
         }
 
@@ -121,6 +121,7 @@ class CharacterController extends Controller
 
         /** @var $needActivationFeats CharacterFeat[] */
         /** @var $passiveFeats CharacterFeat[] */
+        /** @noinspection PhpUnusedParameterInspection */
         list($needActivationFeats, $passiveFeats) = $character->getFeats()->partition(
             function ($key, CharacterFeat $feat) {
                 return !$feat->getFeat()->isPassive() || $feat->getFeat()->hasExternalConditions();
@@ -239,38 +240,54 @@ class CharacterController extends Controller
      * @Route("/{id}/levelup", name="characters_levelup")
      * @Template()
      */
-    public function levelUpAction(BaseCharacter $entity, Request $request)
+    public function levelUpAction(BaseCharacter $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $level = new Level();
         $entity->addLevel($level);
         $character = new Character($entity);
 
-        $form = $this->createForm(
-            new LevelType($this->container->getParameter('character_advancement')),
-            $level
-        );
-        $form->add('submit', 'submit', array('label' => 'Level Up'));
+        /** @var $flow LevelUpFlow */
+        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
+        $flow->bind($level);
 
-        if($request->getMethod() === 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
+        // form of the current step
+        $form = $flow->createForm();
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm();
+            } else {
+                // flow finished
                 // Cleanup empty feats that may have been added by the form
-                foreach($level->getFeats() as $feat) {
-                    if($feat === null || $feat->getFeat() === null) {
+                foreach ($level->getFeats() as $feat) {
+                    if ($feat === null || $feat->getFeat() === null) {
                         $level->removeFeat($feat);
                     }
                 }
+                // Max HP for first level
+                if ($character->getLevel() === 1) {
+                    $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($level);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', $entity . ' is now level ' . $character->getLevel());
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $entity . ' is now level ' . $character->getLevel()
+                );
 
                 return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
             }
         }
 
-        return array('form' => $form->createView());
+        return array(
+            'form' => $form->createView(),
+            'flow' => $flow
+        );
     }
 
     /**

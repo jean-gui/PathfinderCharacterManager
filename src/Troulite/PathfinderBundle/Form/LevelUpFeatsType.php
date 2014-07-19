@@ -7,18 +7,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Repository\FeatRepository;
 
 /**
- * Class LevelType
+ * Class LevelUpFeatsType
  *
  * @package Troulite\PathfinderBundle\Form
  */
-class LevelType extends AbstractType
+class LevelUpFeatsType extends AbstractType
 {
     /**
      * @var
@@ -39,10 +38,6 @@ class LevelType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('classDefinition')
-        ;
-
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
@@ -55,26 +50,6 @@ class LevelType extends AbstractType
                 // First level hpRoll should always be maxed out, so do not add the field in this case
                 if ($level && $character->getLevel() > 1) {
                     $form->add('hpRoll');
-                }
-
-                // Extra ability point
-                if (
-                    $level &&
-                    $character->getLevel() > 0 &&
-                    $this->advancement[$character->getLevel()]['ability']
-                ) {
-                    $form->add(
-                        'extraAbility',
-                        'choice',
-                        array('choices' => array(
-                            Abilities::STRENGTH => mb_convert_case(Abilities::STRENGTH, MB_CASE_TITLE),
-                            Abilities::DEXTERITY => mb_convert_case(Abilities::DEXTERITY, MB_CASE_TITLE),
-                            Abilities::CONSTITUTION => mb_convert_case(Abilities::CONSTITUTION, MB_CASE_TITLE),
-                            Abilities::INTELLIGENCE => mb_convert_case(Abilities::INTELLIGENCE, MB_CASE_TITLE),
-                            Abilities::WISDOM => mb_convert_case(Abilities::WISDOM, MB_CASE_TITLE),
-                            Abilities::CHARISMA => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
-                        ))
-                    );
                 }
 
                 // Racial bonus feats

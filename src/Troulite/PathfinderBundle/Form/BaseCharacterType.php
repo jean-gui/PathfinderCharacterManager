@@ -39,15 +39,6 @@ class BaseCharacterType extends AbstractType
             ->add('favoredClass')
             ->add('extraPoint', 'choice', array('choices' => array('hp' => 'Hit Point', 'skill' => 'Skill')))
             ->add('abilities', new AbilitiesType())
-            ->add(
-                'levels',
-                'collection',
-                array(
-                    'type' => new LevelType($this->advancement),
-                    'options' => array('label' => false),
-                    'label' => false
-                )
-            )
             ->add('equipment', new EquipmentType())
             ->add('party')
         ;

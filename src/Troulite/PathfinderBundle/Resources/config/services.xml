@@ -16,5 +16,11 @@
         <service id="troulite_pathfinder.addcharacterfeat_type" class="%troulite_pathfinder.addcharacterfeat_type.class%">
             <tag name="form.type" alias="addcharacterfeat"/>
         </service>
+        <service id="troulite_pathfinder.form.flow.levelup"
+                 class="Troulite\PathfinderBundle\Form\LevelUpFlow"
+                 parent="craue.form.flow"
+                 scope="request">
+            <argument>%character_advancement%</argument>
+        </service>
     </services>
 </container>

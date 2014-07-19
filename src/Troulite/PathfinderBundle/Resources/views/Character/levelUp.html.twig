@@ -1,17 +1,29 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <div class="container">
-        <h1>Level Up</h1>
-
-        {{ form(form) }}
-
-        <ul class="record_actions">
-            <li>
-                <a href="{{ path('characters') }}">
-                    Back to the list
-                </a>
-            </li>
-        </ul>
+    <h1>Level Up</h1>
+    <div>
+        Steps:
+        {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
     </div>
+    <form method="post" {{ form_enctype(form) }}>
+        {% if flow.currentStepLabel == 'confirmation' %}
+            <dl>
+                <dt>Class</dt>
+                <dd>{{ flow.formData.classDefinition }}</dd>
+                <dt>HP Roll</dt>
+                <dd>{{ flow.formData.hpRoll }}</dd>
+                <dt>Feats</dt>
+                {% for feat in flow.formData.feats %}
+                    <dd>{{ feat.feat }}</dd>
+                {% else %}
+                    <dd>None</dd>
+                {% endfor %}
+            </dl>
+        {% endif %}
+        {{ form_errors(form) }}
+        {{ form_rest(form) }}
+
+        {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
+    </form>
 {% endblock %}
