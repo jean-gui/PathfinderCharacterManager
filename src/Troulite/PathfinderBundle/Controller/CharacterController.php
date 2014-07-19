@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\BaseCharacter as BaseCharacter;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\FeatsActivationType;
@@ -113,13 +114,21 @@ class CharacterController extends Controller
      */
     public function showAction(BaseCharacter $entity, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $character = new Character($entity);
         $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
 
-        $em = $this->getDoctrine()->getManager();
+        /** @var $needActivationFeats CharacterFeat[] */
+        /** @var $passiveFeats CharacterFeat[] */
+        list($needActivationFeats, $passiveFeats) = $character->getFeats()->partition(
+            function ($key, CharacterFeat $feat) {
+                return !$feat->getFeat()->isPassive() || $feat->getFeat()->hasExternalConditions();
+            }
+        );
 
         $featsActivationForm = $this->createForm(new FeatsActivationType());
-        $featsActivationForm->get('feats')->setData($character->getFeats());
+        $featsActivationForm->get('feats')->setData($needActivationFeats);
         $featsActivationForm->handleRequest($request);
 
         if ($featsActivationForm->isValid()) {
@@ -133,7 +142,8 @@ class CharacterController extends Controller
         return array(
             'entity' => $character,
             'feats_activation_form' => $featsActivationForm->createView(),
-            'skills' => $skills
+            'skills' => $skills,
+            'passive_feats' => $passiveFeats
         );
     }
 

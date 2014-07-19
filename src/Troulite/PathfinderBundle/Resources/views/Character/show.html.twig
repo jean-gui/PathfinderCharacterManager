@@ -203,6 +203,7 @@
             </div>
             <div class="col-md-3">
                 <h2 id="feats">Feats</h2>
+                <h3>Activable Feats</h3>
                 {{ form_start(feats_activation_form) }}
                 <table>
                     <thead>
@@ -221,6 +222,12 @@
                     </tbody>
                 </table>
                 {{ form_end(feats_activation_form) }}
+                <h3>Passive Feats</h3>
+                <ul>
+                    {% for feat in passive_feats %}
+                    <li>{{ feat.feat }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
