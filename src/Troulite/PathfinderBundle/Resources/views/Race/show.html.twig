@@ -6,9 +6,9 @@
 
         <h2>Traits</h2>
         <ul>
-            {% for attribute, bonus in entity.traits %}
+            {% for stat, bonus in entity.traits %}
                 {% set value = bonus.value %}
-                <li>{% if value > 0 %}+{% endif %}{{ value }} {{ attribute }}</li>
+                <li>{% if value > 0 %}+{% endif %}{{ value }} {{ stat|replace('_', ' ') }}</li>
             {% endfor %}
         </ul>
         <h2>Actions</h2>
