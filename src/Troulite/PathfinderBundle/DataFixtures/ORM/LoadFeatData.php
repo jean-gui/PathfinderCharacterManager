@@ -7,7 +7,13 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Feat;
 
-class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
+/**
+ * Class LoadFeatData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
+class
+LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -101,7 +107,7 @@ class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     'ranged-attack-roll' => ['type' => null, 'value' => 1]
                 )
             )
-            ->setWorksIf(
+            ->setConditions(
                 array(
                     'weapon-type' => 'longbow'
                 )

@@ -61,7 +61,14 @@ class Feat
      *
      * @ORM\Column(type="json_array", nullable=true)
      */
-    private $worksIf;
+    private $conditions;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $externalConditions;
 
 
     /**
@@ -163,16 +170,19 @@ class Feat
     /**
      * Get effect
      *
-     * @return array
+     * @return string[]
      */
     public function getEffect()
     {
         return $this->effect;
     }
 
+    /**
+     * @return bool
+     */
     public function hasEffects()
     {
-        return $this->getEffect()->count() > 0;
+        return count($this->getEffect()) > 0;
     }
 
     /**
@@ -199,32 +209,59 @@ class Feat
         return $this->prerequisities;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
     /**
-     * Set worksIf
+     * Set conditions
      *
-     * @param array $worksIf
+     * @param array $conditions
      *
      * @return Feat
      */
-    public function setWorksIf($worksIf)
+    public function setConditions($conditions)
     {
-        $this->worksIf = $worksIf;
+        $this->conditions = $conditions;
 
         return $this;
     }
 
     /**
-     * Get worksIf
+     * Get conditions
      *
      * @return array
      */
-    public function getWorksIf()
+    public function getConditions()
     {
-        return $this->worksIf;
+        return $this->conditions;
+    }
+
+    /**
+     * Set external conditions
+     *
+     * @param array $externalConditions
+     *
+     * @return Feat
+     */
+    public function setExternalConditions($externalConditions)
+    {
+        $this->externalConditions = $externalConditions;
+
+        return $this;
+    }
+
+    /**
+     * Get external conditions
+     *
+     * @return array
+     */
+    public function getExternalConditions()
+    {
+        return $this->externalConditions;
     }
 }
