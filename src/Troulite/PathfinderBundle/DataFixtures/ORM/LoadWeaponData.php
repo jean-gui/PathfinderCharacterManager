@@ -7,6 +7,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Weapon;
 
+/**
+ * Class LoadWeaponData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
@@ -18,6 +23,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
         $longbow
             ->setName('Longbow')
             ->setCategory('martial')
+            ->setType('longbow')
             ->setCost(75)
             ->setCritical(3)
             ->setDamages('1d8')
@@ -36,6 +42,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
         $longbow2
             ->setName('Longbow +2')
             ->setCategory('martial')
+            ->setType('longbow')
             ->setCost(75)
             ->setCritical(3)
             ->setDamages('1d8')

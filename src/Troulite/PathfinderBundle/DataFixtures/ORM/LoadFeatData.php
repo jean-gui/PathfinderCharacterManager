@@ -101,7 +101,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setDescription(
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
             )
-            ->setPassive(false)
+            ->setPassive(true)
             ->setEffect(
                 array(
                     'ranged-attack-roll' => ['type' => null, 'value' => 1]
@@ -132,6 +132,25 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             );
         $manager->persist($dodge);
         $this->addReference('dodge', $dodge);
+
+        $pointBlankShot = new Feat();
+        $pointBlankShot
+            ->setName('Point-Blank Shot')
+            ->setDescription(
+                'You are especially accurate when making ranged attacks against close targets.'
+            )
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'ranged-damage-roll' => ['type' => null, 'value' => 1],
+                    'ranged-attack-roll' => ['type' => null, 'value' => 1],
+                )
+            )
+            ->setExternalConditions(
+                array('target-distance' => '< 9')
+            );
+        $manager->persist($pointBlankShot);
+        $this->addReference('pointBlankShot', $pointBlankShot);
 
         $manager->flush();
     }
