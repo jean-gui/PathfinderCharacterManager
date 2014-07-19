@@ -7,6 +7,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
 
+/**
+ * Class LoadClassDefinitionData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
@@ -55,7 +60,16 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('spellcraft'))
             ->addClassSkill($this->getReference('stealth'))
             ->addClassSkill($this->getReference('survival'))
-            ->addClassSkill($this->getReference('swim'));
+            ->addClassSkill($this->getReference('swim'))
+            ->setSpecials(
+                array(
+                    '2' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                    '6' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                    '10' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                    '15' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                    '18' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                )
+            );
 
         $manager->persist($ranger);
         $manager->flush();

@@ -92,6 +92,13 @@ class ClassDefinition
     private $classSkills;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="specials", type="json_array", nullable=true)
+     */
+    private $specials;
+
+    /**
      * Get id
      *
      * @return integer
@@ -124,6 +131,9 @@ class ClassDefinition
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
@@ -329,5 +339,21 @@ class ClassDefinition
     public function getClassSkills()
     {
         return $this->classSkills;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSpecials()
+    {
+        return $this->specials;
+    }
+
+    /**
+     * @param $specials
+     */
+    public function setSpecials($specials)
+    {
+        $this->specials = $specials;
     }
 }
