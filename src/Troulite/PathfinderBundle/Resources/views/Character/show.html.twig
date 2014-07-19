@@ -245,6 +245,8 @@
             </thead>
             <tbody>
             {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
+                {% set value = 0 %}
+                {% set bonus = 0 %}
                 {%- set shortname = skill.shortname -%}
                 {%- spaceless -%}
                     {% set value = entity.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
