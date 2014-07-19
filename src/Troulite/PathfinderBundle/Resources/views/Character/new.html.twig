@@ -4,6 +4,8 @@
     <div class="container">
         <h1>Character creation</h1>
 
+        {{ include('@TroulitePathfinder/partials/ability_scores.html.twig') }}
+
         {{ form(form) }}
 
         <ul class="record_actions">

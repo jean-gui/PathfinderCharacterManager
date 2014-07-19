@@ -100,9 +100,12 @@ class CharacterController extends Controller
             }
         }
 
+        $ability_scores = $this->container->getParameter('ability_scores');
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'ability_scores' => $ability_scores
         );
     }
 
@@ -286,7 +289,7 @@ class CharacterController extends Controller
 
         return array(
             'form' => $form->createView(),
-            'flow' => $flow
+            'flow' => $flow,
         );
     }
 
