@@ -57,9 +57,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Strength")
             ->setTraits(
                 array(
-                    "strength" => [
-                        'type'  => 'racial',
-                        'value' => 2]
+                    "strength" => ['type'  => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
@@ -73,7 +73,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Dexterity")
             ->setTraits(
                 array(
-                    "dexterity" => ['type' => 'racial', 'value' => 2]
+                    "dexterity" => ['type' => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
@@ -87,7 +89,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Constitution")
             ->setTraits(
                 array(
-                    "constitution" => ['type' => 'racial', 'value' => 2]
+                    "constitution" => ['type' => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
@@ -101,7 +105,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Intelligence")
             ->setTraits(
                 array(
-                    "intelligence" => ['type' => 'racial', 'value' => 2]
+                    "intelligence" => ['type' => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
@@ -115,7 +121,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Wisdom")
             ->setTraits(
                 array(
-                    "wisdom" => ['type' => 'racial', 'value' => 2]
+                    "wisdom" => ['type' => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
@@ -129,7 +137,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Human - Charisma")
             ->setTraits(
                 array(
-                    "charisma" => ['type' => 'racial', 'value' => 2]
+                    "charisma" => ['type' => 'racial', 'value' => 2],
+                    "extra_feats_per_level" => ['type' => 'racial', 'value' => 'c.getLevel() === 1 ? 1 : 0'],
+                    "extra_skills_per_level" => ['type' => 'racial', 'value' => '1']
                 )
             );
 
