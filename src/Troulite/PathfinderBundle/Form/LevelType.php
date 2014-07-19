@@ -49,6 +49,7 @@ class LevelType extends AbstractType
                 /** @var $level Level */
                 $level = $event->getData();
                 $character = $level->getCharacter();
+                $class = $level->getClassDefinition();
                 $form  = $event->getForm();
 
                 // First level hpRoll should always be maxed out, so do not add the field in this case
@@ -86,6 +87,24 @@ class LevelType extends AbstractType
                         $effect['value'],
                         array("c" => $character)
                     );
+                    while ($value > 0) {
+                        $level->addFeat(new CharacterFeat());
+                        $value--;
+                    }
+                }
+
+                // Class bonus feats
+                if (
+                    $class && $class->getSpecials() &&
+                    array_key_exists($character->getLevel(), $class->getSpecials()) &&
+                    array_key_exists('extra_feats', $class->getSpecials()[$character->getLevel()])
+                ) {
+                    $effect = $class->getSpecials()[$character->getLevel()]['extra_feats'];
+                    $value  = (int)(new ExpressionLanguage())->evaluate(
+                        $effect['value'],
+                        array("c" => $character)
+                    );
+
                     while ($value > 0) {
                         $level->addFeat(new CharacterFeat());
                         $value--;
