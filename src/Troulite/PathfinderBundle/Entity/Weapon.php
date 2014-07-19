@@ -20,6 +20,13 @@ class Weapon extends Item
     private $category;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=false)
+     */
+    private $type;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="dual_wield", type="boolean", nullable=false)
@@ -71,6 +78,30 @@ class Weapon extends Item
     }
 
     /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Weapon
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Set range
      *
      * @param string $range
@@ -93,6 +124,11 @@ class Weapon extends Item
         return $this->range;
     }
 
+    /**
+     * @param $damages
+     *
+     * @return $this
+     */
     public function setDamages($damages)
     {
         $this->damages = $damages;
