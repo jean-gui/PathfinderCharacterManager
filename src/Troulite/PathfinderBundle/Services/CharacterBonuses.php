@@ -8,6 +8,7 @@
 
 namespace Troulite\PathfinderBundle\Services;
 
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
@@ -68,12 +69,38 @@ class CharacterBonuses
     public function applyFeats(Character $character)
     {
         foreach ($character->getFeats() as $feat) {
-            if ($feat->isActive()) {
+            if ($this->isApplicable($feat)) {
                 $this->applyFeat($character, $feat->getFeat());
             }
         }
 
         return $character;
+    }
+
+    /**
+     * Return whether a feat's bonuses can be applied
+     *
+     * @param CharacterFeat $characterFeat
+     *
+     * @return bool
+     */
+    private function isApplicable(CharacterFeat $characterFeat)
+    {
+        $character = $characterFeat->getCharacter();
+        $feat = $characterFeat->getFeat();
+
+        foreach ($feat->getConditions() as $type => $condition) {
+            switch($type) {
+                case 'weapon-type':
+                    $weapon = $character->getEquipment()->getMainWeapon();;
+                    if (!$weapon || $weapon->getType() !== $condition) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+
+        return ($feat->isPassive() && !$feat->hasExternalConditions()) || $characterFeat->isActive();
     }
 
     /**
