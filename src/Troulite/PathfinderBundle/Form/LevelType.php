@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Repository\FeatRepository;
 
 /**
@@ -44,19 +46,21 @@ class LevelType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
+                /** @var $level Level */
                 $level = $event->getData();
+                $character = $level->getCharacter();
                 $form  = $event->getForm();
 
                 // First level hpRoll should always be maxed out, so do not add the field in this case
-                if ($level && $level->getCharacter()->getLevel() > 1) {
+                if ($level && $character->getLevel() > 1) {
                     $form->add('hpRoll');
                 }
 
                 // Extra ability point
                 if (
                     $level &&
-                    $level->getCharacter()->getLevel() > 0 &&
-                    $this->advancement[$level->getCharacter()->getLevel()]['ability']
+                    $character->getLevel() > 0 &&
+                    $this->advancement[$character->getLevel()]['ability']
                 ) {
                     $form->add(
                         'extraAbility',
@@ -72,14 +76,32 @@ class LevelType extends AbstractType
                     );
                 }
 
+                // Racial bonus feats
+                if (
+                    $character->getRace() &&
+                    array_key_exists('extra_feats_per_level', $character->getRace()->getTraits())
+                ) {
+                    $effect = $character->getRace()->getTraits()['extra_feats_per_level'];
+                    $value = (int)(new ExpressionLanguage())->evaluate(
+                        $effect['value'],
+                        array("c" => $character)
+                    );
+                    while ($value > 0) {
+                        $level->addFeat(new CharacterFeat());
+                        $value--;
+                    }
+                }
+
                 // Extra feat
                 if (
                     $level &&
-                    $level->getCharacter()->getLevel() > 0 &&
-                    $this->advancement[$level->getCharacter()->getLevel()]['feat']
+                    $character->getLevel() > 0 &&
+                    $this->advancement[$character->getLevel()]['feat']
                 ) {
                     $level->addFeat(new CharacterFeat());
+                }
 
+                if ($level->getFeats()->count() > 0) {
                     $form->add(
                         'feats',
                         'collection',
@@ -88,8 +110,8 @@ class LevelType extends AbstractType
                             'type' => 'addcharacterfeat',
                             'options' => array(
                                 'class' => 'TroulitePathfinderBundle:Feat',
-                                'query_builder' => function (FeatRepository $er) use ($level) {
-                                        return $er->queryAvailableFor($level->getCharacter());
+                                'query_builder' => function (FeatRepository $er) use ($character) {
+                                        return $er->queryAvailableFor($character);
                                 },
                                 'label' => false,
                                 'required' => false,
