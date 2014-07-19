@@ -264,4 +264,12 @@ class Feat
     {
         return $this->externalConditions;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasExternalConditions()
+    {
+        return count($this->externalConditions) > 0;
+    }
 }
