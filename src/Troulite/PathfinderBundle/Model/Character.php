@@ -249,10 +249,6 @@ class Character
      */
     public function getStrength()
     {
-        $racialBonus = 0;
-        if (array_key_exists("strength", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["strength"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::STRENGTH) {
@@ -263,7 +259,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseStrength() +
             $this->baseCharacter->getAbilities()->getBonuses()->strength->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 
@@ -274,10 +269,6 @@ class Character
      */
     public function getDexterity()
     {
-        $racialBonus = 0;
-        if (array_key_exists("dexterity", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["dexterity"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::DEXTERITY) {
@@ -288,7 +279,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseDexterity() +
             $this->baseCharacter->getAbilities()->getBonuses()->dexterity->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 
@@ -299,10 +289,6 @@ class Character
      */
     public function getConstitution()
     {
-        $racialBonus = 0;
-        if (array_key_exists("constitution", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["constitution"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::CONSTITUTION) {
@@ -313,7 +299,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseConstitution() +
             $this->baseCharacter->getAbilities()->getBonuses()->constitution->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 
@@ -324,10 +309,6 @@ class Character
      */
     public function getIntelligence()
     {
-        $racialBonus = 0;
-        if (array_key_exists("intelligence", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["intelligence"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::INTELLIGENCE) {
@@ -338,7 +319,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseIntelligence() +
             $this->baseCharacter->getAbilities()->getBonuses()->intelligence->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 
@@ -349,10 +329,6 @@ class Character
      */
     public function getWisdom()
     {
-        $racialBonus = 0;
-        if (array_key_exists("wisdom", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["wisdom"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::WISDOM) {
@@ -363,7 +339,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseWisdom() +
             $this->baseCharacter->getAbilities()->getBonuses()->wisdom->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 
@@ -374,10 +349,6 @@ class Character
      */
     public function getCharisma()
     {
-        $racialBonus = 0;
-        if (array_key_exists("charisma", $this->baseCharacter->getRace()->getModifiers())) {
-            $racialBonus = $this->baseCharacter->getRace()->getModifiers()["charisma"];
-        }
         $levelBonus = 0;
         foreach ($this->baseCharacter->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::CHARISMA) {
@@ -388,7 +359,6 @@ class Character
         return
             $this->baseCharacter->getAbilities()->getBaseCharisma() +
             $this->baseCharacter->getAbilities()->getBonuses()->charisma->getBonus() +
-            $racialBonus +
             $levelBonus;
     }
 

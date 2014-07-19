@@ -43,6 +43,7 @@ class CharacterBonuses
      */
     public function applyAll(Character $character)
     {
+        $this->applyRace($character);
         $this->applyFeats($character);
         $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getMainWeapon());
         $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getOffhandWeapon());
@@ -60,13 +61,26 @@ class CharacterBonuses
     }
 
     /**
+     * Apply racial traits to a character
+     * @param Character $character
+     */
+    private function applyRace(Character $character)
+    {
+        $this->applyEffects(
+            $character,
+            $character->getBaseCharacter()->getRace()->getTraits(),
+            $character->getBaseCharacter()->getRace()
+        );
+    }
+
+    /**
      * Apply all active feats to a character
      *
      * @param Character $character
      *
      * @return Character
      */
-    public function applyFeats(Character $character)
+    private function applyFeats(Character $character)
     {
         foreach ($character->getFeats() as $feat) {
             if ($this->isApplicable($feat)) {
@@ -111,7 +125,7 @@ class CharacterBonuses
      *
      * @return Character
      */
-    public function applyFeat(Character $character, Feat $feat)
+    private function applyFeat(Character $character, Feat $feat)
     {
         return $this->applyEffects($character, $feat->getEffect(), $feat);
     }
@@ -124,7 +138,7 @@ class CharacterBonuses
      *
      * @return Character
      */
-    public function applyItem(Character $character, Item $item = null)
+    private function applyItem(Character $character, Item $item = null)
     {
         if ($item) {
             return $this->applyEffects($character, $item->getEffects(), $item);

@@ -7,6 +7,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Race;
 
+/**
+ * Class LoadRaceData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
@@ -17,11 +22,12 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $elf = new Race();
         $elf
             ->setName("Elf")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "dexterity" => 2,
-                    "intelligence" => 2,
-                    "constitution" => -2
+                    "dexterity" => ['type' => 'racial', 'value' => 2],
+                    "intelligence" => ['type' => 'racial', 'value' => 2],
+                    "constitution" => ['type' => 'racial', 'value' => 2],
+                    "perception" => ['type' => 'racial', 'value' => 2],
                 )
             );
 
@@ -33,11 +39,11 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfling = new Race();
         $halfling
             ->setName("Halfling")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "dexterity" => 2,
-                    "charisma" => 2,
-                    "strength" => -2
+                    "dexterity" => ['type'  => 'racial', 'value' => 2],
+                    "charisma" => ['type'  => 'racial', 'value' => 2],
+                    "strength" => ['type' => 'racial', 'value' => -2]
                 )
             );
 
@@ -49,9 +55,11 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Strength")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "strength" => 2
+                    "strength" => [
+                        'type'  => 'racial',
+                        'value' => 2]
                 )
             );
 
@@ -63,9 +71,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Dexterity")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "dexterity" => 2
+                    "dexterity" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -77,9 +85,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Constitution")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "constitution" => 2
+                    "constitution" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -91,9 +99,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Intelligence")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "intelligence" => 2
+                    "intelligence" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -105,9 +113,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Wisdom")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "wisdom" => 2
+                    "wisdom" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -119,9 +127,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $human = new Race();
         $human
             ->setName("Human - Charisma")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "charisma" => 2
+                    "charisma" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -133,11 +141,15 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $dwarf = new Race();
         $dwarf
             ->setName("Dwarf")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "constitution" => 2,
-                    "wisdom" => 2,
-                    "charisma" => -2
+                    "constitution" => [
+                        'type'  => 'racial',
+                        'value' => 2],
+                    "wisdom" => [
+                        'type'  => 'racial',
+                        'value' => 2],
+                    "charisma" => ['type' => 'racial', 'value' => -2]
                 )
             );
 
@@ -149,11 +161,15 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $gnome = new Race();
         $gnome
             ->setName("Gnome")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "constitution" => 2,
-                    "strength" => -2,
-                    "charisma" => 2
+                    "constitution" => [
+                        'type'  => 'racial',
+                        'value' => 2],
+                    "strength" => [
+                        'type'  => 'racial',
+                        'value' => -2],
+                    "charisma" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -165,9 +181,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Strength")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "strength" => 2
+                    "strength" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -179,9 +195,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Dexterity")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "dexterity" => 2
+                    "dexterity" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -193,9 +209,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Constitution")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "constitution" => 2
+                    "constitution" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -207,9 +223,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Intelligence")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "intelligence" => 2
+                    "intelligence" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -221,9 +237,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Wisdom")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "wisdom" => 2
+                    "wisdom" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -235,9 +251,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halfelf = new Race();
         $halfelf
             ->setName("Half-elf - Charisma")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "charisma" => 2
+                    "charisma" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -249,9 +265,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Strength")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "strength" => 2
+                    "strength" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -263,9 +279,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Dexterity")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "dexterity" => 2
+                    "dexterity" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -277,9 +293,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Constitution")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "constitution" => 2
+                    "constitution" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -291,9 +307,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Intelligence")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "intelligence" => 2
+                    "intelligence" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -305,9 +321,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Wisdom")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "wisdom" => 2
+                    "wisdom" => ['type' => 'racial', 'value' => 2]
                 )
             );
 
@@ -319,9 +335,9 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
         $halforc = new Race();
         $halforc
             ->setName("Half-orc - Charisma")
-            ->setModifiers(
+            ->setTraits(
                 array(
-                    "charisma" => 2
+                    "charisma" => ['type' => 'racial', 'value' => 2]
                 )
             );
 

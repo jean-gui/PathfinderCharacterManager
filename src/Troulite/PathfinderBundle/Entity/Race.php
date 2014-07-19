@@ -32,9 +32,9 @@ class Race
     /**
      * @var array
      *
-     * @ORM\Column(type="json_array")
+     * @ORM\Column(type="json_array", nullable=true)
      */
-    private $modifiers;
+    private $traits;
 
     /**
      * Get id
@@ -69,31 +69,35 @@ class Race
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
     }
 
     /**
-     * Set modifiers
+     * Set traits
      *
-     * @param array $modifiers
+     * @param array $traits
+     *
      * @return Race
      */
-    public function setModifiers($modifiers)
+    public function setTraits($traits)
     {
-        $this->modifiers = $modifiers;
+        $this->traits = $traits;
 
         return $this;
     }
 
     /**
-     * Get modifiers
+     * Get traits
      *
      * @return array
      */
-    public function getModifiers()
+    public function getTraits()
     {
-        return $this->modifiers;
+        return $this->traits;
     }
 }

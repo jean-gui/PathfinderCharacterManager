@@ -4,9 +4,10 @@
     <div class="container">
         <h1>{{ entity.name }}</h1>
 
-        <h2>Modifiers</h2>
+        <h2>Traits</h2>
         <ul>
-            {% for attribute, value in entity.modifiers %}
+            {% for attribute, bonus in entity.traits %}
+                {% set value = bonus.value %}
                 <li>{% if value > 0 %}+{% endif %}{{ value }} {{ attribute }}</li>
             {% endfor %}
         </ul>
