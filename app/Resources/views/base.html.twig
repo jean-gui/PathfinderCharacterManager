@@ -3,11 +3,15 @@
 <head>
     <title>{% block title "Pathfinder Character Manager" %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% stylesheets '@CraueFormFlowBundle/Resources/assets/css/buttons.css' %}
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    {% stylesheets
+        '@CraueFormFlowBundle/Resources/assets/css/buttons.css'
+        '@TroulitePathfinderBundle/Resources/public/css/flow_steps.css'
+        '@TroulitePathfinderBundle/Resources/public/css/flow_skills.css'
+    %}
         <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
-
+    {% block stylesheets %}{% endblock stylesheets %}
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
     {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 </head>

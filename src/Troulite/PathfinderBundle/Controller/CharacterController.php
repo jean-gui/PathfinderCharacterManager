@@ -253,6 +253,13 @@ class CharacterController extends Controller
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
         $flow->bind($level);
 
+        // Cleanup empty feats that may have been added by the form
+        foreach ($level->getFeats() as $feat) {
+            if ($feat === null || $feat->getFeat() === null) {
+                $level->removeFeat($feat);
+            }
+        }
+
         // form of the current step
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
@@ -263,12 +270,14 @@ class CharacterController extends Controller
                 $form = $flow->createForm();
             } else {
                 // flow finished
-                // Cleanup empty feats that may have been added by the form
-                foreach ($level->getFeats() as $feat) {
-                    if ($feat === null || $feat->getFeat() === null) {
-                        $level->removeFeat($feat);
+
+                // Cleanup empty skills as well
+                foreach ($level->getSkills() as $levelSkill) {
+                    if ($levelSkill->getValue() === 0) {
+                        $level->removeSkill($levelSkill);
                     }
                 }
+
                 // Max HP for first level
                 if ($character->getLevel() === 1) {
                     $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());

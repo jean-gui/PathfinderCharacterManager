@@ -37,7 +37,7 @@ class FeatRepository extends EntityRepository
 
         $qb = $this->_em->createQueryBuilder()->select('f')->from('TroulitePathfinderBundle:Feat', 'f');
         foreach ($characterFeats as $characterFeat) {
-            if ($characterFeat->getFeat()) {
+            if ($characterFeat->getFeat() && $characterFeat->getId()) {
                 $feats[] = $characterFeat->getFeat()->getId();
             }
         }

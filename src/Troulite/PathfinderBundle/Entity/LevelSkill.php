@@ -45,7 +45,19 @@ class LevelSkill
      *
      * @ORM\Column(type="integer")
      */
-    private $value = 1;
+    private $value = 0;
+
+    /**
+     * @param Level $level
+     * @param Skill $skill
+     * @param int $value
+     */
+    public function __construct(Level $level = null, Skill $skill = null, $value = 0)
+    {
+        $this->level = $level;
+        $this->skill = $skill;
+        $this->value = $value;
+    }
 
     /**
      * Get id

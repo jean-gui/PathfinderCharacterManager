@@ -1,29 +1,65 @@
 {% extends '::base.html.twig' %}
 
+{% form_theme form _self %}
+
 {% block content -%}
     <h1>Level Up</h1>
-    <div>
-        Steps:
+    <div class=wizard">
         {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
     </div>
     <form method="post" {{ form_enctype(form) }}>
-        {% if flow.currentStepLabel == 'confirmation' %}
+        {% if flow.currentStepLabel == 'Skills' %}
+
+        {% elseif flow.currentStepLabel == 'Confirmation' %}
             <dl>
                 <dt>Class</dt>
                 <dd>{{ flow.formData.classDefinition }}</dd>
                 <dt>HP Roll</dt>
                 <dd>{{ flow.formData.hpRoll }}</dd>
                 <dt>Feats</dt>
-                {% for feat in flow.formData.feats %}
+                {% for feat in flow.formData.feats if feat.feat is defined %}
                     <dd>{{ feat.feat }}</dd>
                 {% else %}
                     <dd>None</dd>
                 {% endfor %}
             </dl>
         {% endif %}
+
         {{ form_errors(form) }}
         {{ form_rest(form) }}
 
         {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
     </form>
 {% endblock %}
+
+{% block _troulite_pathfinderbundle_level_skills_widget %}
+    {% spaceless %}
+        <table {{ block('widget_container_attributes') }}>
+            <thead>
+            <tr>
+                <th>Skill</th>
+                <th>Current Value</th>
+                <th>Increment</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{ block('collection_rows') }}
+            </tbody>
+        </table>
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock _troulite_pathfinderbundle_level_skills_widget %}
+
+{% block collection_rows %}
+    {% spaceless %}
+        {{ form_errors(form) }}
+        {% for child in form %}
+            <tr>
+                <td>{{ child.vars.value.skill }}</td>
+                {# Here we subtract the value that was set in a previous submit (necessary if back button is used) #}
+                <td>{{ child.parent.parent.vars.character.skillRank(child.vars.value.skill) - child.vars.value.value }}</td>
+                <td>{{ form_row(child, {'attr':{'class':'collection-item' }}) }}</td>
+            </tr>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock collection_rows %}

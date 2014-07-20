@@ -10,6 +10,7 @@ namespace Troulite\PathfinderBundle\Form;
 
 
 use Craue\FormFlowBundle\Form\FormFlow;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Class LevelUpFlow
@@ -19,16 +20,23 @@ use Craue\FormFlowBundle\Form\FormFlow;
 class LevelUpFlow extends FormFlow
 {
     /**
-     * @var
+     * @var array
      */
     private $advancement;
 
     /**
-     * @param $advancement
+     * @var EntityManager
      */
-    public function __construct($advancement)
+    private $em;
+
+    /**
+     * @param array $advancement
+     * @param EntityManager $em
+     */
+    public function __construct($advancement, EntityManager $em)
     {
         $this->advancement = $advancement;
+        $this->em = $em;
     }
 
     /**
@@ -36,7 +44,7 @@ class LevelUpFlow extends FormFlow
      */
     public function getName()
     {
-        return 'createVehicle';
+        return 'levelUp';
     }
 
     /**
@@ -46,15 +54,19 @@ class LevelUpFlow extends FormFlow
     {
         return array(
             array(
-                'label' => 'base',
+                'label' => 'Base',
                 'type'  => new LevelUpClassType($this->advancement),
             ),
             array(
-                'label' => 'feats',
+                'label' => 'Feats',
                 'type'  => new LevelUpFeatsType($this->advancement),
             ),
             array(
-                'label' => 'confirmation',
+                'label' => 'Skills',
+                'type'  => new LevelUpSkillsType($this->em),
+            ),
+            array(
+                'label' => 'Confirmation',
             ),
         );
     }

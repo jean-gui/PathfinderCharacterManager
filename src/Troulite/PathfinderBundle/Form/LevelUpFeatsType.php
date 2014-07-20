@@ -52,6 +52,8 @@ class LevelUpFeatsType extends AbstractType
                     $form->add('hpRoll');
                 }
 
+                $featsToAdd = -$level->getFeats()->count();
+
                 // Racial bonus feats
                 if (
                     $character->getRace() &&
@@ -63,7 +65,7 @@ class LevelUpFeatsType extends AbstractType
                         array("c" => $character)
                     );
                     while ($value > 0) {
-                        $level->addFeat(new CharacterFeat());
+                        $featsToAdd++;
                         $value--;
                     }
                 }
@@ -81,7 +83,7 @@ class LevelUpFeatsType extends AbstractType
                     );
 
                     while ($value > 0) {
-                        $level->addFeat(new CharacterFeat());
+                        $featsToAdd++;
                         $value--;
                     }
                 }
@@ -92,7 +94,12 @@ class LevelUpFeatsType extends AbstractType
                     $character->getLevel() > 0 &&
                     $this->advancement[$character->getLevel()]['feat']
                 ) {
+                    $featsToAdd++;
+                }
+
+                while ($featsToAdd > 0) {
                     $level->addFeat(new CharacterFeat());
+                    $featsToAdd--;
                 }
 
                 if ($level->getFeats()->count() > 0) {

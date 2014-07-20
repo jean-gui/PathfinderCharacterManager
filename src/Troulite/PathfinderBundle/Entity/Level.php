@@ -66,7 +66,7 @@ class Level
     /**
      * @var Collection|LevelSkill[]
      *
-     * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level")
+     * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level", cascade={"all"})
      */
     private $skills;
 
@@ -162,7 +162,7 @@ class Level
     }
 
     /**
-     * Add skills
+     * Add a skill or its value if this level already has that skill
      *
      * @param LevelSkill $skill
      *
@@ -170,8 +170,20 @@ class Level
      */
     public function addSkill(LevelSkill $skill)
     {
-        $skill->setLevel($this);
-        $this->skills[] = $skill;
+        $matchingSkill = null;
+        foreach ($this->getSkills() as $ls) {
+            if ($ls->getSkill() === $skill->getSkill()) {
+                $matchingSkill = $ls;
+                break;
+            }
+        }
+
+        if ($matchingSkill) {
+            $matchingSkill->setValue($matchingSkill->getValue() + $skill->getValue());
+        } else {
+            $skill->setLevel($this);
+            $this->skills[] = $skill;
+        }
 
         return $this;
     }
