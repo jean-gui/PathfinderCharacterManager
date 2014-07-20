@@ -11,6 +11,7 @@ namespace Troulite\PathfinderBundle\Services;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
@@ -106,11 +107,18 @@ class CharacterBonuses
         foreach ($feat->getConditions() as $type => $condition) {
             switch($type) {
                 case 'weapon-type':
-                    $weapon = $character->getEquipment()->getMainWeapon();;
+                    $weapon = $character->getEquipment()->getMainWeapon();
                     if (!$weapon || $weapon->getType() !== $condition) {
                         return false;
                     }
                     break;
+                case 'equipped':
+                    $mainHand = $character->getEquipment()->getMainWeapon();
+                    $offHand  = $character->getEquipment()->getOffhandWeapon();
+                    switch ($condition) {
+                        case 'shield':
+                            return $mainHand instanceof Shield or $offHand instanceof Shield;
+                    }
             }
         }
 
