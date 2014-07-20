@@ -24,11 +24,14 @@
     <h1>
         {{ entity }}
         <small>
-            <a href="{{ path('characters_edit', {'id': entity.baseCharacter.id}) }}"><span
-                        class="glyphicon glyphicon-edit"></span></a>
             Level {{ entity.level }}
             <a href="{{ path('races_show', {'id': entity.baseCharacter.race.id}) }}">{{ entity.baseCharacter.race }}</a>
             <a href="{{ path('classes_show', {'id': entity.baseCharacter.favoredClass.id}) }}">{{ entity.baseCharacter.favoredClass }}</a>
+            <a href="{{ path('characters_edit', {'id': entity.baseCharacter.id}) }}"><span
+                        class="glyphicon glyphicon-edit"></span></a>
+            <a href="{{ path('characters_levelup', { 'id': entity.baseCharacter.id }) }}" title="Level Up">
+                <span class="glyphicon glyphicon-plus glyphicon-"></span>
+            </a>
         </small>
     </h1>
     <div class="tab-content">
