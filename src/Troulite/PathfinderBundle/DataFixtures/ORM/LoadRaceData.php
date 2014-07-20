@@ -26,7 +26,7 @@ class LoadRaceData extends AbstractFixture implements OrderedFixtureInterface
                 array(
                     "dexterity" => ['type' => 'racial', 'value' => 2],
                     "intelligence" => ['type' => 'racial', 'value' => 2],
-                    "constitution" => ['type' => 'racial', 'value' => 2],
+                    "constitution" => ['type' => 'racial', 'value' => -2],
                     "perception" => ['type' => 'racial', 'value' => 2],
                 )
             );
