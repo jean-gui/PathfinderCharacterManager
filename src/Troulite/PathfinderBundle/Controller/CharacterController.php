@@ -248,6 +248,7 @@ class CharacterController extends Controller
         $level = new Level();
         $entity->addLevel($level);
         $character = new Character($entity);
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
 
         /** @var $flow LevelUpFlow */
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
@@ -299,6 +300,7 @@ class CharacterController extends Controller
         return array(
             'form' => $form->createView(),
             'flow' => $flow,
+            'entity' => $character
         );
     }
 
