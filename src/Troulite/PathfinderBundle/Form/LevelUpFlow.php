@@ -58,6 +58,10 @@ class LevelUpFlow extends FormFlow
                 'type'  => new LevelUpClassType($this->advancement),
             ),
             array(
+                'label' => 'Class Summary',
+                'type'  => new LevelUpClassSummaryHpType(),
+            ),
+            array(
                 'label' => 'Feats',
                 'type'  => new LevelUpFeatsType($this->advancement),
             ),

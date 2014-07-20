@@ -8,8 +8,27 @@
         {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
     </div>
     <form method="post" {{ form_enctype(form) }}>
-        {% if flow.currentStepLabel == 'Skills' %}
-
+        {% if flow.currentStepLabel == 'Class Summary' %}
+            {% if
+                attribute(form.vars.value.classDefinition.specials, entity.level(form.vars.value.classDefinition)) is defined
+                and attribute(form.vars.value.classDefinition.specials, entity.level(form.vars.value.classDefinition))|length > 0
+            %}
+                <p>At this level, the {{ form.vars.value.classDefinition }} class will give {{ entity }} the following bonuses:</p>
+                <dl>
+                {% for key, special in attribute(form.vars.value.classDefinition.specials, entity.level(form.vars.value.classDefinition)) %}
+                    <dt>{{ key|replace('_', ' ')|capitalize }}</dt>
+                    <dd>{{ special.value|capitalize }}</dd>
+                {% endfor %}
+                </dl>
+                <p>
+                    Note that some of these bonuses may have restrictions that are not taken into account by the tool.
+                    Make sure to respect these limitations.
+                </p>
+            {% endif %}
+        {% elseif flow.currentStepLabel == 'Skills' %}
+        <p>
+            {{ entity }} has {{ entity.availableSkillPoints }} available skill points.
+        </p>
         {% elseif flow.currentStepLabel == 'Confirmation' %}
             <dl>
                 <dt>Class</dt>
