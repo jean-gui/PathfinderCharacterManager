@@ -449,13 +449,16 @@ class Character
         /** @var $levels array */
         $levels = array();
         foreach ($this->baseCharacter->getLevels() as $level) {
-            if(array_key_exists($level->getClassDefinition()->getId(), $levels)) {
-                $levels[$level->getClassDefinition()->getId()]['level']++;
-            } else {
-                $levels[$level->getClassDefinition()->getId()] = array(
-                    'class' => $level->getClassDefinition(),
-                    'level' => 1
-                );
+            $class = $level->getClassDefinition();
+            if ($class) {
+                if (array_key_exists($class->getId(), $levels)) {
+                    $levels[$class->getId()]['level']++;
+                } else {
+                    $levels[$class->getId()] = array(
+                        'class' => $class,
+                        'level' => 1
+                    );
+                }
             }
         }
 
@@ -564,10 +567,16 @@ class Character
     /**
      * Get this character's current level
      *
+     * @param ClassDefinition $class
+     *
      * @return int
      */
-    public function getLevel()
+    public function getLevel(ClassDefinition $class = null)
     {
+        if ($class) {
+            return $this->getLevelPerClass()[$class->getId()]['level'];
+        }
+
         return $this->baseCharacter->getLevel();
     }
 
@@ -697,5 +706,60 @@ class Character
                 return $this->getAbilityModifier($this->getCharisma());
         }
         return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAvailableSkillPoints()
+    {
+        $available = 0;
+
+        // Intelligence modifier (profile only).
+        $intelligence = $this->getBaseCharacter()->getAbilities()->getBaseIntelligence();
+        foreach ($this->baseCharacter->getLevels() as $level) {
+            if ($level->getExtraAbility() == Abilities::INTELLIGENCE) {
+                $intelligence++;
+            }
+        }
+        // Racial intelligence bonuses
+        foreach ($this->getBaseCharacter()->getAbilities()->getBonuses()->intelligence->getBonuses() as $bonus) {
+            if ($bonus->getType() == 'racial') {
+                $intelligence += $bonus->getValue();
+            }
+        }
+
+        foreach ($this->getBaseCharacter()->getLevels() as $level) {
+            $levelPoints = $level->getClassDefinition()->getSkillPoints();
+
+            // Add Intelligence mod. Available points can't be < 1 after applying intelligence
+            $levelPoints += $this->getAbilityModifier($intelligence);
+            if ($levelPoints < 1) {
+                $levelPoints = 1;
+            }
+
+            // Add skill bonus for favored classes
+            if (
+                $level->getClassDefinition() === $this->getBaseCharacter()->getFavoredClass() &&
+                $this->getBaseCharacter()->getExtraPoint() === 'skill'
+            ) {
+                $levelPoints++;
+            }
+
+            // Racial Bonus
+            $traits = $this->getBaseCharacter()->getRace()->getTraits();
+            if (array_key_exists('extra_skills_per_level', $traits)) {
+                $levelPoints += $traits['extra_skills_per_level']['value'];
+            }
+
+            // Subtract spent points
+            foreach ($level->getSkills() as $levelSkill) {
+                $levelPoints -= $levelSkill->getValue();
+            }
+
+            $available += $levelPoints;
+        }
+
+        return $available;
     }
 }
