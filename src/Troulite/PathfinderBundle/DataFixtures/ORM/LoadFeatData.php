@@ -20,8 +20,8 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $deadlyAim = new Feat();
-        $deadlyAim
+        $feat = new Feat();
+        $feat
             ->setName("Deadly aim")
             ->setDescription(
                 "You can make exceptionally deadly ranged attacks by pinpointing a foe's weak spot, at the expense of making the attack less likely to succeed."
@@ -39,11 +39,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     "ranged-damage-roll" => ['type' => null, 'value' => "2 + 2 * div(c.getBab(), 4)"]
                 )
             );
-        $manager->persist($deadlyAim);
-        $this->addReference('deadly-aim', $deadlyAim);
+        $manager->persist($feat);
+        $this->addReference('deadly-aim', $feat);
 
-        $lightningReflexes = new Feat();
-        $lightningReflexes
+        $feat = new Feat();
+        $feat
             ->setName("Lightning reflexes")
             ->setDescription("You have faster reflexes than normal.")
             ->setPassive(true)
@@ -52,11 +52,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     "reflexes" => ['type' => null, 'value' => 2]
                 )
             );
-        $manager->persist($lightningReflexes);
-        $this->addReference('lightning-reflexes', $lightningReflexes);
+        $manager->persist($feat);
+        $this->addReference('lightning-reflexes', $feat);
 
-        $ironwill = new Feat();
-        $ironwill
+        $feat = new Feat();
+        $feat
             ->setName("Iron will")
             ->setDescription("You are more resistant to mental effects.")
             ->setPassive(true)
@@ -65,11 +65,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     "will" => ['type' => null, 'value' => 2]
                 )
             );
-        $manager->persist($ironwill);
-        $this->addReference('iron-will', $ironwill);
+        $manager->persist($feat);
+        $this->addReference('iron-will', $feat);
 
-        $greatFortitude = new Feat();
-        $greatFortitude
+        $feat = new Feat();
+        $feat
             ->setName("Great Fortitude")
             ->setDescription("You are resistant to poisons, diseases, and other maladies.")
             ->setPassive(true)
@@ -78,11 +78,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     "fortitude" => ['type' => null, 'value' => 2]
                 )
             );
-        $manager->persist($greatFortitude);
-        $this->addReference('great-fortitude', $greatFortitude);
+        $manager->persist($feat);
+        $this->addReference('great-fortitude', $feat);
 
-        $rapidShot = new Feat();
-        $rapidShot
+        $feat = new Feat();
+        $feat
             ->setName('Rapid shot')
             ->setDescription('You can make an additional ranged attack.')
             ->setPassive(false)
@@ -92,11 +92,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     'ranged-attack-roll' => ['type' => null, 'value' => -2]
                 )
             );
-        $manager->persist($rapidShot);
-        $this->addReference('rapid-shot', $rapidShot);
+        $manager->persist($feat);
+        $this->addReference('rapid-shot', $feat);
 
-        $weaponFocus = new Feat();
-        $weaponFocus
+        $feat = new Feat();
+        $feat
             ->setName('Weapon focus - Longbow')
             ->setDescription(
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
@@ -112,11 +112,31 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     'weapon-type' => 'longbow'
                 )
             );
-        $manager->persist($weaponFocus);
-        $this->addReference('weapon-focus', $weaponFocus);
+        $manager->persist($feat);
+        $this->addReference('weapon-focus-longbow', $feat);
 
-        $dodge = new Feat();
-        $dodge
+        $feat = new Feat();
+        $feat
+            ->setName('Weapon focus - Longsword')
+            ->setDescription(
+                'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
+            )
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'ranged-attack-roll' => ['type' => null, 'value' => 1]
+                )
+            )
+            ->setConditions(
+                array(
+                    'weapon-type' => 'longsword'
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('weapon-focus-longsword', $feat);
+
+        $feat = new Feat();
+        $feat
             ->setName('Dodge')
             ->setDescription(
                 "Your training and reflexes allow you to react swiftly to avoid an opponents' attacks ."
@@ -130,11 +150,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     'ac' => ['type' => 'dodge', 'value' => 1]
                 )
             );
-        $manager->persist($dodge);
-        $this->addReference('dodge', $dodge);
+        $manager->persist($feat);
+        $this->addReference('dodge', $feat);
 
-        $pointBlankShot = new Feat();
-        $pointBlankShot
+        $feat = new Feat();
+        $feat
             ->setName('Point-Blank Shot')
             ->setDescription(
                 'You are especially accurate when making ranged attacks against close targets.'
@@ -149,8 +169,69 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setExternalConditions(
                 array('target-distance' => '< 9')
             );
-        $manager->persist($pointBlankShot);
-        $this->addReference('pointBlankShot', $pointBlankShot);
+        $manager->persist($feat);
+        $this->addReference('pointBlankShot', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Toughness')
+            ->setDescription('You have enhanced physical stamina.')
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'hp' => ['type' => null, 'value' => 'c.getLevel() <= 3 ? 3 : c.getLevel()']
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('toughness', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Shield Focus')
+            ->setDescription('You are skilled at deflecting blows with your shield.')
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'ac' => ['type' => null, 'value' => 1]
+                )
+            )
+            ->setConditions(
+                array('equipped' => 'shield')
+            )
+        ;
+        $manager->persist($feat);
+        $this->addReference('shield-focus', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Improved Critical (Longsword)')
+            ->setDescription('Attacks made with your chosen weapon are quite deadly.')
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'critical-range' => ['type' => null, 'value' => 2]
+                )
+            )
+            ->setConditions(
+                array('weapon-type' => 'longsword')
+            );
+        $manager->persist($feat);
+        $this->addReference('improved-critical-longsword', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Critical Focus')
+            ->setDescription('You are trained in the art of causing pain.')
+            ->setPassive(true)
+            ->setEffect(
+                array(
+                    'critical-confirmation' => ['type' => null, 'value' => 4]
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('critical-focus', $feat);
+
+        $manager->flush();
 
         $manager->flush();
     }

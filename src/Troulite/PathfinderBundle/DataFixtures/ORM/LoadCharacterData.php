@@ -45,7 +45,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setHpRoll(10)
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("weapon-focus"))
+                    ->setFeat($this->getReference("weapon-focus-longbow"))
             );
         $gwendae->addLevel($level);
         $skill = (new LevelSkill())
