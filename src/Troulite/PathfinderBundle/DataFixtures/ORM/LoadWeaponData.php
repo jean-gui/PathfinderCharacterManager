@@ -25,6 +25,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setCategory('martial')
             ->setType('longbow')
             ->setCost(75)
+            ->setCriticalRange(20)
             ->setCritical(3)
             ->setDamages('1d8')
             ->setDescription(
@@ -45,6 +46,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setType('longbow')
             ->setCost(75)
             ->setCritical(3)
+            ->setCriticalRange(20)
             ->setDamages('1d8')
             ->setDescription(
                 'At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood.'

@@ -50,6 +50,13 @@ class Weapon extends Item
     /**
      * @var integer
      *
+     * @ORM\Column(name="critical_range", type="smallint", nullable=true)
+     */
+    private $criticalRange;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="critical", type="smallint")
      */
     private $critical;
@@ -167,6 +174,30 @@ class Weapon extends Item
     public function getCritical()
     {
         return $this->critical;
+    }
+
+    /**
+     * Set critical range
+     *
+     * @param integer $criticalRange
+     *
+     * @return Weapon
+     */
+    public function setCriticalRange($criticalRange)
+    {
+        $this->criticalRange = $criticalRange;
+
+        return $this;
+    }
+
+    /**
+     * Get critical range
+     *
+     * @return integer
+     */
+    public function getCriticalRange()
+    {
+        return $this->criticalRange;
     }
 
     /**
