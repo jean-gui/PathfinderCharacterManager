@@ -8,9 +8,9 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Troulite\PathfinderBundle\Model\AbilitiesBonuses;
 use Troulite\PathfinderBundle\Model\AttackBonuses;
 use Troulite\PathfinderBundle\Model\Bonus;
@@ -71,7 +71,9 @@ class Character extends BaseCharacter
      */
     public function __construct()
     {
-
+        parent::__construct();
+        $this->postLoad();
+        $this->levels = new ArrayCollection();
     }
 
     /**
@@ -95,13 +97,12 @@ class Character extends BaseCharacter
         return $this->getName();
     }
 
-
     /**
      * Add level
      *
      * @param Level $level
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function addLevel(Level $level)
     {
@@ -680,7 +681,10 @@ class Character extends BaseCharacter
     {
         return
             10 +
-            $this->getAbilityModifier($this->getDexterity()) +
+            min(
+                $this->getAbilityModifier($this->getDexterity()),
+                $this->getEquipment()->getBody()->getMaximumDexterityBonus()
+            ) +
             $this->getDefenseBonuses()->ac->getBonus();
     }
 

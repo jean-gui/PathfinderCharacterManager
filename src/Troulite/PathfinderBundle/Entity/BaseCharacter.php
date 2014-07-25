@@ -2,7 +2,6 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -112,7 +111,17 @@ class BaseCharacter
      */
     public function __construct()
     {
-        $this->levels = new ArrayCollection();
+        $this->abilities = new Abilities();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -124,13 +133,27 @@ class BaseCharacter
     }
 
     /**
-     * Get id
+     * Get user
      *
-     * @return integer
+     * @return User
      */
-    public function getId()
+    public function getUser()
     {
-        return $this->id;
+        return $this->user;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return $this
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
@@ -261,30 +284,6 @@ class BaseCharacter
     public function getInventory()
     {
         return $this->inventory;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set user
-     *
-     * @param User $user
-     *
-     * @return BaseCharacter
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**
