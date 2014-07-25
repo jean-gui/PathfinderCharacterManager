@@ -3,6 +3,7 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Troulite\PathfinderBundle\Entity\Traits\Power;
 
 /**
  * Feat
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Feat
 {
-    use Traits\Power;
+    use Power;
 
     /**
      * @var integer
@@ -33,7 +34,7 @@ class Feat
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     private $description;
 
