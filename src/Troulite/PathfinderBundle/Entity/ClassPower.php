@@ -150,4 +150,12 @@ class ClassPower
     {
         return $this->class;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 } 
