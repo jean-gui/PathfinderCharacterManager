@@ -27,7 +27,8 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
                     'ranged-attack-roll' => ['type' => 'enhancement', 'value' => '2'],
                     'ranged-damage-roll' => ['type' => 'enhancement', 'value' => '2']
                 )
-            );
+            )
+            ->setPassive(true);
 
         $manager->persist($weaponEnhancement2);
         $manager->flush();
@@ -41,7 +42,8 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
                 array(
                     'ac' => ['type' => 'enhancement', 'value' => '5'],
                 )
-            );
+            )
+            ->setPassive(true);
 
         $manager->persist($armorEnhancement5);
         $manager->flush();
