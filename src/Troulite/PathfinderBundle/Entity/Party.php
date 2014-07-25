@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * BaseCharacter
+ * Party
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -47,18 +47,18 @@ class Party
     /**
      * @var Collection|Character[]
      *
-     * @ORM\OneToMany(targetEntity="BaseCharacter", mappedBy="party")
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="party")
      */
     private $characters;
 
     /**
      * Add characters
      *
-     * @param BaseCharacter $character
+     * @param Character $character
      *
      * @return Group
      */
-    public function addCharacter(BaseCharacter $character)
+    public function addCharacter(Character $character)
     {
         $this->characters[] = $character;
 
@@ -68,9 +68,9 @@ class Party
     /**
      * Remove characters
      *
-     * @param BaseCharacter $character
+     * @param Character $character
      */
-    public function removeCharacter(BaseCharacter $character)
+    public function removeCharacter(Character $character)
     {
         $this->characters->removeElement($character);
     }
@@ -78,24 +78,11 @@ class Party
     /**
      * Get characters
      *
-     * @return Collection|BaseCharacter[]
-     */
-    public function getBaseCharacters()
-    {
-        return $this->characters;
-    }
-
-    /**
      * @return Collection|Character[]
      */
     public function getCharacters()
     {
-        $characters = new ArrayCollection();
-        foreach ($this->characters as $character) {
-            $characters->add(new Character($character));
-        }
-
-        return $characters;
+        return $this->characters;
     }
 
     /**
