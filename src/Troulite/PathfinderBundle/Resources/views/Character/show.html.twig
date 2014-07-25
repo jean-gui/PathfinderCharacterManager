@@ -231,6 +231,16 @@
                     <li>{{ feat.feat }}</li>
                     {% endfor %}
                 </ul>
+                <h3>Passive Class Powers</h3>
+                <ul>
+                    {% for classLevel in entity.levelPerClass %}
+                        {% for power in classLevel['class'].powers %}
+                            {% if power.level <= classLevel['level'] %}
+                                <li>{{ power }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
