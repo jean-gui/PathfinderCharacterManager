@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class CharacterType
+ *
+ * @package Troulite\PathfinderBundle\Form
+ */
 class CharacterType extends AbstractType
 {
     /**
@@ -34,7 +39,7 @@ class CharacterType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\BaseCharacter'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
             )
         );
     }

@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Abilities;
-use Troulite\PathfinderBundle\Entity\BaseCharacter;
+use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Equipment;
 use Troulite\PathfinderBundle\Entity\Level;
@@ -24,7 +24,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
      */
     public function load(ObjectManager $manager)
     {
-        $gwendae = new BaseCharacter();
+        $gwendae = new Character();
         $gwendae
             ->setName("Gwendaë")
             ->setUser($this->getReference('jean-gui'))

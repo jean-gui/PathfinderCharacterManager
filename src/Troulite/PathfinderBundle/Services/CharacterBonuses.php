@@ -15,7 +15,7 @@ use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
-use Troulite\PathfinderBundle\Model\Character;
+use Troulite\PathfinderBundle\Entity\Character;
 
 /**
  * Class CharacterBonuses
@@ -46,17 +46,17 @@ class CharacterBonuses
     {
         $this->applyRace($character);
         $this->applyFeats($character);
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getMainWeapon());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getOffhandWeapon());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getBody());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getHead());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getHands());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getLeftFinger());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getRightFinger());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getBelt());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getFeet());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getNeck());
-        $this->applyItem($character, $character->getBaseCharacter()->getEquipment()->getBack());
+        $this->applyItem($character, $character->getEquipment()->getMainWeapon());
+        $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
+        $this->applyItem($character, $character->getEquipment()->getBody());
+        $this->applyItem($character, $character->getEquipment()->getHead());
+        $this->applyItem($character, $character->getEquipment()->getHands());
+        $this->applyItem($character, $character->getEquipment()->getLeftFinger());
+        $this->applyItem($character, $character->getEquipment()->getRightFinger());
+        $this->applyItem($character, $character->getEquipment()->getBelt());
+        $this->applyItem($character, $character->getEquipment()->getFeet());
+        $this->applyItem($character, $character->getEquipment()->getNeck());
+        $this->applyItem($character, $character->getEquipment()->getBack());
 
         return $character;
     }
@@ -69,8 +69,8 @@ class CharacterBonuses
     {
         $this->applyEffects(
             $character,
-            $character->getBaseCharacter()->getRace()->getTraits(),
-            $character->getBaseCharacter()->getRace()
+            $character->getRace()->getTraits(),
+            $character->getRace()
         );
     }
 
@@ -178,22 +178,22 @@ class CharacterBonuses
 
             switch ($stat) {
                 case 'strength':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->strength->add($bonus);
+                    $character->getAbilitiesBonuses()->strength->add($bonus);
                     break;
                 case 'dexterity':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->dexterity->add($bonus);
+                    $character->getAbilitiesBonuses()->dexterity->add($bonus);
                     break;
                 case 'constitution':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->constitution->add($bonus);
+                    $character->getAbilitiesBonuses()->constitution->add($bonus);
                     break;
                 case 'intelligence':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->intelligence->add($bonus);
+                    $character->getAbilitiesBonuses()->intelligence->add($bonus);
                     break;
                 case 'wisdom':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->wisdom->add($bonus);
+                    $character->getAbilitiesBonuses()->wisdom->add($bonus);
                     break;
                 case 'charisma':
-                    $character->getBaseCharacter()->getAbilities()->getBonuses()->charisma->add($bonus);
+                    $character->getAbilitiesBonuses()->charisma->add($bonus);
                     break;
                 case 'fortitude':
                     $character->getDefenseBonuses()->fortitude->add($bonus);

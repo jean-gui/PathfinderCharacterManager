@@ -19,17 +19,17 @@
             {% for entity in entities %}
                 <tr>
                     <td>
-                        <a href="{{ path('characters_show', { 'id': entity.baseCharacter.id }) }}">{{ entity.baseCharacter.id }}</a>
+                        <a href="{{ path('characters_show', { 'id': entity.id }) }}">{{ entity.baseCharacter.id }}</a>
                     </td>
                     <td>{{ entity }}</td>
                     <td>{{ entity.level }}</td>
                     <td>
                         <ul>
                             <li>
-                                <a href="{{ path('characters_show', { 'id': entity.baseCharacter.id }) }}">show</a>
+                                <a href="{{ path('characters_show', { 'id': entity.id }) }}">show</a>
                             </li>
                             <li>
-                                <a href="{{ path('characters_edit', { 'id': entity.baseCharacter.id }) }}">edit</a>
+                                <a href="{{ path('characters_edit', { 'id': entity.id }) }}">edit</a>
                             </li>
                         </ul>
                     </td>

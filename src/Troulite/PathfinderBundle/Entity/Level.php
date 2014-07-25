@@ -27,14 +27,14 @@ class Level
     /**
      * @var BaseCharacter
      *
-     * @ORM\ManyToOne(targetEntity="BaseCharacter", inversedBy="levels")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="levels")
      * @ORM\JoinColumn(name="character", referencedColumnName="id")
      * @Assert\NotBlank()
      */
     private $character;
 
     /**
-     * @var BaseCharacter
+     * @var Character
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="class", referencedColumnName="id")
@@ -92,11 +92,11 @@ class Level
     /**
      * Set character
      *
-     * @param BaseCharacter $character
+     * @param Character $character
      *
      * @return Level
      */
-    public function setCharacter(BaseCharacter $character)
+    public function setCharacter(Character $character)
     {
         $this->character = $character;
 
@@ -106,7 +106,7 @@ class Level
     /**
      * Get character
      *
-     * @return BaseCharacter
+     * @return Character
      */
     public function getCharacter()
     {
@@ -236,7 +236,7 @@ class Level
      *
      * @param CharacterFeat $feat
      *
-     * @return BaseCharacter
+     * @return Character
      */
     public function addFeat(CharacterFeat $feat = null)
     {

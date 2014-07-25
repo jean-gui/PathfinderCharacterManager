@@ -143,7 +143,7 @@ class Equipment
      *
      * @param Weapon $weapon
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setMainWeapon(Weapon $weapon = null)
     {
@@ -171,7 +171,7 @@ class Equipment
      *
      * @param Weapon $weapon
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setOffhandWeapon(Weapon $weapon = null)
     {
@@ -199,7 +199,7 @@ class Equipment
      *
      * @param Item $body
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setBody(Item $body = null)
     {
@@ -223,7 +223,7 @@ class Equipment
      *
      * @param Item $leftFinger
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setLeftFinger(Item $leftFinger = null)
     {
@@ -247,7 +247,7 @@ class Equipment
      *
      * @param Item $rightFinger
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setRightFinger(Item $rightFinger = null)
     {
@@ -271,7 +271,7 @@ class Equipment
      *
      * @param Item $feet
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setFeet(Item $feet = null)
     {
@@ -295,7 +295,7 @@ class Equipment
      *
      * @param Item $neck
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setNeck(Item $neck = null)
     {
@@ -319,7 +319,7 @@ class Equipment
      *
      * @param Item $back
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setBack(Item $back = null)
     {
@@ -343,7 +343,7 @@ class Equipment
      *
      * @param Item $head
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setHead(Item $head = null)
     {
@@ -367,7 +367,7 @@ class Equipment
      *
      * @param Item $belt
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setBelt(Item $belt = null)
     {
@@ -391,7 +391,7 @@ class Equipment
      *
      * @param Item $hands
      *
-     * @return BaseCharacter
+     * @return Equipment
      */
     public function setHands(Item $hands = null)
     {

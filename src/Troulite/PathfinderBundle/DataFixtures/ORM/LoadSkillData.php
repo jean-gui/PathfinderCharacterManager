@@ -7,6 +7,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Skill;
 
+/**
+ * Class LoadSkillData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadSkillData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**

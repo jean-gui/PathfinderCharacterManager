@@ -13,6 +13,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Group;
 
+/**
+ * Class LoadGroupData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**

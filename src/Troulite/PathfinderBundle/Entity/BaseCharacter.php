@@ -10,8 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * BaseCharacter
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\MappedSuperclass()
  */
 class BaseCharacter
 {
@@ -48,14 +47,6 @@ class BaseCharacter
      * @Assert\NotBlank()
      */
     private $race;
-
-    /**
-     * @var Collection|Level[]
-     *
-     * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
-     * @ORM\OrderBy({"id": "ASC"})
-     */
-    private $levels;
 
     /**
      * @var ClassDefinition
@@ -140,52 +131,6 @@ class BaseCharacter
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Add level
-     *
-     * @param Level $level
-     *
-     * @return BaseCharacter
-     */
-    public function addLevel(Level $level)
-    {
-        $level->setCharacter($this);
-        $this->levels[] = $level;
-
-        return $this;
-    }
-
-    /**
-     * Remove level
-     *
-     * @param Level $level
-     */
-    public function removeLevel(Level $level)
-    {
-        $level->setCharacter(null);
-        $this->levels->removeElement($level);
-    }
-
-    /**
-     * Get level
-     *
-     * @return Collection|Level[]
-     */
-    public function getLevels()
-    {
-        return $this->levels;
-    }
-
-    /**
-     * Get this character's current level
-     *
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->getLevels()->count();
     }
 
     /**

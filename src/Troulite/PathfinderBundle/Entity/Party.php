@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Troulite\PathfinderBundle\Model\Character;
 
 /**
  * BaseCharacter
@@ -46,7 +45,7 @@ class Party
     private $dungeonMaster;
 
     /**
-     * @var Collection|BaseCharacter[]
+     * @var Collection|Character[]
      *
      * @ORM\OneToMany(targetEntity="BaseCharacter", mappedBy="party")
      */
@@ -141,6 +140,9 @@ class Party
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();

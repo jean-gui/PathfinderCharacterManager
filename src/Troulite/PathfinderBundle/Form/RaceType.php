@@ -6,6 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class RaceType
+ *
+ * @package Troulite\PathfinderBundle\Form
+ */
 class RaceType extends AbstractType
 {
     /**

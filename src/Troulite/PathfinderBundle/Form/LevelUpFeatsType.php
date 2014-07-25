@@ -10,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
-use Troulite\PathfinderBundle\Model\Character;
 use Troulite\PathfinderBundle\Repository\FeatRepository;
 
 /**
@@ -44,8 +43,7 @@ class LevelUpFeatsType extends AbstractType
             function (FormEvent $event) {
                 /** @var $level Level */
                 $level = $event->getData();
-                $baseCharacter = $level->getCharacter();
-                $character = new Character($baseCharacter);
+                $character = $level->getCharacter();
                 $class = $level->getClassDefinition();
                 $form  = $event->getForm();
 
@@ -53,13 +51,13 @@ class LevelUpFeatsType extends AbstractType
 
                 // Racial bonus feats
                 if (
-                    $baseCharacter->getRace() &&
-                    array_key_exists('extra_feats_per_level', $baseCharacter->getRace()->getTraits())
+                    $character->getRace() &&
+                    array_key_exists('extra_feats_per_level', $character->getRace()->getTraits())
                 ) {
-                    $effect = $baseCharacter->getRace()->getTraits()['extra_feats_per_level'];
+                    $effect = $character->getRace()->getTraits()['extra_feats_per_level'];
                     $value = (int)(new ExpressionLanguage())->evaluate(
                         $effect['value'],
-                        array("c" => $baseCharacter)
+                        array("c" => $character)
                     );
                     while ($value > 0) {
                         $featsToAdd++;
@@ -76,7 +74,7 @@ class LevelUpFeatsType extends AbstractType
                     $effect = $class->getSpecials()[$character->getLevel($class)]['extra_feats'];
                     $value  = (int)(new ExpressionLanguage())->evaluate(
                         $effect['value'],
-                        array("c" => $baseCharacter)
+                        array("c" => $character)
                     );
 
                     while ($value > 0) {
@@ -108,8 +106,8 @@ class LevelUpFeatsType extends AbstractType
                             'type' => 'addcharacterfeat',
                             'options' => array(
                                 'class' => 'TroulitePathfinderBundle:Feat',
-                                'query_builder' => function (FeatRepository $er) use ($baseCharacter) {
-                                        return $er->queryAvailableFor($baseCharacter);
+                                'query_builder' => function (FeatRepository $er) use ($character) {
+                                        return $er->queryAvailableFor($character);
                                 },
                                 'label' => false,
                                 'required' => false,

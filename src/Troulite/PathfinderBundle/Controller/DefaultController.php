@@ -13,6 +13,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Troulite\PathfinderBundle\Entity\User;
 
+/**
+ * Class DefaultController
+ *
+ * @package Troulite\PathfinderBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**

@@ -13,6 +13,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Party;
 
+/**
+ * Class LoadPartyData
+ *
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ */
 class LoadPartyData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**

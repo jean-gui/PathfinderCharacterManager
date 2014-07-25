@@ -6,26 +6,35 @@
  * Time: 19:04
  */
 
-namespace Troulite\PathfinderBundle\Model;
+namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Troulite\PathfinderBundle\Entity\Abilities;
-use Troulite\PathfinderBundle\Entity\BaseCharacter;
-use Troulite\PathfinderBundle\Entity\CharacterFeat;
-use Troulite\PathfinderBundle\Entity\ClassDefinition;
-use Troulite\PathfinderBundle\Entity\Skill;
+use Troulite\PathfinderBundle\Model\AbilitiesBonuses;
+use Troulite\PathfinderBundle\Model\AttackBonuses;
+use Troulite\PathfinderBundle\Model\Bonus;
+use Troulite\PathfinderBundle\Model\Bonuses;
+use Troulite\PathfinderBundle\Model\DefenseBonuses;
 
 /**
  * Class BaseCharacter
  *
- * @package Troulite\PathfinderBundle\Model
+ * @ORM\Table()
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ *
+ * @package Troulite\PathfinderBundle\Entity
  */
-class Character
+class Character extends BaseCharacter
 {
     /**
-     * @var BaseCharacter
+     * @var Collection|Level[]
+     *
+     * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
+     * @ORM\OrderBy({"id": "ASC"})
      */
-    private $baseCharacter;
+    private $levels;
 
     /**
      * @var AbilitiesBonuses
@@ -58,16 +67,24 @@ class Character
     private $speedBonuses;
 
     /**
-     * @param BaseCharacter $baseCharacter
+     * Constructor
      */
-    public function __construct(BaseCharacter $baseCharacter)
+    public function __construct()
     {
-        $this->baseCharacter = $baseCharacter;
-        $this->defenseBonuses = new DefenseBonuses();
-        $this->attackBonuses = new AttackBonuses();
-        $this->hpBonuses = new Bonuses();
-        $this->skillsBonuses = array();
-        $this->speedBonuses = new Bonuses();
+
+    }
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function postLoad()
+    {
+        $this->abilitiesBonuses = new AbilitiesBonuses();
+        $this->defenseBonuses   = new DefenseBonuses();
+        $this->attackBonuses    = new AttackBonuses();
+        $this->hpBonuses        = new Bonuses();
+        $this->skillsBonuses    = array();
+        $this->speedBonuses     = new Bonuses();
     }
 
     /**
@@ -75,23 +92,44 @@ class Character
      */
     public function __toString()
     {
-        return $this->baseCharacter->__toString();
+        return $this->getName();
     }
 
-    /**
-     * @param BaseCharacter $baseCharacter
-     */
-    public function setBaseCharacter($baseCharacter)
-    {
-        $this->baseCharacter = $baseCharacter;
-    }
 
     /**
+     * Add level
+     *
+     * @param Level $level
+     *
      * @return BaseCharacter
      */
-    public function getBaseCharacter()
+    public function addLevel(Level $level)
     {
-        return $this->baseCharacter;
+        $level->setCharacter($this);
+        $this->levels[] = $level;
+
+        return $this;
+    }
+
+    /**
+     * Remove level
+     *
+     * @param Level $level
+     */
+    public function removeLevel(Level $level)
+    {
+        $level->setCharacter(null);
+        $this->levels->removeElement($level);
+    }
+
+    /**
+     * Get level
+     *
+     * @return Collection|Level[]
+     */
+    public function getLevels()
+    {
+        return $this->levels;
     }
 
     /**
@@ -190,7 +228,7 @@ class Character
     public function getSkillRank(Skill $skill)
     {
         $rank = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             foreach ($level->getSkills() as $levelSkill) {
                 if ($levelSkill->getSkill() === $skill) {
                     $rank += $levelSkill->getValue();
@@ -209,7 +247,7 @@ class Character
      */
     public function hasClassBonus(Skill $skill)
     {
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getClassDefinition()->getClassSkills()->contains($skill)) {
                 return true;
             }
@@ -250,15 +288,15 @@ class Character
     public function getStrength()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::STRENGTH) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseStrength() +
-            $this->baseCharacter->getAbilities()->getBonuses()->strength->getBonus() +
+            $this->getAbilities()->getBaseStrength() +
+            $this->getAbilitiesBonuses()->strength->getBonus() +
             $levelBonus;
     }
 
@@ -270,15 +308,15 @@ class Character
     public function getDexterity()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::DEXTERITY) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseDexterity() +
-            $this->baseCharacter->getAbilities()->getBonuses()->dexterity->getBonus() +
+            $this->getAbilities()->getBaseDexterity() +
+            $this->getAbilitiesBonuses()->dexterity->getBonus() +
             $levelBonus;
     }
 
@@ -290,15 +328,15 @@ class Character
     public function getConstitution()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::CONSTITUTION) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseConstitution() +
-            $this->baseCharacter->getAbilities()->getBonuses()->constitution->getBonus() +
+            $this->getAbilities()->getBaseConstitution() +
+            $this->getAbilitiesBonuses()->constitution->getBonus() +
             $levelBonus;
     }
 
@@ -310,15 +348,15 @@ class Character
     public function getIntelligence()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::INTELLIGENCE) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseIntelligence() +
-            $this->baseCharacter->getAbilities()->getBonuses()->intelligence->getBonus() +
+            $this->getAbilities()->getBaseIntelligence() +
+            $this->getAbilitiesBonuses()->intelligence->getBonus() +
             $levelBonus;
     }
 
@@ -330,15 +368,15 @@ class Character
     public function getWisdom()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::WISDOM) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseWisdom() +
-            $this->baseCharacter->getAbilities()->getBonuses()->wisdom->getBonus() +
+            $this->getAbilities()->getBaseWisdom() +
+            $this->getAbilitiesBonuses()->wisdom->getBonus() +
             $levelBonus;
     }
 
@@ -350,15 +388,15 @@ class Character
     public function getCharisma()
     {
         $levelBonus = 0;
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::CHARISMA) {
                 $levelBonus += 1;
             }
         }
 
         return
-            $this->baseCharacter->getAbilities()->getBaseCharisma() +
-            $this->baseCharacter->getAbilities()->getBonuses()->charisma->getBonus() +
+            $this->getAbilities()->getBaseCharisma() +
+            $this->getAbilitiesBonuses()->charisma->getBonus() +
             $levelBonus;
     }
 
@@ -429,11 +467,11 @@ class Character
     public function getMaxHp()
     {
         $hp = $this->getHpBonuses()->getBonus();
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             $hp += $level->getHpRoll() + $this->getAbilityModifier($this->getConstitution());
 
             // Extra hit point if favored class
-            if ($this->baseCharacter->getExtraPoint() === 'hp' && $level->isFavoredClass()) {
+            if ($this->getExtraPoint() === 'hp' && $level->isFavoredClass()) {
                 $hp += 1;
             }
         }
@@ -448,7 +486,7 @@ class Character
     {
         /** @var $levels array */
         $levels = array();
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             $class = $level->getClassDefinition();
             if ($class) {
                 if (array_key_exists($class->getId(), $levels)) {
@@ -577,7 +615,7 @@ class Character
             return $this->getLevelPerClass()[$class->getId()]['level'];
         }
 
-        return $this->baseCharacter->getLevel();
+        return $this->getLevels()->count();
     }
 
     /**
@@ -626,7 +664,7 @@ class Character
     public function getFeats()
     {
         $feats = array();
-        foreach($this->getBaseCharacter()->getLevels() as $level) {
+        foreach($this->getLevels() as $level) {
             $feats = array_merge($feats, $level->getFeats()->toArray());
         }
 
@@ -716,20 +754,20 @@ class Character
         $available = 0;
 
         // Intelligence modifier (profile only).
-        $intelligence = $this->getBaseCharacter()->getAbilities()->getBaseIntelligence();
-        foreach ($this->baseCharacter->getLevels() as $level) {
+        $intelligence = $this->getAbilities()->getBaseIntelligence();
+        foreach ($this->getLevels() as $level) {
             if ($level->getExtraAbility() == Abilities::INTELLIGENCE) {
                 $intelligence++;
             }
         }
         // Racial intelligence bonuses
-        foreach ($this->getBaseCharacter()->getAbilities()->getBonuses()->intelligence->getBonuses() as $bonus) {
+        foreach ($this->getAbilitiesBonuses()->intelligence->getBonuses() as $bonus) {
             if ($bonus->getType() == 'racial') {
                 $intelligence += $bonus->getValue();
             }
         }
 
-        foreach ($this->getBaseCharacter()->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             $levelPoints = $level->getClassDefinition()->getSkillPoints();
 
             // Add Intelligence mod. Available points can't be < 1 after applying intelligence
@@ -740,14 +778,14 @@ class Character
 
             // Add skill bonus for favored classes
             if (
-                $level->getClassDefinition() === $this->getBaseCharacter()->getFavoredClass() &&
-                $this->getBaseCharacter()->getExtraPoint() === 'skill'
+                $level->getClassDefinition() === $this->getFavoredClass() &&
+                $this->getExtraPoint() === 'skill'
             ) {
                 $levelPoints++;
             }
 
             // Racial Bonus
-            $traits = $this->getBaseCharacter()->getRace()->getTraits();
+            $traits = $this->getRace()->getTraits();
             if (array_key_exists('extra_skills_per_level', $traits)) {
                 $levelPoints += $traits['extra_skills_per_level']['value'];
             }

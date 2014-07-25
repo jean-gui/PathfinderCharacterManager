@@ -17,17 +17,35 @@ use Troulite\PathfinderBundle\Model\AbilitiesBonuses;
  *
  * @package Troulite\PathfinderBundle\Entity
  *
+ * @ORM\Entity()
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
 class Abilities
 {
+    /**
+     * Strength identifier
+     */
     const STRENGTH     = 'strength';
+    /**
+     * Dexterity identifier
+     */
     const DEXTERITY    = 'dexterity';
+    /**
+     * Constitution identifier
+     */
     const CONSTITUTION = 'constitution';
+    /**
+     * Intelligence identifier
+     */
     const INTELLIGENCE = 'intelligence';
+    /**
+     * Wisdom identifier
+     */
     const WISDOM       = 'wisdom';
+    /**
+     * Charisma identifier
+     */
     const CHARISMA     = 'charisma';
 
     /**
@@ -86,11 +104,6 @@ class Abilities
      * @Assert\NotBlank()
      */
     private $baseCharisma;
-
-    /**
-     * @var AbilitiesBonuses
-     */
-    private $bonuses;
 
     /**
      * @param $strength
@@ -276,26 +289,6 @@ class Abilities
     public function setBaseCharisma($baseCharisma)
     {
         $this->baseCharisma = $baseCharisma;
-
-        return $this;
-    }
-
-    /**
-     * @return AbilitiesBonuses
-     */
-    public function getBonuses()
-    {
-        return $this->bonuses;
-    }
-
-    /**
-     * @param AbilitiesBonuses $bonuses
-     *
-     * @return $this
-     */
-    public function setBonuses($bonuses)
-    {
-        $this->bonuses = $bonuses;
 
         return $this;
     }

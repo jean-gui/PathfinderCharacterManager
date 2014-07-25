@@ -11,9 +11,8 @@ namespace Troulite\PathfinderBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Troulite\PathfinderBundle\Entity\BaseCharacter;
 use Troulite\PathfinderBundle\Entity\Feat;
-use Troulite\PathfinderBundle\Model\Character;
+use Troulite\PathfinderBundle\Entity\Character;
 
 /**
  * Class FeatRepository
@@ -25,13 +24,12 @@ class FeatRepository extends EntityRepository
     /**
      * Query to find all available feats for a character to pick from
      *
-     * @param BaseCharacter $baseCharacter
+     * @param Character $character
      *
      * @return QueryBuilder
      */
-    public function queryAvailableFor(BaseCharacter $baseCharacter)
+    public function queryAvailableFor(Character $character)
     {
-        $character = new Character($baseCharacter);
         $characterFeats = $character->getFeats();
         $feats          = array();
 
@@ -51,11 +49,11 @@ class FeatRepository extends EntityRepository
     /**
      * Find all available feats for a character to pick from
      *
-     * @param BaseCharacter $baseCharacter
+     * @param Character $Character
      *
      * @return Feat[]
-     */public function findByAvailableFor(BaseCharacter $baseCharacter)
+     */public function findByAvailableFor(Character $Character)
     {
-        return $this->queryAvailableFor($baseCharacter)->getQuery()->getResult();
+        return $this->queryAvailableFor($Character)->getQuery()->getResult();
     }
 } 

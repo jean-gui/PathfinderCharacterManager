@@ -13,7 +13,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
-use Troulite\PathfinderBundle\Model\Character;
 
 /**
  * @ORM\Entity
@@ -35,9 +34,9 @@ class User extends BaseUser
     protected $groups;
 
     /**
-     * @var Collection|BaseCharacter[]
+     * @var Collection|Character[]
      *
-     * @ORM\OneToMany(targetEntity="BaseCharacter", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="user")
      */
     private $characters;
 

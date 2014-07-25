@@ -2,17 +2,16 @@
 
 namespace Troulite\PathfinderBundle\Form;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
-use Troulite\PathfinderBundle\Model\Character;
+use Troulite\PathfinderBundle\Entity\Skill;
 
 /**
  * Class LevelUpClassType
@@ -26,6 +25,9 @@ class LevelUpSkillsType extends AbstractType
      */
     private $em;
 
+    /**
+     * @var Collection|Skill[]
+     */
     private $skills;
 
     /**
@@ -74,16 +76,6 @@ class LevelUpSkillsType extends AbstractType
                 'options' => array('label' => false)
             )
         );
-
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
-                /** @var $level Level */
-                $level     = $event->getData();
-                $character = $level->getCharacter();
-                $form      = $event->getForm();
-            }
-        );
     }
     
     /**
@@ -110,6 +102,8 @@ class LevelUpSkillsType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['skills'] = $this->skills;
-        $view->vars['character'] = new Character($options['data']->getCharacter());
+        /** @var $level Level */
+        $level = $options['data'];
+        $view->vars['character'] = $level->getCharacter();
     }
 }
