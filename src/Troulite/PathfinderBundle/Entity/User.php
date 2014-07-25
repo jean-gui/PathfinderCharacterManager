@@ -135,12 +135,7 @@ class User extends BaseUser
      */
     public function getCharacters()
     {
-        $characters = new ArrayCollection();
-        foreach ($this->characters as $character) {
-            $characters->add(new Character($character));
-        }
-
-        return $characters;
+        return $this->characters;
     }
 
     /**
