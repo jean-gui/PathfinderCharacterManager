@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
-use Troulite\PathfinderBundle\Form\CharacterType;
+use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\FeatsActivationType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Entity\Character;
@@ -52,7 +52,7 @@ class CharacterController extends Controller
     private function createCreateForm(Character $entity)
     {
         $form = $this->createForm(
-            new CharacterType($this->container->getParameter('character_advancement')),
+            new BaseCharacterType($this->container->getParameter('character_advancement')),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_new'),
@@ -180,7 +180,7 @@ class CharacterController extends Controller
     private function createEditForm(Character $entity)
     {
         $form = $this->createForm(
-            new CharacterType($this->container->getParameter('character_advancement')),
+            new BaseCharacterType($this->container->getParameter('character_advancement')),
             $entity,
             array(
                 'action' => $this->generateUrl('characters_update', array('id' => $entity->getId())),
