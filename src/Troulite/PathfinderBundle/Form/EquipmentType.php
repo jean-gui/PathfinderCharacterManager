@@ -40,7 +40,7 @@ class EquipmentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troulite\PathfinderBundle\Entity\Equipment'
+            'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterEquipment'
         ));
     }
 
