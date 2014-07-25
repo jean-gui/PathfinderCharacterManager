@@ -47,9 +47,9 @@ class CharacterEquipment
     private $offhandWeapon;
 
     /**
-     * @var Item $body
+     * @var Armor $body
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Armor")
      * @ORM\JoinColumn(name="body_item_id", referencedColumnName="id")
      */
     private $body;
@@ -187,7 +187,7 @@ class CharacterEquipment
     /**
      * Get body
      *
-     * @return Item
+     * @return Armor
      */
     public function getBody()
     {
@@ -197,11 +197,11 @@ class CharacterEquipment
     /**
      * Set body
      *
-     * @param Item $body
+     * @param Armor $body
      *
      * @return CharacterEquipment
      */
-    public function setBody(Item $body = null)
+    public function setBody(Armor $body = null)
     {
         $this->body = $body;
 
