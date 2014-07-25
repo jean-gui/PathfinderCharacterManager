@@ -33,7 +33,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                 )
             )
             ->setPassive(false)
-            ->setEffect(
+            ->setEffects(
                 array(
                     "ranged-attack-roll" => ['type' => null, 'value' => "-1 - div(c.getBab(), 4)"],
                     "ranged-damage-roll" => ['type' => null, 'value' => "2 + 2 * div(c.getBab(), 4)"]
@@ -47,7 +47,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Lightning reflexes")
             ->setDescription("You have faster reflexes than normal.")
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     "reflexes" => ['type' => null, 'value' => 2]
                 )
@@ -60,7 +60,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Iron will")
             ->setDescription("You are more resistant to mental effects.")
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     "will" => ['type' => null, 'value' => 2]
                 )
@@ -73,7 +73,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName("Great Fortitude")
             ->setDescription("You are resistant to poisons, diseases, and other maladies.")
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     "fortitude" => ['type' => null, 'value' => 2]
                 )
@@ -86,7 +86,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName('Rapid shot')
             ->setDescription('You can make an additional ranged attack.')
             ->setPassive(false)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ranged-attacks'     => ['type' => null, 'value' => 1],
                     'ranged-attack-roll' => ['type' => null, 'value' => -2]
@@ -102,7 +102,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
             )
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ranged-attack-roll' => ['type' => null, 'value' => 1]
                 )
@@ -122,7 +122,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
             )
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ranged-attack-roll' => ['type' => null, 'value' => 1]
                 )
@@ -145,7 +145,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPrerequisities(
                 array("dexterity" => 13)
             )
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ac' => ['type' => 'dodge', 'value' => 1]
                 )
@@ -160,7 +160,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                 'You are especially accurate when making ranged attacks against close targets.'
             )
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ranged-damage-roll' => ['type' => null, 'value' => 1],
                     'ranged-attack-roll' => ['type' => null, 'value' => 1],
@@ -177,7 +177,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName('Toughness')
             ->setDescription('You have enhanced physical stamina.')
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'hp' => ['type' => null, 'value' => 'c.getLevel() <= 3 ? 3 : c.getLevel()']
                 )
@@ -190,7 +190,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName('Shield Focus')
             ->setDescription('You are skilled at deflecting blows with your shield.')
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'ac' => ['type' => null, 'value' => 1]
                 )
@@ -207,7 +207,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName('Improved Critical (Longsword)')
             ->setDescription('Attacks made with your chosen weapon are quite deadly.')
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'critical-range' => ['type' => null, 'value' => 2]
                 )
@@ -223,7 +223,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setName('Critical Focus')
             ->setDescription('You are trained in the art of causing pain.')
             ->setPassive(true)
-            ->setEffect(
+            ->setEffects(
                 array(
                     'critical-confirmation' => ['type' => null, 'value' => 4]
                 )

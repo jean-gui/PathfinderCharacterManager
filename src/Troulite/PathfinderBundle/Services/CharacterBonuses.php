@@ -8,6 +8,7 @@
 
 namespace Troulite\PathfinderBundle\Services;
 
+use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
@@ -135,7 +136,7 @@ class CharacterBonuses
      */
     private function applyFeat(Character $character, Feat $feat)
     {
-        return $this->applyEffects($character, $feat->getEffect(), $feat);
+        return $this->applyEffects($character, $feat->getEffects(), $feat);
     }
 
     /**
@@ -149,7 +150,16 @@ class CharacterBonuses
     private function applyItem(Character $character, Item $item = null)
     {
         if ($item) {
-            return $this->applyEffects($character, $item->getEffects(), $item);
+            foreach ($item->getPowers() as $power) {
+                $this->applyEffects($character, $power->getEffects(), $item);
+
+                if ($item instanceof Armor) {
+                    $this->applyEffects(
+                        $character,
+                        array('ac' => array('type' => 'armor', 'value' => $item->getAc())),
+                        $item);
+                }
+            }
         }
 
         return $character;

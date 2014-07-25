@@ -12,14 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class Equipment
+ * Class CharacterEquipment
  *
  * @package Troulite\PathfinderBundle\Entity
  *
  * @ORM\Table()
  * @ORM\Entity()
  */
-class Equipment
+class CharacterEquipment
 {
     /**
      * @var integer
@@ -143,7 +143,7 @@ class Equipment
      *
      * @param Weapon $weapon
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setMainWeapon(Weapon $weapon = null)
     {
@@ -171,7 +171,7 @@ class Equipment
      *
      * @param Weapon $weapon
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setOffhandWeapon(Weapon $weapon = null)
     {
@@ -199,7 +199,7 @@ class Equipment
      *
      * @param Item $body
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setBody(Item $body = null)
     {
@@ -223,7 +223,7 @@ class Equipment
      *
      * @param Item $leftFinger
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setLeftFinger(Item $leftFinger = null)
     {
@@ -247,7 +247,7 @@ class Equipment
      *
      * @param Item $rightFinger
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setRightFinger(Item $rightFinger = null)
     {
@@ -271,7 +271,7 @@ class Equipment
      *
      * @param Item $feet
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setFeet(Item $feet = null)
     {
@@ -295,7 +295,7 @@ class Equipment
      *
      * @param Item $neck
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setNeck(Item $neck = null)
     {
@@ -319,7 +319,7 @@ class Equipment
      *
      * @param Item $back
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setBack(Item $back = null)
     {
@@ -343,7 +343,7 @@ class Equipment
      *
      * @param Item $head
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setHead(Item $head = null)
     {
@@ -367,7 +367,7 @@ class Equipment
      *
      * @param Item $belt
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setBelt(Item $belt = null)
     {
@@ -391,7 +391,7 @@ class Equipment
      *
      * @param Item $hands
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function setHands(Item $hands = null)
     {

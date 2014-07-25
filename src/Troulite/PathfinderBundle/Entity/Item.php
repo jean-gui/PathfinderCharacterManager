@@ -2,6 +2,7 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,11 +54,15 @@ class Item
     private $weight;
 
     /**
-     * @var array
+     * @var Collection|ItemPower[]
      *
-     * @ORM\Column(type="json_array", nullable=true)
+     * @ORM\ManyToMany(targetEntity="ItemPower")
+     * @ORM\JoinTable(name="ItemPowers",
+     *     joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="power_id", referencedColumnName="id")}
+     * )
      */
-    private $effects;
+    private $powers;
 
     /**
      * Get id
@@ -166,58 +171,44 @@ class Item
     }
 
     /**
-     * Set effects
-     *
-     * @param array $effects
-     *
-     * @return Armor
-     */
-    public function setEffects($effects)
-    {
-        $this->effects = $effects;
-
-        return $this;
-    }
-
-    /**
-     * Get special
-     *
-     * @return array
-     */
-    public function getEffects()
-    {
-        return $this->effects;
-    }
-
-    /**
-     * Set effect
-     *
-     * @param array $effect
-     *
-     * @return Item
-     */
-    public function setEffect($effect)
-    {
-        $this->effects = $effect;
-
-        return $this;
-    }
-
-    /**
-     * Get effect
-     *
-     * @return array
-     */
-    public function getEffect()
-    {
-        return $this->effects;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Add power
+     *
+     * @param ItemPower $power
+     *
+     * @return $this
+     */
+    public function addPower(ItemPower $power)
+    {
+        $this->powers[] = $power;
+
+        return $this;
+    }
+
+    /**
+     * Remove power
+     *
+     * @param ItemPower $power
+     */
+    public function removePower(ItemPower $power)
+    {
+        $this->powers->removeElement($power);
+    }
+
+    /**
+     * Get powers
+     *
+     * @return Collection|ItemPower[]
+     */
+    public function getPowers()
+    {
+        return $this->powers;
     }
 }

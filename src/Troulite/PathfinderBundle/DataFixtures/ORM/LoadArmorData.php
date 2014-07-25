@@ -22,6 +22,7 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
         $mithralChainShirt5 = new Armor();
         $mithralChainShirt5
             ->setName('Mithral Chain Armor +5')
+            ->setAc(4)
             ->setCategory('light')
             ->setCost(26100)
             ->setDescription(
@@ -31,11 +32,7 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setMaximumDexterityBonus(6)
             ->setArmorCheckPenalty(0)
             ->setArcaneSpellFailure(10)
-            ->setEffect(
-                array(
-                    'ac' => ['type' => 'armor', 'value' => '9'],
-                )
-            );
+            ->addPower($this->getReference('armor-power-enhancement-5'));
 
         $manager->persist($mithralChainShirt5);
         $manager->flush();

@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
-use Troulite\PathfinderBundle\Entity\Equipment;
+use Troulite\PathfinderBundle\Entity\CharacterEquipment;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
 
@@ -34,7 +34,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->setAbilities(new Abilities(10, 16, 12, 10, 13, 10))
             ->setEquipment(
-                (new Equipment())
+                (new CharacterEquipment())
                     ->setMainWeapon($this->getReference('longbow +2'))
                     ->setBody($this->getReference('mithral chain mail +5'))
             );

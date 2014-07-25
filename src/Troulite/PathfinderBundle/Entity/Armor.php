@@ -13,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Armor extends Item
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $ac;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="category", type="string", length=255, nullable=false)
@@ -39,6 +46,26 @@ class Armor extends Item
      * @ORM\Column(name="arcaneSpellFailure", type="integer", nullable=false)
      */
     private $arcaneSpellFailure = 0;
+
+    /**
+     * @param int $ac
+     *
+     * @return $this
+     */
+    public function setAc($ac)
+    {
+        $this->ac = $ac;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAc()
+    {
+        return $this->ac;
+    }
 
     /**
      * Set category

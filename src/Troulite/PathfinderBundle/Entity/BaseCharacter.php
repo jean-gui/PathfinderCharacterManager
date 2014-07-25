@@ -92,9 +92,9 @@ class BaseCharacter
     private $inventory;
 
     /**
-     * @var Equipment
+     * @var CharacterEquipment
      *
-     * @ORM\OneToOne(targetEntity="Equipment", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="CharacterEquipment", cascade={"all"})
      * @ORM\JoinColumn(name="equipment_id", referencedColumnName="id")
      */
     private $equipment;
@@ -338,11 +338,11 @@ class BaseCharacter
     /**
      * Set equipment
      *
-     * @param Equipment $equipment
+     * @param CharacterEquipment $equipment
      *
      * @return BaseCharacter
      */
-    public function setEquipment(Equipment $equipment = null)
+    public function setEquipment(CharacterEquipment $equipment = null)
     {
         $this->equipment = $equipment;
 
@@ -352,7 +352,7 @@ class BaseCharacter
     /**
      * Get equipment
      *
-     * @return Equipment
+     * @return CharacterEquipment
      */
     public function getEquipment()
     {

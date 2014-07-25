@@ -54,12 +54,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setRange(20)
             ->setDualWield(true)
             ->setWeight(1.5)
-            ->setEffect(
-                array(
-                    'ranged-attack-roll' => ['type' => 'enhancement', 'value' => '2'],
-                    'ranged-damage-roll' => ['type' => 'enhancement', 'value' => '2']
-                )
-            );
+            ->addPower($this->getReference('weapon-power-enhancement-2'));
 
         $manager->persist($longbow2);
         $manager->flush();
