@@ -19,8 +19,8 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $mithralChainShirt5 = new Armor();
-        $mithralChainShirt5
+        $mithralStoneplate5Champion = new Armor();
+        $mithralStoneplate5Champion
             ->setName('Mithral Chain Armor +5')
             ->setAc(4)
             ->setCategory('light')
@@ -34,10 +34,30 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setArcaneSpellFailure(10)
             ->addPower($this->getReference('armor-power-enhancement-5'));
 
-        $manager->persist($mithralChainShirt5);
+        $manager->persist($mithralStoneplate5Champion);
         $manager->flush();
 
-        $this->setReference('mithral chain mail +5', $mithralChainShirt5);
+        $this->setReference('mithral chain mail +5', $mithralStoneplate5Champion);
+
+        $mithralStoneplate5Champion = new Armor();
+        $mithralStoneplate5Champion
+            ->setName('Mithral Stoneplate Champion Armor +5')
+            ->setAc(9)
+            ->setCategory('heavy')
+            ->setCost(46800)
+            ->setDescription(
+                'Crafted by dwarven stonesmiths from alchemically strengthened plates of basalt primarily for use by dwarven druids, stoneplate is heavy and unwieldy, but offers incredible protection to its wearer.'
+            )
+            ->setWeight(12.5)
+            ->setMaximumDexterityBonus(3)
+            ->setArmorCheckPenalty(-3)
+            ->setArcaneSpellFailure(25)
+            ->addPower($this->getReference('armor-power-enhancement-5'));
+
+        $manager->persist($mithralStoneplate5Champion);
+        $manager->flush();
+
+        $this->setReference('mithral stoneplate champion armor +5', $mithralStoneplate5Champion);
     }
 
     /**
