@@ -99,6 +99,13 @@ class ClassDefinition
     private $specials;
 
     /**
+     * @var Collection|ClassPower[]
+     *
+     * @ORM\OneToMany(targetEntity="ClassPower", mappedBy="class", cascade={"all"})
+     */
+    private $powers;
+
+    /**
      * Get id
      *
      * @return integer
@@ -351,9 +358,47 @@ class ClassDefinition
 
     /**
      * @param $specials
+     *
+     * @return $this
      */
     public function setSpecials($specials)
     {
         $this->specials = $specials;
+
+        return $this;
+    }
+
+    /**
+     * Add powers
+     *
+     * @param ClassPower $powers
+     *
+     * @return ClassDefinition
+     */
+    public function addPower(ClassPower $powers)
+    {
+        $this->powers[] = $powers;
+
+        return $this;
+    }
+
+    /**
+     * Remove powers
+     *
+     * @param ClassPower $powers
+     */
+    public function removePower(ClassPower $powers)
+    {
+        $this->powers->removeElement($powers);
+    }
+
+    /**
+     * Get powers
+     *
+     * @return Collection|ClassPower[]
+     */
+    public function getPowers()
+    {
+        return $this->powers;
     }
 }

@@ -9,14 +9,15 @@
 namespace Troulite\PathfinderBundle\Services;
 
 use Troulite\PathfinderBundle\Entity\Armor;
+use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
-use Troulite\PathfinderBundle\Entity\Character;
 
 /**
  * Class CharacterBonuses
@@ -47,6 +48,7 @@ class CharacterBonuses
     {
         $this->applyRace($character);
         $this->applyFeats($character);
+        $this->applyClass($character);
         $this->applyItem($character, $character->getEquipment()->getMainWeapon());
         $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
         $this->applyItem($character, $character->getEquipment()->getBody());
@@ -87,6 +89,27 @@ class CharacterBonuses
         foreach ($character->getFeats() as $feat) {
             if ($this->isApplicable($feat)) {
                 $this->applyFeat($character, $feat->getFeat());
+            }
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param Character $character
+     *
+     * @return Character
+     */
+    private function applyClass(Character $character)
+    {
+        /** @var $class ClassDefinition */
+        foreach ($character->getLevelPerClass() as $classLevel) {
+            $class = $classLevel['class'];
+            $level = $classLevel['level'];
+            foreach ($class->getPowers() as $power) {
+                if ($power->getLevel() <= $level) {
+                    $this->applyEffects($character, $power->getEffects(), $class);
+                }
             }
         }
 

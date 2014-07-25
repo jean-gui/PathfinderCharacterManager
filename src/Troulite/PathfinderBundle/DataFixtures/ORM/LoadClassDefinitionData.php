@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
+use Troulite\PathfinderBundle\Entity\ClassPower;
 
 /**
  * Class LoadClassDefinitionData
@@ -148,7 +149,24 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('profession'))
             ->addClassSkill($this->getReference('ride'))
             ->addClassSkill($this->getReference('senseMotive'))
-            ->addClassSkill($this->getReference('spellcraft'));
+            ->addClassSkill($this->getReference('spellcraft'))
+            ->addPower(
+                (new ClassPower())
+                    ->setName('Divine Grace')
+                    ->setDescription(
+                        'At 2nd level, a paladin gains a bonus equal to her Charisma bonus (if any) on all Saving Throws.'
+                    )
+                    ->setLevel(2)
+                    ->setClass($paladin)
+                    ->setPassive(true)
+                    ->setEffects(
+                        array(
+                            'fortitude' => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
+                            'reflexes'  => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
+                            'will'      => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())')
+                        )
+                    )
+            );
 
         $manager->persist($paladin);
         $manager->flush();
