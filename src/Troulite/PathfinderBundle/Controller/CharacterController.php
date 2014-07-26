@@ -132,12 +132,29 @@ class CharacterController extends Controller
         $passiveClassPowers        = array();
         $otherClassPowers       = array();
         foreach ($entity->getClassPowers() as $classPower) {
-            if (!$classPower->getClassPower()->hasEffects()) {
-                $otherClassPowers[] = $classPower;
-            } elseif (!$classPower->getClassPower()->isPassive() || $classPower->getClassPower()->hasExternalConditions()) {
-                $needActivationClassPowers[] = $classPower;
+            $power = $classPower->getClassPower();
+
+            if ($power->hasEffects()) {
+                $useless = 0;
+                if (array_key_exists('feat', $power->getEffects())) {
+                    $useless++;
+                }
+                if (array_key_exists('extra_feats', $power->getEffects())) {
+                    $useless++;
+                }
+
+                if ($useless == count($power->getEffects())) {
+                    // Don't add a power if it has not meaningful bonuses for the character sheet
+                    continue;
+                }
+
+                if (!$power->isPassive() || $power->hasExternalConditions()) {
+                    $needActivationClassPowers[] = $classPower;
+                } else {
+                    $passiveClassPowers[] = $classPower;
+                }
             } else {
-                $passiveClassPowers[] = $classPower;
+                $otherClassPowers[] = $classPower;
             }
         }
 
