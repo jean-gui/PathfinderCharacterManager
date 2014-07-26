@@ -18,5 +18,25 @@ class ExpressionLanguage extends BaseExpressionLanguage
                 return (int)($param1 / $param2);
             }
         );
+
+        $this->register(
+            'min',
+            function ($param1, $param2) {
+                return sprintf("min(%f, %f)", $param1, $param2);
+            },
+            function ($arguments, $param1, $param2) {
+                return (min($param1, $param2));
+            }
+        );
+
+        $this->register(
+            'max',
+            function ($param1, $param2) {
+                return sprintf("max(%f, %f)", $param1, $param2);
+            },
+            function ($arguments, $param1, $param2) {
+                return (max($param1, $param2));
+            }
+        );
     }
 }
