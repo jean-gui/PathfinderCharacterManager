@@ -493,6 +493,46 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('ride'))
             ->addClassSkill($this->getReference('senseMotive'))
             ->addClassSkill($this->getReference('spellcraft'));
+
+        $power = (new ClassPower())
+            ->setName('Aura of Good')
+            ->setLevel(1)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-good', $power);
+
+        $power = (new ClassPower())
+            ->setName('Detect Evil')
+            ->setLevel(1)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('detect-evil', $power);
+
+        $power = (new ClassPower())
+            ->setName('Smite Evil')
+            ->setLevel(1)
+            ->setClass($paladin)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll' => [
+                        'type' => null,
+                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                    ],
+                    'ranged-attack-roll' => [
+                        'type' => null,
+                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                    ],
+                    'melee-damage-roll' => ['type' => null, 'value' => 'c.getLevel(3)'],
+                    'ranged-damage-roll' => ['type' => null, 'value' => 'c.getLevel(3)'],
+                    'ac' => ['type' => 'deflection', 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))']
+                )
+            );
+        $paladin->addPower($power);
+        $this->addReference('smite-evil', $power);
+
         $power = (new ClassPower())
             ->setName('Divine Grace')
             ->setDescription(
@@ -503,18 +543,144 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'fortitude' => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
-                    'reflexes'  => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
-                    'will'      => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())')
+                    'fortitude' => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'),
+                    'reflexes'  => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'),
+                    'will'      => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))')
                 )
             );
         $paladin->addPower($power);
+        $this->addReference('divine-grace', $power);
 
-        $manager->persist($power);
+        $power = (new ClassPower())
+            ->setName('Lay On Hands')
+            ->setLevel(2)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('lay-on-hands', $power);
+
+        $power = (new ClassPower())
+            ->setName('Aura of Courage')
+            ->setLevel(3)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-courage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Divine Health')
+            ->setLevel(3)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('divine-health', $power);
+
+        $power = (new ClassPower())
+            ->setName('First Mercy')
+            ->setLevel(3)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-1', $power);
+
+        $power = (new ClassPower())
+            ->setName('Channel Positive Energy')
+            ->setLevel(4)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('channel-positive-energy', $power);
+
+        $power = (new ClassPower())
+            ->setName('Divine Bond')
+            ->setLevel(5)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('divine-bond', $power);
+
+        $power = (new ClassPower())
+            ->setName('Second Mercy')
+            ->setLevel(6)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Aura of Resolve')
+            ->setLevel(8)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-resolve', $power);
+
+        $power = (new ClassPower())
+            ->setName('Third Mercy')
+            ->setLevel(9)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Aura of Justice')
+            ->setLevel(11)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-justice', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fourth Mercy')
+            ->setLevel(12)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Aura of Faith')
+            ->setLevel(14)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-faith', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fifth Mercy')
+            ->setLevel(15)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-5', $power);
+
+        $power = (new ClassPower())
+            ->setName('Aura of Righteousness')
+            ->setLevel(17)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('aura-of-righteousness', $power);
+
+        $power = (new ClassPower())
+            ->setName('Sixth Mercy')
+            ->setLevel(18)
+            ->setClass($paladin)
+            ->setPassive(true);
+        $paladin->addPower($power);
+        $this->addReference('mercy-6', $power);
+
+        $power = (new ClassPower())
+            ->setName('Holy Champion')
+            ->setLevel(20)
+            ->setClass($paladin)
+            ->setPassive(false);
+        $paladin->addPower($power);
+        $this->addReference('holy-champion', $power);
+
         $manager->persist($paladin);
         $manager->flush();
-
-        $this->addReference('divine-grace', $power);
         $this->addReference('paladin', $paladin);
 
         $bab       = array(0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15);
