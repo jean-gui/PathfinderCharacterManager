@@ -235,6 +235,27 @@
                     </tbody>
                 </table>
                 {{ form_end(powers_activation_form) }}
+                <h3>Unmanaged Powers</h3>
+                <table class="table table-hover table-condensed table-responsive">
+                    <tbody>
+                    {% for feat in other_feats %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Feats</th>
+                            {% endif %}
+                            <td>{{ feat.feat }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for power in other_class_powers %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Class Powers</th>
+                            {% endif %}
+                            <td>{{ power.classPower }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 <h3>Passive Powers</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>

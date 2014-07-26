@@ -11,8 +11,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
-use Troulite\PathfinderBundle\Entity\CharacterClassPower;
-use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
@@ -115,25 +113,31 @@ class CharacterController extends Controller
 
         $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
 
-        /** @var $needActivationFeats CharacterFeat[] */
-        /** @var $passiveFeats CharacterFeat[] */
-        /** @noinspection PhpUnusedParameterInspection */
-        list($needActivationFeats, $passiveFeats) = $entity->getFeats()->partition(
-            function ($key, CharacterFeat $feat) {
-                return !$feat->getFeat()->isPassive() || $feat->getFeat()->hasExternalConditions();
+        $needActivationFeats = array();
+        $passiveFeats = array();
+        $otherFeats = array();
+        foreach ($entity->getFeats() as $feat) {
+            if (!$feat->getFeat()->hasEffects()) {
+                $otherFeats[] = $feat;
+            } elseif (!$feat->getFeat()->isPassive() || $feat->getFeat()->hasExternalConditions()) {
+                $needActivationFeats[] = $feat;
+            } else {
+                $passiveFeats[] = $feat;
             }
-        );
+        }
 
-        /** @var $needActivationPowers CharacterClassPower[] */
-        /** @var $passiveClassPowers CharacterClassPower[] */
-        /** @noinspection PhpUnusedParameterInspection */
-        list($needActivationClassPowers, $passiveClassPowers) = $entity->getClassPowers()->partition(
-            function ($key, CharacterClassPower $classPower) {
-                return
-                    !$classPower->getClassPower()->isPassive() ||
-                    $classPower->getClassPower()->hasExternalConditions();
+        $needActivationClassPowers = array();
+        $passiveClassPowers        = array();
+        $otherClassPowers       = array();
+        foreach ($entity->getClassPowers() as $classPower) {
+            if (!$classPower->getClassPower()->hasEffects()) {
+                $otherClassPowers[] = $classPower;
+            } elseif (!$classPower->getClassPower()->isPassive() || $classPower->getClassPower()->hasExternalConditions()) {
+                $needActivationClassPowers[] = $classPower;
+            } else {
+                $passiveClassPowers[] = $classPower;
             }
-        );
+        }
 
         $powersActivationForm = $this->createForm(new PowersActivationType());
         $powersActivationForm->get('feats')->setData($needActivationFeats);
@@ -153,7 +157,9 @@ class CharacterController extends Controller
             'powers_activation_form' => $powersActivationForm->createView(),
             'skills' => $skills,
             'passive_feats' => $passiveFeats,
-            'passive_class_powers' => $passiveClassPowers
+            'passive_class_powers' => $passiveClassPowers,
+            'other_feats' => $otherFeats,
+            'other_class_powers' => $otherClassPowers
         );
     }
 
