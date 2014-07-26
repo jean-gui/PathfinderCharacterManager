@@ -701,13 +701,20 @@ class Character extends BaseCharacter
      */
     public function getAc()
     {
-        return
-            10 +
-            min(
-                $this->getAbilityModifier($this->getDexterity()),
-                $this->getEquipment()->getBody()->getMaximumDexterityBonus()
-            ) +
-            $this->getDefenseBonuses()->ac->getBonus();
+        if ($this->getEquipment()->getBody()) {
+            return
+                10 +
+                min(
+                    $this->getAbilityModifier($this->getDexterity()),
+                    $this->getEquipment()->getBody()->getMaximumDexterityBonus()
+                ) +
+                $this->getDefenseBonuses()->ac->getBonus();
+        } else {
+            return
+                10 +
+                $this->getAbilityModifier($this->getDexterity()) +
+                $this->getDefenseBonuses()->ac->getBonus();
+        }
     }
 
     /**
