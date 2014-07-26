@@ -70,14 +70,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll' => array('type' => null, 'value' => 2),
-                    'melee-damage-roll'  => array('type' => null, 'value' => 2),
-                    'ranged-attack-roll' => array('type' => null, 'value' => 2),
-                    'ranged-damage-roll' => array('type' => null, 'value' => 2),
-                    'bluff'      => array('type' => null, 'value' => 2),
-                    'perception' => array('type' => null, 'value' => 2),
-                    'sense-motive' => array('type' => null, 'value' => 2),
-                    'survival' => array('type' => null, 'value' => 2),
+                    'melee-attack-roll' => array('type' => 'favored-enemy', 'value' => 2),
+                    'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 2),
+                    'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 2),
+                    'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 2),
+                    'bluff'      => array('type' => 'favored-enemy', 'value' => 2),
+                    'perception' => array('type' => 'favored-enemy', 'value' => 2),
+                    'sense-motive' => array('type' => 'favored-enemy', 'value' => 2),
+                    'survival' => array('type' => 'favored-enemy', 'value' => 2),
                 )
             );
         $ranger->addPower($power);
@@ -160,14 +160,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll'  => array('type' => null, 'value' => 4),
-                    'melee-damage-roll'  => array('type' => null, 'value' => 4),
-                    'ranged-attack-roll' => array('type' => null, 'value' => 4),
-                    'ranged-damage-roll' => array('type' => null, 'value' => 4),
-                    'bluff'              => array('type' => null, 'value' => 4),
-                    'perception'         => array('type' => null, 'value' => 4),
-                    'sense-motive'       => array('type' => null, 'value' => 4),
-                    'survival'           => array('type' => null, 'value' => 4),
+                    'melee-attack-roll'  => array('type' => 'favored-enemy', 'value' => 4),
+                    'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 4),
+                    'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 4),
+                    'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 4),
+                    'bluff'              => array('type' => 'favored-enemy', 'value' => 4),
+                    'perception'         => array('type' => 'favored-enemy', 'value' => 4),
+                    'sense-motive'       => array('type' => 'favored-enemy', 'value' => 4),
+                    'survival'           => array('type' => 'favored-enemy', 'value' => 4),
                 )
             );
         $ranger->addPower($power);
@@ -243,14 +243,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll'  => array('type' => null, 'value' => 6),
-                    'melee-damage-roll'  => array('type' => null, 'value' => 6),
-                    'ranged-attack-roll' => array('type' => null, 'value' => 6),
-                    'ranged-damage-roll' => array('type' => null, 'value' => 6),
-                    'bluff'              => array('type' => null, 'value' => 6),
-                    'perception'         => array('type' => null, 'value' => 6),
-                    'sense-motive'       => array('type' => null, 'value' => 6),
-                    'survival'           => array('type' => null, 'value' => 6),
+                    'melee-attack-roll'  => array('type' => 'favored-enemy', 'value' => 6),
+                    'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 6),
+                    'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 6),
+                    'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 6),
+                    'bluff'              => array('type' => 'favored-enemy', 'value' => 6),
+                    'perception'         => array('type' => 'favored-enemy', 'value' => 6),
+                    'sense-motive'       => array('type' => 'favored-enemy', 'value' => 6),
+                    'survival'           => array('type' => 'favored-enemy', 'value' => 6),
                 )
             );
         $ranger->addPower($power);
@@ -313,14 +313,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll'  => array('type' => null, 'value' => 8),
-                    'melee-damage-roll'  => array('type' => null, 'value' => 8),
-                    'ranged-attack-roll' => array('type' => null, 'value' => 8),
-                    'ranged-damage-roll' => array('type' => null, 'value' => 8),
-                    'bluff'              => array('type' => null, 'value' => 8),
-                    'perception'         => array('type' => null, 'value' => 8),
-                    'sense-motive'       => array('type' => null, 'value' => 8),
-                    'survival'           => array('type' => null, 'value' => 8),
+                    'melee-attack-roll'  => array('type' => 'favored-enemy', 'value' => 8),
+                    'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 8),
+                    'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 8),
+                    'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 8),
+                    'bluff'              => array('type' => 'favored-enemy', 'value' => 8),
+                    'perception'         => array('type' => 'favored-enemy', 'value' => 8),
+                    'sense-motive'       => array('type' => 'favored-enemy', 'value' => 8),
+                    'survival'           => array('type' => 'favored-enemy', 'value' => 8),
                 )
             );
         $ranger->addPower($power);
@@ -402,14 +402,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll'  => array('type' => null, 'value' => 10),
-                    'melee-damage-roll'  => array('type' => null, 'value' => 10),
-                    'ranged-attack-roll' => array('type' => null, 'value' => 10),
-                    'ranged-damage-roll' => array('type' => null, 'value' => 10),
-                    'bluff'              => array('type' => null, 'value' => 10),
-                    'perception'         => array('type' => null, 'value' => 10),
-                    'sense-motive'       => array('type' => null, 'value' => 10),
-                    'survival'           => array('type' => null, 'value' => 10),
+                    'melee-attack-roll'  => array('type' => 'favored-enemy', 'value' => 10),
+                    'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 10),
+                    'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 10),
+                    'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 10),
+                    'bluff'              => array('type' => 'favored-enemy', 'value' => 10),
+                    'perception'         => array('type' => 'favored-enemy', 'value' => 10),
+                    'sense-motive'       => array('type' => 'favored-enemy', 'value' => 10),
+                    'survival'           => array('type' => 'favored-enemy', 'value' => 10),
                 )
             );
         $ranger->addPower($power);
