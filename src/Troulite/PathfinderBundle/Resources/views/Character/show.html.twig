@@ -1,14 +1,12 @@
 {% extends '::base.html.twig' %}
 
-{% form_theme feats_activation_form _self %}
-
 {% block title "BaseCharacter - " ~ entity %}
 
 {% block navbar_current -%}
     <ul class="nav navbar-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ entity }} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
+            <ul class="dropdown-menu">
                 <li><a href="#main" data-toggle="tab">Main Profile</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
                 <li><a href="#equipment" data-toggle="tab">Equipment</a></li>
@@ -205,42 +203,59 @@
                 </table>
             </div>
             <div class="col-md-3">
-                <h2 id="feats">Feats</h2>
-                <h3>Activable Feats</h3>
-                {{ form_start(feats_activation_form) }}
-                <table>
+                <h2 id="feats">Powers</h2>
+
+                {{ form_start(powers_activation_form) }}
+                <table class="table table-hover table-condensed table-responsive">
                     <thead>
                     <tr>
-                        <th></th>
+                        <th colspan="2"></th>
                         <th>Active?</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for feat in feats_activation_form.feats %}
+                    {% for power in powers_activation_form.feats %}
                         <tr>
-                            <td>{{ form_label(feat.active, feat.vars.value.feat.name) }}</td>
-                            <td>{{ form_widget(feat.active) }}</td>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Feats</th>
+                            {% endif %}
+                            <td>{{ form_label(power.active, power.vars.value.feat.name) }}</td>
+                            <td>{{ form_widget(power.active) }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for power in powers_activation_form.class_powers %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Class</th>
+                            {% endif %}
+                            <td>{{ form_label(power.active, power.vars.value.classPower.name) }}</td>
+                            <td>{{ form_widget(power.active) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
-                {{ form_end(feats_activation_form) }}
-                <h3>Passive Feats</h3>
-                <ul>
-                    {% for feat in passive_feats %}
-                    <li>{{ feat.feat }}</li>
-                    {% endfor %}
-                </ul>
-                <h3>Passive Class Powers</h3>
-                <ul>
-                    {% for classLevel in entity.levelPerClass %}
-                        {% for power in classLevel['class'].powers %}
-                            {% if power.level <= classLevel['level'] %}
-                                <li>{{ power }}</li>
-                            {% endif %}
+                {{ form_end(powers_activation_form) }}
+                <h3>Passive Powers</h3>
+                <table class="table table-hover table-condensed table-responsive">
+                    <tbody>
+                        {% for feat in passive_feats %}
+                            <tr>
+                                {% if loop.index == 1 %}
+                                    <th rowspan="{{ loop.length }}">Feats</th>
+                                {% endif %}
+                                <td>{{ feat.feat }}</td>
+                            </tr>
                         {% endfor %}
-                    {% endfor %}
-                </ul>
+                        {% for power in passive_class_powers %}
+                            <tr>
+                                {% if loop.index == 1 %}
+                                    <th rowspan="{{ loop.length }}">Class Powers</th>
+                                {% endif %}
+                                <td>{{ power.classPower }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -315,6 +330,12 @@
             <dt>Neck</dt>
             <dd>{{ entity.equipment.neck }}</dd>
         </dl>
+    </div>
+    <div id="inventory" class="tab-pane">
+        <h2>Inventory</h2>
+    </div>
+    <div id="spells" class="tab-pane">
+        <h2>Spells</h2>
     </div>
     </div>
     </div>

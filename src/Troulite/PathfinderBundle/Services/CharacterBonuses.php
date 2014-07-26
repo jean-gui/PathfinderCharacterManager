@@ -10,9 +10,9 @@ namespace Troulite\PathfinderBundle\Services;
 
 use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
-use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
@@ -48,7 +48,7 @@ class CharacterBonuses
     {
         $this->applyRace($character);
         $this->applyFeats($character);
-        $this->applyClass($character);
+        $this->applyClassPowers($character);
         $this->applyItem($character, $character->getEquipment()->getMainWeapon());
         $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
         $this->applyItem($character, $character->getEquipment()->getBody());
@@ -88,7 +88,7 @@ class CharacterBonuses
     {
         foreach ($character->getFeats() as $feat) {
             if ($this->isApplicable($feat)) {
-                $this->applyFeat($character, $feat->getFeat());
+                $this->applyPower($character, $feat->getFeat());
             }
         }
 
@@ -100,16 +100,12 @@ class CharacterBonuses
      *
      * @return Character
      */
-    private function applyClass(Character $character)
+    private function applyClassPowers(Character $character)
     {
         /** @var $class ClassDefinition */
-        foreach ($character->getLevelPerClass() as $classLevel) {
-            $class = $classLevel['class'];
-            $level = $classLevel['level'];
-            foreach ($class->getPowers() as $power) {
-                if ($power->getLevel() <= $level) {
-                    $this->applyEffects($character, $power->getEffects(), $class);
-                }
+        foreach ($character->getClassPowers() as $classPower) {
+            if ($this->isApplicable($classPower)) {
+                $this->applyPower($character, $classPower->getClassPower());
             }
         }
 
@@ -119,16 +115,26 @@ class CharacterBonuses
     /**
      * Return whether a feat's bonuses can be applied
      *
-     * @param CharacterFeat $characterFeat
+     * @param mixed $characterPower
      *
      * @return bool
      */
-    private function isApplicable(CharacterFeat $characterFeat)
+    private function isApplicable($characterPower)
     {
-        $character = $characterFeat->getCharacter();
-        $feat = $characterFeat->getFeat();
+        /** @var $character Character */
+        $character = $characterPower->getCharacter();
+        $power = null;
+        if ($characterPower instanceof CharacterFeat) {
+            $power = $characterPower->getFeat();
+        } elseif ($characterPower instanceof CharacterClassPower) {
+            $power = $characterPower->getClassPower();
+        }
 
-        foreach ($feat->getConditions() as $type => $condition) {
+        if ($power === null) {
+            return false;
+        }
+
+        foreach ($power->getConditions() as $type => $condition) {
             switch($type) {
                 case 'weapon-type':
                     $weapon = $character->getEquipment()->getMainWeapon();
@@ -146,20 +152,20 @@ class CharacterBonuses
             }
         }
 
-        return ($feat->isPassive() && !$feat->hasExternalConditions()) || $characterFeat->isActive();
+        return ($power->isPassive() && !$power->hasExternalConditions()) || $characterPower->isActive();
     }
 
     /**
      * Apply feat effects to a character
      *
      * @param Character $character
-     * @param Feat $feat
+     * @param mixed $power anything with the Power trait
      *
      * @return Character
      */
-    private function applyFeat(Character $character, Feat $feat)
+    private function applyPower(Character $character, $power)
     {
-        return $this->applyEffects($character, $feat->getEffects(), $feat);
+        return $this->applyEffects($character, $power->getEffects(), $power);
     }
 
     /**

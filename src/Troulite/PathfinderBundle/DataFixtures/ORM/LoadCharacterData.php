@@ -7,8 +7,8 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\Character;
-use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\CharacterEquipment;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
 

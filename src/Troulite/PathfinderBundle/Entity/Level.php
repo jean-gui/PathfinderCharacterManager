@@ -71,12 +71,20 @@ class Level
     private $skills;
 
     /**
+     * @var Collection|CharacterClassPower[]
+     *
+     * @ORM\OneToMany(targetEntity="CharacterClassPower", mappedBy="level", cascade={"all"})
+     */
+    private $classPowers;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->skills = new ArrayCollection();
-        $this->feats  = new ArrayCollection();
+        $this->skills      = new ArrayCollection();
+        $this->feats       = new ArrayCollection();
+        $this->classPowers = new ArrayCollection();
     }
 
     /**
@@ -94,7 +102,7 @@ class Level
      *
      * @param Character $character
      *
-     * @return Level
+     * @return $this
      */
     public function setCharacter(Character $character)
     {
@@ -118,7 +126,7 @@ class Level
      *
      * @param ClassDefinition $classDefinition
      *
-     * @return Level
+     * @return $this
      */
     public function setClassDefinition(ClassDefinition $classDefinition)
     {
@@ -142,7 +150,7 @@ class Level
      *
      * @param integer $hpRoll
      *
-     * @return Level
+     * @return $this
      */
     public function setHpRoll($hpRoll)
     {
@@ -166,7 +174,7 @@ class Level
      *
      * @param LevelSkill $skill
      *
-     * @return Level
+     * @return $this
      */
     public function addSkill(LevelSkill $skill)
     {
@@ -212,7 +220,7 @@ class Level
      * Set extraAbility
      *
      * @param string $extraAbility
-     * @return Level
+     * @return $this
      */
     public function setExtraAbility($extraAbility)
     {
@@ -236,7 +244,7 @@ class Level
      *
      * @param CharacterFeat $feat
      *
-     * @return Character
+     * @return $this
      */
     public function addFeat(CharacterFeat $feat = null)
     {
@@ -274,5 +282,40 @@ class Level
     public function isFavoredClass()
     {
         return $this->getClassDefinition() === $this->getCharacter()->getFavoredClass();
+    }
+
+    /**
+     * Add classPowers
+     *
+     * @param CharacterClassPower $classPower
+     *
+     * @return $this
+     */
+    public function addClassPower(CharacterClassPower $classPower)
+    {
+        $classPower->setLevel($this);
+        $this->classPowers[] = $classPower;
+
+        return $this;
+    }
+
+    /**
+     * Remove classPowers
+     *
+     * @param CharacterClassPower $classPower
+     */
+    public function removeClassPower(CharacterClassPower $classPower)
+    {
+        $this->classPowers->removeElement($classPower);
+    }
+
+    /**
+     * Get classPowers
+     *
+     * @return Collection|CharacterClassPower[]
+     */
+    public function getClassPowers()
+    {
+        return $this->classPowers;
     }
 }

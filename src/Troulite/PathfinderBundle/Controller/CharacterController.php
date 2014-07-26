@@ -10,12 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
-use Troulite\PathfinderBundle\Form\FeatsActivationType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
-use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Form\PowersActivationType;
 
 /**
  * Character controller.
@@ -123,11 +124,23 @@ class CharacterController extends Controller
             }
         );
 
-        $featsActivationForm = $this->createForm(new FeatsActivationType());
-        $featsActivationForm->get('feats')->setData($needActivationFeats);
-        $featsActivationForm->handleRequest($request);
+        /** @var $needActivationPowers CharacterClassPower[] */
+        /** @var $passiveClassPowers CharacterClassPower[] */
+        /** @noinspection PhpUnusedParameterInspection */
+        list($needActivationClassPowers, $passiveClassPowers) = $entity->getClassPowers()->partition(
+            function ($key, CharacterClassPower $classPower) {
+                return
+                    !$classPower->getClassPower()->isPassive() ||
+                    $classPower->getClassPower()->hasExternalConditions();
+            }
+        );
 
-        if ($featsActivationForm->isValid()) {
+        $powersActivationForm = $this->createForm(new PowersActivationType());
+        $powersActivationForm->get('feats')->setData($needActivationFeats);
+        $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
+        $powersActivationForm->handleRequest($request);
+
+        if ($powersActivationForm->isValid()) {
             $em->flush();
 
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
@@ -137,9 +150,10 @@ class CharacterController extends Controller
 
         return array(
             'entity' => $entity,
-            'feats_activation_form' => $featsActivationForm->createView(),
+            'powers_activation_form' => $powersActivationForm->createView(),
             'skills' => $skills,
-            'passive_feats' => $passiveFeats
+            'passive_feats' => $passiveFeats,
+            'passive_class_powers' => $passiveClassPowers
         );
     }
 

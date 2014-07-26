@@ -673,6 +673,21 @@ class Character extends BaseCharacter
     }
 
     /**
+     * Return all class powers this character possesses
+     *
+     * @return Collection|CharacterClassPower[]
+     */
+    public function getClassPowers()
+    {
+        $classPowers = array();
+        foreach ($this->getLevels() as $level) {
+            $classPowers = array_merge($classPowers, $level->getClassPowers()->toArray());
+        }
+
+        return new ArrayCollection($classPowers);
+    }
+
+    /**
      * @todo dexterity modifier limited by armor
      * @todo bonuses
      * @return int

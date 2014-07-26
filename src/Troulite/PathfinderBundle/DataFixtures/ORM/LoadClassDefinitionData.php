@@ -149,28 +149,29 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('profession'))
             ->addClassSkill($this->getReference('ride'))
             ->addClassSkill($this->getReference('senseMotive'))
-            ->addClassSkill($this->getReference('spellcraft'))
-            ->addPower(
-                (new ClassPower())
-                    ->setName('Divine Grace')
-                    ->setDescription(
-                        'At 2nd level, a paladin gains a bonus equal to her Charisma bonus (if any) on all Saving Throws.'
-                    )
-                    ->setLevel(2)
-                    ->setClass($paladin)
-                    ->setPassive(true)
-                    ->setEffects(
-                        array(
-                            'fortitude' => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
-                            'reflexes'  => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
-                            'will'      => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())')
-                        )
-                    )
+            ->addClassSkill($this->getReference('spellcraft'));
+        $power = (new ClassPower())
+            ->setName('Divine Grace')
+            ->setDescription(
+                'At 2nd level, a paladin gains a bonus equal to her Charisma bonus (if any) on all Saving Throws.'
+            )
+            ->setLevel(2)
+            ->setClass($paladin)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'fortitude' => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
+                    'reflexes'  => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())'),
+                    'will'      => array('type' => null, 'value' => 'c.getAbilityModifier(c.getCharisma())')
+                )
             );
+        $paladin->addPower($power);
 
+        $manager->persist($power);
         $manager->persist($paladin);
         $manager->flush();
 
+        $this->addReference('divine-grace', $power);
         $this->addReference('paladin', $paladin);
 
         $bab       = array(0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15);

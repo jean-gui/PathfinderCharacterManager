@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class FeatsActivationType
+ * Class ClassPowerActivationType
  *
  * @package Troulite\PathfinderBundle\Form
  */
-class FeatsActivationType extends AbstractType
+class ClassPowerActivationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,8 +20,11 @@ class FeatsActivationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('feats', 'collection', ['type' => new FeatActivationType()])
-            ->add('submit', 'submit', ['label' => '(De)Activate Feats']);
+            ->add(
+                'active',
+                null,
+                array("required" => false)
+            );
     }
 
     /**
@@ -29,7 +32,11 @@ class FeatsActivationType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterClassPower'
+            )
+        );
     }
 
     /**
@@ -37,7 +44,6 @@ class FeatsActivationType extends AbstractType
      */
     public function getName()
     {
-        return 'featsactivation';
+        return 'classpoweractivation';
     }
-
-} 
+}
