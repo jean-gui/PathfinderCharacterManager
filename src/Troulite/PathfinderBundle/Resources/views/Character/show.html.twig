@@ -320,7 +320,10 @@
                                 {% if loop.index == 1 %}
                                     <th rowspan="{{ loop.length }}">Feats</th>
                                 {% endif %}
-                                <td>{{ feat.feat }}</td>
+                                <td>
+                                    {{ popovers.description(feat.feat.name, feat.feat) }}
+                                    {{ feat.feat }}
+                                </td>
                             </tr>
                         {% endfor %}
                         {% for power in passive_class_powers %}
@@ -328,7 +331,10 @@
                                 {% if loop.index == 1 %}
                                     <th rowspan="{{ loop.length }}">Class Powers</th>
                                 {% endif %}
-                                <td>{{ power.classPower }}</td>
+                                <td>
+                                    {{ popovers.description(power.classPower.name, power.classPower) }}
+                                    {{ power.classPower }}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -424,7 +430,13 @@
 {% endblock %}
 
 {% macro description(title, object) %}
-    {% if object.longDescription or object.shortDescription %}
+    {% if
+        object.longDescription or
+        object.shortDescription or
+        (object.prerequisities is defined and object.prerequisities|length > 0) or
+        (object.conditions is defined and object.conditions|length > 0) or
+        (object.externalConditions is defined and object.externalConditions|length > 0)
+    %}
     <a class="mypopover" data-toggle="popover"
        title="{{ title }}"
        data-content="
@@ -432,6 +444,28 @@
             <p><em>{{ object.shortDescription }}</em></p>
             {% endif %}
             {{ object.longDescription }}
+            {% if object.prerequisities is defined and object.prerequisities|length > 0 %}
+            Prerequisities:
+            <ul>
+                {% for key, value in object.prerequisities %}
+                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if
+                (object.conditions is defined and object.conditions|length > 0) or
+                (object.externalConditions is defined and object.externalConditions|length > 0)
+            %}
+            Conditions:
+            <ul>
+                {% for key, value in object.conditions %}
+                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                {% endfor %}
+                {% for key, value in object.externalConditions %}
+                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
        ">
         <span class="glyphicon glyphicon-info-sign"></span></a>
     {% endif %}
