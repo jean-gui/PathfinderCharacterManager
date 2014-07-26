@@ -203,10 +203,11 @@
                         <th>Melee attack rolls</th>
                         {% for ar in entity.meleeAttackRoll %}
                             <td>
-                                {% if loop.index == 1 %}
+                                {{ ar }}
+                                {% if loop.index == loop.length %}
                                     {{ popovers.bonuses(entity.attackBonuses.meleeAttackRolls) }}
                                 {% endif %}
-                                {{ ar }}
+
                             </td>
                         {% endfor %}
                     </tr>
