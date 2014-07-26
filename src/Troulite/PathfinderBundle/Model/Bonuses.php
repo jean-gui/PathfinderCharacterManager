@@ -109,6 +109,23 @@ class Bonuses {
     }
 
     /**
+     * Most bonuses do not stack. This method returns the list of bonuses that cannot be applied to a character
+     *
+     * @return Bonus[]
+     * @todo handle same source for non typed bonuses
+     */
+    public function getNonApplicableBonuses()
+    {
+        return array_udiff(
+            $this->getBonuses(),
+            $this->getApplicableBonuses(),
+            function ($a, $b) {
+                return $a !== $b;
+            }
+        );
+    }
+
+    /**
      * Get the applicable bonus value
      *
      * @return int
