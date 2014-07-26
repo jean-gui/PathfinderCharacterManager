@@ -231,7 +231,19 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($feat);
         $this->addReference('critical-focus', $feat);
 
-        $manager->flush();
+        $feat = new Feat();
+        $feat
+            ->setName('Endurance')
+            ->setDescription('Harsh conditions or long exertions do not easily tire you.')
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'swim' => ['type' => null, 'value' => 4],
+                    'fortitude' => ['type' => null, 'value' => 4]
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('feat-endurance', $feat);
 
         $manager->flush();
     }

@@ -120,7 +120,10 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Endurance')
             ->setLevel(3)
             ->setClass($ranger)
-            ->setPassive(true);
+            ->setPassive(true)
+            ->setEffects(
+                array('feat' => ['type' => null, 'value' => 'Endurance'])
+            );
 
         $ranger->addPower($power);
         $this->setReference('endurance', $power);
