@@ -23,7 +23,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName("Deadly aim")
-            ->setDescription(
+            ->setShortDescription(
                 "You can make exceptionally deadly ranged attacks by pinpointing a foe's weak spot, at the expense of making the attack less likely to succeed."
             )
             ->setPrerequisities(
@@ -45,7 +45,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName("Lightning reflexes")
-            ->setDescription("You have faster reflexes than normal.")
+            ->setShortDescription("You have faster reflexes than normal.")
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -58,7 +58,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName("Iron will")
-            ->setDescription("You are more resistant to mental effects.")
+            ->setShortDescription("You are more resistant to mental effects.")
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -71,7 +71,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName("Great Fortitude")
-            ->setDescription("You are resistant to poisons, diseases, and other maladies.")
+            ->setShortDescription("You are resistant to poisons, diseases, and other maladies.")
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -84,7 +84,10 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Rapid shot')
-            ->setDescription('You can make an additional ranged attack.')
+            ->setShortDescription('You can make an additional ranged attack.')
+            ->setLongDescription('
+                When making a full-attack action with a ranged weapon, you can fire one additional time this
+                round. All of your attack rolls take a –2 penalty when using Rapid Shot.')
             ->setPassive(false)
             ->setEffects(
                 array(
@@ -98,7 +101,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Weapon focus - Longbow')
-            ->setDescription(
+            ->setShortDescription(
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
             )
             ->setPassive(true)
@@ -118,7 +121,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Weapon focus - Longsword')
-            ->setDescription(
+            ->setShortDescription(
                 'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
             )
             ->setPassive(true)
@@ -138,7 +141,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Dodge')
-            ->setDescription(
+            ->setShortDescription(
                 "Your training and reflexes allow you to react swiftly to avoid an opponents' attacks ."
             )
             ->setPassive(true)
@@ -156,7 +159,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Point-Blank Shot')
-            ->setDescription(
+            ->setShortDescription(
                 'You are especially accurate when making ranged attacks against close targets.'
             )
             ->setPassive(true)
@@ -175,7 +178,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Toughness')
-            ->setDescription('You have enhanced physical stamina.')
+            ->setShortDescription('You have enhanced physical stamina.')
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -188,7 +191,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Shield Focus')
-            ->setDescription('You are skilled at deflecting blows with your shield.')
+            ->setShortDescription('You are skilled at deflecting blows with your shield.')
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -205,7 +208,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Improved Critical (Longsword)')
-            ->setDescription('Attacks made with your chosen weapon are quite deadly.')
+            ->setShortDescription('Attacks made with your chosen weapon are quite deadly.')
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -221,7 +224,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Critical Focus')
-            ->setDescription('You are trained in the art of causing pain.')
+            ->setShortDescription('You are trained in the art of causing pain.')
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -234,7 +237,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $feat = new Feat();
         $feat
             ->setName('Endurance')
-            ->setDescription('Harsh conditions or long exertions do not easily tire you.')
+            ->setShortDescription('Harsh conditions or long exertions do not easily tire you.')
             ->setPassive(false)
             ->setEffects(
                 array(

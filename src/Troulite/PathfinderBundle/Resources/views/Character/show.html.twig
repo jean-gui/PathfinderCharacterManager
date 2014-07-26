@@ -264,11 +264,7 @@
                                 <th rowspan="{{ loop.length }}">Feats</th>
                             {% endif %}
                             <td>
-                                {{ popovers.description(
-                                        power.vars.value.feat.name,
-                                        power.vars.value.feat.description
-                                   )
-                                }}
+                                {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat) }}
                                 {{ form_label(power.active, power.vars.value.feat.name) }}
                             </td>
                             <td>{{ form_widget(power.active) }}</td>
@@ -280,11 +276,7 @@
                                 <th rowspan="{{ loop.length }}">Class</th>
                             {% endif %}
                             <td>
-                                {{ popovers.description(
-                                        power.vars.value.classPower.name,
-                                        power.vars.value.classPower.description
-                                   )
-                                }}
+                                {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
                                 {{ form_label(power.active, power.vars.value.classPower.name) }}
                             </td>
                             <td>{{ form_widget(power.active) }}</td>
@@ -302,11 +294,7 @@
                                 <th rowspan="{{ loop.length }}">Feats</th>
                             {% endif %}
                             <td>
-                                {{ popovers.description(
-                                        feat.feat.name,
-                                        feat.feat.description
-                                   )
-                                }}
+                                {{ popovers.description(feat.feat.name, feat.feat) }}
                                 {{ feat.feat }}
                             </td>
                         </tr>
@@ -317,11 +305,7 @@
                                 <th rowspan="{{ loop.length }}">Class Powers</th>
                             {% endif %}
                             <td>
-                                {{ popovers.description(
-                                        power.classPower.name,
-                                        power.classPower.description
-                                   )
-                                }}
+                                {{ popovers.description(power.classPower.name, power.classPower) }}
                                 {{ power.classPower }}
                             </td>
                         </tr>
@@ -439,18 +423,23 @@
     </div>
 {% endblock %}
 
-{% macro description(title, description) %}
-    {% if description is defined and description %}
-    <a class="mypopover" data-placement="top" data-toggle="popover"
+{% macro description(title, object) %}
+    {% if object.longDescription or object.shortDescription %}
+    <a class="mypopover" data-toggle="popover"
        title="{{ title }}"
-       data-content="{{ description }}">
+       data-content="
+            {% if object.shortDescription %}
+            <p><em>{{ object.shortDescription }}</em></p>
+            {% endif %}
+            {{ object.longDescription }}
+       ">
         <span class="glyphicon glyphicon-info-sign"></span></a>
     {% endif %}
 {% endmacro %}
 
 {% macro bonuses(bonuses) %}
     {% if bonuses.bonuses|length != 0 %}
-        <a class="mypopover" data-placement="top" data-toggle="popover"
+        <a class="mypopover" data-toggle="popover"
            title="Bonuses"
            data-content="
                 {% set ab = bonuses.applicableBonuses %}

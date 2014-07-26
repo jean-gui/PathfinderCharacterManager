@@ -4,6 +4,7 @@ namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Troulite\PathfinderBundle\Entity\Traits\Describable;
 
 /**
  * Item
@@ -16,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
+    use Describable;
+
     /**
      * @var integer
      *
@@ -31,13 +34,6 @@ class Item
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
-     */
-    private $description;
 
     /**
      * @var integer
@@ -96,30 +92,6 @@ class Item
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Item
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

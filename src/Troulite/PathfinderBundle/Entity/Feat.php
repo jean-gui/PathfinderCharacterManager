@@ -3,6 +3,7 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Troulite\PathfinderBundle\Entity\Traits\Describable;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
 
 /**
@@ -30,13 +31,6 @@ class Feat
      * @ORM\Column(type="string")
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text")
-     */
-    private $description;
 
     /**
      * @var string[]
@@ -77,30 +71,6 @@ class Feat
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Feat
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

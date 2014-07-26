@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Troulite\PathfinderBundle\Entity\Traits
  */
 trait Power {
+    use Describable;
 
     /**
      * @var boolean

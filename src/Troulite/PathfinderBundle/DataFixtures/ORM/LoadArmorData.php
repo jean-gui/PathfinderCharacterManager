@@ -25,7 +25,7 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setAc(4)
             ->setCategory('light')
             ->setCost(26100)
-            ->setDescription(
+            ->setShortDescription(
                 'Covering the torso, this shirt is made up of thousands of interlocking metal rings.'
             )
             ->setWeight(6)
@@ -45,7 +45,7 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setAc(9)
             ->setCategory('heavy')
             ->setCost(46800)
-            ->setDescription(
+            ->setShortDescription(
                 'Crafted by dwarven stonesmiths from alchemically strengthened plates of basalt primarily for use by dwarven druids, stoneplate is heavy and unwieldy, but offers incredible protection to its wearer.'
             )
             ->setWeight(12.5)

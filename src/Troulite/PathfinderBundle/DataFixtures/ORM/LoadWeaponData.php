@@ -28,7 +28,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setCriticalRange(20)
             ->setCritical(3)
             ->setDamages('1d8')
-            ->setDescription(
+            ->setShortDescription(
                 'At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood.'
             )
             ->setRange(20)
@@ -48,7 +48,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setCritical(3)
             ->setCriticalRange(20)
             ->setDamages('1d8')
-            ->setDescription(
+            ->setShortDescription(
                 'At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood.'
             )
             ->setRange(20)
