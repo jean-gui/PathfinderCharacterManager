@@ -101,11 +101,11 @@ class Bonuses {
                 !array_key_exists($type, $bonusValues) || $bonus->getValue() > $bonusValues[$type]
             ) { // Other types do not stack
                 $bonusValues[$type] = $bonus->getValue();
-                $applicable[] = $bonus;
+                $applicable[$type] = $bonus;
             }
         }
 
-        return $applicable;
+        return array_values($applicable);
     }
 
     /**
@@ -116,13 +116,15 @@ class Bonuses {
      */
     public function getNonApplicableBonuses()
     {
-        return array_udiff(
-            $this->getBonuses(),
-            $this->getApplicableBonuses(),
-            function ($a, $b) {
-                return $a !== $b;
+        // I first tried with array_udiff, but that didn't work as expected
+        $nab = array();
+        $ab = $this->getApplicableBonuses();
+        foreach ($this->getBonuses() as $bonus) {
+            if (!in_array($bonus, $ab, true)) {
+                $nab[] = $bonus;
             }
-        );
+        }
+        return $nab;
     }
 
     /**
