@@ -61,16 +61,356 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('spellcraft'))
             ->addClassSkill($this->getReference('stealth'))
             ->addClassSkill($this->getReference('survival'))
-            ->addClassSkill($this->getReference('swim'))
-            ->setSpecials(
+            ->addClassSkill($this->getReference('swim'));
+
+        $power = (new ClassPower())
+            ->setName('First Favored Enemy (+2)')
+            ->setLevel(1)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
                 array(
-                    '2' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
-                    '6' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
-                    '10' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
-                    '15' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
-                    '18' => ['extra_feats' => ['type' => 'class', 'value' => '1']],
+                    'melee-attack-roll' => array('type' => null, 'value' => 2),
+                    'melee-damage-roll'  => array('type' => null, 'value' => 2),
+                    'ranged-attack-roll' => array('type' => null, 'value' => 2),
+                    'ranged-damage-roll' => array('type' => null, 'value' => 2),
+                    'bluff'      => array('type' => null, 'value' => 2),
+                    'perception' => array('type' => null, 'value' => 2),
+                    'sense-motive' => array('type' => null, 'value' => 2),
+                    'survival' => array('type' => null, 'value' => 2),
                 )
             );
+        $ranger->addPower($power);
+        $this->setReference('favored-enemy-1', $power);
+
+        $power = (new ClassPower())
+            ->setName('Track')
+            ->setLevel(1)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    // 1 == ranger class id
+                    'survival' => array('type' => null, 'value' => 'max(1, div(c.getLevel(1), 2))'),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('track', $power);
+
+        $power = (new ClassPower())
+            ->setName('Wild Empathy')
+            ->setLevel(1)
+            ->setClass($ranger)
+            ->setPassive(false);
+        $ranger->addPower($power);
+        $this->setReference('wild-empathy', $power);
+
+        $power = (new ClassPower())
+            ->setName('First Combat Style Feat')
+            ->setLevel(2)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array('extra_feats' => ['type' => 'class', 'value' => 1])
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style-feat-1', $power);
+
+        $power = (new ClassPower())
+            ->setName('Endurance')
+            ->setLevel(3)
+            ->setClass($ranger)
+            ->setPassive(true);
+
+        $ranger->addPower($power);
+        $this->setReference('endurance', $power);
+
+        $power = (new ClassPower())
+            ->setName('Favored Terrain +2')
+            ->setLevel(3)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'initiative' => array('type' => null, 'value' => 2),
+                    'knowledge-geography' => array('type' => null, 'value' => 2),
+                    'perception' => array('type' => null, 'value' => 2),
+                    'stealth' => array('type' => null, 'value' => 2),
+                    'survival' => array('type' => null, 'value' => 2),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-terrain-1', $power);
+
+        $power = (new ClassPower())
+            ->setName("Hunter's Bond")
+            ->setLevel(4)
+            ->setClass($ranger)
+            ->setPassive(false);
+        $ranger->addPower($power);
+        $this->setReference('hunter-bond', $power);
+
+        $power = (new ClassPower())
+            ->setName('Second Favored Enemy (+4)')
+            ->setLevel(5)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll'  => array('type' => null, 'value' => 4),
+                    'melee-damage-roll'  => array('type' => null, 'value' => 4),
+                    'ranged-attack-roll' => array('type' => null, 'value' => 4),
+                    'ranged-damage-roll' => array('type' => null, 'value' => 4),
+                    'bluff'              => array('type' => null, 'value' => 4),
+                    'perception'         => array('type' => null, 'value' => 4),
+                    'sense-motive'       => array('type' => null, 'value' => 4),
+                    'survival'           => array('type' => null, 'value' => 4),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-enemy-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Second Combat Style Feat')
+            ->setLevel(6)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array('extra_feats' => ['type' => 'class', 'value' => 1])
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style-feat-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Woodland Stride')
+            ->setLevel(7)
+            ->setClass($ranger)
+            ->setPassive(true);
+        $ranger->addPower($power);
+        $this->setReference('woodland-stride', $power);
+
+        $power = (new ClassPower())
+            ->setName('Swift Tracker')
+            ->setLevel(8)
+            ->setClass($ranger)
+            ->setPassive(false);
+        $ranger->addPower($power);
+        $this->setReference('swift-tracker', $power);
+
+        $power = (new ClassPower())
+            ->setName('Favored Terrain +4')
+            ->setLevel(8)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'initiative'          => array('type' => null, 'value' => 4),
+                    'knowledge-geography' => array('type' => null, 'value' => 4),
+                    'perception'          => array('type' => null, 'value' => 4),
+                    'stealth'             => array('type' => null, 'value' => 4),
+                    'survival'            => array('type' => null, 'value' => 4),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-terrain-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Evasion')
+            ->setLevel(9)
+            ->setClass($ranger)
+            ->setPassive(true);
+        $ranger->addPower($power);
+        $this->setReference('evasion', $power);
+
+        $power = (new ClassPower())
+            ->setName('Third Combat Style Feat')
+            ->setLevel(10)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array('extra_feats' => ['type' => 'class', 'value' => 1])
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style-feat-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Third Favored Enemy (+6)')
+            ->setLevel(10)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll'  => array('type' => null, 'value' => 6),
+                    'melee-damage-roll'  => array('type' => null, 'value' => 6),
+                    'ranged-attack-roll' => array('type' => null, 'value' => 6),
+                    'ranged-damage-roll' => array('type' => null, 'value' => 6),
+                    'bluff'              => array('type' => null, 'value' => 6),
+                    'perception'         => array('type' => null, 'value' => 6),
+                    'sense-motive'       => array('type' => null, 'value' => 6),
+                    'survival'           => array('type' => null, 'value' => 6),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-enemy-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Quarry')
+            ->setLevel(11)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'ranged-attack-roll' => array('type' => null, 'value' => 2),
+                    'melee-attack-roll'  => array('type' => null, 'value' => 2),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('quarry', $power);
+
+        $power = (new ClassPower())
+            ->setName('Camouflage')
+            ->setLevel(12)
+            ->setClass($ranger)
+            ->setPassive(true);
+        $ranger->addPower($power);
+        $this->setReference('camouflage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Favored Terrain +6')
+            ->setLevel(13)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'initiative'          => array('type' => null, 'value' => 6),
+                    'knowledge-geography' => array('type' => null, 'value' => 6),
+                    'perception'          => array('type' => null, 'value' => 6),
+                    'stealth'             => array('type' => null, 'value' => 6),
+                    'survival'            => array('type' => null, 'value' => 6),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-terrain-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fourth Combat Style Feat')
+            ->setLevel(14)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array('extra_feats' => ['type' => 'class', 'value' => 1])
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style-feat-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fourth Favored Enemy (+8)')
+            ->setLevel(15)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll'  => array('type' => null, 'value' => 8),
+                    'melee-damage-roll'  => array('type' => null, 'value' => 8),
+                    'ranged-attack-roll' => array('type' => null, 'value' => 8),
+                    'ranged-damage-roll' => array('type' => null, 'value' => 8),
+                    'bluff'              => array('type' => null, 'value' => 8),
+                    'perception'         => array('type' => null, 'value' => 8),
+                    'sense-motive'       => array('type' => null, 'value' => 8),
+                    'survival'           => array('type' => null, 'value' => 8),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-enemy-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Improved Evasion')
+            ->setLevel(16)
+            ->setClass($ranger)
+            ->setPassive(true);
+        $ranger->addPower($power);
+        $this->setReference('improved-evasion', $power);
+
+        $power = (new ClassPower())
+            ->setName('Hide in Plain Sight')
+            ->setLevel(17)
+            ->setClass($ranger)
+            ->setPassive(false);
+        $ranger->addPower($power);
+        $this->setReference('hide-in-plain-sight', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fifth Combat Style Feat')
+            ->setLevel(18)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array('extra_feats' => ['type' => 'class', 'value' => 1])
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style-feat-5', $power);
+
+        $power = (new ClassPower())
+            ->setName('Favored Terrain +8')
+            ->setLevel(18)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'initiative'          => array('type' => null, 'value' => 8),
+                    'knowledge-geography' => array('type' => null, 'value' => 8),
+                    'perception'          => array('type' => null, 'value' => 8),
+                    'stealth'             => array('type' => null, 'value' => 8),
+                    'survival'            => array('type' => null, 'value' => 8),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-terrain-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Improved Quarry')
+            ->setLevel(19)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'ranged-attack-roll' => array('type' => null, 'value' => 4),
+                    'melee-attack-roll'  => array('type' => null, 'value' => 4),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('improved-quarry', $power);
+
+        $power = (new ClassPower())
+            ->setName('Master Hunter')
+            ->setLevel(20)
+            ->setClass($ranger)
+            ->setPassive(false);
+        $ranger->addPower($power);
+        $this->setReference('master-hunter', $power);
+
+        /**
+         * @todo Missing knowledge bonus
+         */
+        $power = (new ClassPower())
+            ->setName('Fifth Favored Enemy (+10)')
+            ->setLevel(20)
+            ->setClass($ranger)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll'  => array('type' => null, 'value' => 10),
+                    'melee-damage-roll'  => array('type' => null, 'value' => 10),
+                    'ranged-attack-roll' => array('type' => null, 'value' => 10),
+                    'ranged-damage-roll' => array('type' => null, 'value' => 10),
+                    'bluff'              => array('type' => null, 'value' => 10),
+                    'perception'         => array('type' => null, 'value' => 10),
+                    'sense-motive'       => array('type' => null, 'value' => 10),
+                    'survival'           => array('type' => null, 'value' => 10),
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('favored-enemy-4', $power);
 
         $manager->persist($ranger);
         $manager->flush();
