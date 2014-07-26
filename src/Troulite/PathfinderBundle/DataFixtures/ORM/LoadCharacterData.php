@@ -156,6 +156,11 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
                     ->setFeat($this->getReference("deadly-aim"))
                     ->setActive(true)
             )
+            ->addFeat(
+                (new CharacterFeat())
+                    ->setFeat($this->getReference("feat-endurance"))
+                    ->setActive(false)
+            )
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('endurance'))
