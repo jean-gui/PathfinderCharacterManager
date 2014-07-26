@@ -606,14 +606,21 @@ class Character extends BaseCharacter
     /**
      * Get this character's current level
      *
-     * @param ClassDefinition $class
+     * @param int|ClassDefinition $class
      *
      * @return int
      */
-    public function getLevel(ClassDefinition $class = null)
+    public function getLevel($class = null)
     {
         if ($class) {
-            return $this->getLevelPerClass()[$class->getId()]['level'];
+            $id = null;
+            if (is_object($class) && $class instanceof ClassDefinition) {
+                $id = $class->getId();
+            } elseif (is_numeric($class)) {
+                $id = $class;
+            }
+
+            return $this->getLevelPerClass()[$id]['level'];
         }
 
         return $this->getLevels()->count();
