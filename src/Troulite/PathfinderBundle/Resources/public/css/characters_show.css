@@ -2,3 +2,7 @@ form[name="classpoweractivation"] label {
     margin-bottom: 0;
     font-weight: normal;
 }
+
+a.mypopover {
+    color: #C7C7C7;
+}
