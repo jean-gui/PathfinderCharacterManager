@@ -2,6 +2,7 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
@@ -295,7 +297,21 @@ class CharacterController extends Controller
                     $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
                 }
 
+                /** @var $em EntityManager */
                 $em = $this->getDoctrine()->getManager();
+
+                // Add fixed extra feats granted by this level
+                foreach ($level->getClassPowers() as $power) {
+                    $effects = $power->getClassPower()->getEffects();
+                    if ($power->getClassPower()->hasEffects() && array_key_exists('feat', $effects)) {
+                        $feat = $em->getRepository('TroulitePathfinderBundle:Feat')
+                            ->findOneBy(array('name' => $effects['feats']['value']));
+                        if ($feat) {
+                            $level->addFeat((new CharacterFeat())->setFeat($feat));
+                        }
+                    }
+                }
+
                 $em->persist($level);
                 $em->flush();
 
