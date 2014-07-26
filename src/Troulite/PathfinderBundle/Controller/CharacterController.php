@@ -12,6 +12,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
@@ -284,6 +285,15 @@ class CharacterController extends Controller
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
         $flow->bind($level);
 
+        // Add powers
+        if ($level->getClassDefinition()) {
+            foreach ($level->getClassDefinition()->getPowers() as $power) {
+                if ($power->getLevel() === $entity->getLevel($level->getClassDefinition())) {
+                    $level->addClassPower((new CharacterClassPower())->setClassPower($power));
+                }
+            }
+        }
+
         // Cleanup empty feats that may have been added by the form
         foreach ($level->getFeats() as $feat) {
             if ($feat === null || $feat->getFeat() === null) {
@@ -322,7 +332,7 @@ class CharacterController extends Controller
                     $effects = $power->getClassPower()->getEffects();
                     if ($power->getClassPower()->hasEffects() && array_key_exists('feat', $effects)) {
                         $feat = $em->getRepository('TroulitePathfinderBundle:Feat')
-                            ->findOneBy(array('name' => $effects['feats']['value']));
+                            ->findOneBy(array('name' => $effects['feat']['value']));
                         if ($feat) {
                             $level->addFeat((new CharacterFeat())->setFeat($feat));
                         }
