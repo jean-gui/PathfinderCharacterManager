@@ -66,20 +66,21 @@ class LevelUpFeatsType extends AbstractType
                 }
 
                 // Class bonus feats
-                if (
-                    $class && $class->getSpecials() &&
-                    array_key_exists($character->getLevel($class), $class->getSpecials()) &&
-                    array_key_exists('extra_feats', $class->getSpecials()[$character->getLevel($class)])
-                ) {
-                    $effect = $class->getSpecials()[$character->getLevel($class)]['extra_feats'];
-                    $value  = (int)(new ExpressionLanguage())->evaluate(
-                        $effect['value'],
-                        array("c" => $character)
-                    );
-
-                    while ($value > 0) {
-                        $featsToAdd++;
-                        $value--;
+                if ($class) {
+                    foreach($class->getPowers() as $power) {
+                        $effects = $power->getEffects();
+                        if (
+                            $power->getLevel() === $character->getLevel($class) &&
+                            $power->hasEffects() &&
+                            array_key_exists('extra_feats', $effects)
+                        ) {
+                            $effect = $effects['extra_feats'];
+                            $value  = (int)(new ExpressionLanguage())->evaluate(
+                                $effect['value'],
+                                array("c" => $character)
+                            );
+                            $featsToAdd += $value;
+                        }
                     }
                 }
 
