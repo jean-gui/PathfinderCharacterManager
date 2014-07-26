@@ -39,7 +39,13 @@
                     <td>{{ entity.reflexes[level] }}</td>
                     <td>{{ entity.fortitude[level] }}</td>
                     <td>{{ entity.will[level] }}</td>
-                    <td>TODO</td>
+                    <td>
+                        {% for power in entity.powers %}
+                            {% if power.level == level + 1 %}
+                                {{ power }}{% if loop.index < loop.length %},{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     {% for spellLevel in entity.spellsPerDay|keys if entity.spellsPerDay %}
                         <td>
                             {% if entity.spellsPerDay[spellLevel][level] < 0 %}
