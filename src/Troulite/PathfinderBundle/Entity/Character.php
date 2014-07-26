@@ -723,7 +723,17 @@ class Character extends BaseCharacter
      */
     public function getTouchAc()
     {
-        return 10 + $this->getAbilityModifier($this->getDexterity()) + $this->getDodgeBonus();
+        if ($this->getEquipment()->getBody()) {
+            return
+                10 +
+                min(
+                    $this->getAbilityModifier($this->getDexterity()),
+                    $this->getEquipment()->getBody()->getMaximumDexterityBonus()
+                ) +
+                $this->getDodgeBonus();
+        } else {
+            return 10 + $this->getAbilityModifier($this->getDexterity()) + $this->getDodgeBonus();
+        }
     }
 
     /**
