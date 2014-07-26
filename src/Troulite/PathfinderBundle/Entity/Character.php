@@ -709,18 +709,7 @@ class Character extends BaseCharacter
      */
     public function getTouchAc()
     {
-        /** @var $dodgeBonuses Bonus[] */
-        $dodgeBonuses = array_filter(
-            $this->getDefenseBonuses()->ac->getBonuses(),
-            function (Bonus $bonus) {
-                return $bonus->getType() === 'dodge';
-            }
-        );
-        $dodgeBonus   = 0;
-        foreach ($dodgeBonuses as $db) {
-            $dodgeBonus += $db->getValue();
-        }
-        return 10 + $this->getAbilityModifier($this->getDexterity()) + $dodgeBonus;
+        return 10 + $this->getAbilityModifier($this->getDexterity()) + $this->getDodgeBonus();
     }
 
     /**
@@ -729,18 +718,7 @@ class Character extends BaseCharacter
      */
     public function getFlatFootedAc()
     {
-        /** @var $dodgeBonuses Bonus[] */
-        $dodgeBonuses = array_filter(
-            $this->getDefenseBonuses()->ac->getBonuses(),
-            function(Bonus $bonus) {
-                return $bonus->getType() === 'dodge';
-            }
-        );
-        $dodgeBonus = 0;
-        foreach ($dodgeBonuses as $db) {
-            $dodgeBonus += $db->getValue();
-        }
-        return 10 + $this->getDefenseBonuses()->ac->getBonus() - $dodgeBonus;
+        return 10 + $this->getDefenseBonuses()->ac->getBonus() - $this->getDodgeBonus();
     }
 
     /**
@@ -829,5 +807,40 @@ class Character extends BaseCharacter
         }
 
         return $available;
+    }
+
+    /**
+     * Get the list of dodge bonuses
+     *
+     * @return Bonus[]
+     */
+    public function getDodgeBonuses()
+    {
+        /** @var $dodgeBonuses Bonus[] */
+        $dodgeBonuses = array_filter(
+            $this->getDefenseBonuses()->ac->getBonuses(),
+            function (Bonus $bonus) {
+                return $bonus->getType() === 'dodge';
+            }
+        );
+
+        return $dodgeBonuses;
+    }
+
+    /**
+     * Get total dodge bonus
+     *
+     * @return int
+     */
+    public function getDodgeBonus()
+    {
+        $dodgeBonuses = $this->getDodgeBonuses();
+
+        $dodgeBonus = 0;
+        foreach ($dodgeBonuses as $db) {
+            $dodgeBonus += $db->getValue();
+        }
+
+        return $dodgeBonus;
     }
 }
