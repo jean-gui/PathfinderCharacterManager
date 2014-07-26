@@ -63,9 +63,13 @@
         {% block content %}{% endblock %}
     </div>
 {% endblock %}
-<!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
-<script src="{{ asset('js/jquery.js') }}"></script>
-<!-- Include all JavaScripts, compiled by Assetic -->
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+{% javascripts
+    'js/jquery.js'
+    'js/bootstrap.js'
+    'js/bootstrap_popover_9.js'
+    '@TroulitePathfinderBundle/Resources/public/popover.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 </body>
 </html>

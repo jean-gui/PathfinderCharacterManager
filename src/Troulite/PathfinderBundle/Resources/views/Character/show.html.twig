@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% import _self as popovers %}
+
 {% block title "BaseCharacter - " ~ entity %}
 
 {% block navbar_current -%}
@@ -47,39 +49,60 @@
                     </thead>
                     <tr>
                         <th>Strength</th>
-                        <td>{{ entity.strength }}</td>
+                        <td>
+                            {{ entity.strength }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.strength) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.strength) }}</td>
                     </tr>
                     <tr>
                         <th>Dexterity</th>
-                        <td>{{ entity.dexterity }}</td>
+                        <td>
+                            {{ entity.dexterity }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.dexterity) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
                     </tr>
                     <tr>
                         <th>Constitution</th>
-                        <td>{{ entity.constitution }}</td>
+                        <td>
+                            {{ entity.constitution }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.constitution) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.constitution) }}</td>
                     </tr>
                     <tr>
                         <th>Intelligence</th>
-                        <td>{{ entity.intelligence }}</td>
+                        <td>
+                            {{ entity.intelligence }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.intelligence) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
                     </tr>
                     <tr>
                         <th>Wisdom</th>
-                        <td>{{ entity.wisdom }}</td>
+                        <td>
+                            {{ entity.wisdom }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.wisdom) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
                     </tr>
                     <tr>
                         <th>Charisma</th>
-                        <td>{{ entity.charisma }}</td>
+                        <td>
+                            {{ entity.charisma }}
+                            {{ popovers.bonuses(entity.abilitiesBonuses.charisma) }}
+                        </td>
                         <td>{{ entity.abilityModifier(entity.charisma) }}</td>
                     </tr>
                 </table>
                 <h2>Hit Points</h2>
                 <dl class="dl-horizontal">
                     <dt>Max Hit Points</dt>
-                    <dd>{{ entity.maxHp }}</dd>
+                    <dd>
+                        {{ entity.maxHp }}
+                        {{ popovers.bonuses(entity.hpBonuses) }}
+                    </dd>
                     <dt>Losts Hit Points</dt>
                     <dd>{{ entity.lostHP }}</dd>
                     <dt>Current Hit Points</dt>
@@ -109,7 +132,10 @@
                 <table id="armor" class="table table-striped table-condensed table-responsive">
                     <tr>
                         <th>AC</th>
-                        <td>{{ entity.ac }}</td>
+                        <td>
+                            {{ entity.ac }}
+                            {{ popovers.bonuses(entity.defenseBonuses.ac) }}
+                        </td>
                     </tr>
                     <tr>
                         <th>Touch AC</th>
@@ -130,7 +156,10 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
                         <td>+</td>
-                        <td>{{ entity.defenseBonuses.reflexes }}</td>
+                        <td>
+                            {{ entity.defenseBonuses.reflexes }}
+                            {{ popovers.bonuses(entity.defenseBonuses.reflexes) }}
+                        </td>
                     </tr>
                     <tr>
                         <th>Fortitude</th>
@@ -140,7 +169,10 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.constitution) }}</td>
                         <td>+</td>
-                        <td>{{ entity.defenseBonuses.fortitude }}</td>
+                        <td>
+                            {{ entity.defenseBonuses.fortitude }}
+                            {{ popovers.bonuses(entity.defenseBonuses.fortitude) }}
+                        </td>
                     </tr>
                     <tr>
                         <th>Will</th>
@@ -150,10 +182,13 @@
                         <td>+</td>
                         <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
                         <td>+</td>
-                        <td>{{ entity.defenseBonuses.will }}</td>
+                        <td>
+                            {{ entity.defenseBonuses.will }}
+                            {{ popovers.bonuses(entity.defenseBonuses.will) }}
+                        </td>
                     </tr>
                 </table>
-                <table id="attack-rolls" class="table table-hover table-condensed table-responsive">
+                <table id="attack-rolls" class="table table-striped table-hover table-condensed table-responsive">
                     <tr>
                         <th>BAB</th>
                         <td>{{ entity.bab }}</td>
@@ -167,27 +202,39 @@
                     <tr>
                         <th>Melee attack rolls</th>
                         {% for ar in entity.meleeAttackRoll %}
-                            <td>{{ ar }}</td>
+                            <td>
+                                {% if loop.index == 1 %}
+                                    {{ popovers.bonuses(entity.attackBonuses.meleeAttackRolls) }}
+                                {% endif %}
+                                {{ ar }}
+                            </td>
                         {% endfor %}
                     </tr>
                     <tr>
                         <th>Ranged attack rolls</th>
                         {% for ar in entity.rangedAttackRoll %}
-                            <td>{{ ar }}</td>
+                            <td>
+                                {{ ar }}
+                                {% if loop.index == loop.length %}
+                                    {{ popovers.bonuses(entity.attackBonuses.rangedAttackRolls) }}
+                                {% endif %}
+                            </td>
                         {% endfor %}
                     </tr>
                 </table>
-                <table id="damage-bonus" class="table table-hover table-condensed table-responsive">
+                <table id="damage-bonus" class="table table-striped table-hover table-condensed table-responsive">
                     <tr>
                         <th>Melee damage bonus</th>
                         <td>
                             {% if entity.meleeDamageRoll > 0 %}+{% endif %}{{ entity.meleeDamageRoll }}
+                            {{ popovers.bonuses(entity.attackBonuses.meleeDamage) }}
                         </td>
                     </tr>
                     <tr>
                         <th>Ranged damage bonus</th>
                         <td>
                             {% if entity.rangedAttackRoll > 0 %}+{% endif %}{{ entity.rangedDamageRoll }}
+                            {{ popovers.bonuses(entity.attackBonuses.rangedDamage) }}
                         </td>
                     </tr>
                 </table>
@@ -198,7 +245,10 @@
                         <td>=</td>
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
                         <td>+</td>
-                        <td>{{ entity.attackBonuses.initiative.bonus }}</td>
+                        <td>
+                            {{ entity.attackBonuses.initiative.bonus }}
+                            {{ popovers.bonuses(entity.attackBonuses.initiative) }}
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -213,7 +263,14 @@
                             {% if loop.index == 1 %}
                                 <th rowspan="{{ loop.length }}">Feats</th>
                             {% endif %}
-                            <td>{{ form_label(power.active, power.vars.value.feat.name) }}</td>
+                            <td>
+                                {{ popovers.description(
+                                        power.vars.value.feat.name,
+                                        power.vars.value.feat.description
+                                   )
+                                }}
+                                {{ form_label(power.active, power.vars.value.feat.name) }}
+                            </td>
                             <td>{{ form_widget(power.active) }}</td>
                         </tr>
                     {% endfor %}
@@ -222,7 +279,14 @@
                             {% if loop.index == 1 %}
                                 <th rowspan="{{ loop.length }}">Class</th>
                             {% endif %}
-                            <td>{{ form_label(power.active, power.vars.value.classPower.name) }}</td>
+                            <td>
+                                {{ popovers.description(
+                                        power.vars.value.classPower.name,
+                                        power.vars.value.classPower.description
+                                   )
+                                }}
+                                {{ form_label(power.active, power.vars.value.classPower.name) }}
+                            </td>
                             <td>{{ form_widget(power.active) }}</td>
                         </tr>
                     {% endfor %}
@@ -237,7 +301,14 @@
                             {% if loop.index == 1 %}
                                 <th rowspan="{{ loop.length }}">Feats</th>
                             {% endif %}
-                            <td>{{ feat.feat }}</td>
+                            <td>
+                                {{ popovers.description(
+                                        feat.feat.name,
+                                        feat.feat.description
+                                   )
+                                }}
+                                {{ feat.feat }}
+                            </td>
                         </tr>
                     {% endfor %}
                     {% for power in other_class_powers %}
@@ -245,7 +316,14 @@
                             {% if loop.index == 1 %}
                                 <th rowspan="{{ loop.length }}">Class Powers</th>
                             {% endif %}
-                            <td>{{ power.classPower }}</td>
+                            <td>
+                                {{ popovers.description(
+                                        power.classPower.name,
+                                        power.classPower.description
+                                   )
+                                }}
+                                {{ power.classPower }}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -313,7 +391,12 @@
                     <td>{{ value }}</td>
                     <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
                     <td>{{ entity.skillRank(skill) }}</td>
-                    <td>{{ bonus|default(0) }}</td>
+                    <td>
+                        {{ bonus|default(0) }}
+                        {% if attribute(entity.skillsBonuses, shortname) is defined %}
+                            {{ popovers.bonuses(entity.skillsBonuses[shortname]) }}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -355,3 +438,46 @@
     </div>
     </div>
 {% endblock %}
+
+{% macro description(title, description) %}
+    {% if description is defined and description %}
+    <a class="mypopover" data-placement="top" data-toggle="popover"
+       title="{{ title }}"
+       data-content="{{ description }}">
+        <span class="glyphicon glyphicon-info-sign"></span></a>
+    {% endif %}
+{% endmacro %}
+
+{% macro bonuses(bonuses) %}
+    {% if bonuses.bonuses|length != 0 %}
+        <a class="mypopover" data-placement="top" data-toggle="popover"
+           title="Bonuses"
+           data-content="
+                {% set ab = bonuses.applicableBonuses %}
+                {% if ab|length > 0 %}
+                List of applied bonuses:
+                <ul>
+                    {% for bonus in bonuses.applicableBonuses %}
+                    <li>
+                        {{ bonus.source }}: {{ bonus.value }}
+                        {% if bonus.type %}({{ bonus.type }}){% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% set nab = bonuses.nonApplicableBonuses %}
+                {% if nab|length > 0 %}
+                Other bonuses:
+                <ul>
+                    {% for bonus in nab %}
+                    <li>
+                        {{ bonus.source }}: {{ bonus.value }}
+                        {% if bonus.type %}({{ bonus.type }}){% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+           ">
+            <span class="glyphicon glyphicon-info-sign"></span></a>
+    {% endif %}
+{% endmacro bonuses %}
