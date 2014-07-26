@@ -709,7 +709,18 @@ class Character extends BaseCharacter
      */
     public function getTouchAc()
     {
-        return 10 + $this->getAbilityModifier($this->getDexterity());
+        /** @var $dodgeBonuses Bonus[] */
+        $dodgeBonuses = array_filter(
+            $this->getDefenseBonuses()->ac->getBonuses(),
+            function (Bonus $bonus) {
+                return $bonus->getType() === 'dodge';
+            }
+        );
+        $dodgeBonus   = 0;
+        foreach ($dodgeBonuses as $db) {
+            $dodgeBonus += $db->getValue();
+        }
+        return 10 + $this->getAbilityModifier($this->getDexterity()) + $dodgeBonus;
     }
 
     /**
