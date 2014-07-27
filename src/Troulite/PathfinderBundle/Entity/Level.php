@@ -25,7 +25,7 @@ class Level
     private $id;
 
     /**
-     * @var BaseCharacter
+     * @var Character
      *
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="levels")
      * @ORM\JoinColumn(name="character", referencedColumnName="id")
