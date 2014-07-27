@@ -171,7 +171,7 @@ class BaseCharacter
      *
      * @param string $lostHP
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setLostHP($lostHP)
     {
@@ -195,7 +195,7 @@ class BaseCharacter
      *
      * @param ClassDefinition $favoredClass
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setFavoredClass(ClassDefinition $favoredClass)
     {
@@ -219,7 +219,7 @@ class BaseCharacter
      *
      * @param Race $race
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setRace(Race $race = null)
     {
@@ -243,7 +243,7 @@ class BaseCharacter
      *
      * @param string $name
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setName($name)
     {
@@ -257,7 +257,7 @@ class BaseCharacter
      *
      * @param Item $inventory
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function addInventory(Item $inventory)
     {
@@ -301,7 +301,7 @@ class BaseCharacter
      *
      * @param Party $party
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setParty(Party $party = null)
     {
@@ -315,7 +315,7 @@ class BaseCharacter
      *
      * @param Abilities $abilities
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setAbilities(Abilities $abilities = null)
     {
@@ -339,7 +339,7 @@ class BaseCharacter
      *
      * @param CharacterEquipment $equipment
      *
-     * @return BaseCharacter
+     * @return $this
      */
     public function setEquipment(CharacterEquipment $equipment = null)
     {
@@ -362,7 +362,7 @@ class BaseCharacter
      * Set extraPoint
      *
      * @param string $extraPoint
-     * @return BaseCharacter
+     * @return $this
      */
     public function setExtraPoint($extraPoint)
     {
