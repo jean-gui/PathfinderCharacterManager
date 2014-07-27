@@ -37,6 +37,13 @@ class Character extends BaseCharacter
     private $levels;
 
     /**
+     * @var Collection|SpellEffect[]
+     *
+     * @ORM\OneToMany(targetEntity="SpellEffect", mappedBy="target", cascade={"all"})
+     */
+    private $spellEffects;
+
+    /**
      * @var AbilitiesBonuses
      */
     public $abilitiesBonuses;
@@ -74,6 +81,7 @@ class Character extends BaseCharacter
         parent::__construct();
         $this->postLoad();
         $this->levels = new ArrayCollection();
+        $this->spellEffects = new ArrayCollection();
     }
 
     /**
@@ -867,4 +875,50 @@ class Character extends BaseCharacter
 
         return $dodgeBonus;
     }
+
+    /**
+     * @param SpellEffect $spellEffect
+     *
+     * @return $this
+     */
+    public function addSpellEffect(SpellEffect $spellEffect)
+    {
+        $spellEffect->setTarget($this);
+        $this->spellEffects->add($spellEffect);
+
+        return $this;
+    }
+
+    /**
+     * @param SpellEffect $spellEffect
+     *
+     * @return $this
+     */public function removeSpellEffect(SpellEffect $spellEffect)
+    {
+        $this->spellEffects->remove($spellEffect);
+
+        return $this;
+    }
+
+    /**
+     * @param Collection|SpellEffect[] $spellEffects
+     *
+     * @return $this
+     */
+    public function setSpellEffects($spellEffects)
+    {
+        $this->spellEffects = $spellEffects;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SpellEffect[]
+     */
+    public function getSpellEffects()
+    {
+        return $this->spellEffects;
+    }
+
+
 }

@@ -12,6 +12,7 @@ use Troulite\PathfinderBundle\Entity\CharacterEquipment;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
+use Troulite\PathfinderBundle\Entity\SpellEffect;
 
 /**
  * Class LoadCharacterData
@@ -38,6 +39,11 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
                 (new CharacterEquipment())
                     ->setMainWeapon($this->getReference('longbow +2'))
                     ->setBody($this->getReference('mithral chain mail +5'))
+            )
+            ->addSpellEffect(
+                (new SpellEffect())
+                    ->setSpell($this->getReference('spell-haste'))
+                    ->setCasterLevel(14)
             );
 
         // Level 1
