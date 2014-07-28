@@ -6,3 +6,7 @@ form[name="classpoweractivation"] label {
 a.mypopover {
     color: #C7C7C7;
 }
+
+.popover {
+    max-width: 600px !important;
+}
