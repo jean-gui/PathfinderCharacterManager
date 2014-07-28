@@ -78,6 +78,28 @@
             </tbody>
         </table>
 
+        {% if entity.spells is defined and entity.spells|length > 0%}
+        <h2>Spells</h2>
+        <table class="table table-condensed table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Spell Level</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for spellClass in entity.spells %}
+                <tr>
+                    <td>{{ spellClass.spell }}</td>
+                    <td>{{ spellClass.spell.shortDescription }}</td>
+                    <td>{{ spellClass.spellLevel }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
         <ul class="list-inline">
             <li>
                 <a href="{{ path('classes') }}" class="btn btn-primary">

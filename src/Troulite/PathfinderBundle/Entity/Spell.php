@@ -8,6 +8,8 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Describable;
@@ -86,6 +88,13 @@ class Spell
      * @ORM\Column(type="string", length=255)
      */
     private $targets;
+
+    /**
+     * @var Collection|ClassSpell[]
+     *
+     * @ORM\ManyToMany(targetEntity="ClassSpell", mappedBy="spell")
+     */
+    private $classes;
 
     /**
      * Get id
@@ -267,5 +276,47 @@ class Spell
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->classes = new ArrayCollection();
+    }
+
+    /**
+     * Add class
+     *
+     * @param ClassSpell $class
+     *
+     * @return Spell
+     */
+    public function addClass(ClassSpell $class)
+    {
+        $this->classes[] = $class;
+
+        return $this;
+    }
+
+    /**
+     * Remove classes
+     *
+     * @param ClassSpell $class
+     */
+    public function removeClass(ClassSpell $class)
+    {
+        $this->classes->removeElement($class);
+    }
+
+    /**
+     * Get classes
+     *
+     * @return Collection|ClassSpell[]
+     */
+    public function getClasses()
+    {
+        return $this->classes;
     }
 }

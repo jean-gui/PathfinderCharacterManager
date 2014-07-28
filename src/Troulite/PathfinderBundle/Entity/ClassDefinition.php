@@ -128,6 +128,13 @@ class ClassDefinition
     private $knownSpellsPerLevel;
 
     /**
+     * @var Collection|ClassSpell[]
+     *
+     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class")
+     */
+    private $spells;
+
+    /**
      * Get id
      *
      * @return integer
@@ -484,5 +491,37 @@ class ClassDefinition
         return $this->knownSpellsPerLevel;
     }
 
+    /**
+     * Add spell
+     *
+     * @param ClassSpell $spell
+     *
+     * @return ClassDefinition
+     */
+    public function addSpell(ClassSpell $spell)
+    {
+        $this->spells[] = $spell;
 
+        return $this;
+    }
+
+    /**
+     * Remove spell
+     *
+     * @param ClassSpell $spell
+     */
+    public function removeSpell(ClassSpell $spell)
+    {
+        $this->spells->removeElement($spell);
+    }
+
+    /**
+     * Get spells
+     *
+     * @return Collection|ClassSpell[]
+     */
+    public function getSpells()
+    {
+        return $this->spells;
+    }
 }
