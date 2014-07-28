@@ -116,8 +116,6 @@ class CharacterBonuses
      * @param Character $character
      *
      * @return Character
-     *
-     * @todo Handle cases when a spell effect cannot be applied (are there such cases?)
      */
     private function applySpellEffects(Character $character)
     {
@@ -246,8 +244,6 @@ class CharacterBonuses
      * @param mixed $source
      *
      * @return Character
-     *
-     * @todo Handle bonus type
      */
     private function applyEffects(Character $character, array $effects, $source)
     {
