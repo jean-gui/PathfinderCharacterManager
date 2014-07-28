@@ -13,7 +13,7 @@
             <dd>{{ entity.classSkills|join(', ') }}</dd>
         </dl>
 
-        <table class="table table-condensed table-striped table-hover">
+        <table class="table table-condensed table-striped table-hover table-responsive">
             <thead>
             <tr>
                 <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Level</th>
@@ -80,7 +80,7 @@
 
         {% if entity.spells is defined and entity.spells|length > 0%}
         <h2>Spells</h2>
-        <table class="table table-condensed table-striped table-hover">
+        <table class="table table-condensed table-striped table-hover table-responsive">
             <thead>
                 <tr>
                     <th>Name</th>
