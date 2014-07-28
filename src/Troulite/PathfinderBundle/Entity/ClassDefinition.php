@@ -106,6 +106,28 @@ class ClassDefinition
     private $powers;
 
     /**
+     * @var string One of intelligence, wisdom or charisma
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Choice(choices={"intelligence", "wisdom", "charisma"})
+     */
+    private $castingAbility;
+
+    /**
+     * @var bool true if this class' spells need to be prepared before being cast
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $preparationNeeded = true;
+
+    /**
+     * @var array Number of spells a character of this class knows per level
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $knownSpellsPerLevel;
+
+    /**
      * Get id
      *
      * @return integer
@@ -401,4 +423,66 @@ class ClassDefinition
     {
         return $this->powers;
     }
+
+    /**
+     * @param string $castingAbility
+     *
+     * @return $this
+     */
+    public function setCastingAbility($castingAbility)
+    {
+        $this->castingAbility = $castingAbility;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCastingAbility()
+    {
+        return $this->castingAbility;
+    }
+
+    /**
+     * @param boolean $preparationNeeded
+     *
+     * @return $this
+     */
+    public function setPreparationNeeded($preparationNeeded)
+    {
+        $this->preparationNeeded = $preparationNeeded;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPreparationNeeded()
+    {
+        return $this->preparationNeeded;
+    }
+
+    /**
+     * @param array $knownSpellsPerLevel
+     *
+     * @return $this
+     */
+    public function setKnownSpellsPerLevel($knownSpellsPerLevel)
+    {
+        $this->knownSpellsPerLevel = $knownSpellsPerLevel;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getKnownSpellsPerLevel()
+    {
+        return $this->knownSpellsPerLevel;
+    }
+
+
 }

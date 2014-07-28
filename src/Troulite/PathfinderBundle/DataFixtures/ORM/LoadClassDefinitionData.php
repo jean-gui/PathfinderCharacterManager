@@ -47,6 +47,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setFortitude($fortitude)
             ->setWill($will)
             ->setSpellsPerDay($spellsPerDay)
+            ->setCastingAbility('wisdom')
+            ->setPreparationNeeded(true)
             ->addClassSkill($this->getReference('climb'))
             ->addClassSkill($this->getReference('craft'))
             ->addClassSkill($this->getReference('handleAnimal'))
@@ -483,6 +485,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setFortitude($fortitude)
             ->setWill($will)
             ->setSpellsPerDay($spellsPerDay)
+            ->setCastingAbility('charisma')
+            ->setPreparationNeeded(true)
             ->addClassSkill($this->getReference('craft'))
             ->addClassSkill($this->getReference('diplomacy'))
             ->addClassSkill($this->getReference('handleAnimal'))
@@ -700,6 +704,16 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             5 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  1,  2,  3, 3, 4, 4, 5, 5),
             6 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 4, 5),
         );
+        $knownSpellsPerLevel = array(
+            0 => array(4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6),
+            1 => array(2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6),
+            2 => array(0, 0, 0, 2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6),
+            3 => array(0, 0, 0, 0, 0, 0, 2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6),
+            4 => array(0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6),
+            5 => array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 4, 4, 4, 5, 5),
+            6 => array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 4, 5)
+        );
+
 
         $bard = new ClassDefinition();
         $bard
@@ -711,6 +725,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setFortitude($fortitude)
             ->setWill($will)
             ->setSpellsPerDay($spellsPerDay)
+            ->setCastingAbility('charisma')
+            ->setPreparationNeeded(false)
+            ->setKnownSpellsPerLevel($knownSpellsPerLevel)
             ->addClassSkill($this->getReference('acrobatics'))
             ->addClassSkill($this->getReference('appraise'))
             ->addClassSkill($this->getReference('bluff'))
