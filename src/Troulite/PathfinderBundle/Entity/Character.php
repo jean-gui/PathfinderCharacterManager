@@ -39,7 +39,7 @@ class Character extends BaseCharacter
     /**
      * @var Collection|SpellEffect[]
      *
-     * @ORM\OneToMany(targetEntity="SpellEffect", mappedBy="target", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="SpellEffect", mappedBy="character", cascade={"all"})
      */
     private $spellEffects;
 
@@ -883,7 +883,7 @@ class Character extends BaseCharacter
      */
     public function addSpellEffect(SpellEffect $spellEffect)
     {
-        $spellEffect->setTarget($this);
+        $spellEffect->setCharacter($this);
         $this->spellEffects->add($spellEffect);
 
         return $this;

@@ -126,14 +126,6 @@
                         </dd>
                     {% endif %}
                 </dl>
-                <h2>Spell Effects</h2>
-                {% if entity.spellEffects|length > 0 %}
-                    <ul>
-                        {% for spellEffect in entity.spellEffects %}
-                            <li>{{ spellEffect.spell }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
             </div>
             <div class="col-md-4">
                 <h2>Combat</h2>
@@ -263,7 +255,11 @@
             </div>
             <div class="col-md-4">
                 <h2 id="feats">Powers</h2>
-
+                {% if
+                    powers_activation_form.feats|length > 0 or
+                    powers_activation_form.class_powers|length > 0 or
+                    powers_activation_form.spell_effects|length > 0
+                %}
                 {{ form_start(powers_activation_form) }}
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
@@ -291,9 +287,23 @@
                             <td>{{ form_widget(power.active) }}</td>
                         </tr>
                     {% endfor %}
+                    {% for spellEffect in powers_activation_form.spell_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Spells</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(spellEffect.vars.value.spell.name, spellEffect.vars.value.spell) }}
+                                {{ form_label(spellEffect.active, spellEffect.vars.value.spell.name) }}
+                            </td>
+                            <td>{{ form_widget(spellEffect.active) }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
-                {{ form_end(powers_activation_form) }}
+                {{ form_row(powers_activation_form.submit) }}
+                {{ form_end(powers_activation_form, {'render_rest': false}) }}
+                {% endif %}
                 <h3>Unmanaged Powers</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
@@ -316,6 +326,17 @@
                             <td>
                                 {{ popovers.description(power.classPower.name, power.classPower) }}
                                 {{ power.classPower }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for spellEffect in other_spell_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">Spells</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
+                                {{ spellEffect.spell }}
                             </td>
                         </tr>
                     {% endfor %}
@@ -343,6 +364,17 @@
                                 <td>
                                     {{ popovers.description(power.classPower.name, power.classPower) }}
                                     {{ power.classPower }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% for spellEffect in passive_spell_effects %}
+                            <tr>
+                                {% if loop.index == 1 %}
+                                    <th rowspan="{{ loop.length }}">Spells</th>
+                                {% endif %}
+                                <td>
+                                    {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
+                                    {{ spellEffect.spell }}
                                 </td>
                             </tr>
                         {% endfor %}

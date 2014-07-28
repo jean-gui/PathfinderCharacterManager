@@ -12,9 +12,9 @@ use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
-use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\Entity\Shield;
+use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
@@ -60,6 +60,7 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getFeet());
         $this->applyItem($character, $character->getEquipment()->getNeck());
         $this->applyItem($character, $character->getEquipment()->getBack());
+        $this->applySpellEffects($character);
 
         return $character;
     }
@@ -102,7 +103,6 @@ class CharacterBonuses
      */
     private function applyClassPowers(Character $character)
     {
-        /** @var $class ClassDefinition */
         foreach ($character->getClassPowers() as $classPower) {
             if ($this->isApplicable($classPower)) {
                 $this->applyPower($character, $classPower->getClassPower());
@@ -110,6 +110,48 @@ class CharacterBonuses
         }
 
         return $character;
+    }
+
+    /**
+     * @param Character $character
+     *
+     * @return Character
+     *
+     * @todo Handle cases when a spell effect cannot be applied (are there such cases?)
+     */
+    private function applySpellEffects(Character $character)
+    {
+        foreach ($character->getSpellEffects() as $spellEffect) {
+            if ($this->isApplicable($spellEffect)) {
+                $this->applySpellEffect($character, $spellEffect);
+            }
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param Character $character
+     * @param SpellEffect $spellEffect
+     *
+     * @return Character
+     *
+     * @todo Properly handle cases where spell effects depend on caster level
+     */
+    private function applySpellEffect(Character $character, SpellEffect $spellEffect)
+    {
+        $effects = array();
+        foreach ($spellEffect->getSpell()->getEffects() as $stat => $effect) {
+            $computedEffect = (int)$this->expressionLanguage->evaluate(
+                (string)($effect['value']),
+                array(
+                    'caster' => $spellEffect->getCaster(),
+                    'level'  => $spellEffect->getCasterLevel()
+                )
+            );
+            $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
+        }
+        return $this->applyEffects($character, $effects, $spellEffect);
     }
 
     /**
@@ -128,6 +170,8 @@ class CharacterBonuses
             $power = $characterPower->getFeat();
         } elseif ($characterPower instanceof CharacterClassPower) {
             $power = $characterPower->getClassPower();
+        } elseif ($characterPower instanceof SpellEffect) {
+            $power = $characterPower->getSpell();
         }
 
         if ($power === null) {

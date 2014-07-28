@@ -119,13 +119,13 @@ class CharacterController extends Controller
         $needActivationFeats = array();
         $passiveFeats = array();
         $otherFeats = array();
-        foreach ($entity->getFeats() as $feat) {
-            if (!$feat->getFeat()->hasEffects()) {
-                $otherFeats[] = $feat;
-            } elseif (!$feat->getFeat()->isPassive() || $feat->getFeat()->hasExternalConditions()) {
-                $needActivationFeats[] = $feat;
+        foreach ($entity->getFeats() as $spellEffect) {
+            if (!$spellEffect->getFeat()->hasEffects()) {
+                $otherFeats[] = $spellEffect;
+            } elseif (!$spellEffect->getFeat()->isPassive() || $spellEffect->getFeat()->hasExternalConditions()) {
+                $needActivationFeats[] = $spellEffect;
             } else {
-                $passiveFeats[] = $feat;
+                $passiveFeats[] = $spellEffect;
             }
         }
 
@@ -159,9 +159,24 @@ class CharacterController extends Controller
             }
         }
 
+        $needActivationSpellEffects = array();
+        $passiveSpellEffects        = array();
+        $otherSpellEffects          = array();
+        foreach ($entity->getSpellEffects() as $spellEffect) {
+            $spell = $spellEffect->getSpell();
+            if (!$spell->hasEffects()) {
+                $otherSpellEffects[] = $spellEffect;
+            } elseif (!$spell->isPassive() || $spell->hasExternalConditions()) {
+                $needActivationSpellEffects[] = $spellEffect;
+            } else {
+                $passiveSpellEffects[] = $spellEffect;
+            }
+        }
+
         $powersActivationForm = $this->createForm(new PowersActivationType());
         $powersActivationForm->get('feats')->setData($needActivationFeats);
         $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
+        $powersActivationForm->get('spell_effects')->setData($needActivationSpellEffects);
         $powersActivationForm->handleRequest($request);
 
         if ($powersActivationForm->isValid()) {
@@ -179,7 +194,9 @@ class CharacterController extends Controller
             'passive_feats' => $passiveFeats,
             'passive_class_powers' => $passiveClassPowers,
             'other_feats' => $otherFeats,
-            'other_class_powers' => $otherClassPowers
+            'other_class_powers' => $otherClassPowers,
+            'passive_spell_effects' => $passiveSpellEffects,
+            'other_spell_effects' => $otherSpellEffects
         );
     }
 

@@ -53,20 +53,27 @@ class SpellEffect
      * @var Character
      *
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="spellEffects")
-     * @ORM\JoinColumn(name="target_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", nullable=false)
      * @Assert\NotBlank()
      */
-    protected $target;
+    protected $character;
 
     /**
      * Spell that triggered this spell effect
      *
-     * @var Character|null Target of the spell or null if the corresponding spell is unknown
+     * @var Character|null Target of the spell or null if the corresponding spell
      *
      * @ORM\ManyToOne(targetEntity="Spell")
-     * @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=false)
      */
     protected $spell;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $active = false;
 
     /**
      * Get id
@@ -127,11 +134,11 @@ class SpellEffect
     }
 
     /**
-     * @param mixed $spell
+     * @param Spell $spell
      *
      * @return $this
      */
-    public function setSpell($spell)
+    public function setSpell(Spell $spell)
     {
         $this->spell = $spell;
 
@@ -139,7 +146,7 @@ class SpellEffect
     }
 
     /**
-     * @return mixed
+     * @return Spell
      */
     public function getSpell()
     {
@@ -147,22 +154,47 @@ class SpellEffect
     }
 
     /**
-     * @param mixed $target
+     * @param Character $character
      *
      * @return $this
      */
-    public function setTarget($target)
+    public function setCharacter(Character $character)
     {
-        $this->target = $target;
+        $this->character = $character;
 
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return Character
      */
-    public function getTarget()
+    public function getCharacter()
     {
-        return $this->target;
+        return $this->character;
+    }
+
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return CharacterFeat
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
     }
 }
