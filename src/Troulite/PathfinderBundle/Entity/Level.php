@@ -78,6 +78,17 @@ class Level
     private $classPowers;
 
     /**
+     * @var Collection|Spell[]
+     *
+     * @ORM\ManyToMany(targetEntity="Spell")
+     * @ORM\JoinTable(name="levels_spells",
+     *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="spell_id", referencedColumnName="id")}
+     *      )
+     */
+    private $learnedSpells;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -317,5 +328,39 @@ class Level
     public function getClassPowers()
     {
         return $this->classPowers;
+    }
+
+    /**
+     * Add learnedSpells
+     *
+     * @param Spell $learnedSpell
+     * 
+     * @return $this
+     */
+    public function addLearnedSpell(Spell $learnedSpell)
+    {
+        $this->learnedSpells[] = $learnedSpell;
+
+        return $this;
+    }
+
+    /**
+     * Remove learnedSpell
+     *
+     * @param Spell $learnedSpell
+     */
+    public function removeLearnedSpell(Spell $learnedSpell)
+    {
+        $this->learnedSpells->removeElement($learnedSpell);
+    }
+
+    /**
+     * Get learnedSpells
+     *
+     * @return Collection|Spell[] 
+     */
+    public function getLearnedSpells()
+    {
+        return $this->learnedSpells;
     }
 }
