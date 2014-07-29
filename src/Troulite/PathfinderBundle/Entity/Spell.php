@@ -92,7 +92,7 @@ class Spell
     /**
      * @var Collection|ClassSpell[]
      *
-     * @ORM\ManyToMany(targetEntity="ClassSpell", mappedBy="spell")
+     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="spell")
      */
     private $classes;
 
