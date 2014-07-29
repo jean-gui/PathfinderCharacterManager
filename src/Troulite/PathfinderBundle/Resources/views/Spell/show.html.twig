@@ -1,0 +1,80 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div class="container">
+    <h1>
+        {{ entity.name }}
+        {% if entity.classes %}
+        <small>
+            {% for classSpell in entity.classes %}
+                {{ classSpell.class }} {{ classSpell.spellLevel }}
+                {%- if loop.index != loop.length -%},{% endif %}
+            {% endfor %}
+        </small>
+        {% endif %}
+    </h1>
+
+    {% if entity.shortDescription %}
+    <p><em>{{ entity.shortDescription }}</em></p>
+    {% endif %}
+
+    {% if entity.longDescription %}
+        <p>{{ entity.longDescription }}</p>
+    {% endif %}
+
+    <dl class="dl-horizontal">
+        <dt>Casting Time</dt>
+        <dd>{{ entity.castingTime }}</dd>
+
+        <dt>Components</dt>
+        <dd>{{ entity.components }}</dd>
+
+        <dt>Range</dt>
+        <dd>{{ entity.range }}</dd>
+
+        <dt>Duration</dt>
+        <dd>{{ entity.duration }}</dd>
+
+        <dt>Saving throw</dt>
+        <dd>{{ entity.savingThrow }}</dd>
+
+        <dt>Spell Resistance</dt>
+        <dd>{{ entity.spellResistance ? 'Yes' : 'No' }}</dd>
+
+        <dt>Targets</dt>
+        <dd>{{ entity.targets }}</dd>
+
+        <dt>Passive</dt>
+        <dd>{{ entity.passive }}</dd>
+
+        {% if entity.effects %}
+            <dt>Effects</dt>
+            {% for key, effect in entity.effects %}
+                <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.conditions %}
+            <dt>Conditions</dt>
+            {% for key, condition in entity.condition %}
+                <dd>{{ key }}: {{ condition }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.externalConditions %}
+            <dt>Externalconditions</dt>
+            {% for key, conditions in entity.externalConditions %}
+                <dd>{{ key }}: {{ condition }}</dd>
+            {% endfor %}
+        {% endif %}
+    </dl>
+
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('spells') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+</div>
+{% endblock %}
