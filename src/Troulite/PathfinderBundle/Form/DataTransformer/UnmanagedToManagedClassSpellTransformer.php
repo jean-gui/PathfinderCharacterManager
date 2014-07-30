@@ -19,7 +19,7 @@ use Troulite\PathfinderBundle\Entity\ClassSpell;
  *
  * @package Troulite\PathfinderBundle\Form\DataTransformer
  */
-class SpellToClassSpellTransformer implements DataTransformerInterface
+class UnmanagedToManagedClassSpellTransformer implements DataTransformerInterface
 {
     /**
      * @var EntityManager
