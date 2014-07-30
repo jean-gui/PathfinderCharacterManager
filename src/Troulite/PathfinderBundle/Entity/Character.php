@@ -920,5 +920,17 @@ class Character extends BaseCharacter
         return $this->spellEffects;
     }
 
+    /**
+     * Return empty array if no known spells or if no class has to learn spells
+     * @return array
+     */
+    public function getLearnedSpells()
+    {
+        $known = array();
+        foreach ($this->getLevels() as $level) {
+            $known = array_merge($known, (array)$level->getLearnedSpells()->toArray());
+        }
 
+        return $known;
+    }
 }

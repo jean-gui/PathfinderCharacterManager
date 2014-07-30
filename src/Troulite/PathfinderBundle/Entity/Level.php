@@ -80,10 +80,10 @@ class Level
     /**
      * @var Collection|Spell[]
      *
-     * @ORM\ManyToMany(targetEntity="Spell")
+     * @ORM\ManyToMany(targetEntity="ClassSpell")
      * @ORM\JoinTable(name="levels_spells",
      *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="spell_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="classspell_id", referencedColumnName="id")}
      *      )
      */
     private $learnedSpells;
@@ -96,6 +96,7 @@ class Level
         $this->skills      = new ArrayCollection();
         $this->feats       = new ArrayCollection();
         $this->classPowers = new ArrayCollection();
+        $this->learnedSpells = new ArrayCollection();
     }
 
     /**
@@ -333,11 +334,11 @@ class Level
     /**
      * Add learnedSpells
      *
-     * @param Spell $learnedSpell
+     * @param ClassSpell $learnedSpell
      * 
      * @return $this
      */
-    public function addLearnedSpell(Spell $learnedSpell)
+    public function addLearnedSpell(ClassSpell $learnedSpell)
     {
         $this->learnedSpells[] = $learnedSpell;
 
@@ -347,9 +348,9 @@ class Level
     /**
      * Remove learnedSpell
      *
-     * @param Spell $learnedSpell
+     * @param ClassSpell $learnedSpell
      */
-    public function removeLearnedSpell(Spell $learnedSpell)
+    public function removeLearnedSpell(ClassSpell $learnedSpell)
     {
         $this->learnedSpells->removeElement($learnedSpell);
     }
@@ -357,7 +358,7 @@ class Level
     /**
      * Get learnedSpells
      *
-     * @return Collection|Spell[] 
+     * @return Collection|ClassSpell[]
      */
     public function getLearnedSpells()
     {

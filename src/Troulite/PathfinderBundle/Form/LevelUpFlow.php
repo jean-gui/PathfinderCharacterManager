@@ -66,6 +66,10 @@ class LevelUpFlow extends FormFlow
                 'type'  => new LevelUpFeatsType($this->advancement),
             ),
             array(
+                'label' => 'Spells',
+                'type'  => new LevelUpSpellsType($this->em),
+            ),
+            array(
                 'label' => 'Skills',
                 'type'  => new LevelUpSkillsType($this->em),
             ),
