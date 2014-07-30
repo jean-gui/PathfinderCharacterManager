@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\Spell;
-use Troulite\PathfinderBundle\Form\DataTransformer\SpellToClassSpellTransformer;
+use Troulite\PathfinderBundle\Form\DataTransformer\UnmanagedToManagedClassSpellTransformer;
 
 /**
  * Class AddCharacterSpellType
@@ -41,7 +41,7 @@ class AddCharacterSpellType extends AbstractType
         /** @var $em EntityManager */
         $em = $options['em'];
 
-        $spellTransformer = new SpellToClassSpellTransformer($options['em'], $options['class-definition']);
+        $spellTransformer = new UnmanagedToManagedClassSpellTransformer($options['em'], $options['class-definition']);
         $builder->addModelTransformer($spellTransformer);
 
         $builder->addEventListener(
@@ -87,12 +87,10 @@ class AddCharacterSpellType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class'       => 'Troulite\PathfinderBundle\Entity\ClassSpell',
-                'learned'          => array(),
-                'em'               => null,
-                'class-definition' => null
+                'data_class'       => 'Troulite\PathfinderBundle\Entity\ClassSpell'
             )
         );
+        $resolver->setRequired(array('learned', 'em', 'class-definition'));
     }
 
     /**
