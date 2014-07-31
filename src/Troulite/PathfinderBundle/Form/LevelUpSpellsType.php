@@ -57,13 +57,19 @@ class LevelUpSpellsType extends AbstractType
                     $spellLevels = array();
                     foreach ($class->getKnownSpellsPerLevel() as $spellLevel => $known) {
                         $spellsToAdd = $known[$classLevel - 1];
+
                         if ($classLevel > 1) {
                             $spellsToAdd -= $known[$classLevel - 2];
                         }
 
-                        $spellsToAdd -= $level->getLearnedSpells()->count();
+                        // We don't want to add spells already added to this level again
+                        foreach ($level->getLearnedSpells() as $cs) {
+                            if ($cs->getSpellLevel() === $spellLevel) {
+                                $spellsToAdd--;
+                            }
+                        }
 
-                        if ($spellsToAdd === 0) {
+                        if ($spellsToAdd < 1) {
                             continue;
                         }
 
