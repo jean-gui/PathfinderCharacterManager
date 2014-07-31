@@ -59,19 +59,21 @@ class AddCharacterSpellType extends AbstractType
                     }
                 );
 
-                $spells = $em
-                    ->createQuery(
-                        'SELECT s FROM TroulitePathfinderBundle:Spell s
+                $queryString = 'SELECT s FROM TroulitePathfinderBundle:Spell s
                             JOIN s.classes cs
                             WHERE cs.spellLevel = ?1
-                                AND cs.class = ?2
-                                AND cs NOT IN(?3)
-                        '
-                    )
+                                AND cs.class = ?2';
+                if ($learned && count($learned) > 0) {
+                    $queryString .= 'AND cs NOT IN(?3)';
+                }
+                $query = $em
+                    ->createQuery($queryString)
                     ->setParameter(1, $classSpell->getSpellLevel())
-                    ->setParameter(2, $classSpell->getClass()->getId())
-                    ->setParameter(3, $learned)
-                    ->getResult();
+                    ->setParameter(2, $classSpell->getClass()->getId());
+                if ($learned && count($learned) > 0) {
+                    $query->setParameter(3, $learned);
+                }
+                $spells = $query->getResult();
 
                 $form->add(
                     'spell',
