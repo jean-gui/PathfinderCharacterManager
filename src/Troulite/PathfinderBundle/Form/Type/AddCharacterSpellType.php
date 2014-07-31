@@ -50,8 +50,14 @@ class AddCharacterSpellType extends AbstractType
                 /** @var $level ClassSpell */
                 $classSpell = $event->getData();
                 $form  = $event->getForm();
-
                 $this->class = $classSpell->getClass();
+
+                $learned = array_filter(
+                    $options['learned'],
+                    function (ClassSpell $cs) use ($classSpell) {
+                        return $cs !== $classSpell;
+                    }
+                );
 
                 $spells = $em
                     ->createQuery(
@@ -64,7 +70,7 @@ class AddCharacterSpellType extends AbstractType
                     )
                     ->setParameter(1, $classSpell->getSpellLevel())
                     ->setParameter(2, $classSpell->getClass()->getId())
-                    ->setParameter(3, $options['learned'])
+                    ->setParameter(3, $learned)
                     ->getResult();
 
                 $form->add(
