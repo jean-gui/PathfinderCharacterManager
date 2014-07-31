@@ -465,6 +465,18 @@
     </div>
     <div id="spells" class="tab-pane">
         <h2>Spells</h2>
+
+        {% set known = entity.learnedSpellsBySpellLevel %}
+        {% if known %}
+            {% for spellLevel, classSpells in known %}
+                <h3>Level {{ spellLevel }}</h3>
+                <ul>
+                    {% for classSpell in classSpells %}
+                    <li>{{ classSpell.spell }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        {% endif %}
     </div>
     </div>
     </div>

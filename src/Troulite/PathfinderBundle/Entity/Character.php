@@ -927,8 +927,25 @@ class Character extends BaseCharacter
     public function getLearnedSpells()
     {
         $known = array();
+        foreach ($this->getLearnedSpellsBySpellLevel() as $spells) {
+            $known = array_merge($known, $spells);
+        }
+
+        return $known;
+    }
+
+    /**
+     * Return empty array if no known spells or if no class has to learn spells
+     *
+     * @return array
+     */
+    public function getLearnedSpellsBySpellLevel()
+    {
+        $known = array();
         foreach ($this->getLevels() as $level) {
-            $known = array_merge($known, (array)$level->getLearnedSpells()->toArray());
+            foreach ($level->getLearnedSpells() as $classSpell) {
+                $known[$classSpell->getSpellLevel()][] = $classSpell;
+            }
         }
 
         return $known;
