@@ -103,7 +103,7 @@ class LevelUpFeatsType extends AbstractType
                         'feats',
                         'collection',
                         array(
-                            'label' => 'New Feat',
+                            'label' => 'New Feat' . ($level->getFeats()->count() > 1 ? 's' : ''),
                             'type' => 'addcharacterfeat',
                             'options' => array(
                                 'class' => 'TroulitePathfinderBundle:Feat',
