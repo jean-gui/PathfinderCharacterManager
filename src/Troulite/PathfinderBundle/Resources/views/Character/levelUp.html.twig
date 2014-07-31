@@ -57,14 +57,14 @@
             </tr>
             </thead>
             <tbody>
-                {{ block('collection_rows') }}
+                {{ block('skills_collection_rows') }}
             </tbody>
         </table>
         {{ form_rest(form) }}
     {% endspaceless %}
 {% endblock _troulite_pathfinderbundle_level_skills_widget %}
 
-{% block collection_rows %}
+{% block skills_collection_rows %}
     {% spaceless %}
         {{ form_errors(form) }}
         {% for child in form %}
@@ -76,4 +76,4 @@
             </tr>
         {% endfor %}
     {% endspaceless %}
-{% endblock collection_rows %}
+{% endblock skills_collection_rows %}
