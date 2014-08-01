@@ -757,6 +757,235 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('stealth'))
             ->addClassSkill($this->getReference('useMagicDevice'));
 
+        $power = (new ClassPower())
+            ->setName('Bardic Knowledge')
+            ->setLevel(1)
+            ->setClass($bard)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'knowledge-arcana' => ['type' => 'class', 'value' => 2],
+                    'knowledge-dungeoneering' => ['type' => 'class', 'value' => 2],
+                    'knowledge-geography' => ['type' => 'class', 'value' => 2],
+                    'knowledge-history' => ['type' => 'class', 'value' => 2],
+                    'knowledge-local' => ['type' => 'class', 'value' => 2],
+                    'knowledge-nature' => ['type' => 'class', 'value' => 2],
+                    'knwoledge-nobility' => ['type' => 'class', 'value' => 2],
+                    'knowledge-planes' => ['type' => 'class', 'value' => 2],
+                    'knowledge-religion' => ['type' => 'class', 'value' => 2]
+                )
+            );
+        $bard->addPower($power);
+        $this->addReference('bardic-knowledge', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Countersong')
+            ->setLevel(1)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-countersong', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Distraction')
+            ->setLevel(1)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-distraction', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Fascinate')
+            ->setLevel(1)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance - Fascinate', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Inspire Courage')
+            ->setLevel(1)
+            ->setClass($bard)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll' => [
+                        'type' => 'competence',
+                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                    'ranged-attack-roll' => [
+                        'type' => 'competence',
+                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                    'melee-damage-roll' => [
+                        'type' => 'competence',
+                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                    'ranged-damage-roll' => [
+                        'type' => 'competence',
+                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                    'saving-charm' => [
+                        'type'    => 'morale',
+                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                    'saving-fear' => [
+                        'type'    => 'competence',
+                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                    ],
+                )
+            );
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-inspire-courage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Inspire Competence')
+            ->setLevel(3)
+            ->setClass($bard)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'skills' => ['type' => 'competence', 'value' => '2 + div(c.getLevel(4) - 3, 4)']
+                )
+            );
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-inspire-competence', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Suggestion')
+            ->setLevel(6)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-suggestion', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Dirge of Doom')
+            ->setLevel(8)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-dirge-of-doom', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Inspire Greatness')
+            ->setLevel(9)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-inspire-greatness', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Soothing Performance')
+            ->setLevel(12)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-soothing-performance', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Frightening Tune')
+            ->setLevel(14)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-frightening-tune', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Inspire Heroics')
+            ->setLevel(15)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-inspire-heroics', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Mass Suggestion')
+            ->setLevel(18)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-mass-suggestion', $power);
+
+        $power = (new ClassPower())
+            ->setName('Bardic Performance - Deadly Performance')
+            ->setLevel(20)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('bardic-performance-deadly-performance', $power);
+
+        $power = (new ClassPower())
+            ->setName('First Versatile Performance')
+            ->setLevel(2)
+            ->setClass($bard)
+            ->setPassive(true);
+        $bard->addPower($power);
+        $this->addReference('versatile-performance-1', $power);
+
+        $power = (new ClassPower())
+            ->setName('Second Versatile Performance')
+            ->setLevel(6)
+            ->setClass($bard)
+            ->setPassive(true);
+        $bard->addPower($power);
+        $this->addReference('versatile-performance-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Third Versatile Performance')
+            ->setLevel(10)
+            ->setClass($bard)
+            ->setPassive(true);
+        $bard->addPower($power);
+        $this->addReference('versatile-performance-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fourth Versatile Performance')
+            ->setLevel(14)
+            ->setClass($bard)
+            ->setPassive(true);
+        $bard->addPower($power);
+        $this->addReference('versatile-performance-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fifth Versatile Performance')
+            ->setLevel(18)
+            ->setClass($bard)
+            ->setPassive(true);
+        $bard->addPower($power);
+        $this->addReference('versatile-performance-5', $power);
+
+        $power = (new ClassPower())
+            ->setName('Well Versed')
+            ->setLevel(2)
+            ->setClass($bard)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'saving-bardic' => ['type' => 'class', 'value' => 4],
+                    'saving-sonic' => ['type' => 'class', 'value' => 4],
+                    'saving-language' => ['type' => 'class', 'value' => 4],
+                )
+            );
+        $bard->addPower($power);
+        $this->addReference('well-versed', $power);
+
+        $power = (new ClassPower())
+            ->setName('Lore Master')
+            ->setLevel(5)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('lore-master', $power);
+
+        $power = (new ClassPower())
+            ->setName('Jack of All Trades')
+            ->setLevel(5)
+            ->setClass($bard)
+            ->setPassive(false);
+        $bard->addPower($power);
+        $this->addReference('jack-of-all-trades', $power);
+
         $manager->persist($bard);
         $manager->flush();
 
