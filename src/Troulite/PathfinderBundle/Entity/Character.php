@@ -39,7 +39,7 @@ class Character extends BaseCharacter
     /**
      * @var Collection|PreparedSpell[]
      *
-     * @ORM\OneToMany(targetEntity="PreparedSpell", mappedBy="character", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="PreparedSpell", mappedBy="character", cascade={"all"}, orphanRemoval=true)
      */
     private $preparedSpells;
 
@@ -966,15 +966,15 @@ class Character extends BaseCharacter
     }
 
     /**
-     * Add preparedSpells
+     * Add preparedSpell
      *
-     * @param PreparedSpell $preparedSpells
+     * @param PreparedSpell $preparedSpell
      *
      * @return $this
      */
-    public function addPreparedSpell(PreparedSpell $preparedSpells)
+    public function addPreparedSpell(PreparedSpell $preparedSpell)
     {
-        $this->preparedSpells[] = $preparedSpells;
+        $this->preparedSpells[] = $preparedSpell;
 
         return $this;
     }
