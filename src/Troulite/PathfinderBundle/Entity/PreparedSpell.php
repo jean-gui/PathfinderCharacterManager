@@ -49,33 +49,28 @@ class PreparedSpell
     private $class;
 
     /**
-     * @var int Number of times the spell has been memorized
+     * @var bool Has the spell already been cast today?
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
-    private $count = 1;
-
-    /**
-     * @var int Number of times the spell has been cast
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $castCount = 0;
+    private $alreadyCast = false;
 
     /**
      * @param Character $character
      * @param Spell $spell
      * @param ClassDefinition $class
-     * @param int $count
-     * @param int $castCount
+     * @param bool $alreadyCast
      */
-    public function __construct(Character $character = null, Spell $spell, ClassDefinition $class, $count = 1, $castCount = 0)
-    {
+    public function __construct(
+        Character $character = null,
+        Spell $spell = null,
+        ClassDefinition $class = null,
+        $alreadyCast = false
+    ) {
         $this->character = $character;
         $this->spell = $spell;
         $this->class = $class;
-        $this->count = $count;
-        $this->$castCount = $castCount;
+        $this->alreadyCast = $alreadyCast;
     }
 
     /**
@@ -89,49 +84,27 @@ class PreparedSpell
     }
 
     /**
-     * Set count
-     *
-     * @param integer $count
-     * @return $this
-     */
-    public function setCount($count)
-    {
-        $this->count = $count;
-
-        return $this;
-    }
-
-    /**
-     * Get count
-     *
-     * @return integer 
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
      * Set castCount
      *
-     * @param integer $castCount
+     * @param bool $alreadyCast
+     *
      * @return $this
      */
-    public function setCastCount($castCount)
+    public function setAlreaydCast($alreadyCast)
     {
-        $this->castCount = $castCount;
+        $this->alreadyCast = $alreadyCast;
 
         return $this;
     }
 
     /**
-     * Get castCount
+     * Get alreadyCast
      *
      * @return integer 
      */
-    public function getCastCount()
+    public function isAlreadyCast()
     {
-        return $this->castCount;
+        return $this->alreadyCast;
     }
 
     /**

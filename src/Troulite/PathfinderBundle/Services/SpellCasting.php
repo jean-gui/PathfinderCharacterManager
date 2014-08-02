@@ -52,13 +52,14 @@ class SpellCasting
                 if (
                     $preparedSpell->getSpell() === $spell &&
                     $preparedSpell->getClass() === $class &&
-                    $preparedSpell->getCount() > $preparedSpell->getCastCount()) {
+                    !$preparedSpell->isAlreadyCast()
+                ) {
                     return true;
                 }
             }
         } else { // The spell doesn't need to be prepared but needs to be known and still be castable
             $cast = $caster->getNonPreparedCastSpellsCount();
-            $castPerDay = 0;
+
             foreach ($caster->getLearnedSpells() as $classSpell) {
                 if (
                     $classSpell->getSpell() === $spell &&
@@ -105,7 +106,7 @@ class SpellCasting
 
         if ($class->isPreparationNeeded()) {
             $preparedSpell = $caster->getPreparedSpell($spell, $class);
-            $preparedSpell->setCastCount($preparedSpell->getCastCount() + 1);
+            $preparedSpell->setAlreaydCast(true);
         } else {
             $cast = $caster->getNonPreparedCastSpellsCount();
             $classSpell = $caster->getLearnedSpell($spell, $class);

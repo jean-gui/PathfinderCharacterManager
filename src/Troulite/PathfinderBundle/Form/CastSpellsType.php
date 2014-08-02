@@ -36,19 +36,16 @@ class CastSpellsType extends AbstractType
                 /** @var $character Character */
                 $character = $event->getData();
                 $form = $event->getForm();
-
+                $i = 0;
                 $choices = array('other' => 'Other', 'allies' => 'Allies');
                 foreach ($character->getParty()->getCharacters() as $ally) {
                     $choices[$ally->getId()] = $ally->getName();
                 }
 
                 foreach ($character->getPreparedSpells() as $preparedSpell) {
-                    $toAdd = $preparedSpell->getCount() - $preparedSpell->getCastCount();
-
-                    while ($toAdd > 0) {
-                        $toAdd--;
+                    if (!$preparedSpell->isAlreadyCast()) {
                         $form->add(
-                            'Prepared_' . $toAdd,
+                            'Prepared_' . $i++,
                             new CastPreparedSpellType(),
                             array(
                                 'targets'  => $choices,
@@ -61,7 +58,6 @@ class CastSpellsType extends AbstractType
                     }
                 }
 
-                $i = 1;
                 foreach ($character->getLevelPerClass() as $classLevel) {
                     /** @var $class ClassDefinition */
                     $class = $classLevel['class'];
