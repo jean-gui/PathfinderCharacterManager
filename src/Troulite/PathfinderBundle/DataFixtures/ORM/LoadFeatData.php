@@ -277,7 +277,6 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         foreach($finder as $file) {
             $handle = fopen($file->getRealPath(), 'r');
             $header = null;
-            $data = array();
             while (($row = fgetcsv($handle, null, ',', '"', "\\")) !== false) {
                 if (!$header) {
                     $header = $row;
@@ -293,7 +292,6 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     $manager->persist($feat);
                 }
             }
-
         }
 
         $manager->flush();
