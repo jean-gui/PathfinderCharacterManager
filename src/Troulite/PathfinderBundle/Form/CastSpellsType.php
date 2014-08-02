@@ -45,9 +45,10 @@ class CastSpellsType extends AbstractType
                 foreach ($character->getPreparedSpells() as $preparedSpell) {
                     if (!$preparedSpell->isAlreadyCast()) {
                         $form->add(
-                            'Prepared_' . $i++,
+                            $i++,
                             new CastPreparedSpellType(),
                             array(
+                                'label'    => false,
                                 'targets'  => $choices,
                                 'mapped'   => false,
                                 'spell'    => $preparedSpell->getSpell(),
@@ -76,9 +77,10 @@ class CastSpellsType extends AbstractType
                             }
                             for(; $count < $levels[$level-1]; $count++) {
                                 $form->add(
-                                    'Unprepared_' . $i++,
+                                    $i++,
                                     new CastUnpreparedSpellType(),
                                     array(
+                                        'label' => false,
                                         'targets'  => $choices,
                                         'class'    => $class,
                                         'caster' => $character,

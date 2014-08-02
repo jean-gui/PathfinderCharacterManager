@@ -465,22 +465,27 @@
         <h2>Inventory</h2>
     </div>
     <div id="spells" class="tab-pane">
+        {% if castSpellsForm.children|length > 1 %}
         <h2>Cast Spells</h2>
         {{ form(castSpellsForm) }}
+        {% endif %}
+
+        {% if uncastSpellsForm.children|length > 1 %}
         <h2>Uncast Spells</h2>
         {{ form(uncastSpellsForm) }}
-        <h2>Known Spells</h2>
+        {% endif %}
 
         {% set known = entity.learnedSpellsBySpellLevel %}
         {% if known %}
-            {% for spellLevel, classSpells in known %}
-                <h3>Level {{ spellLevel }}</h3>
-                <ul>
-                    {% for classSpell in classSpells %}
-                    <li>{{ classSpell.spell }}</li>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
+        <h2>Known Spells</h2>
+        {% for spellLevel, classSpells in known %}
+            <h3>Level {{ spellLevel }}</h3>
+            <ul>
+                {% for classSpell in classSpells %}
+                <li>{{ classSpell.spell }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
         {% endif %}
     </div>
     </div>
