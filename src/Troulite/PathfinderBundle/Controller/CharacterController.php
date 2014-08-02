@@ -14,10 +14,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
+use Troulite\PathfinderBundle\Form\CastSpellsType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
+use Troulite\PathfinderBundle\Form\UncastSpellsType;
 
 /**
  * Character controller.
@@ -185,6 +189,86 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
+        $castSpellsForm = $this->createForm(new CastSpellsType(), $entity);
+        $castSpellsForm->handleRequest($request);
+        if ($castSpellsForm->isValid()) {
+            /** @var $f Form */
+            foreach ($castSpellsForm->all() as $f) {
+                if ($f->getName() === 'Cast') {
+                    continue;
+                }
+
+                $spell = null;
+
+                if ($f->getConfig()->getOption('spell')) { // Prepared Spell
+                    $spell = $f->getConfig()->getOption('spell');
+                } elseif ($f->getData()['spell']) { // Unprepared Spell
+                    /** @var $classSpell ClassSpell */
+                    $classSpell = $f->getData()['spell'];
+                    $spell = $classSpell->getSpell();
+                }
+                $class = $f->getConfig()->getOption('class');
+                $target = $f->getData()['targets'];
+
+                if ($target === null || $spell === null) {
+                    continue;
+                }
+
+                switch ($target) {
+                    case 'other':
+                        $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class);
+                        break;
+                    case 'allies':
+                        $this->get('troulite_pathfinder.spell_casting')->cast(
+                            $entity,
+                            $spell,
+                            $class,
+                            $entity->getParty()->getCharacters()
+                        );
+                        break;
+                    default:
+                        $target = $em->getRepository('TroulitePathfinderBundle:Character')->find($target);
+                        if ($target) {
+                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class, $target);
+                        }
+                        break;
+                }
+
+                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            }
+        }
+
+        $uncastSpellsForm = $this->createForm(new UncastSpellsType(), $entity);
+        $uncastSpellsForm->handleRequest($request);
+        if ($uncastSpellsForm->isValid()) {
+            foreach ($uncastSpellsForm->all() as $f) {
+                if ($f->getName() === 'Uncast') {
+                    continue;
+                }
+
+                if ($f->getData()['uncast'] === true) {
+                    /** @var $spellEffect SpellEffect */
+                    $spellEffect = $f->getConfig()->getOption('spellEffect');
+                    $spellEffect->getCharacter()->removeSpellEffect($spellEffect);
+                }
+            }
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+        }
+
+        $sleepForm = $this->createFormBuilder()->add('sleep', 'submit')->getForm();
+        $sleepForm->handleRequest($request);
+        if ($sleepForm->isValid()) {
+            $entity->setNonPreparedCastSpellsCount(null);
+            foreach ($entity->getPreparedSpells() as $preparedSpell) {
+                $preparedSpell->setCastCount(0);
+            }
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+        }
+
         $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
 
         return array(
@@ -196,7 +280,10 @@ class CharacterController extends Controller
             'other_feats' => $otherFeats,
             'other_class_powers' => $otherClassPowers,
             'passive_spell_effects' => $passiveSpellEffects,
-            'other_spell_effects' => $otherSpellEffects
+            'other_spell_effects' => $otherSpellEffects,
+            'castSpellsForm' => $castSpellsForm->createView(),
+            'uncastSpellsForm' => $uncastSpellsForm->createView(),
+            'sleepForm' => $sleepForm->createView(),
         );
     }
 

@@ -585,11 +585,25 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($spell);
 
         $this->setReference('spell-calm-emotions', $spell);
-        $spell = (new Spell())->setName("Cat's Grace")->setLongDescription(
-            "The transmuted creature becomes more graceful, agile, and coordinated. The spell grants a +4 enhancement bonus to Dexterity, adding the usual benefits to AC, Reflex saves, and other uses of the Dexterity modifier."
-        )->setCastingTime("1 standard action")->setComponents("pinch of cat fur")->setRange("touch")->setTargets(
-                "creature touched"
-            )->setDuration("1 min./level")->setSavingThrow("Will negates (harmless)")->setSpellResistance(true);
+        $spell = (new Spell())
+            ->setName("Cat's Grace")
+            ->setLongDescription(
+                "The transmuted creature becomes more graceful, agile, and coordinated. The spell grants a +4 enhancement bonus to Dexterity, adding the usual benefits to AC, Reflex saves, and other uses of the Dexterity modifier."
+            )
+            ->setCastingTime("1 standard action")
+            ->setComponents("pinch of cat fur")
+            ->setRange("touch")
+            ->setTargets("creature touched")
+            ->setDuration("1 min./level")
+            ->setSavingThrow("Will negates (harmless)")
+            ->setSpellResistance(true)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'dexterity' => ['type' => 'enhancement', 'value' => 4]
+                )
+            );
+        $this->setReference('spell-cats-grace', $spell);
         $manager->persist($spell);
 
         $this->setReference('spell-cats-grace', $spell);

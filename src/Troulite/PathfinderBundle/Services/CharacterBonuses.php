@@ -168,6 +168,10 @@ class CharacterBonuses
             $power = $characterPower->getFeat();
         } elseif ($characterPower instanceof CharacterClassPower) {
             $power = $characterPower->getClassPower();
+            // Don't apply castable powers
+            if ($power->isCastable()) {
+                return false;
+            }
         } elseif ($characterPower instanceof SpellEffect) {
             $power = $characterPower->getSpell();
         }

@@ -37,9 +37,23 @@ class Character extends BaseCharacter
     private $levels;
 
     /**
+     * @var Collection|PreparedSpell[]
+     *
+     * @ORM\OneToMany(targetEntity="PreparedSpell", mappedBy="character", cascade={"all"})
+     */
+    private $preparedSpells;
+
+    /**
+     * @var array Number of spells cast per class per spell level
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $nonPreparedCastSpellsCount;
+
+    /**
      * @var Collection|SpellEffect[]
      *
-     * @ORM\OneToMany(targetEntity="SpellEffect", mappedBy="character", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="SpellEffect", mappedBy="character", cascade={"all"}, orphanRemoval=true)
      */
     private $spellEffects;
 
@@ -895,7 +909,7 @@ class Character extends BaseCharacter
      * @return $this
      */public function removeSpellEffect(SpellEffect $spellEffect)
     {
-        $this->spellEffects->remove($spellEffect);
+        $this->spellEffects->removeElement($spellEffect);
 
         return $this;
     }
@@ -922,7 +936,7 @@ class Character extends BaseCharacter
 
     /**
      * Return empty array if no known spells or if no class has to learn spells
-     * @return array
+     * @return ClassSpell[]
      */
     public function getLearnedSpells()
     {
@@ -949,5 +963,97 @@ class Character extends BaseCharacter
         }
 
         return $known;
+    }
+
+    /**
+     * Add preparedSpells
+     *
+     * @param PreparedSpell $preparedSpells
+     *
+     * @return $this
+     */
+    public function addPreparedSpell(PreparedSpell $preparedSpells)
+    {
+        $this->preparedSpells[] = $preparedSpells;
+
+        return $this;
+    }
+
+    /**
+     * Remove preparedSpells
+     *
+     * @param PreparedSpell $preparedSpells
+     */
+    public function removePreparedSpell(PreparedSpell $preparedSpells)
+    {
+        $this->preparedSpells->removeElement($preparedSpells);
+    }
+
+    /**
+     * Get preparedSpells
+     *
+     * @return Collection|PreparedSpell[]
+     */
+    public function getPreparedSpells()
+    {
+        return $this->preparedSpells;
+    }
+
+    /**
+     * @param Spell $spell
+     * @param ClassDefinition $class
+     *
+     * @return null|PreparedSpell
+     */
+    public function getPreparedSpell(Spell $spell, ClassDefinition $class)
+    {
+        foreach ($this->getPreparedSpells() as $preparedSpell) {
+            if ($preparedSpell->getSpell() === $spell && $preparedSpell->getClass() === $class) {
+                return $preparedSpell;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param Spell $spell
+     * @param ClassDefinition $class
+     *
+     * @return null|ClassSpell
+     */
+    public function getLearnedSpell(Spell $spell, ClassDefinition $class)
+    {
+        foreach ($this->getLearnedSpells() as $classSpell) {
+            if ($classSpell->getSpell() === $spell && $classSpell->getClass() === $class) {
+                return $classSpell;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Set nonPreparedCastSpellsCount
+     *
+     * @param array $nonPreparedCastSpellsCount
+     *
+     * @return $this
+     */
+    public function setNonPreparedCastSpellsCount($nonPreparedCastSpellsCount)
+    {
+        $this->nonPreparedCastSpellsCount = $nonPreparedCastSpellsCount;
+
+        return $this;
+    }
+
+    /**
+     * Get nonPreparedCastSpellsCount
+     *
+     * @return array 
+     */
+    public function getNonPreparedCastSpellsCount()
+    {
+        return $this->nonPreparedCastSpellsCount;
     }
 }

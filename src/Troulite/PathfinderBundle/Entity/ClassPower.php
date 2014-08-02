@@ -62,6 +62,13 @@ class ClassPower
     private $level;
 
     /**
+     * @var bool Whether the power acts as a spell and is castable
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $castable = false;
+
+    /**
      * Get id
      *
      * @return integer
@@ -149,6 +156,26 @@ class ClassPower
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @param $castable
+     *
+     * @return $this
+     */
+    public function setCastable($castable = false)
+    {
+        $this->castable = $castable;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCastable()
+    {
+        return $this->castable;
     }
 
     /**

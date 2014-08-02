@@ -158,7 +158,7 @@ class SpellEffect
      *
      * @return $this
      */
-    public function setCharacter(Character $character)
+    public function setCharacter(Character $character = null)
     {
         $this->character = $character;
 

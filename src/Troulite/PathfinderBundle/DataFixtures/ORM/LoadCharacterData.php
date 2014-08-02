@@ -12,6 +12,7 @@ use Troulite\PathfinderBundle\Entity\CharacterEquipment;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
+use Troulite\PathfinderBundle\Entity\PreparedSpell;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 
 /**
@@ -682,6 +683,13 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setSkill($this->getReference('stealth'))
             ->setValue(1);
         $manager->persist($skill);
+
+        $gwendae->addPreparedSpell(new PreparedSpell(
+            $gwendae,
+            $this->getReference('spell-cats-grace'),
+            $this->getReference('ranger'),
+            2
+        ));
 
         $manager->persist($gwendae);
         $manager->flush();

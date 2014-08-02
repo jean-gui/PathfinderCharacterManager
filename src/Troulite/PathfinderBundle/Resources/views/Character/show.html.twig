@@ -126,6 +126,7 @@
                         </dd>
                     {% endif %}
                 </dl>
+                {{ form(sleepForm) }}
             </div>
             <div class="col-md-4">
                 <h2>Combat</h2>
@@ -464,7 +465,11 @@
         <h2>Inventory</h2>
     </div>
     <div id="spells" class="tab-pane">
-        <h2>Spells</h2>
+        <h2>Cast Spells</h2>
+        {{ form(castSpellsForm) }}
+        <h2>Uncast Spells</h2>
+        {{ form(uncastSpellsForm) }}
+        <h2>Known Spells</h2>
 
         {% set known = entity.learnedSpellsBySpellLevel %}
         {% if known %}
