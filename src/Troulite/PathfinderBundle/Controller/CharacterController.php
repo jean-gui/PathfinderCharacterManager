@@ -21,6 +21,7 @@ use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
+use Troulite\PathfinderBundle\Form\SleepType;
 use Troulite\PathfinderBundle\Form\UncastSpellsType;
 
 /**
@@ -229,7 +230,7 @@ class CharacterController extends Controller
                     default:
                         $target = $em->getRepository('TroulitePathfinderBundle:Character')->find($target);
                         if ($target) {
-                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class, $target);
+                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class, array($target));
                         }
                         break;
                 }
@@ -262,7 +263,7 @@ class CharacterController extends Controller
         if ($sleepForm->isValid()) {
             $entity->setNonPreparedCastSpellsCount(null);
             foreach ($entity->getPreparedSpells() as $preparedSpell) {
-                $preparedSpell->setCastCount(0);
+                $preparedSpell->setAlreaydCast(false);
             }
             $em->flush();
 
@@ -502,5 +503,28 @@ class CharacterController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
+    }
+
+    /**
+     * Deletes a Character entity.
+     *
+     * @Route("/{id}/sleep", name="characters_delete")
+     * @Method("GET|POST")
+     * @Template()
+     */
+    public function sleepAction(Character $entity, Request $request)
+    {
+        /** @var $em EntityManager */
+        $em = $this->get('doctrine.orm.entity_manager');
+        $sleepForm = $this->createForm(new SleepType(), $entity, array('em' => $em));
+
+        $sleepForm->handleRequest($request);
+        if ($sleepForm->isValid()) {
+            $em->flush();
+        }
+
+        return array(
+            'form' => $sleepForm->createView()
+        );
     }
 }
