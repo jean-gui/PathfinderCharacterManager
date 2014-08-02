@@ -36,7 +36,7 @@
         <dd>{{ entity.duration }}</dd>
 
         <dt>Saving throw</dt>
-        <dd>{{ entity.savingThrow }}</dd>
+        <dd>{{ entity.savingThrow|default('None') }}</dd>
 
         <dt>Spell Resistance</dt>
         <dd>{{ entity.spellResistance ? 'Yes' : 'No' }}</dd>
