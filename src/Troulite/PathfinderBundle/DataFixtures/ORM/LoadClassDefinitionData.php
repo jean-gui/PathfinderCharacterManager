@@ -453,6 +453,130 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('survival'))
             ->addClassSkill($this->getReference('swim'));
 
+        $power = (new ClassPower())
+            ->setName('Fast Movement')
+            ->setLevel(1)
+            ->setClass($barbarian)
+            ->setPassive(true);
+        $barbarian->addPower($power);
+        $this->addReference('fast-movement', $power);
+
+        $power = (new ClassPower())
+            ->setName('Rage')
+            ->setLevel(1)
+            ->setClass($barbarian)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'strength' => ['type' => 'morale', 'value' => 4],
+                    'constitution' => ['type' => 'morale', 'value' => 4],
+                    'will' => ['type' => 'morale', 'value' => 2],
+                    'ac' => ['type' => null, 'value' => -2],
+                )
+            );
+        $barbarian->addPower($power);
+        $this->addReference('rage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Uncanny Dodge')
+            ->setLevel(2)
+            ->setClass($barbarian)
+            ->setPassive(true);
+        $barbarian->addPower($power);
+        $this->addReference('uncanny-dodge', $power);
+
+        $power = (new ClassPower())
+            ->setName('Trap Sense')
+            ->setLevel(3)
+            ->setClass($barbarian)
+            ->setPassive(true);
+        $barbarian->addPower($power);
+        $this->addReference('trap-sense', $power);
+
+        $power = (new ClassPower())
+            ->setName('Improved Uncanny Dodge')
+            ->setLevel(5)
+            ->setClass($barbarian)
+            ->setPassive(true);
+        $barbarian->addPower($power);
+        $this->addReference('improved-uncanny-dodge', $power);
+
+        $power = (new ClassPower())
+            ->setName('Damage Reduction')
+            ->setLevel(7)
+            ->setClass($barbarian)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'damage-reduction' => ['type' => null, 'value' => 'div(c.getLevelPerClass(2), 3) - 1']
+                )
+            );
+        $barbarian->addPower($power);
+        $this->addReference('damage-reduction', $power);
+
+        $power = (new ClassPower())
+            ->setName('Greater Rage')
+            ->setLevel(11)
+            ->setClass($barbarian)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'strength' => ['type' => 'morale', 'value' => 6],
+                    'constitution' => ['type' => 'morale', 'value' => 6],
+                    'will' => ['type' => 'morale', 'value' => 3],
+                )
+            )
+            ->setExternalConditions(
+                array('active-power' => 'rage')
+            );
+        $barbarian->addPower($power);
+        $this->addReference('Greater Rage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Indomitable Will')
+            ->setLevel(14)
+            ->setClass($barbarian)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'saving-enchantment' => ['type' => null, 'value' => 4]
+                )
+            )
+            ->setExternalConditions(
+                array('active-power' => 'rage')
+            );
+        $barbarian->addPower($power);
+        $this->addReference('indomitable-will', $power);
+
+        $power = (new ClassPower())
+            ->setName('Tireless Rage')
+            ->setLevel(17)
+            ->setClass($barbarian)
+            ->setPassive(true)
+            ->setExternalConditions(
+                array('active-power' => 'rage')
+            );
+        $barbarian->addPower($power);
+        $this->addReference('tireless-rage', $power);
+
+        $power = (new ClassPower())
+            ->setName('Mighty Rage')
+            ->setLevel(20)
+            ->setClass($barbarian)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'strength'     => ['type' => 'morale', 'value' => 8],
+                    'constitution' => ['type' => 'morale', 'value' => 8],
+                    'will'         => ['type' => 'morale', 'value' => 4],
+                )
+            )
+            ->setExternalConditions(
+                array('active-power' => 'rage')
+            );
+        $barbarian->addPower($power);
+        $this->addReference('mighty-rage', $power);
+
         $manager->persist($barbarian);
         $manager->flush();
 
