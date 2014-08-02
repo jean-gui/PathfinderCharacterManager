@@ -258,18 +258,6 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
-        $sleepForm = $this->createFormBuilder()->add('sleep', 'submit')->getForm();
-        $sleepForm->handleRequest($request);
-        if ($sleepForm->isValid()) {
-            $entity->setNonPreparedCastSpellsCount(null);
-            foreach ($entity->getPreparedSpells() as $preparedSpell) {
-                $preparedSpell->setAlreaydCast(false);
-            }
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
-        }
-
         $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
 
         return array(
@@ -284,7 +272,6 @@ class CharacterController extends Controller
             'other_spell_effects' => $otherSpellEffects,
             'castSpellsForm' => $castSpellsForm->createView(),
             'uncastSpellsForm' => $uncastSpellsForm->createView(),
-            'sleepForm' => $sleepForm->createView(),
         );
     }
 
@@ -508,7 +495,7 @@ class CharacterController extends Controller
     /**
      * Deletes a Character entity.
      *
-     * @Route("/{id}/sleep", name="characters_delete")
+     * @Route("/{id}/sleep", name="characters_sleep")
      * @Method("GET|POST")
      * @Template()
      */
@@ -525,6 +512,8 @@ class CharacterController extends Controller
                 $preparedSpell->setAlreaydCast(false);
             }
             $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
         return array(

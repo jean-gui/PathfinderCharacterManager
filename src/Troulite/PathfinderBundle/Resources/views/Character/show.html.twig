@@ -30,7 +30,10 @@
             <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
                         class="glyphicon glyphicon-edit"></span></a>
             <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="Level Up">
-                <span class="glyphicon glyphicon-plus glyphicon-"></span>
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="Sleep">
+                <span class="glyphicon glyphicon-plus glyphicon-time"></span>
             </a>
         </small>
     </h1>
@@ -126,7 +129,6 @@
                         </dd>
                     {% endif %}
                 </dl>
-                {{ form(sleepForm) }}
             </div>
             <div class="col-md-4">
                 <h2>Combat</h2>
