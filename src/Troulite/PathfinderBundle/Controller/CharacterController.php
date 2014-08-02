@@ -520,6 +520,10 @@ class CharacterController extends Controller
 
         $sleepForm->handleRequest($request);
         if ($sleepForm->isValid()) {
+            $entity->setNonPreparedCastSpellsCount(null);
+            foreach ($entity->getPreparedSpells() as $preparedSpell) {
+                $preparedSpell->setAlreaydCast(false);
+            }
             $em->flush();
         }
 
