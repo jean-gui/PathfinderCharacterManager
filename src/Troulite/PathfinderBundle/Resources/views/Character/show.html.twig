@@ -29,12 +29,10 @@
             <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
             <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
                         class="glyphicon glyphicon-edit"></span></a>
-            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="Level Up">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="Sleep">
-                <span class="glyphicon glyphicon-plus glyphicon-time"></span>
-            </a>
+            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="Level Up"><span
+                        class="glyphicon glyphicon-plus"></span></a>
+            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="Sleep"><span
+                        class="glyphicon glyphicon-plus glyphicon-time"></span></a>
         </small>
     </h1>
     <div class="tab-content">
