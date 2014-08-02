@@ -55,6 +55,7 @@ class SleepType extends AbstractType
                     'preparedSpells',
                     'collection',
                     array(
+                        'label' => 'Prepare Spells',
                         'type' => new PreparedSpellType(),
                         'options' => array(
                             'label' => false,
