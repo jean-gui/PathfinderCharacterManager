@@ -40,6 +40,6 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 6;
+        return 2;
     }
 }

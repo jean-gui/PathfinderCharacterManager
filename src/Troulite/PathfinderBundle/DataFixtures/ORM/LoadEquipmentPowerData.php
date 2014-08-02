@@ -58,6 +58,6 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
      */
     function getOrder()
     {
-        return 3;
+        return 1;
     }
 }
