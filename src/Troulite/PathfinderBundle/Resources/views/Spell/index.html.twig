@@ -7,24 +7,21 @@
     <table class="table table-condensed table-striped table-hover table-responsive">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
-                <th>Shortdescription</th>
-                <th>Actions</th>
+                <th>Description</th>
+                <th>Classes</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('spells_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name }}</td>
+                <td><a href="{{ path('spells_show', {'id': entity.id}) }}">{{ entity.name }}</a></td>
                 <td>{{ entity.shortDescription }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('spells_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                </ul>
+                    {% for spellClass in entity.classes %}
+                        {{ spellClass.class }} {{ spellClass.spellLevel }}
+                        {% if loop.index != loop.length %}, {% endif %}
+                    {% endfor %}
                 </td>
             </tr>
         {% endfor %}
