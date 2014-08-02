@@ -1123,6 +1123,6 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
      */
     function getOrder()
     {
-        return 1;
+        return 2;
     }
 }
