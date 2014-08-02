@@ -262,6 +262,7 @@
                     powers_activation_form.spell_effects|length > 0
                 %}
                 {{ form_start(powers_activation_form) }}
+                {{ form_errors(powers_activation_form) }}
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
                     {% for power in powers_activation_form.feats %}
@@ -302,6 +303,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {{ form_row(powers_activation_form._token) }}
                 {{ form_row(powers_activation_form.submit) }}
                 {{ form_end(powers_activation_form, {'render_rest': false}) }}
                 {% endif %}
