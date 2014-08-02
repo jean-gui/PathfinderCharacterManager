@@ -687,9 +687,15 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $gwendae->addPreparedSpell(new PreparedSpell(
             $gwendae,
             $this->getReference('spell-cats-grace'),
-            $this->getReference('ranger'),
-            2
+            $this->getReference('ranger')
         ));
+        $gwendae->addPreparedSpell(
+            new PreparedSpell(
+                $gwendae,
+                $this->getReference('spell-cats-grace'),
+                $this->getReference('ranger')
+            )
+        );
 
         $manager->persist($gwendae);
         $manager->flush();
