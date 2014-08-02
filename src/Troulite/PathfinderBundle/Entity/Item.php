@@ -75,7 +75,7 @@ class Item
      *
      * @param string $name
      *
-     * @return Item
+     * @return $this
      */
     public function setName($name)
     {
@@ -99,7 +99,7 @@ class Item
      *
      * @param integer $cost
      *
-     * @return Item
+     * @return $this
      */
     public function setCost($cost)
     {
@@ -123,7 +123,7 @@ class Item
      *
      * @param double $weight
      *
-     * @return Item
+     * @return $this
      */
     public function setWeight($weight)
     {
