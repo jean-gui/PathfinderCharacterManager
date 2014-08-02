@@ -34,7 +34,7 @@ class ClassSpell
     /**
      * @var Spell
      *
-     * @ORM\ManyToOne(targetEntity="Spell", inversedBy="class")
+     * @ORM\ManyToOne(targetEntity="Spell", inversedBy="classes")
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id")
      * @Assert\NotBlank()
      */
