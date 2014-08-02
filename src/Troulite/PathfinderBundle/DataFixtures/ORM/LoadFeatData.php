@@ -5,6 +5,8 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Troulite\PathfinderBundle\Entity\Feat;
 
 /**
@@ -247,6 +249,52 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             );
         $manager->persist($feat);
         $this->addReference('feat-endurance', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Weapon Finesse')
+            ->setShortDescription('You are trained in using your agility in melee combat, as opposed to brute strength.')
+            ->setLongDescription('
+                With a light weapon, elven curve blade, rapier, whip, or spiked chain made for a creature of your size
+                category, you may use your Dexterity modifier instead of your Strength modifier on attack rolls. If you
+                carry a shield, its armor check penalty applies to your attack rolls.
+            ')
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'melee-attack-rolls' => [
+                        'type' => null,
+                        'value' => 'c.getAbilityModifier(c.getDexterity()) - c.getAbilityModifier(c.getStrength())'
+                    ],
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('feat-weapon-finesse', $feat);
+
+        $finder = new Finder();
+        $finder->files()->in('src/Troulite/PathfinderBundle/DataFixtures/ORM/')->name('feats.csv');
+        /** @var $file SplFileInfo */
+        foreach($finder as $file) {
+            $handle = fopen($file->getRealPath(), 'r');
+            $header = null;
+            $data = array();
+            while (($row = fgetcsv($handle, null, ',', '"', "\\")) !== false) {
+                if (!$header) {
+                    $header = $row;
+                } else {
+                    $data = array_combine($header, $row);
+
+                    $feat = new Feat();
+                    $feat
+                        ->setName($data['name'])
+                        ->setShortDescription($data['description'])
+                        ->setLongDescription($data['benefit'])
+                        ->setPassive(true);
+                    $manager->persist($feat);
+                }
+            }
+
+        }
 
         $manager->flush();
     }
