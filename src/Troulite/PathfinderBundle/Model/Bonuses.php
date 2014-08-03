@@ -97,6 +97,23 @@ class Bonuses {
                 $applicable[] = $bonus;
             } elseif ($type === 'dodge') { // Dodge bonuses stack
                 $applicable[] = $bonus;
+            } elseif($type === 'enhancement') {
+                $apply = true;
+                foreach ($applicable as $bonus2) {
+                    if (
+                        $bonus !== $bonus2 &&
+                        $bonus2->getType() === 'enhancement' &&
+                        $bonus2->getSource() === $bonus->getSource()
+                    ) {
+                        if ($bonus->getValue() < $bonus2->getValue()) {
+                            $apply = false;
+                        }
+                    }
+                }
+
+                if ($apply) {
+                    $applicable[] = $bonus;
+                }
             } elseif (
                 !array_key_exists($type, $bonusValues) || $bonus->getValue() > $bonusValues[$type]
             ) { // Other types do not stack

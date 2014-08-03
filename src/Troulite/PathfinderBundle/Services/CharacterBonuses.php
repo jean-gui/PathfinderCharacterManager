@@ -234,6 +234,13 @@ class CharacterBonuses
                         array('ac' => array('type' => 'armor', 'value' => $item->getAc())),
                         $item);
                 }
+                if ($item instanceof Shield) {
+                    $this->applyEffects(
+                        $character,
+                        array('ac' => array('type' => 'shield', 'value' => $item->getAc())),
+                        $item
+                    );
+                }
             }
         }
 

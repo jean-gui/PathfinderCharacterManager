@@ -351,7 +351,7 @@ class CharacterController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'Update successful');
 
-            return $this->redirect($this->generateUrl('characters_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $id)));
         }
 
         return array(

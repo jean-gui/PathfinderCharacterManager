@@ -54,12 +54,32 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setRange(20)
             ->setDualWield(true)
             ->setWeight(1.5)
-            ->addPower($this->getReference('weapon-power-enhancement-2'));
+            ->addPower($this->getReference('ranged-weapon-power-enhancement-2'));
 
         $manager->persist($longbow2);
         $manager->flush();
 
         $this->setReference('longbow +2', $longbow2);
+
+        $weapon = new Weapon();
+        $weapon
+            ->setName('Longsword + 1')
+            ->setCategory('martial')
+            ->setType('longsword')
+            ->setCost(15)
+            ->setCriticalRange(19)
+            ->setCritical(2)
+            ->setDamages('1d8')
+            ->setShortDescription(
+                'A longsword (also spelled long sword, long-sword) is a type of sword characterized as having a cruciform hilt with a grip for two handed use and a straight double-edged blade of around 100–122 cm (39–48 in).'
+            )
+            ->setRange(0)
+            ->setDualWield(false)
+            ->setWeight(2);
+
+        $manager->persist($weapon);
+        $manager->flush();
+        $this->setReference('longsword +1', $weapon);
     }
 
     /**

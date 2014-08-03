@@ -15,11 +15,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Shield extends Item
 {
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="category", type="string", length=255, nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $category;
+    private $ac;
 
     /**
      * @var int
@@ -43,26 +43,23 @@ class Shield extends Item
     private $arcaneSpellFailure = 0;
 
     /**
-     * Set category
+     * @param int $ac
      *
-     * @param string $category
-     * @return Armor
+     * @return $this
      */
-    public function setCategory($category)
+    public function setAc($ac)
     {
-        $this->category = $category;
+        $this->ac = $ac;
 
         return $this;
     }
 
     /**
-     * Get category
-     *
-     * @return string
+     * @return int
      */
-    public function getCategory()
+    public function getAc()
     {
-        return $this->category;
+        return $this->ac;
     }
 
     /**

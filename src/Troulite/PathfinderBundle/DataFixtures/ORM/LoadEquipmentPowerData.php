@@ -19,6 +19,22 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
      */
     public function load(ObjectManager $manager)
     {
+        $weaponEnhancement1 = new EquipmentPower();
+        $weaponEnhancement1
+            ->setCost(1)
+            ->setEffects(
+                array(
+                    'melee-attack-roll' => ['type' => 'enhancement', 'value' => '1'],
+                    'melee-damage-roll' => ['type' => 'enhancement', 'value' => '1'],
+                )
+            )
+            ->setPassive(true);
+
+        $manager->persist($weaponEnhancement1);
+        $manager->flush();
+
+        $this->setReference('melee-weapon-power-enhancement-1', $weaponEnhancement1);
+
         $weaponEnhancement2 = new EquipmentPower();
         $weaponEnhancement2
             ->setCost(2)
@@ -33,7 +49,22 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
         $manager->persist($weaponEnhancement2);
         $manager->flush();
 
-        $this->setReference('weapon-power-enhancement-2', $weaponEnhancement2);
+        $this->setReference('ranged-weapon-power-enhancement-2', $weaponEnhancement2);
+
+        $weaponEnhancement5 = new EquipmentPower();
+        $weaponEnhancement5
+            ->setCost(5)
+            ->setEffects(
+                array(
+                    'melee-attack-roll' => ['type' => 'enhancement', 'value' => '5'],
+                    'melee-damage-roll' => ['type' => 'enhancement', 'value' => '5'],
+                )
+            )
+            ->setPassive(true);
+
+        $manager->persist($weaponEnhancement5);
+        $manager->flush();
+        $this->setReference('melee-weapon-power-enhancement-5', $weaponEnhancement5);
 
         $armorEnhancement5 = new EquipmentPower();
         $armorEnhancement5
@@ -49,6 +80,21 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
         $manager->flush();
 
         $this->setReference('armor-power-enhancement-5', $armorEnhancement5);
+
+        $power = new EquipmentPower();
+        $power
+            ->setCost(2)
+            ->setEffects(
+                array(
+                    'ac' => ['type' => 'enhancement', 'value' => '2'],
+                )
+            )
+            ->setPassive(true);
+
+        $manager->persist($power);
+        $manager->flush();
+
+        $this->setReference('shield-power-enhancement-2', $power);
     }
 
     /**

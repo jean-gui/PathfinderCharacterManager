@@ -39,9 +39,9 @@ class CharacterEquipment
     private $mainWeapon;
 
     /**
-     * @var Weapon $rightWeapon
+     * @var Weapon|Shield $rightWeapon
      *
-     * @ORM\ManyToOne(targetEntity="Weapon")
+     * @ORM\ManyToOne(targetEntity="Item")
      * @ORM\JoinColumn(name="offhand_weapon_item_id", referencedColumnName="id")
      */
     private $offhandWeapon;
@@ -148,7 +148,7 @@ class CharacterEquipment
     public function setMainWeapon(Weapon $weapon = null)
     {
         // Unequip right-hand weapon if this weapon is dual-weilded
-        if ($weapon && $weapon->isDualWield()) {
+        if ($weapon instanceof Weapon && $weapon->isDualWield()) {
             $this->setOffhandWeapon(null);
         }
         $this->mainWeapon = $weapon;
@@ -159,7 +159,7 @@ class CharacterEquipment
     /**
      * Get rightWeapon
      *
-     * @return Weapon
+     * @return Weapon|Shield
      */
     public function getOffhandWeapon()
     {
@@ -169,17 +169,17 @@ class CharacterEquipment
     /**
      * Set offhandHand
      *
-     * @param Weapon $weapon
+     * @param Weapon|Shield $weapon
      *
      * @return CharacterEquipment
      */
-    public function setOffhandWeapon(Weapon $weapon = null)
+    public function setOffhandWeapon(Item $weapon = null)
     {
         // Unequip left-hand weapon if this weapon is dual-weilded
-        if ($weapon && $weapon->isDualWield()) {
+        if ($weapon instanceof Weapon && $weapon->isDualWield()) {
             $this->setMainWeapon(null);
         }
-        $this->rightFinger = $weapon;
+        $this->offhandWeapon = $weapon;
 
         return $this;
     }
