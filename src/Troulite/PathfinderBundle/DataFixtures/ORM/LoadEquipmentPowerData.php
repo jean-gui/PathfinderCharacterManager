@@ -19,8 +19,8 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
      */
     public function load(ObjectManager $manager)
     {
-        $weaponEnhancement1 = new EquipmentPower();
-        $weaponEnhancement1
+        $power = new EquipmentPower();
+        $power
             ->setCost(1)
             ->setEffects(
                 array(
@@ -30,13 +30,13 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
             )
             ->setPassive(true);
 
-        $manager->persist($weaponEnhancement1);
+        $manager->persist($power);
         $manager->flush();
 
-        $this->setReference('melee-weapon-power-enhancement-1', $weaponEnhancement1);
+        $this->setReference('melee-weapon-power-enhancement-1', $power);
 
-        $weaponEnhancement2 = new EquipmentPower();
-        $weaponEnhancement2
+        $power = new EquipmentPower();
+        $power
             ->setCost(2)
             ->setEffects(
                 array(
@@ -46,13 +46,13 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
             )
             ->setPassive(true);
 
-        $manager->persist($weaponEnhancement2);
+        $manager->persist($power);
         $manager->flush();
 
-        $this->setReference('ranged-weapon-power-enhancement-2', $weaponEnhancement2);
+        $this->setReference('ranged-weapon-power-enhancement-2', $power);
 
-        $weaponEnhancement5 = new EquipmentPower();
-        $weaponEnhancement5
+        $power = new EquipmentPower();
+        $power
             ->setCost(5)
             ->setEffects(
                 array(
@@ -62,12 +62,27 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
             )
             ->setPassive(true);
 
-        $manager->persist($weaponEnhancement5);
+        $manager->persist($power);
         $manager->flush();
-        $this->setReference('melee-weapon-power-enhancement-5', $weaponEnhancement5);
+        $this->setReference('melee-weapon-power-enhancement-5', $power);
 
-        $armorEnhancement5 = new EquipmentPower();
-        $armorEnhancement5
+        $power = new EquipmentPower();
+        $power
+            ->setCost(5)
+            ->setEffects(
+                array(
+                    'ac' => ['type' => 'enhancement', 'value' => 2],
+                )
+            )
+            ->setPassive(true);
+
+        $manager->persist($power);
+        $manager->flush();
+
+        $this->setReference('armor-power-enhancement-2', $power);
+
+        $power = new EquipmentPower();
+        $power
             ->setCost(5)
             ->setEffects(
                 array(
@@ -76,10 +91,10 @@ class LoadEquipmentPowerData extends AbstractFixture implements OrderedFixtureIn
             )
             ->setPassive(true);
 
-        $manager->persist($armorEnhancement5);
+        $manager->persist($power);
         $manager->flush();
 
-        $this->setReference('armor-power-enhancement-5', $armorEnhancement5);
+        $this->setReference('armor-power-enhancement-5', $power);
 
         $power = new EquipmentPower();
         $power

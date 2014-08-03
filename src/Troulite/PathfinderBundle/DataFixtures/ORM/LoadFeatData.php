@@ -142,6 +142,46 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
 
         $feat = new Feat();
         $feat
+            ->setName('Weapon focus - Greatsword')
+            ->setShortDescription(
+                'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
+            )
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'ranged-attack-roll' => ['type' => null, 'value' => 1]
+                )
+            )
+            ->setConditions(
+                array(
+                    'weapon-type' => 'greatsword'
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('weapon-focus-greatsword', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Weapon focus - Whip')
+            ->setShortDescription(
+                'Choose one type of weapon. You can also choose unarmed strike or grapple (or ray, if you are a spellcaster) as your weapon for the purposes of this feat.'
+            )
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'ranged-attack-roll' => ['type' => null, 'value' => 1]
+                )
+            )
+            ->setConditions(
+                array(
+                    'weapon-type' => 'whip'
+                )
+            );
+        $manager->persist($feat);
+        $this->addReference('weapon-focus-whip', $feat);
+
+        $feat = new Feat();
+        $feat
             ->setName('Dodge')
             ->setShortDescription(
                 "Your training and reflexes allow you to react swiftly to avoid an opponents' attacks ."
@@ -222,6 +262,22 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             );
         $manager->persist($feat);
         $this->addReference('improved-critical-longsword', $feat);
+
+        $feat = new Feat();
+        $feat
+            ->setName('Improved Critical (Greatsword)')
+            ->setShortDescription('Attacks made with your chosen weapon are quite deadly.')
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'critical-range' => ['type' => null, 'value' => 2]
+                )
+            )
+            ->setConditions(
+                array('weapon-type' => 'greatsword')
+            );
+        $manager->persist($feat);
+        $this->addReference('improved-critical-greatsword', $feat);
 
         $feat = new Feat();
         $feat

@@ -19,8 +19,8 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $mithralStoneplate5Champion = new Armor();
-        $mithralStoneplate5Champion
+        $armor = new Armor();
+        $armor
             ->setName('Mithral Chain Armor +5')
             ->setAc(4)
             ->setCategory('light')
@@ -34,13 +34,52 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setArcaneSpellFailure(10)
             ->addPower($this->getReference('armor-power-enhancement-5'));
 
-        $manager->persist($mithralStoneplate5Champion);
+        $manager->persist($armor);
         $manager->flush();
 
-        $this->setReference('mithral chain mail +5', $mithralStoneplate5Champion);
+        $this->setReference('mithral chain mail +5', $armor);
 
-        $mithralStoneplate5Champion = new Armor();
-        $mithralStoneplate5Champion
+        $armor = new Armor();
+        $armor
+            ->setName('Mithral Chain Armor')
+            ->setAc(4)
+            ->setCategory('light')
+            ->setCost(17100)
+            ->setShortDescription(
+                'Covering the torso, this shirt is made up of thousands of interlocking metal rings.'
+            )
+            ->setWeight(6)
+            ->setMaximumDexterityBonus(6)
+            ->setArmorCheckPenalty(0)
+            ->setArcaneSpellFailure(10);
+
+        $manager->persist($armor);
+        $manager->flush();
+
+        $this->setReference('mithral chain mail', $armor);
+
+        $armor = new Armor();
+        $armor
+            ->setName('Chain Armor +2')
+            ->setAc(4)
+            ->setCategory('light')
+            ->setCost(100)
+            ->setShortDescription(
+                'Covering the torso, this shirt is made up of thousands of interlocking metal rings.'
+            )
+            ->setWeight(12.5)
+            ->setMaximumDexterityBonus(4)
+            ->setArmorCheckPenalty(-2)
+            ->setArcaneSpellFailure(20)
+            ->addPower($this->getReference('armor-power-enhancement-2'));
+
+        $manager->persist($armor);
+        $manager->flush();
+
+        $this->setReference('chain mail +2', $armor);
+
+        $armor = new Armor();
+        $armor
             ->setName('Mithral Stoneplate Champion Armor +5')
             ->setAc(9)
             ->setCategory('heavy')
@@ -54,10 +93,10 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             ->setArcaneSpellFailure(25)
             ->addPower($this->getReference('armor-power-enhancement-5'));
 
-        $manager->persist($mithralStoneplate5Champion);
+        $manager->persist($armor);
         $manager->flush();
 
-        $this->setReference('mithral stoneplate champion armor +5', $mithralStoneplate5Champion);
+        $this->setReference('mithral stoneplate champion armor +5', $armor);
     }
 
     /**

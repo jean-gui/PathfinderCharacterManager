@@ -75,11 +75,30 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             )
             ->setRange(0)
             ->setDualWield(false)
-            ->setWeight(2);
+            ->setWeight(2)
+            ->addPower($this->getReference('melee-weapon-power-enhancement-1'));
 
         $manager->persist($weapon);
         $manager->flush();
         $this->setReference('longsword +1', $weapon);
+
+        $weapon = new Weapon();
+        $weapon
+            ->setName('Greatsword + 5')
+            ->setCategory('martial')
+            ->setType('greatsword')
+            ->setCost(15)
+            ->setCriticalRange(19)
+            ->setCritical(2)
+            ->setDamages('2d6')
+            ->setRange(0)
+            ->setDualWield(true)
+            ->setWeight(2)
+            ->addPower($this->getReference('melee-weapon-power-enhancement-5'));
+
+        $manager->persist($weapon);
+        $manager->flush();
+        $this->setReference('greatsword +5', $weapon);
     }
 
     /**
