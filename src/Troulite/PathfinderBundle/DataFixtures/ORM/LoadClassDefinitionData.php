@@ -508,7 +508,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'damage-reduction' => ['type' => null, 'value' => 'div(c.getLevelPerClass(2), 3) - 1']
+                    'damage-reduction' => ['type' => null, 'value' => 'div(c.getLevel(2), 3) - 1']
                 )
             );
         $barbarian->addPower($power);
