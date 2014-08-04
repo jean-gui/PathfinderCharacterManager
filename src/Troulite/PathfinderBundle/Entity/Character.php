@@ -244,16 +244,17 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @param Skill $skill
+     * @param Skill|string $skill
      *
      * @return int
      */
-    public function getSkillRank(Skill $skill)
+    public function getSkillRank($skill)
     {
         $rank = 0;
+        $isSkillObject = is_object($skill);
         foreach ($this->getLevels() as $level) {
             foreach ($level->getSkills() as $levelSkill) {
-                if ($levelSkill->getSkill() === $skill) {
+                if (($isSkillObject && $levelSkill->getSkill() === $skill) || ((string)$skill) === $levelSkill->getSkill()->getName()) {
                     $rank += $levelSkill->getValue();
                     break;
                 }
