@@ -84,7 +84,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
 
         $weapon = new Weapon();
         $weapon
-            ->setName('Greatsword + 5')
+            ->setName('La Rudement Grande')
             ->setCategory('martial')
             ->setType('greatsword')
             ->setCost(15)
@@ -98,7 +98,6 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($weapon);
         $manager->flush();
-        $this->setReference('greatsword +5', $weapon);
     }
 
     /**
