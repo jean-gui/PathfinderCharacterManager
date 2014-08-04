@@ -55,65 +55,65 @@ class CharacterEquipment
     private $body;
 
     /**
-     * @var Item $leftFinger
+     * @var Ring $leftFinger
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Ring")
      * @ORM\JoinColumn(name="left_finger_item_id", referencedColumnName="id")
      */
     private $leftFinger;
 
     /**
-     * @var Item $rightFinger
+     * @var Ring $rightFinger
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Ring")
      * @ORM\JoinColumn(name="right_finger_item_id", referencedColumnName="id")
      */
     private $rightFinger;
 
     /**
-     * @var Item $feet
+     * @var Boots $feet
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Boots")
      * @ORM\JoinColumn(name="feet_item_id", referencedColumnName="id")
      */
     private $feet;
 
     /**
-     * @var Item $neck
+     * @var Amulet $neck
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Amulet")
      * @ORM\JoinColumn(name="neck_item_id", referencedColumnName="id")
      */
     private $neck;
 
     /**
-     * @var Item $back
+     * @var Cloak $back
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Cloak")
      * @ORM\JoinColumn(name="back_item_id", referencedColumnName="id")
      */
     private $back;
 
     /**
-     * @var Item $head
+     * @var Helm $head
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Helm")
      * @ORM\JoinColumn(name="head_item_id", referencedColumnName="id")
      */
     private $head;
 
     /**
-     * @var Item $belt
+     * @var Belt $belt
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Belt")
      * @ORM\JoinColumn(name="belt_item_id", referencedColumnName="id")
      */
     private $belt;
 
     /**
-     * @var Item $hands
+     * @var Gloves $hands
      *
-     * @ORM\ManyToOne(targetEntity="Item")
+     * @ORM\ManyToOne(targetEntity="Gloves")
      * @ORM\JoinColumn(name="hands_item_id", referencedColumnName="id")
      */
     private $hands;

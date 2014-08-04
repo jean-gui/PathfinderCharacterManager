@@ -13,7 +13,11 @@ use Troulite\PathfinderBundle\Entity\Traits\Describable;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"weapon" = "Weapon", "armor" = "Armor", "shield" = "Shield"})
+ * @ORM\DiscriminatorMap({
+ *     "weapon" = "Weapon", "armor" = "Armor", "shield" = "Shield", "cloak" = "Cloak", "ring" = "Ring",
+ *     "amulet" = "Amulet", "belt" = "Belt", "bracers" = "Bracers", "boots" = "Boots", "gloves" = "Gloves",
+ *     "helm" = "Helm", "item" = "Item"
+ * })
  */
 class Item
 {
@@ -52,7 +56,7 @@ class Item
     /**
      * @var Collection|ItemPower[]
      *
-     * @ORM\ManyToMany(targetEntity="ItemPower")
+     * @ORM\ManyToMany(targetEntity="ItemPower", cascade={"all"})
      * @ORM\JoinTable(name="ItemPowers",
      *     joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="power_id", referencedColumnName="id")}
