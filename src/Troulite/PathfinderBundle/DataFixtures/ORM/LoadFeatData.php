@@ -149,7 +149,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'ranged-attack-roll' => ['type' => null, 'value' => 1]
+                    'melee-attack-roll' => ['type' => null, 'value' => 1]
                 )
             )
             ->setConditions(
