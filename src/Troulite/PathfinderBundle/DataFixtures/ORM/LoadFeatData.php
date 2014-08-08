@@ -344,7 +344,7 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                         ->setName($data['name'])
                         ->setShortDescription($data['description'])
                         ->setLongDescription($data['benefit'])
-                        ->setPassive(true);
+                        ->setPassive($data['passive']);
                     if ($data['effects']) {
                         $feat->setEffects(json_decode($data['effects']));
                     }
