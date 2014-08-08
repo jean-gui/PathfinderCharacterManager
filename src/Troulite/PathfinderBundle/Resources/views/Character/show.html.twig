@@ -2,25 +2,18 @@
 
 {% import _self as popovers %}
 
-{% block title "BaseCharacter - " ~ entity %}
+{% block title entity %}
 
 {% block navbar_current -%}
     <ul class="nav navbar-nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ entity }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#main" data-toggle="tab">Main Profile</a></li>
-                <li><a href="#skills" data-toggle="tab">Skills</a></li>
-                <li><a href="#equipment" data-toggle="tab">Equipment</a></li>
-                <li><a href="#inventory" data-toggle="tab">Inventory</a></li>
-                <li><a href="#spells" data-toggle="tab">Spells</a></li>
-            </ul>
-        </li>
+        <li><a href="#main" data-toggle="tab">Main Profile</a></li>
+        <li><a href="#equipment" data-toggle="tab">Equipment</a></li>
+        <li><a href="#inventory" data-toggle="tab">Inventory</a></li>
+        <li><a href="#spells" data-toggle="tab">Spells</a></li>
     </ul>
 {% endblock %}
 
 {% block content -%}
-    <div class="container">
     <h1>
         {{ entity }}
         <small>
@@ -38,7 +31,7 @@
     <div class="tab-content">
     <div id="main" class="tab-pane active">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-4">
                 <h2>Main Profile</h2>
                 <table id="abilities" class="table table-condensed table-striped table-hover table-responsive">
                     <thead>
@@ -128,7 +121,7 @@
                     {% endif %}
                 </dl>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-4">
                 <h2>Combat</h2>
                 <table id="armor" class="table table-striped table-condensed table-responsive">
                     <tr>
@@ -254,7 +247,59 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-md-4">
+            <div id "skills" class="col-lg-4 col-md-4">
+                <h2>Skills</h2>
+                <table class="table table-hover table-striped table-condensed table-responsive">
+                    <thead>
+                    <tr>
+                        <th><a href="{{ path('skills') }}">Skill</a></th>
+                        <th>Total Bonus</th>
+                        <th>Ability Modifier</th>
+                        <th>Ranks</th>
+                        <th>Misc Modifiers</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
+                        {% set value = 0 %}
+                        {% set bonus = 0 %}
+                        {%- set shortname = skill.shortname -%}
+                        {%- spaceless -%}
+                            {% set value = entity.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
+                            {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
+                                {% set value = value + 3 %}
+                            {% endif %}
+                            {% if attribute(entity.skillsBonuses, shortname) is defined %}
+                                {% set bonus = attribute(entity.skillsBonuses, shortname).bonus %}
+                                {% set value = value + bonus %}
+                            {% endif %}
+                        {%- endspaceless -%}
+                        <tr>
+                            <td>
+                                {% if entity.hasClassBonus(skill) -%}
+                                    <span class="glyphicon glyphicon-check"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-unchecked"></span>
+                                {% endif %}
+                                {{ skill }}
+                            </td>
+                            <td>{{ value }}</td>
+                            <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
+                            <td>{{ entity.skillRank(skill) }}</td>
+                            <td>
+                                {{ bonus|default(0) }}
+                                {% if attribute(entity.skillsBonuses, shortname) is defined %}
+                                    {{ popovers.bonuses(entity.skillsBonuses[shortname]) }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
                 <h2 id="feats">Powers</h2>
                 {% if
                     powers_activation_form.feats|length > 0 or
@@ -307,6 +352,8 @@
                 {{ form_row(powers_activation_form.submit) }}
                 {{ form_end(powers_activation_form, {'render_rest': false}) }}
                 {% endif %}
+            </div>
+            <div class="col-lg-4 col-md-4">
                 <h3>Unmanaged Powers</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
@@ -345,6 +392,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <div class="col-lg-4 col-md-4">
                 <h3>Passive Powers</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
@@ -385,56 +434,6 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div id="skills" class="tab-pane">
-        <h2>Skills</h2>
-        <table class="table table-hover table-striped table-condensed table-responsive">
-            <thead>
-            <tr>
-                <th><a href="{{ path('skills') }}">Skill</a></th>
-                <th>Total Bonus</th>
-                <th>Ability Modifier</th>
-                <th>Ranks</th>
-                <th>Misc Modifiers</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for skill in skills if (skill.untrained or entity.skillRank(skill) > 0) %}
-                {% set value = 0 %}
-                {% set bonus = 0 %}
-                {%- set shortname = skill.shortname -%}
-                {%- spaceless -%}
-                    {% set value = entity.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
-                    {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
-                        {% set value = value + 3 %}
-                    {% endif %}
-                    {% if attribute(entity.skillsBonuses, shortname) is defined %}
-                        {% set bonus = attribute(entity.skillsBonuses, shortname).bonus %}
-                        {% set value = value + bonus %}
-                    {% endif %}
-                {%- endspaceless -%}
-                <tr>
-                    <td>
-                        {% if entity.hasClassBonus(skill) -%}
-                            <span class="glyphicon glyphicon-check"></span>
-                        {% else %}
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                        {% endif %}
-                        {{ skill }}
-                    </td>
-                    <td>{{ value }}</td>
-                    <td>{{ skill.keyAbility }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
-                    <td>{{ entity.skillRank(skill) }}</td>
-                    <td>
-                        {{ bonus|default(0) }}
-                        {% if attribute(entity.skillsBonuses, shortname) is defined %}
-                            {{ popovers.bonuses(entity.skillsBonuses[shortname]) }}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     </div>
     <div id="equipment" class="tab-pane">
         <h2>Equipment</h2>
@@ -489,7 +488,6 @@
             </ul>
         {% endfor %}
         {% endif %}
-    </div>
     </div>
     </div>
 {% endblock %}
