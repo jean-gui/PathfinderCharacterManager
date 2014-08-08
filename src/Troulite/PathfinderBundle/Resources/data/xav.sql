@@ -1,6 +1,6 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-INSERT INTO "fos_user" VALUES(3, 'xav', 'xav', 'xavier@cremaschi.fr', 'xavier@cremaschi.fr', 1, 'r270tmifavkcc0ggk4k00kkw0g4skkg', 'ZBJxYfNQXTmP8G/t9Pr5B+UM7TzyRZV2NjmJQHIG2+SIsXb/HasqylPmDTA3nXpaaO0jKd7Tw15BaMTrZlmQWw==', '2014-08-03 16:46:04', 0, 0, NULL, NULL, NULL, 0, NULL, 'a:0:{}');
+INSERT INTO "fos_user" VALUES(3, 'xav', 'xav', 'xavier@cremaschi.fr', 'xavier@cremaschi.fr', 1, 'r270tmifavkcc0ggk4k00kkw0g4skkg', 'ZBJxYfNQXTmP8G/t9Pr5B+UM7TzyRZV2NjmJQHIG2+SIsXb/HasqylPmDTA3nXpaaO0jKd7Tw15BaMTrZlmQWw==', '2014-08-03 16:46:04', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL);
 INSERT INTO "Character" VALUES (2, 3, 10, 2, 2, 1, 'Henrik le Rudement Grand', 'hp', 0, NULL, 2);
 INSERT INTO "Abilities" VALUES(2,18,14,14,7,7,7);
 INSERT INTO "CharacterEquipment" VALUES (2, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
