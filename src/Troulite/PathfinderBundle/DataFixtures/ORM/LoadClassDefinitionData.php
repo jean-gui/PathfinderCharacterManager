@@ -663,7 +663,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
 
         $power = (new ClassPower())
             ->setName('Divine Grace')
-            ->setDescription(
+            ->setShortDescription(
                 'At 2nd level, a paladin gains a bonus equal to her Charisma bonus (if any) on all Saving Throws.'
             )
             ->setLevel(2)
