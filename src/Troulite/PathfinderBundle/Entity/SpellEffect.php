@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Describable;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * SpellEffect
