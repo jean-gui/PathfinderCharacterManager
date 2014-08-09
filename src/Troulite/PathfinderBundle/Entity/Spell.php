@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Describable;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Spell
@@ -37,6 +38,7 @@ class Spell
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
+     * @Gedmo\Translatable()
      */
     private $name;
 
@@ -44,6 +46,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $castingTime;
 
@@ -51,6 +54,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $components;
 
@@ -58,6 +62,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $range;
 
@@ -65,6 +70,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $duration;
 
@@ -72,6 +78,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $savingThrow;
 
@@ -86,6 +93,7 @@ class Spell
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Translatable()
      */
     private $targets;
 

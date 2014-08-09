@@ -11,6 +11,7 @@ namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class ClassPower
@@ -36,15 +37,9 @@ class ClassPower
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Gedmo\Translatable()
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
 
     /**
      * @var ClassDefinition
@@ -96,26 +91,6 @@ class ClassPower
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param mixed $description
-     *
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

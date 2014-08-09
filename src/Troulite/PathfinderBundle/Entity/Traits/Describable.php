@@ -9,6 +9,7 @@
 namespace Troulite\PathfinderBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Trait Describable
@@ -20,6 +21,7 @@ trait Describable {
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Translatable()
      */
     private $shortDescription;
 
@@ -27,6 +29,7 @@ trait Describable {
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Translatable()
      */
     private $longDescription;
 
