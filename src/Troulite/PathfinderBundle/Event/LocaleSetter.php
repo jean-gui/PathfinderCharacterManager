@@ -44,7 +44,7 @@ class LocaleSetter implements EventSubscriberInterface
                 $request->setLocale($locale);
             } else {
                 $locale = $request->getPreferredLanguage();
-                $request->setLocale($request->getPreferredLanguage($locale));
+                $request->setLocale($locale);
                 $request->getSession()->set('_locale', $locale);
             }
         }
