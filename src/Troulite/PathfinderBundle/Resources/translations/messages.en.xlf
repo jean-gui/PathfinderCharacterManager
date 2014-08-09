@@ -274,6 +274,22 @@
         <source>other.bonuses</source>
         <target>Other Bonuses</target>
       </trans-unit>
+      <trans-unit id="9ab2ec7ea4a2041306f7bdf150fcd453" resname="tables">
+        <source>tables</source>
+        <target>Tables</target>
+      </trans-unit>
+      <trans-unit id="b065afb8456dd9de53cba425677a47cf" resname="races">
+        <source>races</source>
+        <target>Races</target>
+      </trans-unit>
+      <trans-unit id="e0bda8197e58839fe38b56adbfec55ff" resname="classes">
+        <source>classes</source>
+        <target>Classes</target>
+      </trans-unit>
+      <trans-unit id="1a5c1f880f2b371fe7f59c6394a78f89" resname="advancement">
+        <source>advancement</source>
+        <target>Advancement</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
