@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="ca1cd3c1055991bf20499ee86739f7e2" resname="races">
+        <source>races</source>
+        <target>Races</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

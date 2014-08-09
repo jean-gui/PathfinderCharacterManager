@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-5">
-        <h2>Ability Score Costs</h2>
+        <h2>{% trans %}ability.score.cost{% endtrans %}</h2>
         <table class="table table-hover table-striped table-condensed table-responsive">
             <thead>
             <tr>
-                <th>{{ 'Score'|trans }}</th>
-                <th>{{ 'Cost'|trans }}</th>
+                <th>{{ 'score'|trans }}</th>
+                <th>{{ 'cost'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -23,14 +23,14 @@
         <table class="table table-hover table-striped table-condensed table-responsive">
             <thead>
             <tr>
-                <th>{{ 'Campain Type'|trans }}</th>
-                <th>{{ 'Points'|trans }}</th>
+                <th>{{ 'campain.type'|trans }}</th>
+                <th>{{ 'points'|trans }}</th>
             </tr>
             </thead>
             <tbody>
                 {% for type, points in ability_scores.points %}
                 <tr>
-                    <td>{{ type|capitalize|trans }} {{ 'Fantasy'|trans }}</td>
+                    <td>{{ type|capitalize|trans }} {{ 'fantasy'|trans }}</td>
                     <td>{{ points }}</td>
                 </tr>
                 {% endfor %}

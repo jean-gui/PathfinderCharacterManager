@@ -1,15 +1,13 @@
-abilities:
+bonuses:
   strength
   dexterity
   constitution
   intelligence
   wisdom
   charisma
-saving-throws:
   fortitude
   reflexes
   will
-combat:
   initiative
   ac
   spell-resistance
@@ -21,7 +19,6 @@ combat:
   ranged-attack-roll
   ranged-damage-roll
   ranged-attacks
-skills:
   acrobatics
   appraise
   bluff
@@ -56,6 +53,10 @@ skills:
   survival
   swim
   use-magic-device
-misc:
   hp
   speed
+conditions:
+  weapon-type
+  equiped
+prerequisities:
+slots:

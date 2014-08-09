@@ -6,10 +6,10 @@
 
 {% block navbar_current -%}
     <ul class="nav navbar-nav">
-        <li><a href="#main" data-toggle="tab">Main Profile</a></li>
-        <li><a href="#equipment" data-toggle="tab">Equipment</a></li>
-        <li><a href="#inventory" data-toggle="tab">Inventory</a></li>
-        <li><a href="#spells" data-toggle="tab">Spells</a></li>
+        <li><a href="#main" data-toggle="tab">{{ 'main.profile'|trans }}</a></li>
+        <li><a href="#equipment" data-toggle="tab">{{ 'equipment'|trans }}</a></li>
+        <li><a href="#inventory" data-toggle="tab">{{ 'inventory'|trans }}</a></li>
+        <li><a href="#spells" data-toggle="tab">{{ 'spells'|trans }}</a></li>
     </ul>
 {% endblock %}
 
@@ -17,14 +17,14 @@
     <h1>
         {{ entity }}
         <small>
-            Level {{ entity.level }}
+            {{ 'level'|trans({'%level%': entity.level}) }}
             <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
             <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
             <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
                         class="glyphicon glyphicon-edit"></span></a>
-            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="Level Up"><span
+            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
                         class="glyphicon glyphicon-plus"></span></a>
-            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="Sleep"><span
+            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}"><span
                         class="glyphicon glyphicon-plus glyphicon-time"></span></a>
         </small>
     </h1>
@@ -32,17 +32,17 @@
     <div id="main" class="tab-pane active">
         <div class="row">
             <div class="col-lg-4 col-md-4">
-                <h2>Main Profile</h2>
+                <h2>{{ 'main.profile'|trans }}</h2>
                 <table id="abilities" class="table table-condensed table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th>Ability</th>
-                        <th>Value</th>
-                        <th>Modifier</th>
+                        <th>{{ 'ability'|trans }}</th>
+                        <th>{{ 'value'|trans }}</th>
+                        <th>{{ 'modifier' }}</th>
                     </tr>
                     </thead>
                     <tr>
-                        <th>Strength</th>
+                        <th>{{ 'strength'|trans }}</th>
                         <td>
                             {{ entity.strength }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.strength) }}
@@ -50,7 +50,7 @@
                         <td>{{ entity.abilityModifier(entity.strength) }}</td>
                     </tr>
                     <tr>
-                        <th>Dexterity</th>
+                        <th>{{ 'dexterity'|trans }}</th>
                         <td>
                             {{ entity.dexterity }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.dexterity) }}
@@ -58,7 +58,7 @@
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
                     </tr>
                     <tr>
-                        <th>Constitution</th>
+                        <th>{{ 'constitution'|trans }}</th>
                         <td>
                             {{ entity.constitution }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.constitution) }}
@@ -66,7 +66,7 @@
                         <td>{{ entity.abilityModifier(entity.constitution) }}</td>
                     </tr>
                     <tr>
-                        <th>Intelligence</th>
+                        <th>{{ 'intelligence'|trans }}</th>
                         <td>
                             {{ entity.intelligence }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.intelligence) }}
@@ -74,7 +74,7 @@
                         <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
                     </tr>
                     <tr>
-                        <th>Wisdom</th>
+                        <th>{{ 'wisdom'|trans }}</th>
                         <td>
                             {{ entity.wisdom }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.wisdom) }}
@@ -82,7 +82,7 @@
                         <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
                     </tr>
                     <tr>
-                        <th>Charisma</th>
+                        <th>{{ 'charisma'|trans }}</th>
                         <td>
                             {{ entity.charisma }}
                             {{ popovers.bonuses(entity.abilitiesBonuses.charisma) }}
@@ -90,18 +90,18 @@
                         <td>{{ entity.abilityModifier(entity.charisma) }}</td>
                     </tr>
                 </table>
-                <h2>Hit Points</h2>
+                <h2>{{ 'hit.points'|trans }}</h2>
                 <dl class="dl-horizontal">
-                    <dt>Max Hit Points</dt>
+                    <dt>{{ 'max.hit.points'|trans }}</dt>
                     <dd>
                         {{ entity.maxHp }}
                         {{ popovers.bonuses(entity.hpBonuses) }}
                     </dd>
-                    <dt>Losts Hit Points</dt>
+                    <dt>{{ 'lost.hit.points'|trans }}</dt>
                     <dd>{{ entity.lostHP }}</dd>
-                    <dt>Current Hit Points</dt>
+                    <dt>{{ 'current.hit.points'|trans }}</dt>
                     <dd>{{ entity.maxHp - entity.lostHP }}</dd>
-                    <dt>HP Rolls per level</dt>
+                    <dt>{{ 'hp.rolls.per.level'|trans }}</dt>
                     <dd>
                         {% for level in entity.levels %}
                             {{ level.hpRoll }}
@@ -122,28 +122,28 @@
                 </dl>
             </div>
             <div class="col-lg-4 col-md-4">
-                <h2>Combat</h2>
+                <h2>{{ 'combat'|trans }}</h2>
                 <table id="armor" class="table table-striped table-condensed table-responsive">
                     <tr>
-                        <th>AC</th>
+                        <th>{{ 'ac'|trans }}</th>
                         <td>
                             {{ entity.ac }}
                             {{ popovers.bonuses(entity.defenseBonuses.ac) }}
                         </td>
                     </tr>
                     <tr>
-                        <th>Touch AC</th>
+                        <th>{{ 'touch.ac'|trans }}</th>
                         <td>{{ entity.touchAc }}</td>
                     </tr>
                     <tr>
-                        <th>Flat-Footed AC</th>
+                        <th>{{ 'flat.footed.ac'|trans }}</th>
                         <td>{{ entity.flatFootedAc }}</td>
                     </tr>
                 </table>
 
                 <table id="saving-throws" class="table table-striped table-condensed table-responsive">
                     <tr>
-                        <th>Reflexes</th>
+                        <th>{{ 'reflexes'|trans }}</th>
                         <td>{{ entity.reflexes }}</td>
                         <td>=</td>
                         <td>{{ entity.baseReflexes }}</td>
@@ -156,7 +156,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Fortitude</th>
+                        <th>{{ 'fortitude'|trans }}</th>
                         <td>{{ entity.fortitude }}</td>
                         <td>=</td>
                         <td>{{ entity.baseFortitude }}</td>
@@ -169,7 +169,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>Will</th>
+                        <th>{{ 'will'|trans }}</th>
                         <td>{{ entity.will }}</td>
                         <td>=</td>
                         <td>{{ entity.baseWill }}</td>
@@ -184,7 +184,7 @@
                 </table>
                 <table id="attack-rolls" class="table table-striped table-hover table-condensed table-responsive">
                     <tr>
-                        <th>BAB</th>
+                        <th>{{ 'bab'|trans }}</th>
                         <td>{{ entity.bab }}</td>
                         {% if entity.bab > 5 -%}
                             <td>{{ entity.bab - 5 }}</td>{% endif %}
@@ -194,7 +194,7 @@
                             <td>{{ entity.bab - 15 }}</td>{% endif %}
                     </tr>
                     <tr>
-                        <th>Melee attack rolls</th>
+                        <th>{{ 'melee.attack.rolls'|trans }}</th>
                         {% for ar in entity.meleeAttackRoll %}
                             <td>
                                 {{ ar }}
@@ -206,7 +206,7 @@
                         {% endfor %}
                     </tr>
                     <tr>
-                        <th>Ranged attack rolls</th>
+                        <th>{{ 'ranged.attack.rolls'|trans }}</th>
                         {% for ar in entity.rangedAttackRoll %}
                             <td>
                                 {{ ar }}
@@ -219,14 +219,14 @@
                 </table>
                 <table id="damage-bonus" class="table table-striped table-hover table-condensed table-responsive">
                     <tr>
-                        <th>Melee damage bonus</th>
+                        <th>{{ 'melee.damage.bonus'|trans }}</th>
                         <td>
                             {% if entity.meleeDamageRoll > 0 %}+{% endif %}{{ entity.meleeDamageRoll }}
                             {{ popovers.bonuses(entity.attackBonuses.meleeDamage) }}
                         </td>
                     </tr>
                     <tr>
-                        <th>Ranged damage bonus</th>
+                        <th>{{ 'ranged.damage.bonus'|trans }}</th>
                         <td>
                             {% if entity.rangedAttackRoll > 0 %}+{% endif %}{{ entity.rangedDamageRoll }}
                             {{ popovers.bonuses(entity.attackBonuses.rangedDamage) }}
@@ -235,7 +235,7 @@
                 </table>
                 <table id="initiative" class="table table-hover table-condensed table-responsive">
                     <tr>
-                        <th>Initiative</th>
+                        <th>{{ 'initiative'|trans }}</th>
                         <td>{{ entity.initiative }}</td>
                         <td>=</td>
                         <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
@@ -247,16 +247,16 @@
                     </tr>
                 </table>
             </div>
-            <div id "skills" class="col-lg-4 col-md-4">
-                <h2>Skills</h2>
+            <div id="skills" class="col-lg-4 col-md-4">
+                <h2>{{ 'skills'|trans }}</h2>
                 <table class="table table-hover table-striped table-condensed table-responsive">
                     <thead>
                     <tr>
-                        <th><a href="{{ path('skills') }}">Skill</a></th>
-                        <th>Total Bonus</th>
-                        <th>Ability Modifier</th>
-                        <th>Ranks</th>
-                        <th>Misc Modifiers</th>
+                        <th><a href="{{ path('skills') }}">{{ 'skill'|trans }}</a></th>
+                        <th>{{ 'total.bonus'|trans }}</th>
+                        <th>{{ 'ability.modifier'|trans }}</th>
+                        <th>{{ 'ranks'|trans }}</th>
+                        <th>{{ 'misc.modifiers'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -300,7 +300,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-4">
-                <h2 id="feats">Powers</h2>
+                <h2 id="feats">{{ 'powers'|trans }}</h2>
                 {% if
                     powers_activation_form.feats|length > 0 or
                     powers_activation_form.class_powers|length > 0 or
@@ -313,7 +313,7 @@
                     {% for power in powers_activation_form.feats %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Feats</th>
+                                <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat) }}
@@ -325,7 +325,7 @@
                     {% for power in powers_activation_form.class_powers %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Class</th>
+                                <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
@@ -337,7 +337,7 @@
                     {% for spellEffect in powers_activation_form.spell_effects %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Spells</th>
+                                <th rowspan="{{ loop.length }}">{{ 'spells'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(spellEffect.vars.value.spell.name, spellEffect.vars.value.spell) }}
@@ -354,13 +354,13 @@
                 {% endif %}
             </div>
             <div class="col-lg-4 col-md-4">
-                <h3>Unmanaged Powers</h3>
+                <h3>{{ 'unmanaged.powers'|trans }}</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
                     {% for feat in other_feats %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Feats</th>
+                                <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(feat.feat.name, feat.feat) }}
@@ -371,7 +371,7 @@
                     {% for power in other_class_powers %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Class Powers</th>
+                                <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(power.classPower.name, power.classPower) }}
@@ -382,7 +382,7 @@
                     {% for spellEffect in other_spell_effects %}
                         <tr>
                             {% if loop.index == 1 %}
-                                <th rowspan="{{ loop.length }}">Spells</th>
+                                <th rowspan="{{ loop.length }}">{{ 'spells'|trans }}</th>
                             {% endif %}
                             <td>
                                 {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
@@ -394,13 +394,13 @@
                 </table>
             </div>
             <div class="col-lg-4 col-md-4">
-                <h3>Passive Powers</h3>
+                <h3>{{ 'passive.powers'|trans }}</h3>
                 <table class="table table-hover table-condensed table-responsive">
                     <tbody>
                         {% for feat in passive_feats %}
                             <tr>
                                 {% if loop.index == 1 %}
-                                    <th rowspan="{{ loop.length }}">Feats</th>
+                                    <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                                 {% endif %}
                                 <td>
                                     {{ popovers.description(feat.feat.name, feat.feat) }}
@@ -411,7 +411,7 @@
                         {% for power in passive_class_powers %}
                             <tr>
                                 {% if loop.index == 1 %}
-                                    <th rowspan="{{ loop.length }}">Class Powers</th>
+                                    <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
                                 {% endif %}
                                 <td>
                                     {{ popovers.description(power.classPower.name, power.classPower) }}
@@ -422,7 +422,7 @@
                         {% for spellEffect in passive_spell_effects %}
                             <tr>
                                 {% if loop.index == 1 %}
-                                    <th rowspan="{{ loop.length }}">Spells</th>
+                                    <th rowspan="{{ loop.length }}">{{ 'spells'|trans }}</th>
                                 {% endif %}
                                 <td>
                                     {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
@@ -436,49 +436,49 @@
         </div>
     </div>
     <div id="equipment" class="tab-pane">
-        <h2>Equipment</h2>
+        <h2>{{ 'equipment'|trans }}</h2>
         <dl>
-            <dt>Left weapon</dt>
+            <dt>{{ 'main.weapon'|trans }}</dt>
             <dd>{{ entity.equipment.mainWeapon }}</dd>
-            <dt>Right weapon</dt>
+            <dt>{{ 'offhand.weapon'|trans }}</dt>
             <dd>{{ entity.equipment.offhandWeapon }}</dd>
-            <dt>Body</dt>
+            <dt>{{ 'body'|trans }}</dt>
             <dd>{{ entity.equipment.body }}</dd>
-            <dt>Feet</dt>
+            <dt>{{ 'feet'|trans }}</dt>
             <dd>{{ entity.equipment.feet }}</dd>
-            <dt>Hands</dt>
+            <dt>{{ 'hands'|trans }}</dt>
             <dd>{{ entity.equipment.hands }}</dd>
-            <dt>Head</dt>
+            <dt>{{ 'head'|trans }}</dt>
             <dd>{{ entity.equipment.head }}</dd>
-            <dt>Back</dt>
+            <dt>{{ 'back'|trans }}</dt>
             <dd>{{ entity.equipment.back }}</dd>
-            <dt>Belt</dt>
+            <dt>{{ 'belt'|trans }}</dt>
             <dd>{{ entity.equipment.belt }}</dd>
-            <dt>Left finger</dt>
+            <dt>{{ 'left.finger'|trans }}</dt>
             <dd>{{ entity.equipment.leftFinger }}</dd>
-            <dt>Right finger</dt>
+            <dt>{{ 'right.finger'|trans }}</dt>
             <dd>{{ entity.equipment.rightFinger }}</dd>
-            <dt>Neck</dt>
+            <dt>{{ 'neck'|trans }}</dt>
             <dd>{{ entity.equipment.neck }}</dd>
         </dl>
     </div>
     <div id="inventory" class="tab-pane">
-        <h2>Inventory</h2>
+        <h2>{{ 'inventory'|trans }}</h2>
     </div>
     <div id="spells" class="tab-pane">
         {% if castSpellsForm.children|length > 1 %}
-        <h2>Cast Spells</h2>
+        <h2>{{ 'cast.spells'|trans }}</h2>
         {{ form(castSpellsForm) }}
         {% endif %}
 
         {% if uncastSpellsForm.children|length > 1 %}
-        <h2>Uncast Spells</h2>
+        <h2>{{ 'uncast.spells'|trans }}</h2>
         {{ form(uncastSpellsForm) }}
         {% endif %}
 
         {% set known = entity.learnedSpellsBySpellLevel %}
         {% if known %}
-        <h2>Known Spells</h2>
+        <h2>{{ 'known.spells'|trans }}</h2>
         {% for spellLevel, classSpells in known %}
             <h3>Level {{ spellLevel }}</h3>
             <ul>
@@ -508,7 +508,7 @@
             {% endif %}
             {{ object.longDescription }}
             {% if object.prerequisities is defined and object.prerequisities|length > 0 %}
-            Prerequisities:
+            {{ 'prerequisities'|trans }}:
             <ul>
                 {% for key, value in object.prerequisities %}
                 <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
@@ -519,7 +519,7 @@
                 (object.conditions is defined and object.conditions|length > 0) or
                 (object.externalConditions is defined and object.externalConditions|length > 0)
             %}
-            Conditions:
+            {{ 'conditions'|trans }}:
             <ul>
                 {% for key, value in object.conditions %}
                 <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
@@ -541,7 +541,7 @@
            data-content="
                 {% set ab = bonuses.applicableBonuses %}
                 {% if ab|length > 0 %}
-                List of applied bonuses:
+                {{ 'applied.bonuses'|trans }}:
                 <ul>
                     {% for bonus in bonuses.applicableBonuses %}
                     <li>
@@ -553,7 +553,7 @@
                 {% endif %}
                 {% set nab = bonuses.nonApplicableBonuses %}
                 {% if nab|length > 0 %}
-                Other bonuses:
+                {{ 'other.bonuses'|trans }}:
                 <ul>
                     {% for bonus in nab %}
                     <li>

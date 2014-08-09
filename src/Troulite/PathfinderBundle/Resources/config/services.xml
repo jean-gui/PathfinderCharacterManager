@@ -9,6 +9,7 @@
         <parameter key="troulite_pathfinder.spellcasting.class">Troulite\PathfinderBundle\Services\SpellCasting</parameter>
         <parameter key="troulite_pathfinder.abilitytools.class">Troulite\PathfinderBundle\Services\AbilityTools</parameter>
         <parameter key="troulite_pathfinder.addcharacterfeat_type.class">Troulite\PathfinderBundle\Form\Type\AddCharacterFeatType</parameter>
+        <parameter key="troulite_pathfinder.locale.setter.class">Troulite\PathfinderBundle\Event\LocaleSetter</parameter>
     </parameters>
 
     <services>
@@ -26,6 +27,10 @@
                  scope="request">
             <argument>%character_advancement%</argument>
             <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="troulite_pathfinder.locale.setter"
+                 class="%troulite_pathfinder.locale.setter.class%">
+            <tag name="kernel.event_subscriber"/>
         </service>
     </services>
 </container>
