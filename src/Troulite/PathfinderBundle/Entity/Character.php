@@ -460,7 +460,7 @@ class Character extends BaseCharacter
             $ars[] = $ar;
         }
         /** @noinspection PhpExpressionResultUnusedInspection */
-        for ($bab; $bab >= 0; $bab -= 5) {
+        for ($bab; $bab > 0; $bab -= 5) {
             $ars[] = $ar;
             $ar -= 5;
         }
