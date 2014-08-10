@@ -47,6 +47,13 @@ trait Power {
     private $externalConditions;
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $prerequisities;
+
+    /**
      * Set passive
      *
      * @param boolean $passive
@@ -157,4 +164,29 @@ trait Power {
     {
         return count($this->externalConditions) > 0;
     }
+
+    /**
+     * Set prerequisities
+     *
+     * @param array $prerequisities
+     *
+     * @return $this
+     */
+    public function setPrerequisities($prerequisities)
+    {
+        $this->prerequisities = $prerequisities;
+
+        return $this;
+    }
+
+    /**
+     * Get prerequisities
+     *
+     * @return array
+     */
+    public function getPrerequisities()
+    {
+        return $this->prerequisities;
+    }
+
 } 

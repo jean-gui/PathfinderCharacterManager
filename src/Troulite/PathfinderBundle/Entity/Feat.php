@@ -35,13 +35,6 @@ class Feat
     private $name;
 
     /**
-     * @var string[]
-     *
-     * @ORM\Column(type="json_array", nullable=true)
-     */
-    private $prerequisities;
-
-    /**
      * Get id
      *
      * @return integer
@@ -73,30 +66,6 @@ class Feat
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set prerequisities
-     *
-     * @param array $prerequisities
-     *
-     * @return Feat
-     */
-    public function setPrerequisities($prerequisities)
-    {
-        $this->prerequisities = $prerequisities;
-
-        return $this;
-    }
-
-    /**
-     * Get prerequisities
-     *
-     * @return array
-     */
-    public function getPrerequisities()
-    {
-        return $this->prerequisities;
     }
 
     /**
