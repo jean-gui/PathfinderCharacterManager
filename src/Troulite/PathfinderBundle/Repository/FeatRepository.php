@@ -10,6 +10,7 @@ namespace Troulite\PathfinderBundle\Repository;
 
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Troulite\PathfinderBundle\Entity\Feat;
 use Troulite\PathfinderBundle\Entity\Character;
@@ -54,6 +55,11 @@ class FeatRepository extends EntityRepository
      * @return Feat[]
      */public function findByAvailableFor(Character $Character)
     {
-        return $this->queryAvailableFor($Character)->getQuery()->getResult();
+        $query = $this->queryAvailableFor($Character)->getQuery();
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+        return $query->getResult();
     }
 } 
