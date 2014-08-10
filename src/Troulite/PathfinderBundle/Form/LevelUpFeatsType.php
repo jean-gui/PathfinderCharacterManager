@@ -2,15 +2,17 @@
 
 namespace Troulite\PathfinderBundle\Form;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\ClassPower;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
-use Troulite\PathfinderBundle\Repository\FeatRepository;
 
 /**
  * Class LevelUpFeatsType
@@ -25,11 +27,18 @@ class LevelUpFeatsType extends AbstractType
     private $advancement;
 
     /**
-     * @param $advancement
+     * @var EntityManager
      */
-    public function __construct($advancement)
+    private $em;
+
+    /**
+     * @param $advancement
+     * @param EntityManager $em
+     */
+    public function __construct($advancement, EntityManager $em)
     {
         $this->advancement = $advancement;
+        $this->em = $em;
     }
 
     /**
@@ -38,9 +47,10 @@ class LevelUpFeatsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $em = $this->em;
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event) use ($em) {
                 /** @var $level Level */
                 $level = $event->getData();
                 $character = $level->getCharacter();
@@ -48,6 +58,14 @@ class LevelUpFeatsType extends AbstractType
                 $form  = $event->getForm();
 
                 $featsToAdd = -$level->getFeats()->count();
+
+                $choices = null;
+
+                $availableFeats = $em->getRepository('TroulitePathfinderBundle:Feat')->findByAvailableFor($character);
+
+                foreach ($level->getFeats() as $key => $feat) {
+                    $choices[$key] = $availableFeats;
+                }
 
                 // Racial bonus feats
                 if (
@@ -60,10 +78,13 @@ class LevelUpFeatsType extends AbstractType
                         array("c" => $character)
                     );
                     while ($value > 0) {
+                        $choices[] = $availableFeats;
                         $featsToAdd++;
                         $value--;
                     }
                 }
+
+                $expressionLanguage = new ExpressionLanguage();
 
                 // Class bonus feats
                 if ($class) {
@@ -71,15 +92,33 @@ class LevelUpFeatsType extends AbstractType
                         $effects = $power->getEffects();
                         if (
                             $power->getLevel() === $character->getLevel($class) &&
-                            $power->hasEffects() &&
-                            array_key_exists('extra_feats', $effects)
+                            $power->hasEffects()
                         ) {
-                            $effect = $effects['extra_feats'];
-                            $value  = (int)(new ExpressionLanguage())->evaluate(
-                                $effect['value'],
-                                array("c" => $character)
-                            );
-                            $featsToAdd += $value;
+                            $ok = LevelUpFeatsType::checkPrerequisities($power, $character, $expressionLanguage);
+
+                            if (!$ok) {
+                                continue;
+                            }
+
+                            if (array_key_exists('extra_feats', $effects)) {
+                                $effect = $effects['extra_feats'];
+                                $value  = (int)(new ExpressionLanguage())->evaluate(
+                                    $effect['value'],
+                                    array("c" => $character)
+                                );
+                                for ($i = 0; $i < $value; $i++) {
+                                    $choices[] = $availableFeats;
+                                }
+                                $featsToAdd += $value;
+                            } elseif (array_key_exists('feat', $effects)) {
+                                if ($effects['feat']['type'] === 'oneof') {
+                                    $choices[] = $em->getRepository('TroulitePathfinderBundle:Feat')->findBy(
+                                        array('name' => $effects['feat']['value'])
+                                    );
+
+                                    $featsToAdd += 1;
+                                }
+                            }
                         }
                     }
                 }
@@ -90,6 +129,7 @@ class LevelUpFeatsType extends AbstractType
                     $character->getLevel() > 0 &&
                     $this->advancement[$character->getLevel()]['feat']
                 ) {
+                    $choices[] = $availableFeats;
                     $featsToAdd++;
                 }
 
@@ -106,13 +146,10 @@ class LevelUpFeatsType extends AbstractType
                             'label' => 'New Feat' . ($level->getFeats()->count() > 1 ? 's' : ''),
                             'type' => 'addcharacterfeat',
                             'options' => array(
-                                'class' => 'TroulitePathfinderBundle:Feat',
-                                'query_builder' => function (FeatRepository $er) use ($character) {
-                                        return $er->queryAvailableFor($character);
-                                },
                                 'label' => false,
                                 'required' => false,
-                                'level' => $level
+                                'level' => $level,
+                                'choices' => $choices
                             )
                         )
                     );
@@ -137,5 +174,37 @@ class LevelUpFeatsType extends AbstractType
     public function getName()
     {
         return 'troulite_pathfinderbundle_level';
+    }
+
+    /**
+     * @param $power
+     * @param $character
+     * @param $expressionLanguage
+     *
+     * @return bool
+     */
+    private static function checkPrerequisities(
+        ClassPower $power,
+        Character $character,
+        ExpressionLanguage $expressionLanguage
+    ) {
+        $prerequisities = $power->getPrerequisities();
+
+        if (array_key_exists('class-power', $prerequisities)) {
+            foreach ($character->getClassPowers() as $classPower) {
+                $ok = $expressionLanguage->evaluate(
+                    $prerequisities['class-power'],
+                    array("classPower" => $classPower)
+                );
+
+                if ($ok) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }

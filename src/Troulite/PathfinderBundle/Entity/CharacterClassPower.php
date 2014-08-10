@@ -48,6 +48,13 @@ class CharacterClassPower
     private $active = false;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $extraInformation;
+
+    /**
      * Get id
      *
      * @return integer
@@ -147,6 +154,26 @@ class CharacterClassPower
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @param $extraInformation
+     *
+     * @return $this
+     */
+    public function setExtraInformation($extraInformation)
+    {
+        $this->extraInformation = $extraInformation;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtraInformation()
+    {
+        return $this->extraInformation;
     }
 
     /**

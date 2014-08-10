@@ -108,15 +108,64 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $this->setReference('wild-empathy', $power);
 
         $power = (new ClassPower())
+            ->setName('Combat Style')
+            ->setLevel(2)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'choice' => array('Archery', 'Two-weapon')
+                )
+            );
+        $ranger->addPower($power);
+        $this->setReference('combat-style', $power);
+
+        $power = (new ClassPower())
             ->setName('First Combat Style Feat')
             ->setLevel(2)
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
-                array('extra_feats' => ['type' => 'class', 'value' => 1])
+                array(
+                    'feat' => [
+                        'type' => 'oneof',
+                        'value' => array('Far Shot', 'Point Blank Shot', 'Precise Shot', 'Rapid Shot')
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Archery"
+                    '
+                )
             );
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-1', $power);
+
+        $power = (new ClassPower())
+            ->setName('First Combat Style Feat')
+            ->setLevel(2)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array('Double Slice', 'Improved Shield Bash', 'Quick Draw', 'Two-Weapon Fighting')
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Two-Weapon"
+                    '
+                )
+            );
+        $ranger->addPower($power);
 
         $power = (new ClassPower())
             ->setName('Endurance')
@@ -181,10 +230,53 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
-                array('extra_feats' => ['type' => 'class', 'value' => 1])
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Far Shot', 'Point Blank Shot', 'Precise Shot', 'Rapid Shot',
+                            'Improved Precise Shot', 'Manyshot'
+
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Archery"
+                    '
+                )
             );
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-2', $power);
+
+        $power = (new ClassPower())
+            ->setName('Second Combat Style Feat')
+            ->setLevel(6)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Double Slice', 'Improved Shield Bash', 'Quick Draw', 'Two-Weapon Fighting',
+                            'Improved Two-Weapon Fighting', 'Two-Weapon Defense'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Two-Weapon"
+                    '
+                )
+            );
+        $ranger->addPower($power);
 
         $power = (new ClassPower())
             ->setName('Woodland Stride')
@@ -233,10 +325,64 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
-                array('extra_feats' => ['type' => 'class', 'value' => 1])
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Far Shot',
+                            'Point Blank Shot',
+                            'Precise Shot',
+                            'Rapid Shot',
+                            'Improved Precise Shot',
+                            'Manyshot',
+                            'Pinpoint Targeting',
+                            'Shot on the Run'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Archery"
+                    '
+                )
             );
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-3', $power);
+
+        $power = (new ClassPower())
+            ->setName('Third Combat Style Feat')
+            ->setLevel(10)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Double Slice',
+                            'Improved Shield Bash',
+                            'Quick Draw',
+                            'Two-Weapon Fighting',
+                            'Improved Two-Weapon Fighting',
+                            'Two-Weapon Defense',
+                            'Greater Two-Weapon Fighting',
+                            'Two-Weapon Rend'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Two-Weapon"
+                    '
+                )
+            );
+        $ranger->addPower($power);
 
         $power = (new ClassPower())
             ->setName('Third Favored Enemy (+6)')
@@ -303,10 +449,64 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
-                array('extra_feats' => ['type' => 'class', 'value' => 1])
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Far Shot',
+                            'Point Blank Shot',
+                            'Precise Shot',
+                            'Rapid Shot',
+                            'Improved Precise Shot',
+                            'Manyshot',
+                            'Pinpoint Targeting',
+                            'Shot on the Run'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Archery"
+                    '
+                )
             );
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-4', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fourth Combat Style Feat')
+            ->setLevel(14)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Double Slice',
+                            'Improved Shield Bash',
+                            'Quick Draw',
+                            'Two-Weapon Fighting',
+                            'Improved Two-Weapon Fighting',
+                            'Two-Weapon Defense',
+                            'Greater Two-Weapon Fighting',
+                            'Two-Weapon Rend'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Two-Weapon"
+                    '
+                )
+            );
+        $ranger->addPower($power);
 
         $power = (new ClassPower())
             ->setName('Fourth Favored Enemy (+8)')
@@ -350,10 +550,64 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
-                array('extra_feats' => ['type' => 'class', 'value' => 1])
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Far Shot',
+                            'Point Blank Shot',
+                            'Precise Shot',
+                            'Rapid Shot',
+                            'Improved Precise Shot',
+                            'Manyshot',
+                            'Pinpoint Targeting',
+                            'Shot on the Run'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Archery"
+                    '
+                )
             );
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-5', $power);
+
+        $power = (new ClassPower())
+            ->setName('Fifth Combat Style Feat')
+            ->setLevel(18)
+            ->setClass($ranger)
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'feat' => [
+                        'type'  => 'oneof',
+                        'value' => array(
+                            'Double Slice',
+                            'Improved Shield Bash',
+                            'Quick Draw',
+                            'Two-Weapon Fighting',
+                            'Improved Two-Weapon Fighting',
+                            'Two-Weapon Defense',
+                            'Greater Two-Weapon Fighting',
+                            'Two-Weapon Rend'
+                        )
+                    ]
+                )
+            )
+            ->setPrerequisities(
+                array(
+                    'class-power' => '
+                        classPower.getClassPower().getName() === "Combat Style" &&
+                        classPower.getExtraInformation() === "Two-Weapon"
+                    '
+                )
+            );
+        $ranger->addPower($power);
 
         $power = (new ClassPower())
             ->setName('Favored Terrain +8')

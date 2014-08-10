@@ -377,10 +377,17 @@ class CharacterController extends Controller
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
         $flow->bind($level);
 
-        // Add powers
+        // Add class powers if they were not already added through a form
         if ($level->getClassDefinition()) {
-            foreach ($level->getClassDefinition()->getPowers() as $power) {
-                if ($power->getLevel() === $entity->getLevel($level->getClassDefinition())) {
+            foreach ($level->getClassDefinition()->getPowers($entity->getLevel($level->getClassDefinition())) as $power) {
+                $alreadyAdded = false;
+                foreach ($level->getClassPowers() as $classPower) {
+                    if ($classPower->getClassPower() === $power) {
+                        $alreadyAdded = true;
+                        break;
+                    }
+                }
+                if (!$alreadyAdded) {
                     $level->addClassPower((new CharacterClassPower())->setClassPower($power));
                 }
             }
@@ -422,7 +429,11 @@ class CharacterController extends Controller
                 // Add fixed extra feats granted by this level
                 foreach ($level->getClassPowers() as $power) {
                     $effects = $power->getClassPower()->getEffects();
-                    if ($power->getClassPower()->hasEffects() && array_key_exists('feat', $effects)) {
+                    if (
+                        $power->getClassPower()->hasEffects() &&
+                        array_key_exists('feat', $effects) &&
+                        $effects['feat']['type'] !== 'oneof'
+                    ) {
                         $feat = $em->getRepository('TroulitePathfinderBundle:Feat')
                             ->findOneBy(array('name' => $effects['feat']['value']));
                         if ($feat) {

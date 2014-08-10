@@ -12,7 +12,7 @@ namespace Troulite\PathfinderBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Form\DataTransformer\FeatToCharacterFeatTransformer;
+//use Troulite\PathfinderBundle\Form\DataTransformer\FeatToCharacterFeatTransformer;
 
 /**
  * Class AddCharacterFeatType
@@ -28,16 +28,17 @@ class AddCharacterFeatType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $featTransformer = new FeatToCharacterFeatTransformer($options['level']);
-        $builder->addModelTransformer($featTransformer);
-    }
+        //$featTransformer = new FeatToCharacterFeatTransformer($options['level']);
+        //$builder->addModelTransformer($featTransformer);
 
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return 'entity';
+        $builder->add(
+            'feat',
+            'entity',
+            array(
+                'class'   => 'TroulitePathfinderBundle:Feat',
+                'choices' => $options['choices'][$builder->getName()]
+            )
+        );
     }
 
     /**
@@ -48,9 +49,17 @@ class AddCharacterFeatType extends AbstractType
         return 'addcharacterfeat';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setRequired(array('level'));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterFeat'
+            )
+        );
+        $resolver->setRequired(array('level', 'choices'));
     }
 
 

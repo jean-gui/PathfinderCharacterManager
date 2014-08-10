@@ -7,7 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Form\Type\ClassPowerChoiceType;
 
 /**
  * Class LevelUpClassType
@@ -28,12 +30,44 @@ class LevelUpClassSummaryHpType extends AbstractType
                 /** @var $level Level */
                 $level     = $event->getData();
                 $character = $level->getCharacter();
+                $classDefinition = $level->getClassDefinition();
+                $classLevel = $character->getLevel($classDefinition);
+                $classLevelPowers = $classDefinition->getPowers($classLevel);
                 $form      = $event->getForm();
 
                 // First level hpRoll should always be maxed out, so do not add the field in this case
-                if ($level && $character->getLevel() > 1) {
+                if ($character->getLevel() > 1) {
                     $form->add('hpRoll');
                 }
+
+                // Class Powers requiring a choice
+                $choices = null;
+                foreach ($classLevelPowers as $power) {
+                    $alreadyThere = false;
+                    foreach ($level->getClassPowers() as $classPower) {
+                        if ($classPower->getClassPower() === $power) {
+                            $alreadyThere = true;
+                            break;
+                        }
+                    }
+                    if (
+                        !$alreadyThere &&
+                        count($power->getEffects()) > 0 &&
+                        array_key_exists('choice', $power->getEffects())
+                    ) {
+                        $level->addClassPower((new CharacterClassPower())->setClassPower($power));
+                    }
+                }
+
+                $form->add(
+                    'classPowers',
+                    'collection',
+                    array(
+                        'label' => false,
+                        'type' => new ClassPowerChoiceType(),
+                        'options' => array('label' => false)
+                    )
+                );
             }
         );
     }

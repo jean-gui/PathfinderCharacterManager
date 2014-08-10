@@ -109,6 +109,11 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             )
             ->addClassPower(
                 (new CharacterClassPower())
+                    ->setClassPower($this->getReference('combat-style'))
+                    ->setExtraInformation('Archery')
+            )
+            ->addClassPower(
+                (new CharacterClassPower())
                     ->setClassPower($this->getReference('combat-style-feat-1'))
             );
         $gwendae->addLevel($level);
