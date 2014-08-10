@@ -106,7 +106,7 @@ class ClassPower
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getLevel()
     {
