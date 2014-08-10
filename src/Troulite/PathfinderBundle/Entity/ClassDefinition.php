@@ -427,10 +427,18 @@ class ClassDefinition
     /**
      * Get powers
      *
+     * @param int $level
+     *
      * @return Collection|ClassPower[]
      */
-    public function getPowers()
+    public function getPowers($level = null)
     {
+        if ($level) {
+            return $this->powers->filter(function (ClassPower $power) use ($level) {
+                return $power->getLevel() === $level;
+            });
+        }
+
         return $this->powers;
     }
 
