@@ -100,7 +100,7 @@
       </trans-unit>
       <trans-unit id="ac22e1cb86e439fce4e1480cafcb9e4f" resname="current.hit.points">
         <source>current.hit.points</source>
-        <target>Poitns de vie actuels</target>
+        <target>Points de vie actuels</target>
       </trans-unit>
       <trans-unit id="b9d9da718f57b5d09f87a9cca6ba0ec8" resname="hp.rolls.per.level">
         <source>hp.rolls.per.level</source>
