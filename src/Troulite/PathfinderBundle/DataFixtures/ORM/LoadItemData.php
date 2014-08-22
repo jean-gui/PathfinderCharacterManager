@@ -34,7 +34,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $finder = new Finder();
-        $finder->files()->in('src/Troulite/PathfinderBundle/DataFixtures/ORM/')->name('magic_items.csv');
+        $finder->files()->in('src/Troulite/PathfinderBundle/Resources/data/')->name('magic_items.csv');
         /** @var $file SplFileInfo */
         foreach($finder as $file) {
             $handle = fopen($file->getRealPath(), 'r');
