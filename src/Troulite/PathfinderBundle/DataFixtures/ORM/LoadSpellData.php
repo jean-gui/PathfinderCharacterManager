@@ -5,6 +5,7 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Troulite\PathfinderBundle\Entity\ClassSpell;
@@ -86,8 +87,11 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
         $classSpell = (new ClassSpell())->setSpell($spell)->setClass($this->getReference('bard'))->setSpellLevel(3);
         $manager->persist($classSpell);
 
+        /** @var $translationsRepository TranslationRepository */
+        $translationsRepository = $manager->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
         $finder = new Finder();
-        $finder->files()->in('src/Troulite/PathfinderBundle/DataFixtures/ORM/')->name('spells.csv');
+        $finder->files()->in('src/Troulite/PathfinderBundle/Resources/data/')->name('sorts.csv');
         /** @var $file SplFileInfo */
         foreach ($finder as $file) {
             $handle = fopen($file->getRealPath(), 'r');
@@ -102,7 +106,7 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
                     $spell
                         ->setName($data['name'])
                         ->setShortDescription($data['short_description'])
-                        ->setLongDescription($data['description'])
+                        ->setLongDescription($data['description_formated'])
                         ->setCastingTime($data['casting_time'])
                         ->setComponents($data['components'])
                         ->setRange($data['range'])
@@ -112,6 +116,28 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
                         ->setSpellResistance($data['spell_resistence'])
                         ->setPassive(true);
                     $manager->persist($spell);
+
+                    if ($data['name_fr'] && $data['name_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'name', 'fr', $data['name_fr']);
+                    }
+                    if ($data['description_formatted_fr'] && $data['description_formatted_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'longDescription', 'fr', $data['description_formatted_fr']);
+                    }
+                    if ($data['casting_time_fr'] && $data['casting_time_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'castingTime', 'fr', $data['casting_time_fr']);
+                    }
+                    if ($data['components_fr'] && $data['components_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'components', 'fr', $data['components_fr']);
+                    }
+                    if ($data['range_fr'] && $data['range_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'range', 'fr', $data['range_fr']);
+                    }
+                    if ($data['duration_fr'] && $data['duration_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'duration', 'fr', $data['duration_fr']);
+                    }
+                    if ($data['saving_throw_fr'] && $data['saving_throw_fr'] != '#N/D') {
+                        $translationsRepository->translate($spell, 'savingThrow', 'fr', $data['saving_throw_fr']);
+                    }
 
                     foreach(array('bard', 'paladin', 'ranger') as $className) {
                         if ($data[$className] != 'NULL') {
