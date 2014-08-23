@@ -5,6 +5,7 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Troulite\PathfinderBundle\Entity\Feat;
@@ -327,8 +328,11 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($feat);
         $this->addReference('feat-weapon-finesse', $feat);
 
+        /** @var $translationsRepository TranslationRepository */
+        $translationsRepository = $manager->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
         $finder = new Finder();
-        $finder->files()->in('src/Troulite/PathfinderBundle/DataFixtures/ORM/')->name('feats.csv');
+        $finder->files()->in('src/Troulite/PathfinderBundle/Resources/data/')->name('dons.csv');
         /** @var $file SplFileInfo */
         foreach($finder as $file) {
             $handle = fopen($file->getRealPath(), 'r');
@@ -349,6 +353,15 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                         $feat->setEffects(json_decode($data['effects']));
                     }
                     $manager->persist($feat);
+                    if ($data['name_fr'] && $data['name_fr'] != '#N/D') {
+                        $translationsRepository->translate($feat, 'name', 'fr', $data['name_fr']);
+                    }
+                    if ($data['description_fr'] && $data['description_fr'] != '#N/D') {
+                        $translationsRepository->translate($feat, 'shortDescription', 'fr', $data['description_fr']);
+                    }
+                    if ($data['benefit_fr'] && $data['benefit_fr'] != '#N/D') {
+                        $translationsRepository->translate($feat, 'longDescription', 'fr', $data['benefit_fr']);
+                    }
                 }
             }
         }
