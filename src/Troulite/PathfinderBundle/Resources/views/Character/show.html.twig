@@ -346,6 +346,18 @@
                             <td>{{ form_widget(spellEffect.active) }}</td>
                         </tr>
                     {% endfor %}
+                    {% for powerEffect in powers_activation_form.power_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
+                                {{ form_label(powerEffect.active, powerEffect.vars.value.power.name) }}
+                            </td>
+                            <td>{{ form_widget(powerEffect.active) }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
                 {{ form_row(powers_activation_form._token) }}
@@ -390,6 +402,17 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% for powerEffect in other_power_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(powerEffect.power.name, powerEffect.spell) }}
+                                {{ spellEffect.power }}
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -427,6 +450,17 @@
                                 <td>
                                     {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
                                     {{ spellEffect.spell }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% for powerEffect in passive_power_effects %}
+                            <tr>
+                                {% if loop.index == 1 %}
+                                    <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                                {% endif %}
+                                <td>
+                                    {{ popovers.description(powerEffect.power.name, powerEffect.power) }}
+                                    {{ powerEffect.power }}
                                 </td>
                             </tr>
                         {% endfor %}

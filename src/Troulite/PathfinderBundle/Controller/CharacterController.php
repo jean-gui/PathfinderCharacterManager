@@ -16,6 +16,7 @@ use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
@@ -150,11 +151,11 @@ class CharacterController extends Controller
                 }
 
                 if ($useless == count($power->getEffects())) {
-                    // Don't add a power if it has not meaningful bonuses for the character sheet
+                    // Don't add a power if it has no meaningful bonuses for the character sheet
                     continue;
                 }
 
-                if (!$power->isPassive() || $power->hasExternalConditions()) {
+                if (!$power->isPassive() || $power->hasExternalConditions() || $power->isCastable()) {
                     $needActivationClassPowers[] = $classPower;
                 } else {
                     $passiveClassPowers[] = $classPower;
@@ -178,13 +179,67 @@ class CharacterController extends Controller
             }
         }
 
+        $needActivationPowerEffects = array();
+        $passivePowerEffects        = array();
+        $otherPowerEffects          = array();
+        foreach ($entity->getPowerEffects() as $powerEffect) {
+            $power = $powerEffect->getPower();
+            if (!$power->hasEffects()) {
+                $otherPowerEffects[] = $powerEffect;
+            } elseif (!$power->isPassive() || $power->hasExternalConditions()) {
+                $needActivationPowerEffects[] = $powerEffect;
+            } else {
+                $passivePowerEffects[] = $powerEffect;
+            }
+        }
+
         $powersActivationForm = $this->createForm(new PowersActivationType());
         $powersActivationForm->get('feats')->setData($needActivationFeats);
         $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
         $powersActivationForm->get('spell_effects')->setData($needActivationSpellEffects);
+        $powersActivationForm->get('power_effects')->setData($needActivationPowerEffects);
         $powersActivationForm->handleRequest($request);
 
         if ($powersActivationForm->isValid()) {
+            if (array_key_exists('class_powers', $request->request->get('classpoweractivation'))) {
+                foreach ($request->request->get('classpoweractivation')['class_powers'] as $key => $value) {
+                    $ccp = $powersActivationForm->get('class_powers')->get($key)->getData();
+
+                    if (
+                        $ccp instanceof CharacterClassPower &&
+                        $ccp->getClassPower()->isCastable() &&
+                        $value['active']
+                    ) {
+                        switch ($value['active']) {
+                            case 'other':
+                                break;
+                            case 'allies':
+                                foreach ($entity->getParty()->getCharacters() as $target) {
+                                    $target->addPowerEffect(
+                                        (new PowerEffect())
+                                            ->setPower($ccp->getClassPower())
+                                            ->setCaster($entity)
+                                            ->setCasterLevel($entity->getLevel($ccp->getClassPower()->getClass()))
+                                    );
+                                }
+                                break;
+                            default:
+                                /** @var $target Character */
+                                $target = $em->getRepository('TroulitePathfinderBundle:Character')->find($value['active']);
+                                if ($target) {
+                                    $target->addPowerEffect(
+                                        (new PowerEffect())
+                                            ->setPower($ccp->getClassPower())
+                                            ->setCaster($entity)
+                                            ->setCasterLevel($entity->getLevel($ccp->getClassPower()->getClass()))
+                                    );
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
@@ -270,6 +325,8 @@ class CharacterController extends Controller
             'other_class_powers' => $otherClassPowers,
             'passive_spell_effects' => $passiveSpellEffects,
             'other_spell_effects' => $otherSpellEffects,
+            'passive_power_effects' => $passivePowerEffects,
+            'other_power_effects'   => $otherPowerEffects,
             'castSpellsForm' => $castSpellsForm->createView(),
             'uncastSpellsForm' => $uncastSpellsForm->createView(),
         );

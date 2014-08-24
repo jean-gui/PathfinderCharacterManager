@@ -1193,27 +1193,27 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array(
                     'melee-attack-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-attack-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'melee-damage-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-damage-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'saving-charm' => [
                         'type'    => 'morale',
-                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'saving-fear' => [
                         'type'    => 'competence',
-                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                 )
             );
@@ -1228,7 +1228,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setCastable(true)
             ->setEffects(
                 array(
-                    'skills' => ['type' => 'competence', 'value' => '2 + div(c.getLevel(4) - 3, 4)']
+                    'skills' => ['type' => 'competence', 'value' => '2 + div(level - 3, 4)']
                 )
             );
         $bard->addPower($power);

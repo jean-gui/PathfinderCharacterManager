@@ -4,7 +4,10 @@ namespace Troulite\PathfinderBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 
 /**
  * Class ClassPowerActivationType
@@ -19,12 +22,37 @@ class ClassPowerActivationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add(
-                'active',
-                null,
-                array("required" => false)
-            );
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                /** @var $ccp CharacterClassPower */
+                $ccp  = $event->getData();
+                $form = $event->getForm();
+
+                if ($ccp->getClassPower()->isCastable() && !$ccp->isActive()) {
+                    $choices = array('other' => 'Other', 'allies' => 'Allies');
+                    foreach ($ccp->getCharacter()->getParty()->getCharacters() as $ally) {
+                        $choices[$ally->getId()] = $ally->getName();
+                    }
+                    $form->add(
+                        'active',
+                        'choice',
+                        array(
+                            'label'    => false,
+                            'choices'  => $choices,
+                            'mapped'   => false,
+                            'required' => false
+                        )
+                    );
+                } else {
+                    $form->add(
+                        'active',
+                        null,
+                        array("required" => false)
+                    );
+                }
+            }
+        );
     }
 
     /**

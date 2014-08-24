@@ -58,6 +58,13 @@ class Character extends BaseCharacter
     private $spellEffects;
 
     /**
+     * @var Collection|PowerEffect[]
+     *
+     * @ORM\OneToMany(targetEntity="PowerEffect", mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    private $powerEffects;
+
+    /**
      * @var AbilitiesBonuses
      */
     public $abilitiesBonuses;
@@ -1061,5 +1068,45 @@ class Character extends BaseCharacter
     public function getNonPreparedCastSpellsCount()
     {
         return $this->nonPreparedCastSpellsCount;
+    }
+
+    /**
+     * Add powerEffects
+     *
+     * @param PowerEffect $powerEffect
+     *
+     * @return Character
+     */
+    public function addPowerEffect(PowerEffect $powerEffect)
+    {
+        foreach ($this->powerEffects as $pe) {
+            if ($powerEffect->getPower() === $pe->getPower() && $powerEffect->getCaster() === $pe->getCaster()) {
+                return $this;
+            }
+        }
+        $powerEffect->setCharacter($this);
+        $this->powerEffects[] = $powerEffect;
+
+        return $this;
+    }
+
+    /**
+     * Remove powerEffect
+     *
+     * @param PowerEffect $powerEffect
+     */
+    public function removePowerEffect(PowerEffect $powerEffect)
+    {
+        $this->powerEffects->removeElement($powerEffect);
+    }
+
+    /**
+     * Get powerEffects
+     *
+     * @return Collection|PowerEffect[]
+     */
+    public function getPowerEffects()
+    {
+        return $this->powerEffects;
     }
 }
