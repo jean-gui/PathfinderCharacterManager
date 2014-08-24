@@ -57,15 +57,6 @@ class BaseCharacter
     private $favoredClass;
 
     /**
-     * Determines whether to add an extra skill point or HP when a favored class is chosen when leveling up
-     *
-     * @var string one of 'skill', 'hp'
-     *
-     * @ORM\Column(type="string")
-     */
-    private $extraPoint;
-
-    /**
      * @var Abilities
      *
      * @ORM\OneToOne(targetEntity="Abilities", cascade={"all"})
@@ -357,28 +348,5 @@ class BaseCharacter
     public function getEquipment()
     {
         return $this->equipment;
-    }
-
-    /**
-     * Set extraPoint
-     *
-     * @param string $extraPoint
-     * @return $this
-     */
-    public function setExtraPoint($extraPoint)
-    {
-        $this->extraPoint = $extraPoint;
-
-        return $this;
-    }
-
-    /**
-     * Get extraPoint
-     *
-     * @return string 
-     */
-    public function getExtraPoint()
-    {
-        return $this->extraPoint;
     }
 }

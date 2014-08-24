@@ -40,6 +40,14 @@ class LevelUpClassSummaryHpType extends AbstractType
                     $form->add('hpRoll');
                 }
 
+                if ($character->getFavoredClass() === $level->getClassDefinition()) {
+                    $form->add(
+                        'extraPoint',
+                        'choice',
+                        array('choices' => array('hp' => 'Hit Point', 'skill' => 'Skill'))
+                    );
+                }
+
                 // Class Powers requiring a choice
                 $choices = null;
                 foreach ($classLevelPowers as $power) {

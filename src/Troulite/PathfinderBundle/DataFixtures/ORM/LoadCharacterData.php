@@ -27,13 +27,13 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
     public function load(ObjectManager $manager)
     {
         $gwendae = new Character();
+
         $gwendae
             ->setName("Gwendaë")
             ->setUser($this->getReference('jean-gui'))
             ->setParty($this->getReference('sit'))
             ->setRace($this->getReference('elf'))
             ->setFavoredClass($this->getReference('ranger'))
-            ->setExtraPoint('hp')
             ->setAbilities(new Abilities(10, 16, 12, 10, 13, 10))
             ->setEquipment(
                 (new CharacterEquipment())
@@ -45,6 +45,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(10)
+            ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("weapon-focus-longbow"))
@@ -102,6 +103,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(5)
+            ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("rapid-shot"))
@@ -157,6 +159,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(2)
+            ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("deadly-aim"))
@@ -216,6 +219,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(4)
+            ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::DEXTERITY)
             ->addClassPower(
                 (new CharacterClassPower())
@@ -262,6 +266,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(4)
+            ->setExtraPoint('hp')
             ->addFeat((new CharacterFeat())->setFeat($this->getReference('pointBlankShot')))
             ->addClassPower(
                 (new CharacterClassPower())
@@ -308,6 +313,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(7)
+            ->setExtraPoint('hp')
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('combat-style-feat-2'))
@@ -353,6 +359,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(6)
+            ->setExtraPoint('hp')
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('woodland-stride'))
@@ -398,6 +405,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(2)
+            ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::DEXTERITY)
             ->addClassPower(
                 (new CharacterClassPower())
@@ -448,6 +456,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(3)
+            ->setExtraPoint('hp')
             ->addFeat((new CharacterFeat())->setFeat($this->getReference('dodge')))
             ->addClassPower(
                 (new CharacterClassPower())
@@ -494,6 +503,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(8)
+            ->setExtraPoint('hp')
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('favored-enemy-3'))
@@ -543,6 +553,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(10)
+            ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("lightning-reflexes"))
@@ -587,6 +598,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(9)
+            ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::WISDOM)
             ->addClassPower(
                 (new CharacterClassPower())
@@ -628,6 +640,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(1)
+            ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
                     ->setFeat($this->getReference("iron-will"))
@@ -667,6 +680,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(8)
+            ->setExtraPoint('hp')
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('combat-style-feat-4'))
