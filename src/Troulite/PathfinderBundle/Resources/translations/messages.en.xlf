@@ -290,6 +290,10 @@
         <source>advancement</source>
         <target>Advancement</target>
       </trans-unit>
+      <trans-unit id="108c795ab5a794f5bca78e121adac6a3" resname="feat_number">
+        <source>feat_number</source>
+        <target>Feat #%number%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
