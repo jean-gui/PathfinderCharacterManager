@@ -1187,7 +1187,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Courage')
             ->setLevel(1)
             ->setClass($bard)
-            ->setPassive(false)
+            ->setPassive(true)
             ->setCastable(true)
             ->setEffects(
                 array(
@@ -1224,7 +1224,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Competence')
             ->setLevel(3)
             ->setClass($bard)
-            ->setPassive(false)
+            ->setPassive(true)
             ->setCastable(true)
             ->setEffects(
                 array(
