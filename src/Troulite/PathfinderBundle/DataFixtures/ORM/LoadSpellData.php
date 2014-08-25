@@ -147,6 +147,8 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
                             $manager->persist($classSpell);
                         }
                     }
+
+                    $this->addReference('spell - ' . $spell->getName(), $spell);
                 }
             }
         }

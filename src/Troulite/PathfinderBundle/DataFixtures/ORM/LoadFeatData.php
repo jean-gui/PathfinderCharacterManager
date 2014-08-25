@@ -362,6 +362,8 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                     if ($data['benefit_fr'] && $data['benefit_fr'] != '#N/D') {
                         $translationsRepository->translate($feat, 'longDescription', 'fr', $data['benefit_fr']);
                     }
+
+                    $this->addReference('feat - ' . $feat->getName(), $feat);
                 }
             }
         }
