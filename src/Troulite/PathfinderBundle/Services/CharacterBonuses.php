@@ -13,6 +13,7 @@ use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
@@ -61,6 +62,7 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getNeck());
         $this->applyItem($character, $character->getEquipment()->getBack());
         $this->applySpellEffects($character);
+        $this->applyPowerEffects($character);
 
         return $character;
     }
@@ -153,6 +155,45 @@ class CharacterBonuses
     }
 
     /**
+     * @param Character $character
+     *
+     * @return Character
+     */
+    private function applyPowerEffects(Character $character)
+    {
+        foreach ($character->getPowerEffects() as $powerEffect) {
+            if ($this->isApplicable($powerEffect)) {
+                $this->applyPowerEffect($character, $powerEffect);
+            }
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param Character $character
+     * @param PowerEffect $powerEffect
+     *
+     * @return Character
+     */
+    private function applyPowerEffect(Character $character, PowerEffect $powerEffect)
+    {
+        $effects = array();
+        foreach ($powerEffect->getPower()->getEffects() as $stat => $effect) {
+            $computedEffect = (int)$this->expressionLanguage->evaluate(
+                (string)($effect['value']),
+                array(
+                    'caster' => $powerEffect->getCaster(),
+                    'level'  => $powerEffect->getCasterLevel()
+                )
+            );
+            $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
+        }
+
+        return $this->applyEffects($character, $effects, $powerEffect);
+    }
+
+    /**
      * Return whether a feat's bonuses can be applied
      *
      * @param mixed $characterPower
@@ -174,6 +215,8 @@ class CharacterBonuses
             }
         } elseif ($characterPower instanceof SpellEffect) {
             $power = $characterPower->getSpell();
+        } elseif ($characterPower instanceof PowerEffect) {
+            $power = $characterPower->getPower();
         }
 
         if ($power === null) {

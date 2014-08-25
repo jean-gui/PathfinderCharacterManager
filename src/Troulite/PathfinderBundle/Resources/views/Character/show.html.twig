@@ -331,7 +331,12 @@
                                 {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
                                 {{ form_label(power.active, power.vars.value.classPower.name) }}
                             </td>
-                            <td>{{ form_widget(power.active) }}</td>
+                            <td>
+                                {{ form_widget(power.active) }}
+                                {% if power.cancel is defined %}
+                                    {{ form_row(power.cancel) }}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     {% for spellEffect in powers_activation_form.spell_effects %}
@@ -344,6 +349,18 @@
                                 {{ form_label(spellEffect.active, spellEffect.vars.value.spell.name) }}
                             </td>
                             <td>{{ form_widget(spellEffect.active) }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for powerEffect in powers_activation_form.power_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
+                                {{ form_label(powerEffect.active, powerEffect.vars.value.power.name) }}
+                            </td>
+                            <td>{{ form_widget(powerEffect.active) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -390,6 +407,17 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% for powerEffect in other_power_effects %}
+                        <tr>
+                            {% if loop.index == 1 %}
+                                <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                            {% endif %}
+                            <td>
+                                {{ popovers.description(powerEffect.power.name, powerEffect.spell) }}
+                                {{ spellEffect.power }}
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -427,6 +455,17 @@
                                 <td>
                                     {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
                                     {{ spellEffect.spell }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% for powerEffect in passive_power_effects %}
+                            <tr>
+                                {% if loop.index == 1 %}
+                                    <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                                {% endif %}
+                                <td>
+                                    {{ popovers.description(powerEffect.power.name, powerEffect.power) }}
+                                    {{ powerEffect.power }}
                                 </td>
                             </tr>
                         {% endfor %}

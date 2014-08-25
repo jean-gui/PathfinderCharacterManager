@@ -1160,7 +1160,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Countersong')
             ->setLevel(1)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-countersong', $power);
 
@@ -1168,7 +1169,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Distraction')
             ->setLevel(1)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-distraction', $power);
 
@@ -1176,7 +1178,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Fascinate')
             ->setLevel(1)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance - Fascinate', $power);
 
@@ -1184,32 +1187,33 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Courage')
             ->setLevel(1)
             ->setClass($bard)
-            ->setPassive(false)
+            ->setPassive(true)
+            ->setCastable(true)
             ->setEffects(
                 array(
                     'melee-attack-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-attack-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'melee-damage-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-damage-roll' => [
                         'type' => 'competence',
-                        'value' => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'saving-charm' => [
                         'type'    => 'morale',
-                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'saving-fear' => [
                         'type'    => 'competence',
-                        'value'   => '1 + (c.getLevel(4) >= 17 ? 3 : (c.getLevel(4) >= 11 ? 2 : (c.getLevel(4) >= 5 ? 1)))'
+                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                 )
             );
@@ -1220,10 +1224,11 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Competence')
             ->setLevel(3)
             ->setClass($bard)
-            ->setPassive(false)
+            ->setPassive(true)
+            ->setCastable(true)
             ->setEffects(
                 array(
-                    'skills' => ['type' => 'competence', 'value' => '2 + div(c.getLevel(4) - 3, 4)']
+                    'skills' => ['type' => 'competence', 'value' => '2 + div(level - 3, 4)']
                 )
             );
         $bard->addPower($power);
@@ -1233,7 +1238,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Suggestion')
             ->setLevel(6)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-suggestion', $power);
 
@@ -1241,7 +1247,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Dirge of Doom')
             ->setLevel(8)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-dirge-of-doom', $power);
 
@@ -1249,7 +1256,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Greatness')
             ->setLevel(9)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-inspire-greatness', $power);
 
@@ -1257,7 +1265,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Soothing Performance')
             ->setLevel(12)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-soothing-performance', $power);
 
@@ -1265,7 +1274,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Frightening Tune')
             ->setLevel(14)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-frightening-tune', $power);
 
@@ -1273,7 +1283,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Inspire Heroics')
             ->setLevel(15)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-inspire-heroics', $power);
 
@@ -1281,7 +1292,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Mass Suggestion')
             ->setLevel(18)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-mass-suggestion', $power);
 
@@ -1289,7 +1301,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Bardic Performance - Deadly Performance')
             ->setLevel(20)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+            ->setCastable(true);
         $bard->addPower($power);
         $this->addReference('bardic-performance-deadly-performance', $power);
 

@@ -50,6 +50,15 @@ class Level
     private $hpRoll;
 
     /**
+     * Determines whether to add an extra skill point or HP when a favored class is chosen when leveling up
+     *
+     * @var string one of 'skill', 'hp'
+     *
+     * @ORM\Column(type="string")
+     */
+    private $extraPoint;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", nullable=true)
@@ -179,6 +188,30 @@ class Level
     public function getHpRoll()
     {
         return $this->hpRoll;
+    }
+
+    /**
+     * Set extraPoint
+     *
+     * @param string $extraPoint
+     *
+     * @return $this
+     */
+    public function setExtraPoint($extraPoint)
+    {
+        $this->extraPoint = $extraPoint;
+
+        return $this;
+    }
+
+    /**
+     * Get extraPoint
+     *
+     * @return string
+     */
+    public function getExtraPoint()
+    {
+        return $this->extraPoint;
     }
 
     /**

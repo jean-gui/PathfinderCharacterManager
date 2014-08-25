@@ -36,7 +36,8 @@ class AddCharacterFeatType extends AbstractType
             'entity',
             array(
                 'class'   => 'TroulitePathfinderBundle:Feat',
-                'choices' => $options['choices'][$builder->getName()]
+                'choices' => $options['choices'][$builder->getName()],
+                'expanded' => true
             )
         );
     }
