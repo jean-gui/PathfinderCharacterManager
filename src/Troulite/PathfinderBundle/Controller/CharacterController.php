@@ -203,7 +203,19 @@ class CharacterController extends Controller
         if ($powersActivationForm->isValid()) {
             if (array_key_exists('class_powers', $request->request->get('classpoweractivation'))) {
                 foreach ($request->request->get('classpoweractivation')['class_powers'] as $key => $value) {
+                    /** @var $ccp CharacterClassPower */
                     $ccp = $powersActivationForm->get('class_powers')->get($key)->getData();
+
+                    if (array_key_exists('cancel', $value) && $value['cancel']) {
+                        foreach ($entity->getParty()->getCharacters() as $target) {
+                            foreach ($target->getPowerEffects() as $powerEffect) {
+                                if ($powerEffect->getCaster() === $entity && $powerEffect->getPower() === $ccp->getClassPower()) {
+                                    $target->removePowerEffect($powerEffect);
+                                    break;
+                                }
+                            }
+                        }
+                    }
 
                     if (
                         $ccp instanceof CharacterClassPower &&

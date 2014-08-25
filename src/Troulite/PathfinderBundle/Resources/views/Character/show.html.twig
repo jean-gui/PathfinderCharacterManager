@@ -331,7 +331,12 @@
                                 {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
                                 {{ form_label(power.active, power.vars.value.classPower.name) }}
                             </td>
-                            <td>{{ form_widget(power.active) }}</td>
+                            <td>
+                                {{ form_widget(power.active) }}
+                                {% if power.cancel is defined %}
+                                    {{ form_row(power.cancel) }}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     {% for spellEffect in powers_activation_form.spell_effects %}

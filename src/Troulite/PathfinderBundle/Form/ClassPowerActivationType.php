@@ -43,6 +43,14 @@ class ClassPowerActivationType extends AbstractType
                             'mapped'   => false,
                             'required' => false
                         )
+                    )
+                    ->add(
+                        'cancel',
+                        'checkbox',
+                        array(
+                            'mapped' => false,
+                            'required' => false
+                        )
                     );
                 } else {
                     $form->add(
