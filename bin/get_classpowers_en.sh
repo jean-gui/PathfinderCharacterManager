@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XSL="../src/Troulite/PathfinderBundle/Resources/data/dump-classpowers.xsl"
+XSL="$(dirname "${0}")/../src/Troulite/PathfinderBundle/Resources/data/dump-classpowers.xsl"
 
 URL="http://paizo.com/pathfinderRPG/prd/classes/"
 EXT=".html"
@@ -14,7 +14,7 @@ for i in ${CLASS[@]}; do
     tidy -n -q --show-warnings no -asxml -i     | \
     xsltproc "${XSL}" -                         | \
     sed 's/"/""/g'                              | \
-    sed 's/|,|/";"/'                            | \
+    sed 's/|,|\([ ]*:[ ]*\)*/";"/'              | \
     sed 's/|/"/g'                               | \
     sed "s/^\"/\"$name\";\"/"                   | \
     cat > "${name}".csv

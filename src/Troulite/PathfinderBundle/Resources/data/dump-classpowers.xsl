@@ -12,8 +12,8 @@
     <!-- MAIN -->
     <xsl:template match="/">
         <!-- csv headers -->
-        <xsl:text>|name,description|</xsl:text>
-        <xsl:text>&#xa;</xsl:text>
+        <!--xsl:text>|name|,|description|</xsl:text>
+        <xsl:text>&#xa;</xsl:text-->
 
         <!-- find <h2>Class Features</h2> -->
         <xsl:apply-templates select="//x:h2
@@ -65,9 +65,9 @@
             [1]"/>
 
         <!-- power description is between $current and $next -->
-        <xsl:apply-templates select="descendant::text() | following-sibling::x:p
-            [preceding-sibling::x:p = $current]
-            [following-sibling::x:p = $next]
+        <xsl:apply-templates select="
+            descendant::text()[not(ancestor::x:b[1])][not(ancestor::x:b[2])] 
+            | following-sibling::x:p[preceding-sibling::x:p = $current][following-sibling::x:p = $next]
             "/>
     </xsl:template>
 
