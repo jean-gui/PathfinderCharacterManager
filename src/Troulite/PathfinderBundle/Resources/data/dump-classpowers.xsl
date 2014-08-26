@@ -9,9 +9,6 @@
     <xsl:output method="text" encoding="utf-8" />
 
 
-    <xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'" />
-    <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
-
     <!-- MAIN -->
     <xsl:template match="/">
         <!-- csv headers -->
