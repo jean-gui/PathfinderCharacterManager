@@ -48,7 +48,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("weapon-focus-longbow"))
+                    ->setFeat($this->getReference("feat - Weapon Focus - Longbow"))
             )
             ->addClassPower(
                 (new CharacterClassPower())
@@ -106,7 +106,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("rapid-shot"))
+                    ->setFeat($this->getReference("feat - Rapid Shot"))
                     ->setActive(false)
             )
             ->addClassPower(
@@ -162,12 +162,12 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("deadly-aim"))
+                    ->setFeat($this->getReference("feat - Deadly Aim"))
                     ->setActive(true)
             )
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("feat-endurance"))
+                    ->setFeat($this->getReference("feat - Endurance"))
                     ->setActive(false)
             )
             ->addClassPower(
@@ -267,7 +267,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(4)
             ->setExtraPoint('hp')
-            ->addFeat((new CharacterFeat())->setFeat($this->getReference('pointBlankShot')))
+            ->addFeat((new CharacterFeat())->setFeat($this->getReference('feat - Point-Blank Shot')))
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('favored-enemy-2'))
@@ -457,7 +457,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setClassDefinition($this->getReference('ranger'))
             ->setHpRoll(3)
             ->setExtraPoint('hp')
-            ->addFeat((new CharacterFeat())->setFeat($this->getReference('dodge')))
+            ->addFeat((new CharacterFeat())->setFeat($this->getReference('feat - Dodge')))
             ->addClassPower(
                 (new CharacterClassPower())
                     ->setClassPower($this->getReference('evasion'))
@@ -556,7 +556,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("lightning-reflexes"))
+                    ->setFeat($this->getReference("feat - Lightning Reflexes"))
             )
             ->addClassPower(
                 (new CharacterClassPower())
@@ -643,7 +643,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setExtraPoint('hp')
             ->addFeat(
                 (new CharacterFeat())
-                    ->setFeat($this->getReference("iron-will"))
+                    ->setFeat($this->getReference("feat - Iron Will"))
             )
             ->addClassPower(
                 (new CharacterClassPower())

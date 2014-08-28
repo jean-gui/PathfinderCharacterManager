@@ -102,6 +102,10 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
                 } else {
                     $data = array_combine($header, $row);
 
+                    if (!in_array($data['source'], array('PFRPG Core', "Advanced Player's Guide", 'Bestiary', 'APG'))) {
+                        continue;
+                    }
+
                     $spell = new Spell();
                     $spell
                         ->setName($data['name'])
