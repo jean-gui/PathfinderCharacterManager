@@ -5,6 +5,9 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Gedmo\Translatable\Entity\Repository\TranslationRepository;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\ClassPower;
 
@@ -20,15 +23,36 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
      */
     public function load(ObjectManager $manager)
     {
-        $bab = array();
-        $reflexes = array();
+        /** @var $translationsRepository TranslationRepository */
+        $translationsRepository = $manager->getRepository('Gedmo\\Translatable\\Entity\\Translation');
+
+        $finder = new Finder();
+        $finder->files()->in('src/Troulite/PathfinderBundle/Resources/data/')->name('pouvoirs.csv');
+
+        $powers = array();
+        /** @var $file SplFileInfo */
+        foreach ($finder as $file) {
+            $handle = fopen($file->getRealPath(), 'r');
+            $header = null;
+            while (($row = fgetcsv($handle, null, ',', '"', "\\")) !== false) {
+                if (!$header) {
+                    $header = $row;
+                } else {
+                    $data                  = array_combine($header, $row);
+                    $powers[$data['name']] = $data;
+                }
+            }
+        }
+
+        $bab       = array();
+        $reflexes  = array();
         $fortitude = array();
-        $will = array();
+        $will      = array();
         for ($i = 0; $i < 20; $i++) {
-            $bab[] = $i + 1;
-            $reflexes[] = ((int)(($i + 1) / 2)) + 2;
+            $bab[]       = $i + 1;
+            $reflexes[]  = ((int)(($i + 1) / 2)) + 2;
             $fortitude[] = ((int)(($i + 1) / 2)) + 2;
-            $will[] = (int)(($i + 1) / 3);
+            $will[]      = (int)(($i + 1) / 3);
         }
         $spellsPerDay = array(
             1 => array(-1, -1, -1, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4),
@@ -66,27 +90,30 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('swim'));
 
         $power = (new ClassPower())
-            ->setName('First Favored Enemy (+2)')
+            ->setName('Favored Enemy (+2) (Ex)')
             ->setLevel(1)
             ->setClass($ranger)
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll' => array('type' => 'favored-enemy', 'value' => 2),
+                    'melee-attack-roll'  => array('type' => 'favored-enemy', 'value' => 2),
                     'melee-damage-roll'  => array('type' => 'favored-enemy', 'value' => 2),
                     'ranged-attack-roll' => array('type' => 'favored-enemy', 'value' => 2),
                     'ranged-damage-roll' => array('type' => 'favored-enemy', 'value' => 2),
-                    'bluff'      => array('type' => 'favored-enemy', 'value' => 2),
-                    'perception' => array('type' => 'favored-enemy', 'value' => 2),
-                    'sense-motive' => array('type' => 'favored-enemy', 'value' => 2),
-                    'survival' => array('type' => 'favored-enemy', 'value' => 2),
+                    'bluff'              => array('type' => 'favored-enemy', 'value' => 2),
+                    'perception'         => array('type' => 'favored-enemy', 'value' => 2),
+                    'sense-motive'       => array('type' => 'favored-enemy', 'value' => 2),
+                    'survival'           => array('type' => 'favored-enemy', 'value' => 2),
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('favored-enemy-1', $power);
 
         $power = (new ClassPower())
-            ->setName('Track')
+            ->setName('Track (Ex)')
             ->setLevel(1)
             ->setClass($ranger)
             ->setPassive(false)
@@ -96,19 +123,25 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     'survival' => array('type' => null, 'value' => 'max(1, div(c.getLevel(1), 2))'),
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('track', $power);
 
         $power = (new ClassPower())
-            ->setName('Wild Empathy')
+            ->setName('Wild Empathy (Ex)')
             ->setLevel(1)
             ->setClass($ranger)
             ->setPassive(false);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('wild-empathy', $power);
 
         $power = (new ClassPower())
-            ->setName('Combat Style')
+            ->setName('Combat Style (Ex)')
             ->setLevel(2)
             ->setClass($ranger)
             ->setPassive(true)
@@ -117,18 +150,21 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     'choice' => array('Archery', 'Two-weapon')
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('combat-style', $power);
 
         $power = (new ClassPower())
-            ->setName('First Combat Style Feat')
+            ->setName('First Combat Style Feat (Ex)')
             ->setLevel(2)
             ->setClass($ranger)
             ->setPassive(true)
             ->setEffects(
                 array(
                     'feat' => [
-                        'type' => 'oneof',
+                        'type'  => 'oneof',
                         'value' => array('Far Shot', 'Point Blank Shot', 'Precise Shot', 'Rapid Shot')
                     ]
                 )
@@ -141,11 +177,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     '
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-1', $power);
 
         $power = (new ClassPower())
-            ->setName('First Combat Style Feat')
+            ->setName('First Combat Style Feat (Ex)')
             ->setLevel(2)
             ->setClass($ranger)
             ->setPassive(true)
@@ -165,6 +204,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     '
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
 
         $power = (new ClassPower())
@@ -175,37 +217,45 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setEffects(
                 array('feat' => ['type' => null, 'value' => 'Endurance'])
             );
-
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('endurance', $power);
 
         $power = (new ClassPower())
-            ->setName('Favored Terrain +2')
+            ->setName('Favored Terrain +2 (Ex)')
             ->setLevel(3)
             ->setClass($ranger)
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'initiative' => array('type' => null, 'value' => 2),
+                    'initiative'          => array('type' => null, 'value' => 2),
                     'knowledge-geography' => array('type' => null, 'value' => 2),
-                    'perception' => array('type' => null, 'value' => 2),
-                    'stealth' => array('type' => null, 'value' => 2),
-                    'survival' => array('type' => null, 'value' => 2),
+                    'perception'          => array('type' => null, 'value' => 2),
+                    'stealth'             => array('type' => null, 'value' => 2),
+                    'survival'            => array('type' => null, 'value' => 2),
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('favored-terrain-1', $power);
 
         $power = (new ClassPower())
-            ->setName("Hunter's Bond")
+            ->setName("Hunter's Bond (Ex)")
             ->setLevel(4)
             ->setClass($ranger)
             ->setPassive(false);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('hunter-bond', $power);
 
         $power = (new ClassPower())
-            ->setName('Second Favored Enemy (+4)')
+            ->setName('Favored Enemy (+4) (Ex)')
             ->setLevel(5)
             ->setClass($ranger)
             ->setPassive(false)
@@ -221,11 +271,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     'survival'           => array('type' => 'favored-enemy', 'value' => 4),
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('favored-enemy-2', $power);
 
         $power = (new ClassPower())
-            ->setName('Second Combat Style Feat')
+            ->setName('Second Combat Style Feat (Ex)')
             ->setLevel(6)
             ->setClass($ranger)
             ->setPassive(true)
@@ -234,8 +287,12 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     'feat' => [
                         'type'  => 'oneof',
                         'value' => array(
-                            'Far Shot', 'Point Blank Shot', 'Precise Shot', 'Rapid Shot',
-                            'Improved Precise Shot', 'Manyshot'
+                            'Far Shot',
+                            'Point Blank Shot',
+                            'Precise Shot',
+                            'Rapid Shot',
+                            'Improved Precise Shot',
+                            'Manyshot'
 
                         )
                     ]
@@ -249,11 +306,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     '
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('combat-style-feat-2', $power);
 
         $power = (new ClassPower())
-            ->setName('Second Combat Style Feat')
+            ->setName('Second Combat Style Feat (Ex)')
             ->setLevel(6)
             ->setClass($ranger)
             ->setPassive(true)
@@ -262,8 +322,12 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     'feat' => [
                         'type'  => 'oneof',
                         'value' => array(
-                            'Double Slice', 'Improved Shield Bash', 'Quick Draw', 'Two-Weapon Fighting',
-                            'Improved Two-Weapon Fighting', 'Two-Weapon Defense'
+                            'Double Slice',
+                            'Improved Shield Bash',
+                            'Quick Draw',
+                            'Two-Weapon Fighting',
+                            'Improved Two-Weapon Fighting',
+                            'Two-Weapon Defense'
                         )
                     ]
                 )
@@ -276,26 +340,35 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                     '
                 )
             );
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
 
         $power = (new ClassPower())
-            ->setName('Woodland Stride')
+            ->setName('Woodland Stride (Ex)')
             ->setLevel(7)
             ->setClass($ranger)
             ->setPassive(true);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $ranger->addPower($power);
         $this->setReference('woodland-stride', $power);
 
         $power = (new ClassPower())
-            ->setName('Swift Tracker')
+            ->setName('Swift Tracker (Ex)')
             ->setLevel(8)
             ->setClass($ranger)
             ->setPassive(false);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('swift-tracker', $power);
 
         $power = (new ClassPower())
-            ->setName('Favored Terrain +4')
+            ->setName('Favored Terrain +4 (Ex)')
             ->setLevel(8)
             ->setClass($ranger)
             ->setPassive(false)
@@ -309,18 +382,24 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-terrain-2', $power);
 
         $power = (new ClassPower())
-            ->setName('Evasion')
+            ->setName('Evasion (Ex)')
             ->setLevel(9)
             ->setClass($ranger)
             ->setPassive(true);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('evasion', $power);
 
         $power = (new ClassPower())
-            ->setName('Third Combat Style Feat')
+            ->setName('Third Combat Style Feat (Ex)')
             ->setLevel(10)
             ->setClass($ranger)
             ->setPassive(true)
@@ -350,10 +429,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('combat-style-feat-3', $power);
 
         $power = (new ClassPower())
-            ->setName('Third Combat Style Feat')
+            ->setName('Third Combat Style Feat (Ex)')
             ->setLevel(10)
             ->setClass($ranger)
             ->setPassive(true)
@@ -385,7 +467,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $ranger->addPower($power);
 
         $power = (new ClassPower())
-            ->setName('Third Favored Enemy (+6)')
+            ->setName('Favored Enemy (+6) (Ex)')
             ->setLevel(10)
             ->setClass($ranger)
             ->setPassive(false)
@@ -402,6 +484,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-enemy-3', $power);
 
         $power = (new ClassPower())
@@ -416,18 +501,24 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('quarry', $power);
 
         $power = (new ClassPower())
-            ->setName('Camouflage')
+            ->setName('Camouflage (Ex)')
             ->setLevel(12)
             ->setClass($ranger)
             ->setPassive(true);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('camouflage', $power);
 
         $power = (new ClassPower())
-            ->setName('Favored Terrain +6')
+            ->setName('Favored Terrain +6 (Ex)')
             ->setLevel(13)
             ->setClass($ranger)
             ->setPassive(false)
@@ -441,10 +532,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-terrain-3', $power);
 
         $power = (new ClassPower())
-            ->setName('Fourth Combat Style Feat')
+            ->setName('Fourth Combat Style Feat (Ex)')
             ->setLevel(14)
             ->setClass($ranger)
             ->setPassive(true)
@@ -474,10 +568,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('combat-style-feat-4', $power);
 
         $power = (new ClassPower())
-            ->setName('Fourth Combat Style Feat')
+            ->setName('Fourth Combat Style Feat (Ex)')
             ->setLevel(14)
             ->setClass($ranger)
             ->setPassive(true)
@@ -509,7 +606,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $ranger->addPower($power);
 
         $power = (new ClassPower())
-            ->setName('Fourth Favored Enemy (+8)')
+            ->setName('Favored Enemy (+8) (Ex)')
             ->setLevel(15)
             ->setClass($ranger)
             ->setPassive(false)
@@ -526,26 +623,35 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-enemy-4', $power);
 
         $power = (new ClassPower())
-            ->setName('Improved Evasion')
+            ->setName('Improved Evasion (Ex)')
             ->setLevel(16)
             ->setClass($ranger)
             ->setPassive(true);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('improved-evasion', $power);
 
         $power = (new ClassPower())
-            ->setName('Hide in Plain Sight')
+            ->setName('Hide in Plain Sight (Ex)')
             ->setLevel(17)
             ->setClass($ranger)
             ->setPassive(false);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('hide-in-plain-sight', $power);
 
         $power = (new ClassPower())
-            ->setName('Fifth Combat Style Feat')
+            ->setName('Fifth Combat Style Feat (Ex)')
             ->setLevel(18)
             ->setClass($ranger)
             ->setPassive(true)
@@ -575,10 +681,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('combat-style-feat-5', $power);
 
         $power = (new ClassPower())
-            ->setName('Fifth Combat Style Feat')
+            ->setName('Fifth Combat Style Feat (Ex)')
             ->setLevel(18)
             ->setClass($ranger)
             ->setPassive(true)
@@ -610,7 +719,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $ranger->addPower($power);
 
         $power = (new ClassPower())
-            ->setName('Favored Terrain +8')
+            ->setName('Favored Terrain +8 (Ex)')
             ->setLevel(18)
             ->setClass($ranger)
             ->setPassive(false)
@@ -624,10 +733,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-terrain-4', $power);
 
         $power = (new ClassPower())
-            ->setName('Improved Quarry')
+            ->setName('Improved Quarry (Ex)')
             ->setLevel(19)
             ->setClass($ranger)
             ->setPassive(false)
@@ -638,21 +750,27 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('improved-quarry', $power);
 
         $power = (new ClassPower())
-            ->setName('Master Hunter')
+            ->setName('Master Hunter (Ex)')
             ->setLevel(20)
             ->setClass($ranger)
             ->setPassive(false);
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('master-hunter', $power);
 
         /**
          * @todo Missing knowledge bonus
          */
         $power = (new ClassPower())
-            ->setName('Fifth Favored Enemy (+10)')
+            ->setName('Favored Enemy (+10) (Ex)')
             ->setLevel(20)
             ->setClass($ranger)
             ->setPassive(false)
@@ -669,6 +787,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $ranger->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->setReference('favored-enemy-4', $power);
 
         $manager->persist($ranger);
@@ -676,15 +797,15 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
 
         $this->addReference('ranger', $ranger);
 
-        $bab = array();
-        $reflexes = array();
+        $bab       = array();
+        $reflexes  = array();
         $fortitude = array();
-        $will = array();
+        $will      = array();
         for ($i = 0; $i < 20; $i++) {
-            $bab[] = $i + 1;
-            $reflexes[] = (int)(($i + 1) / 3);
+            $bab[]       = $i + 1;
+            $reflexes[]  = (int)(($i + 1) / 3);
             $fortitude[] = ((int)(($i + 1) / 2)) + 2;
-            $will[] = (int)(($i + 1) / 3);
+            $will[]      = (int)(($i + 1) / 3);
         }
 
         $barbarian = new ClassDefinition();
@@ -708,55 +829,70 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('swim'));
 
         $power = (new ClassPower())
-            ->setName('Fast Movement')
+            ->setName('Fast Movement (Ex)')
             ->setLevel(1)
             ->setClass($barbarian)
             ->setPassive(true);
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('fast-movement', $power);
 
         $power = (new ClassPower())
-            ->setName('Rage')
+            ->setName('Rage (Ex)')
             ->setLevel(1)
             ->setClass($barbarian)
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'strength' => ['type' => 'morale', 'value' => 4],
+                    'strength'     => ['type' => 'morale', 'value' => 4],
                     'constitution' => ['type' => 'morale', 'value' => 4],
-                    'will' => ['type' => 'morale', 'value' => 2],
-                    'ac' => ['type' => null, 'value' => -2],
+                    'will'         => ['type' => 'morale', 'value' => 2],
+                    'ac'           => ['type' => null, 'value' => -2],
                 )
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('rage', $power);
 
         $power = (new ClassPower())
-            ->setName('Uncanny Dodge')
+            ->setName('Uncanny Dodge (Ex)')
             ->setLevel(2)
             ->setClass($barbarian)
             ->setPassive(true);
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('uncanny-dodge', $power);
 
         $power = (new ClassPower())
-            ->setName('Trap Sense')
+            ->setName('Trap Sense (Ex)')
             ->setLevel(3)
             ->setClass($barbarian)
             ->setPassive(true);
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('trap-sense', $power);
 
         $power = (new ClassPower())
-            ->setName('Improved Uncanny Dodge')
+            ->setName('Improved Uncanny Dodge (Ex)')
             ->setLevel(5)
             ->setClass($barbarian)
             ->setPassive(true);
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('improved-uncanny-dodge', $power);
 
         $power = (new ClassPower())
-            ->setName('Damage Reduction')
+            ->setName('Damage Reduction (Ex)')
             ->setLevel(7)
             ->setClass($barbarian)
             ->setPassive(true)
@@ -766,28 +902,34 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('damage-reduction', $power);
 
         $power = (new ClassPower())
-            ->setName('Greater Rage')
+            ->setName('Greater Rage (Ex)')
             ->setLevel(11)
             ->setClass($barbarian)
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'strength' => ['type' => 'morale', 'value' => 6],
+                    'strength'     => ['type' => 'morale', 'value' => 6],
                     'constitution' => ['type' => 'morale', 'value' => 6],
-                    'will' => ['type' => 'morale', 'value' => 3],
+                    'will'         => ['type' => 'morale', 'value' => 3],
                 )
             )
             ->setExternalConditions(
                 array('active-power' => 'rage')
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('Greater Rage', $power);
 
         $power = (new ClassPower())
-            ->setName('Indomitable Will')
+            ->setName('Indomitable Will (Ex)')
             ->setLevel(14)
             ->setClass($barbarian)
             ->setPassive(true)
@@ -800,10 +942,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array('active-power' => 'rage')
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('indomitable-will', $power);
 
         $power = (new ClassPower())
-            ->setName('Tireless Rage')
+            ->setName('Tireless Rage (Ex)')
             ->setLevel(17)
             ->setClass($barbarian)
             ->setPassive(true)
@@ -811,10 +956,13 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array('active-power' => 'rage')
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('tireless-rage', $power);
 
         $power = (new ClassPower())
-            ->setName('Mighty Rage')
+            ->setName('Mighty Rage (Ex)')
             ->setLevel(20)
             ->setClass($barbarian)
             ->setPassive(false)
@@ -829,6 +977,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array('active-power' => 'rage')
             );
         $barbarian->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mighty-rage', $power);
 
         $manager->persist($barbarian);
@@ -842,7 +993,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $will      = array();
         for ($i = 0; $i < 20; $i++) {
             $bab[]       = $i + 1;
-            $reflexes[]  = ((int)(($i + 1) / 3)) ;
+            $reflexes[]  = ((int)(($i + 1) / 3));
             $fortitude[] = ((int)(($i + 1) / 2)) + 2;
             $will[]      = (int)(($i + 1) / 2) + 2;
         }
@@ -877,11 +1028,14 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('spellcraft'));
 
         $power = (new ClassPower())
-            ->setName('Aura of Good')
+            ->setName('Aura of Good (Ex)')
             ->setLevel(1)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-good', $power);
 
         $power = (new ClassPower())
@@ -890,33 +1044,42 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('detect-evil', $power);
 
         $power = (new ClassPower())
-            ->setName('Smite Evil')
+            ->setName('Smite Evil (Su)')
             ->setLevel(1)
             ->setClass($paladin)
             ->setPassive(false)
             ->setEffects(
                 array(
-                    'melee-attack-roll' => [
-                        'type' => null,
+                    'melee-attack-roll'  => [
+                        'type'  => null,
                         'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
                     ],
                     'ranged-attack-roll' => [
-                        'type' => null,
+                        'type'  => null,
                         'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
                     ],
-                    'melee-damage-roll' => ['type' => null, 'value' => 'c.getLevel(3)'],
+                    'melee-damage-roll'  => ['type' => null, 'value' => 'c.getLevel(3)'],
                     'ranged-damage-roll' => ['type' => null, 'value' => 'c.getLevel(3)'],
-                    'ac' => ['type' => 'deflection', 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))']
+                    'ac'                 => [
+                        'type'  => 'deflection',
+                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                    ]
                 )
             );
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('smite-evil', $power);
 
         $power = (new ClassPower())
-            ->setName('Divine Grace')
+            ->setName('Divine Grace (Su)')
             ->setShortDescription(
                 'At 2nd level, a paladin gains a bonus equal to her Charisma bonus (if any) on all Saving Throws.'
             )
@@ -931,141 +1094,192 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('divine-grace', $power);
 
         $power = (new ClassPower())
-            ->setName('Lay On Hands')
+            ->setName('Lay On Hands (Su)')
             ->setLevel(2)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('lay-on-hands', $power);
 
         $power = (new ClassPower())
-            ->setName('Aura of Courage')
+            ->setName('Aura of Courage (Su)')
             ->setLevel(3)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-courage', $power);
 
         $power = (new ClassPower())
-            ->setName('Divine Health')
+            ->setName('Divine Health (Ex)')
             ->setLevel(3)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('divine-health', $power);
 
         $power = (new ClassPower())
-            ->setName('First Mercy')
+            ->setName('First Mercy (Su)')
             ->setLevel(3)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-1', $power);
 
         $power = (new ClassPower())
-            ->setName('Channel Positive Energy')
+            ->setName('Channel Positive Energy (Su)')
             ->setLevel(4)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('channel-positive-energy', $power);
 
         $power = (new ClassPower())
-            ->setName('Divine Bond')
+            ->setName('Divine Bond (Sp)')
             ->setLevel(5)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('divine-bond', $power);
 
         $power = (new ClassPower())
-            ->setName('Second Mercy')
+            ->setName('Second Mercy (Su)')
             ->setLevel(6)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-2', $power);
 
         $power = (new ClassPower())
-            ->setName('Aura of Resolve')
+            ->setName('Aura of Resolve (Su)')
             ->setLevel(8)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-resolve', $power);
 
         $power = (new ClassPower())
-            ->setName('Third Mercy')
+            ->setName('Third Mercy (Su)')
             ->setLevel(9)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-3', $power);
 
         $power = (new ClassPower())
-            ->setName('Aura of Justice')
+            ->setName('Aura of Justice (Su)')
             ->setLevel(11)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-justice', $power);
 
         $power = (new ClassPower())
-            ->setName('Fourth Mercy')
+            ->setName('Fourth Mercy (Su)')
             ->setLevel(12)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-4', $power);
 
         $power = (new ClassPower())
-            ->setName('Aura of Faith')
+            ->setName('Aura of Faith (Su)')
             ->setLevel(14)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-faith', $power);
 
         $power = (new ClassPower())
-            ->setName('Fifth Mercy')
+            ->setName('Fifth Mercy (Su)')
             ->setLevel(15)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-5', $power);
 
         $power = (new ClassPower())
-            ->setName('Aura of Righteousness')
+            ->setName('Aura of Righteousness (Su)')
             ->setLevel(17)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('aura-of-righteousness', $power);
 
         $power = (new ClassPower())
-            ->setName('Sixth Mercy')
+            ->setName('Sixth Mercy (Su)')
             ->setLevel(18)
             ->setClass($paladin)
             ->setPassive(true);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('mercy-6', $power);
 
         $power = (new ClassPower())
-            ->setName('Holy Champion')
+            ->setName('Holy Champion (Su)')
             ->setLevel(20)
             ->setClass($paladin)
             ->setPassive(false);
         $paladin->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('holy-champion', $power);
 
         $manager->persist($paladin);
         $manager->flush();
         $this->addReference('paladin', $paladin);
 
-        $bab       = array(0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15);
+        $bab       = array(0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15);
         $reflexes  = array();
         $fortitude = array();
         $will      = array();
@@ -1074,12 +1288,12 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             $fortitude[] = ((int)(($i + 1) / 3));
             $will[]      = (int)(($i + 1) / 2) + 2;
         }
-        $spellsPerDay = array(
-            1 => array( 1,  2,  3,  3,  4,  4,  4,  4,  5,  5,  5,  5,  5,  5,  5, 5, 5, 5, 5, 5),
-            2 => array(-1, -1, -1,  1,  2,  3,  3,  4,  4,  4,  4,  5,  5,  5,  5, 5, 5, 5, 5, 5),
-            3 => array(-1, -1, -1, -1, -1, -1,  1,  2,  3,  3,  4,  4,  4,  4,  5, 5, 5, 5, 5, 5),
-            4 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1,  1,  2,  3,  3,  4,  4, 4, 4, 5, 5, 5),
-            5 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  1,  2,  3, 3, 4, 4, 5, 5),
+        $spellsPerDay        = array(
+            1 => array(1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5),
+            2 => array(-1, -1, -1, 1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5),
+            3 => array(-1, -1, -1, -1, -1, -1, 1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5),
+            4 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5),
+            5 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 3, 4, 4, 5, 5),
             6 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 4, 5),
         );
         $knownSpellsPerLevel = array(
@@ -1136,24 +1350,27 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->addClassSkill($this->getReference('useMagicDevice'));
 
         $power = (new ClassPower())
-            ->setName('Bardic Knowledge')
+            ->setName('Bardic Knowledge (Ex)')
             ->setLevel(1)
             ->setClass($bard)
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'knowledge-arcana' => ['type' => 'class', 'value' => 2],
+                    'knowledge-arcana'        => ['type' => 'class', 'value' => 2],
                     'knowledge-dungeoneering' => ['type' => 'class', 'value' => 2],
-                    'knowledge-geography' => ['type' => 'class', 'value' => 2],
-                    'knowledge-history' => ['type' => 'class', 'value' => 2],
-                    'knowledge-local' => ['type' => 'class', 'value' => 2],
-                    'knowledge-nature' => ['type' => 'class', 'value' => 2],
-                    'knwoledge-nobility' => ['type' => 'class', 'value' => 2],
-                    'knowledge-planes' => ['type' => 'class', 'value' => 2],
-                    'knowledge-religion' => ['type' => 'class', 'value' => 2]
+                    'knowledge-geography'     => ['type' => 'class', 'value' => 2],
+                    'knowledge-history'       => ['type' => 'class', 'value' => 2],
+                    'knowledge-local'         => ['type' => 'class', 'value' => 2],
+                    'knowledge-nature'        => ['type' => 'class', 'value' => 2],
+                    'knwoledge-nobility'      => ['type' => 'class', 'value' => 2],
+                    'knowledge-planes'        => ['type' => 'class', 'value' => 2],
+                    'knowledge-religion'      => ['type' => 'class', 'value' => 2]
                 )
             );
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-knowledge', $power);
 
         $power = (new ClassPower())
@@ -1163,6 +1380,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-countersong', $power);
 
         $power = (new ClassPower())
@@ -1172,6 +1392,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-distraction', $power);
 
         $power = (new ClassPower())
@@ -1181,6 +1404,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance - Fascinate', $power);
 
         $power = (new ClassPower())
@@ -1191,33 +1417,36 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setCastable(true)
             ->setEffects(
                 array(
-                    'melee-attack-roll' => [
-                        'type' => 'competence',
+                    'melee-attack-roll'  => [
+                        'type'  => 'competence',
                         'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-attack-roll' => [
-                        'type' => 'competence',
+                        'type'  => 'competence',
                         'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
-                    'melee-damage-roll' => [
-                        'type' => 'competence',
+                    'melee-damage-roll'  => [
+                        'type'  => 'competence',
                         'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                     'ranged-damage-roll' => [
-                        'type' => 'competence',
+                        'type'  => 'competence',
                         'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
-                    'saving-charm' => [
-                        'type'    => 'morale',
-                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
+                    'saving-charm'       => [
+                        'type'  => 'morale',
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
-                    'saving-fear' => [
-                        'type'    => 'competence',
-                        'value'   => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
+                    'saving-fear'        => [
+                        'type'  => 'competence',
+                        'value' => '1 + (level >= 17 ? 3 : (level >= 11 ? 2 : (level >= 5 ? 1)))'
                     ],
                 )
             );
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-inspire-courage', $power);
 
         $power = (new ClassPower())
@@ -1232,6 +1461,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 )
             );
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-inspire-competence', $power);
 
         $power = (new ClassPower())
@@ -1241,6 +1473,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-suggestion', $power);
 
         $power = (new ClassPower())
@@ -1250,6 +1485,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-dirge-of-doom', $power);
 
         $power = (new ClassPower())
@@ -1259,6 +1497,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-inspire-greatness', $power);
 
         $power = (new ClassPower())
@@ -1268,6 +1509,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-soothing-performance', $power);
 
         $power = (new ClassPower())
@@ -1277,6 +1521,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-frightening-tune', $power);
 
         $power = (new ClassPower())
@@ -1286,6 +1533,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-inspire-heroics', $power);
 
         $power = (new ClassPower())
@@ -1295,6 +1545,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-mass-suggestion', $power);
 
         $power = (new ClassPower())
@@ -1304,83 +1557,110 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(false)
             ->setCastable(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('bardic-performance-deadly-performance', $power);
 
         $power = (new ClassPower())
-            ->setName('First Versatile Performance')
+            ->setName('First Versatile Performance (Ex)')
             ->setLevel(2)
             ->setClass($bard)
             ->setPassive(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('versatile-performance-1', $power);
 
         $power = (new ClassPower())
-            ->setName('Second Versatile Performance')
+            ->setName('Second Versatile Performance (Ex)')
             ->setLevel(6)
             ->setClass($bard)
             ->setPassive(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('versatile-performance-2', $power);
 
         $power = (new ClassPower())
-            ->setName('Third Versatile Performance')
+            ->setName('Third Versatile Performance (Ex)')
             ->setLevel(10)
             ->setClass($bard)
             ->setPassive(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('versatile-performance-3', $power);
 
         $power = (new ClassPower())
-            ->setName('Fourth Versatile Performance')
+            ->setName('Fourth Versatile Performance (Ex)')
             ->setLevel(14)
             ->setClass($bard)
             ->setPassive(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('versatile-performance-4', $power);
 
         $power = (new ClassPower())
-            ->setName('Fifth Versatile Performance')
+            ->setName('Fifth Versatile Performance (Ex)')
             ->setLevel(18)
             ->setClass($bard)
             ->setPassive(true);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('versatile-performance-5', $power);
 
         $power = (new ClassPower())
-            ->setName('Well Versed')
+            ->setName('Well Versed (Ex)')
             ->setLevel(2)
             ->setClass($bard)
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'saving-bardic' => ['type' => 'class', 'value' => 4],
-                    'saving-sonic' => ['type' => 'class', 'value' => 4],
+                    'saving-bardic'   => ['type' => 'class', 'value' => 4],
+                    'saving-sonic'    => ['type' => 'class', 'value' => 4],
                     'saving-language' => ['type' => 'class', 'value' => 4],
                 )
             );
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('well-versed', $power);
 
         $power = (new ClassPower())
-            ->setName('Lore Master')
+            ->setName('Lore Master (Ex)')
             ->setLevel(5)
             ->setClass($bard)
             ->setPassive(false);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('lore-master', $power);
 
         $power = (new ClassPower())
-            ->setName('Jack of All Trades')
+            ->setName('Jack of All Trades (Ex)')
             ->setLevel(5)
             ->setClass($bard)
             ->setPassive(false);
         $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
         $this->addReference('jack-of-all-trades', $power);
 
         $manager->persist($bard);
         $manager->flush();
 
-        $this->addReference('bard',$bard);
+        $this->addReference('bard', $bard);
     }
 
     /**
