@@ -41,17 +41,41 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
     {
         $userManager = $this->container->get('fos_user.user_manager');
 
-        $jeangui = $userManager->createUser();
-        $jeangui->setUsername('user1');
-        $jeangui->setEmail('user1@example.com');
-        $jeangui->setEnabled(true);
-        $jeangui->setPlainPassword('***REMOVED***');
-        $userManager->updateUser($jeangui);
-        $this->setReference('user1', $jeangui);
+        $user = $userManager->createUser();
+        $user->setUsername('user1');
+        $user->setEmail('user1@example.com');
+        $user->setEnabled(true);
+        $user->setPlainPassword('***REMOVED***');
+        $userManager->updateUser($user);
+        $this->setReference('user1', $user);
+
+        $user = $userManager->createUser();
+        $user->setUsername('user2');
+        $user->setEmail('user2@example.com');
+        $user->setEnabled(true);
+        $user->setPlainPassword('***REMOVED***');
+        $userManager->updateUser($user);
+        $this->setReference('user2', $user);
+
+        $user = $userManager->createUser();
+        $user->setUsername('user3');
+        $user->setEmail('user3@example.com');
+        $user->setEnabled(true);
+        $user->setPlainPassword('***REMOVED***');
+        $userManager->updateUser($user);
+        $this->setReference('user3', $user);
+
+        $user = $userManager->createUser();
+        $user->setUsername('user4');
+        $user->setEmail('user4@example.com');
+        $user->setEnabled(true);
+        $user->setPlainPassword('***REMOVED***');
+        $userManager->updateUser($user);
+        $this->setReference('user4', $user);
 
         $user = $userManager->createUser();
         $user->setUsername('user5');
-        $user->setEmail('jean-gui+kujar@troulite.fr');
+        $user->setEmail('user5@example.com');
         $user->setEnabled(true);
         $user->setPlainPassword('***REMOVED***');
         $userManager->updateUser($user);
