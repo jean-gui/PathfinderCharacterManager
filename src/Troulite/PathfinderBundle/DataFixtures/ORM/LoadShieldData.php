@@ -26,7 +26,7 @@ class LoadShieldData extends AbstractFixture implements OrderedFixtureInterface
             ->setAc(4)
             ->setCost(30)
             ->setMaximumDexterityBonus(2)
-            ->setArmorCheckPenalty(-10)
+            ->setArmorCheckPenalty(-9)
             ->setArcaneSpellFailure(50)
             ->setWeight(22.5)
             ->addPower($this->getReference('shield-power-enhancement-2'));

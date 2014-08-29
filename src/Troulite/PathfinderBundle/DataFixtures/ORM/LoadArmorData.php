@@ -69,7 +69,7 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
             )
             ->setWeight(12.5)
             ->setMaximumDexterityBonus(4)
-            ->setArmorCheckPenalty(-2)
+            ->setArmorCheckPenalty(-1)
             ->setArcaneSpellFailure(20)
             ->addPower($this->getReference('armor-power-enhancement-2'));
 
