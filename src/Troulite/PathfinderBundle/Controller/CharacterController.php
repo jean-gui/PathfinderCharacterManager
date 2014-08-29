@@ -439,6 +439,7 @@ class CharacterController extends Controller
     public function levelUpAction(Character $entity)
     {
         $level = new Level();
+        $level->setClassDefinition($entity->getFavoredClass());
         $entity->addLevel($level);
         $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
 
