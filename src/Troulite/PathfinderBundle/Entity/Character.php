@@ -261,7 +261,10 @@ class Character extends BaseCharacter
         $isSkillObject = is_object($skill);
         foreach ($this->getLevels() as $level) {
             foreach ($level->getSkills() as $levelSkill) {
-                if (($isSkillObject && $levelSkill->getSkill() === $skill) || ((string)$skill) === $levelSkill->getSkill()->getName()) {
+                if (($isSkillObject && $levelSkill->getSkill() === $skill) ||
+                    ((string)$skill) === $levelSkill->getSkill()->getName() ||
+                    ((string)$skill) === $levelSkill->getSkill()->getShortname()
+                ) {
                     $rank += $levelSkill->getValue();
                     break;
                 }
