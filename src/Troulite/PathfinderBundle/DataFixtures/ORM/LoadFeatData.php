@@ -48,23 +48,23 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
                         ->setShortDescription($data['description'])
                         ->setLongDescription($data['benefit'])
                         ->setPassive($data['passive']);
-                    if ($data['effects']) {
+                    if (array_key_exists('effects', $data) && $data['effects']) {
                         $feat->setEffects(json_decode($data['effects']));
                     }
-                    if ($data['conditions']) {
+                    if (array_key_exists('conditions', $data) && $data['conditions']) {
                         $feat->setConditions(json_decode($data['conditions']));
                     }
-                    if ($data['external_conditions']) {
+                    if (array_key_exists('external_conditions', $data) && $data['external_conditions']) {
                         $feat->setExternalConditions(json_decode($data['external_conditions']));
                     }
                     $manager->persist($feat);
-                    if ($data['name_fr'] && $data['name_fr'] != '#N/D') {
+                    if (array_key_exists('name_fr', $data) && $data['name_fr'] && $data['name_fr'] != '#N/D') {
                         $translationsRepository->translate($feat, 'name', 'fr', $data['name_fr']);
                     }
-                    if ($data['description_fr'] && $data['description_fr'] != '#N/D') {
+                    if (array_key_exists('description_fr', $data) && $data['description_fr'] && $data['description_fr'] != '#N/D') {
                         $translationsRepository->translate($feat, 'shortDescription', 'fr', $data['description_fr']);
                     }
-                    if ($data['benefit_fr'] && $data['benefit_fr'] != '#N/D') {
+                    if (array_key_exists('benefit_fr', $data) && $data['benefit_fr'] && $data['benefit_fr'] != '#N/D') {
                         $translationsRepository->translate($feat, 'longDescription', 'fr', $data['benefit_fr']);
                     }
 
