@@ -375,6 +375,6 @@ class LoadSkillData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 1;
+        return 4;
     }
 }

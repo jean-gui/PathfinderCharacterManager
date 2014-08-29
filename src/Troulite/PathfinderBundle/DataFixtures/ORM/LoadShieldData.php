@@ -42,6 +42,6 @@ class LoadShieldData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 2;
+        return 11;
     }
 }

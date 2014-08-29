@@ -106,6 +106,6 @@ class LoadArmorData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 2;
+        return 13;
     }
 }

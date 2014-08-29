@@ -83,6 +83,6 @@ LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 1;
+        return 5;
     }
 }

@@ -723,6 +723,6 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
      */
     function getOrder()
     {
-        return 4;
+        return 14;
     }
 }

@@ -107,6 +107,6 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 2;
+        return 12;
     }
 }
