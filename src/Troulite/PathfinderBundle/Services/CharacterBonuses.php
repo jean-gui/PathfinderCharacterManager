@@ -8,6 +8,7 @@
 
 namespace Troulite\PathfinderBundle\Services;
 
+use Doctrine\ORM\EntityManager;
 use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
@@ -28,6 +29,11 @@ use Troulite\PathfinderBundle\Model\Bonuses;
 class CharacterBonuses
 {
     /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
      * @var ExpressionLanguage
      */
     private $expressionLanguage;
@@ -35,8 +41,9 @@ class CharacterBonuses
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
+        $this->em = $em;
         $this->expressionLanguage = new ExpressionLanguage();
     }
 
@@ -284,6 +291,23 @@ class CharacterBonuses
                         $item
                     );
                 }
+            }
+
+            // Armor check penalty
+            if ($item instanceof Armor or $item instanceof Shield) {
+                /** @var $item Armor|Shield */
+                $skills = $this->em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+
+                $effects = array();
+                foreach ($skills as $skill) {
+                    if ($skill->getArmorCheckPenalty()) {
+                        $effects[$skill->getShortname()] = array(
+                            'type' => null,
+                            'value' => $item->getArmorCheckPenalty()
+                        );
+                    }
+                }
+                $this->applyEffects($character, $effects, $item);
             }
         }
 
