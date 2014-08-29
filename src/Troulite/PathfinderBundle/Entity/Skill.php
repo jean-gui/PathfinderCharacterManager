@@ -33,6 +33,13 @@ class Skill
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="shortname", type="string", length=255)
+     */
+    private $shortname;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="untrained", type="boolean")
@@ -94,14 +101,25 @@ class Skill
     }
 
     /**
+     * Set shortname
+     *
+     * @param string $shortname
+     *
+     * @return Skill
+     */
+    public function setShortname($shortname)
+    {
+        $this->shortname = $shortname;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getShortname()
     {
-        $shortname = preg_replace('/[^a-zA-Z]/', '', $this->getName());
-        $shortname = lcfirst($shortname);
-
-        return $shortname;
+        return $this->shortname;
     }
 
     /**
