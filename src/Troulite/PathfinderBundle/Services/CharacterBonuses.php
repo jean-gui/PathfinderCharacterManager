@@ -275,22 +275,24 @@ class CharacterBonuses
     private function applyItem(Character $character, Item $item = null)
     {
         if ($item) {
+            if ($item instanceof Armor) {
+                $this->applyEffects(
+                    $character,
+                    array('ac' => array('type' => 'armor', 'value' => $item->getAc())),
+                    $item
+                );
+            }
+
+            if ($item instanceof Shield) {
+                $this->applyEffects(
+                    $character,
+                    array('ac' => array('type' => 'shield', 'value' => $item->getAc())),
+                    $item
+                );
+            }
+
             foreach ($item->getPowers() as $power) {
                 $this->applyEffects($character, $power->getEffects(), $item);
-
-                if ($item instanceof Armor) {
-                    $this->applyEffects(
-                        $character,
-                        array('ac' => array('type' => 'armor', 'value' => $item->getAc())),
-                        $item);
-                }
-                if ($item instanceof Shield) {
-                    $this->applyEffects(
-                        $character,
-                        array('ac' => array('type' => 'shield', 'value' => $item->getAc())),
-                        $item
-                    );
-                }
             }
 
             // Armor check penalty
