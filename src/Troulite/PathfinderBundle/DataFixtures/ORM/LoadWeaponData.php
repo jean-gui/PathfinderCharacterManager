@@ -5,6 +5,7 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Troulite\PathfinderBundle\Entity\ItemPower;
 use Troulite\PathfinderBundle\Entity\Weapon;
 
 /**
@@ -95,6 +96,23 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setDualWield(true)
             ->setWeight(2)
             ->addPower($this->getReference('melee-weapon-power-enhancement-5'));
+
+        $manager->persist($weapon);
+        $manager->flush();
+
+        $weapon = new Weapon();
+        $weapon
+            ->setName('Whip +1')
+            ->setCategory('exotic')
+            ->setType('whip')
+            ->setCost(1)
+            ->setCriticalRange(20)
+            ->setCritical(2)
+            ->setDamages('1d3')
+            ->setRange(0)
+            ->setDualWield(false)
+            ->setWeight(1)
+            ->addPower($this->getReference('melee-weapon-power-enhancement-1'));
 
         $manager->persist($weapon);
         $manager->flush();
