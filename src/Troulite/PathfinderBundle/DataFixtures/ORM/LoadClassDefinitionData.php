@@ -1202,7 +1202,26 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Aura of Justice (Su)')
             ->setLevel(11)
             ->setClass($paladin)
-            ->setPassive(false);
+            ->setCastable(true)
+            ->setPassive(false)
+            ->setEffects(
+                array(
+                    'melee-attack-roll'  => [
+                        'type'  => null,
+                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                    ],
+                    'ranged-attack-roll' => [
+                        'type'  => null,
+                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                    ],
+                    'melee-damage-roll'  => ['type' => null, 'value' => 'caster.getLevel(3)'],
+                    'ranged-damage-roll' => ['type' => null, 'value' => 'caster.getLevel(3)'],
+                    'ac'                 => [
+                        'type'  => 'deflection',
+                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                    ]
+                )
+            );
         $paladin->addPower($power);
         if (array_key_exists($power->getName(), $powers)) {
             $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
