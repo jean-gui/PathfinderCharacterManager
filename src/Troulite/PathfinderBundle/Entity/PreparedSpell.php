@@ -178,4 +178,15 @@ class PreparedSpell
     {
         return $this->class;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getSpellLevel()
+    {
+        if ($this->getSpell()) {
+            return $this->getClass()->getClassSpell($this->getSpell())->getSpellLevel();
+        }
+        return null;
+    }
 }
