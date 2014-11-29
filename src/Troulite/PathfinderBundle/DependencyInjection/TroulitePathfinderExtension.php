@@ -28,5 +28,6 @@ class TroulitePathfinderExtension extends Extension
         $yamlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $yamlLoader->load('character_advancement.yml');
         $yamlLoader->load('ability_scores.yml');
+        $yamlLoader->load('bonus_spells.yml');
     }
 }
