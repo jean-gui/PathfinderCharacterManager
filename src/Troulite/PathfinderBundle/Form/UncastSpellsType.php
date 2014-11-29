@@ -36,18 +36,21 @@ class UncastSpellsType extends AbstractType
                 $form      = $event->getForm();
 
                 $i = 0;
-                foreach($character->getParty()->getCharacters() as $ally) {
-                    foreach ($ally->getSpellEffects() as $spellEffect) {
-                        if ($spellEffect->getCaster() === $character) {
-                            $form->add(
-                                $i++,
-                                new UncastSpellType(),
-                                array(
-                                    'mapped' => false,
-                                    'label'  => $spellEffect->getSpell() . ' on ' . $spellEffect->getCharacter(),
-                                    'spellEffect' => $spellEffect
-                                )
-                            );
+                if ($character->getParty()) {
+                    foreach ($character->getParty()->getCharacters() as $ally) {
+                        foreach ($ally->getSpellEffects() as $spellEffect) {
+                            if ($spellEffect->getCaster() === $character) {
+                                $form->add(
+                                    $i++,
+                                    new UncastSpellType(),
+                                    array(
+                                        'mapped'      => false,
+                                        'label'       => $spellEffect->getSpell() . ' on ' . $spellEffect->getCharacter(
+                                            ),
+                                        'spellEffect' => $spellEffect
+                                    )
+                                );
+                            }
                         }
                     }
                 }
