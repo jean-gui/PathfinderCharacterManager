@@ -1016,6 +1016,17 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @return array
+     */
+    public function getPreparedSpellsByLevel() {
+        $preparedSpellsByLevel = array();
+        foreach ($this->getPreparedSpells() as $preparedSpell) {
+            $preparedSpellsByLevel[$preparedSpell->getSpellLevel()][] = $preparedSpell;
+        }
+        return $preparedSpellsByLevel;
+    }
+
+    /**
      * @param Spell $spell
      * @param ClassDefinition $class
      *
