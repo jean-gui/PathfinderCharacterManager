@@ -115,6 +115,11 @@ class CharacterController extends Controller
      *
      * @Route("/{id}", name="characters_show")
      * @Template()
+     *
+     * @param Character $entity
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function showAction(Character $entity, Request $request)
     {
@@ -257,7 +262,7 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
-        $castSpellsForm = $this->createForm(new CastSpellsType(), $entity);
+        $castSpellsForm = $this->createForm(new CastSpellsType($this->container->getParameter('bonus_spells')), $entity);
         $castSpellsForm->handleRequest($request);
         if ($castSpellsForm->isValid()) {
             /** @var $f Form */
@@ -579,12 +584,22 @@ class CharacterController extends Controller
      * @Route("/{id}/sleep", name="characters_sleep")
      * @Method("GET|POST")
      * @Template()
+     *
+     * @param Character $entity
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function sleepAction(Character $entity, Request $request)
     {
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
+
         /** @var $em EntityManager */
         $em = $this->get('doctrine.orm.entity_manager');
-        $sleepForm = $this->createForm(new SleepType(), $entity, array('em' => $em));
+        $sleepForm = $this->createForm(
+            new SleepType($this->container->getParameter('bonus_spells')),
+            $entity, array('em' => $em)
+        );
 
         $sleepForm->handleRequest($request);
         if ($sleepForm->isValid()) {

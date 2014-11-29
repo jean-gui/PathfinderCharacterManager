@@ -25,6 +25,19 @@ use Troulite\PathfinderBundle\Entity\ClassDefinition;
 class CastSpellsType extends AbstractType
 {
     /**
+     * @var array
+     */
+    private $extra_spells;
+
+    /**
+     * @param array $extra_spells
+     */
+    public function __construct($extra_spells)
+    {
+        $this->extra_spells = $extra_spells;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -38,8 +51,10 @@ class CastSpellsType extends AbstractType
                 $form = $event->getForm();
                 $i = 0;
                 $choices = array('other' => 'Other', 'allies' => 'Allies');
-                foreach ($character->getParty()->getCharacters() as $ally) {
-                    $choices[$ally->getId()] = $ally->getName();
+                if ($character->getParty()) {
+                    foreach ($character->getParty()->getCharacters() as $ally) {
+                        $choices[$ally->getId()] = $ally->getName();
+                    }
                 }
 
                 foreach ($character->getPreparedSpells() as $preparedSpell) {
@@ -75,7 +90,14 @@ class CastSpellsType extends AbstractType
                             ) {
                                 $count = $alreadyCast[$class->getId()][$spellLevel];
                             }
-                            for(; $count < $levels[$level-1]; $count++) {
+
+                            $canCastCount =
+                                $levels[$level - 1] +
+                                $this->extra_spells[$character->getModifierByAbility(
+                                    $class->getCastingAbility()
+                                )][$spellLevel];
+
+                            for(; $count < $canCastCount; $count++) {
                                 $form->add(
                                     $i++,
                                     new CastUnpreparedSpellType(),

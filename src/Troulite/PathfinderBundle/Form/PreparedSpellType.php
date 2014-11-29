@@ -3,12 +3,12 @@
 namespace Troulite\PathfinderBundle\Form;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\PreparedSpell;
 
 /**
@@ -33,27 +33,19 @@ class PreparedSpellType extends AbstractType
                 /** @var $em EntityManager */
                 $em = $options['em'];
 
-                $queryString = '
-                    SELECT cs from TroulitePathfinderBundle:ClassSpell cs WHERE cs.class = ?1 AND cs.spellLevel = ?2
-                ';
-                $query = $em
-                    ->createQuery($queryString)
-                    ->setParameter(1, $preparedSpell->getClass())
+                $qb = $em->createQueryBuilder()->select('sp')->from('TroulitePathfinderBundle:Spell', 'sp')
+                    ->join('TroulitePathfinderBundle:ClassSpell', 'cs', Join::WITH, 'sp = cs.spell')
+                    ->andWhere('cs.class = ?1')
+                    ->andWhere('cs.spellLevel = ?2');
+                $qb->setParameter(1, $preparedSpell->getClass())
                     ->setParameter(2, $options['preparedLevels'][(int)$form->getName()]);
-                /** @var $classSpells ClassSpell[] */
-                $classSpells = $query->getResult();
-                $spells = array();
-                foreach ($classSpells as $cs) {
-                    $spells[] = $cs->getSpell();
-                }
 
                 $form->add(
                     'spell',
-                    'entity',
+                    null,
                     array(
                         'label' => 'Level ' . $options['preparedLevels'][(int)$form->getName()] . ' Spell',
-                        'class' => 'TroulitePathfinderBundle:Spell',
-                        'choices' => $spells,
+                        'query_builder' => $qb,
                     )
                 );
             }

@@ -19,6 +19,18 @@ use Troulite\PathfinderBundle\Entity\PreparedSpell;
 class SleepType extends AbstractType
 {
     /**
+     * @var array
+     */
+    private $extra_spells;
+
+    /**
+     * @param array $extra_spells
+     */
+    public function __construct($extra_spells) {
+        $this->extra_spells = $extra_spells;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,9 +42,9 @@ class SleepType extends AbstractType
                 $character = $event->getData();
                 $form      = $event->getForm();
 
-                $prepared = $character->getPreparedSpells();
-                $prepared->clear();
-
+                /** @var PreparedSpell[] $preparedSpells */
+                $preparedSpells = array();
+                /** @var int[] $preparedLevels */
                 $preparedLevels = array();
 
                 foreach ($character->getLevelPerClass() as $classLevel) {
@@ -40,15 +52,45 @@ class SleepType extends AbstractType
                     $class = $classLevel['class'];
                     /** @var $level int */
                     $level = $classLevel['level'];
+                    /** @var array $previouslyPreparedSpellsByLevel */
+                    $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
+
+                    /** @var PreparedSpell[] $preparedSpells */
+                    $preparedSpells = array();
 
                     if ($class->isPreparationNeeded()) {
+                        // $levels starts at 0 but means character level 1, hence the -1 below
                         foreach ($class->getSpellsPerDay() as $spellLevel => $levels) {
-                            for ($i = 0; $i < $levels[$level - 1]; $i++) {
-                                $character->addPreparedSpell(new PreparedSpell($character, null, $class));
+                            /** @var PreparedSpell[] $previouslyPreparedSpells */
+                            if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
+                                $previouslyPreparedSpells = $previouslyPreparedSpellsByLevel[$spellLevel];
+                            } else {
+                                $previouslyPreparedSpells = array();
+                            }
+                            // A character has $levels[$level - 1] spells + some more if he has a ability score
+                            for (
+                                $i = 0;
+                                $i < $levels[$level - 1] +
+                                $this->extra_spells
+                                    [$character->getModifierByAbility($class->getCastingAbility())]
+                                    [$spellLevel];
+                                $i++) {
+                                if ($i < count($previouslyPreparedSpells)) {
+                                    $preparedSpells[] = $previouslyPreparedSpells[$i];
+                                } else {
+                                    $preparedSpells[] = new PreparedSpell($character, null, $class);
+                                }
+
                                 $preparedLevels[] = $spellLevel;
                             }
                         }
                     }
+                }
+
+                $character->getPreparedSpells()->clear();
+
+                foreach ($preparedSpells as $spell) {
+                    $character->addPreparedSpell($spell);
                 }
 
                 $form->add(
