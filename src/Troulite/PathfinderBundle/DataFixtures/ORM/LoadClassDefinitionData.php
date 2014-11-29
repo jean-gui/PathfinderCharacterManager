@@ -1680,6 +1680,70 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         $manager->flush();
 
         $this->addReference('bard', $bard);
+
+        $bab = array(0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8, 9, 9, 10, 11, 12, 12, 13, 14, 15);
+        $reflexes  = array();
+        $fortitude = array();
+        $will      = array();
+        for ($i = 0; $i < 20; $i++) {
+            $fortitude[] = ((int)(($i + 1) / 2)) + 2;
+            $reflexes[] = (int)(($i + 1) / 3);
+            $will[]      = ((int)(($i + 1) / 2)) + 2;
+        }
+        $spellsPerDay = array(
+            0 => array(3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4),
+            1 => array(1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4),
+            2 => array(-1, -1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4),
+            3 => array(-1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4),
+            4 => array(-1, -1, -1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4),
+            5 => array(-1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4),
+            6 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4),
+            7 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 4, 4),
+            8 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 2, 3, 3, 4),
+            9 => array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 2, 3, 4)
+        );
+
+        $cleric = new ClassDefinition();
+        $cleric
+            ->setName("Cleric")
+            ->setHpDice(8)
+            ->setSkillPoints(2)
+            ->setBab($bab)
+            ->setReflexes($reflexes)
+            ->setFortitude($fortitude)
+            ->setWill($will)
+            ->setSpellsPerDay($spellsPerDay)
+            ->setCastingAbility('wisdom')
+            ->setPreparationNeeded(true)
+            ->addClassSkill($this->getReference('appraise'))
+            ->addClassSkill($this->getReference('craft'))
+            ->addClassSkill($this->getReference('diplomacy'))
+            ->addClassSkill($this->getReference('heal'))
+            ->addClassSkill($this->getReference('knowledgeArcana'))
+            ->addClassSkill($this->getReference('knowledgeHistory'))
+            ->addClassSkill($this->getReference('knowledgeNobility'))
+            ->addClassSkill($this->getReference('knowledgePlanes'))
+            ->addClassSkill($this->getReference('knowledgeReligion'))
+            ->addClassSkill($this->getReference('linguistics'))
+            ->addClassSkill($this->getReference('profession'))
+            ->addClassSkill($this->getReference('senseMotive'))
+            ->addClassSkill($this->getReference('spellcraft'));
+
+        $power = (new ClassPower())
+            ->setName('Channel Energy (Su)')
+            ->setLevel(1)
+            ->setClass($cleric)
+            ->setPassive(true)
+            ->setCastable(true);
+        $bard->addPower($power);
+        if (array_key_exists($power->getName(), $powers)) {
+            $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
+        }
+
+        $manager->persist($cleric);
+        $manager->flush();
+
+        $this->addReference('cleric', $cleric);
     }
 
     /**

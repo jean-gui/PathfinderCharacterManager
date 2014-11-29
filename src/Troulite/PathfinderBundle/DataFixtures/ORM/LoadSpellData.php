@@ -143,7 +143,7 @@ class LoadSpellData extends AbstractFixture implements OrderedFixtureInterface
                         $translationsRepository->translate($spell, 'savingThrow', 'fr', $data['saving_throw_fr']);
                     }
 
-                    foreach(array('bard', 'paladin', 'ranger') as $className) {
+                    foreach(array('bard', 'paladin', 'ranger', 'cleric') as $className) {
                         if ($data[$className] != 'NULL') {
                             $classSpell = (new ClassSpell())->setSpell($spell)->setClass(
                                 $this->getReference($className)
