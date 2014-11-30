@@ -292,6 +292,8 @@ class CharacterController extends Controller
      */
     public function showEquipmentAction(Character $character)
     {
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
+
         return array("entity" => $character);
     }
 
@@ -309,6 +311,8 @@ class CharacterController extends Controller
     public function showCharacterSpellsAction(Character $entity, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
 
         $castSpellsForm = $this->createForm(new CastSpellsType($this->container->getParameter('bonus_spells')),
             $entity);
