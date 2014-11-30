@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block title entity ~ " - " ~ "cast.spells"|trans %}
+
+{% block navbar_current -%}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('characters_show', {'id': entity.id}) }}">{{ 'main.profile'|trans }}</a>
+        </li>
+        <li><a href="{{ path('character_equipment', {'id': entity.id}) }}">{{ 'equipment'|trans }}</a>
+        </li>
+        <li class="active"><a href="{{ path('character_spells', {'id': entity.id}) }}">{{ 'spells'|trans }}</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content -%}
+    {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
+    {% if castSpellsForm.children|length > 1 %}
+        <h2>{{ 'cast.spells'|trans }}</h2>
+        {{ form(castSpellsForm) }}
+    {% endif %}
+
+    {% if uncastSpellsForm.children|length > 1 %}
+        <h2>{{ 'uncast.spells'|trans }}</h2>
+        {{ form(uncastSpellsForm) }}
+    {% endif %}
+
+    {% set known = entity.learnedSpellsBySpellLevel %}
+    {% if known %}
+        <h2>{{ 'known.spells'|trans }}</h2>
+        {% for spellLevel, classSpells in known %}
+            <h3>Level {{ spellLevel }}</h3>
+            <ul>
+                {% for classSpell in classSpells %}
+                    <li>{{ classSpell.spell }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+

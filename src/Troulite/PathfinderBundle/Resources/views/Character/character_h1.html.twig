@@ -1,0 +1,16 @@
+{% block character_h1 %}
+<h1>
+    {{ entity }}
+    <small>
+        {{ 'level'|trans({'%level%': entity.level}) }}
+        <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
+        <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
+        <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+                    class="glyphicon glyphicon-edit"></span></a>
+        <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
+                    class="glyphicon glyphicon-plus"></span></a>
+        <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}"><span
+                    class="glyphicon glyphicon-plus glyphicon-time"></span></a>
+    </small>
+</h1>
+{% endblock %}

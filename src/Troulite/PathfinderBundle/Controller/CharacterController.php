@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
@@ -119,7 +120,7 @@ class CharacterController extends Controller
      * @param Character $entity
      * @param Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function showAction(Character $entity, Request $request)
     {
@@ -262,7 +263,55 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
-        $castSpellsForm = $this->createForm(new CastSpellsType($this->container->getParameter('bonus_spells')), $entity);
+        $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+
+        return array(
+            'entity' => $entity,
+            'powers_activation_form' => $powersActivationForm->createView(),
+            'skills' => $skills,
+            'passive_feats' => $passiveFeats,
+            'passive_class_powers' => $passiveClassPowers,
+            'other_feats' => $otherFeats,
+            'other_class_powers' => $otherClassPowers,
+            'passive_spell_effects' => $passiveSpellEffects,
+            'other_spell_effects' => $otherSpellEffects,
+            'passive_power_effects' => $passivePowerEffects,
+            'other_power_effects'   => $otherPowerEffects
+        );
+    }
+
+    /**
+     * Display a character's equipment
+     *
+     * @Route("/{id}/equipment", name="character_equipment")
+     * @Template()
+     *
+     * @param Character $character
+     *
+     * @return array
+     */
+    public function showEquipmentAction(Character $character)
+    {
+        return array("entity" => $character);
+    }
+
+    /**
+     * Show character spell casting form
+     *
+     * @Route("/{id}/spells", name="character_spells")
+     * @Template()
+     *
+     * @param Character $entity
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function showCharacterSpellsAction(Character $entity, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $castSpellsForm = $this->createForm(new CastSpellsType($this->container->getParameter('bonus_spells')),
+            $entity);
         $castSpellsForm->handleRequest($request);
         if ($castSpellsForm->isValid()) {
             /** @var $f Form */
@@ -278,9 +327,9 @@ class CharacterController extends Controller
                 } elseif ($f->getData()['spell']) { // Unprepared Spell
                     /** @var $classSpell ClassSpell */
                     $classSpell = $f->getData()['spell'];
-                    $spell = $classSpell->getSpell();
+                    $spell      = $classSpell->getSpell();
                 }
-                $class = $f->getConfig()->getOption('class');
+                $class  = $f->getConfig()->getOption('class');
                 $target = $f->getData()['targets'];
 
                 if ($target === null || $spell === null) {
@@ -302,7 +351,8 @@ class CharacterController extends Controller
                     default:
                         $target = $em->getRepository('TroulitePathfinderBundle:Character')->find($target);
                         if ($target) {
-                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class, array($target));
+                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class,
+                                array($target));
                         }
                         break;
                 }
@@ -330,22 +380,10 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
-        $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
-
         return array(
-            'entity' => $entity,
-            'powers_activation_form' => $powersActivationForm->createView(),
-            'skills' => $skills,
-            'passive_feats' => $passiveFeats,
-            'passive_class_powers' => $passiveClassPowers,
-            'other_feats' => $otherFeats,
-            'other_class_powers' => $otherClassPowers,
-            'passive_spell_effects' => $passiveSpellEffects,
-            'other_spell_effects' => $otherSpellEffects,
-            'passive_power_effects' => $passivePowerEffects,
-            'other_power_effects'   => $otherPowerEffects,
-            'castSpellsForm' => $castSpellsForm->createView(),
-            'uncastSpellsForm' => $uncastSpellsForm->createView(),
+            'entity'                 => $entity,
+            'castSpellsForm'         => $castSpellsForm->createView(),
+            'uncastSpellsForm'       => $uncastSpellsForm->createView(),
         );
     }
 
@@ -588,7 +626,7 @@ class CharacterController extends Controller
      * @param Character $entity
      * @param Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function sleepAction(Character $entity, Request $request)
     {
