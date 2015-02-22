@@ -62,7 +62,7 @@ class CharacterBonuses
      */
     public function applyAll(Character $character)
     {
-        if (in_array($character->getId(), $this->alreadyApplied)) {
+        if (in_array($character->getId(), self::$alreadyApplied)) {
             return $character;
         }
         $this->applyRace($character);
@@ -82,7 +82,7 @@ class CharacterBonuses
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
 
-        $this->alreadyApplied[] = $character->getId();
+        self::$alreadyApplied[] = $character->getId();
 
         return $character;
     }
