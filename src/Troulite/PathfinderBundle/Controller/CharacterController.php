@@ -21,6 +21,7 @@ use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
+use Troulite\PathfinderBundle\Form\ChangeHpType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
@@ -662,5 +663,43 @@ class CharacterController extends Controller
         return array(
             'form' => $sleepForm->createView()
         );
+    }
+
+    /**
+     * View and change a character's hit points.
+     *
+     * @Route("/{id}/hitpoints", name="characters_hitpoints")
+     * @Method("GET|PUT")
+     * @Template()
+     *
+     * @param Character $character
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function hitPointsAction(Character $character, Request $request)
+    {
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
+
+        $hpForm = $this->createForm(
+            new ChangeHpType(),
+            $character,
+            array(
+                'method' => 'PUT',
+                'action' => $this->generateUrl('characters_hitpoints', array('id' => $character->getId())),
+            )
+        );
+
+        $hpForm->handleRequest($request);
+        if ($hpForm->isValid()) {
+            $character->changeHp($hpForm->get('hp_mod')->getData());
+            /** @var EntityManager $em */
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
+        }
+
+        return array('character' => $character, 'form' => $hpForm->createView());
     }
 }
