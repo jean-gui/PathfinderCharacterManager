@@ -514,6 +514,18 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @param int $mod how many HP to add or remove
+     *
+     * @return $this
+     */
+    public function changeHp($mod)
+    {
+        $this->setLostHP(max(0, $this->getLostHP() - $mod));
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getLevelPerClass()
@@ -974,7 +986,7 @@ class Character extends BaseCharacter
         $known = array();
         foreach ($this->getLevels() as $level) {
             foreach ($level->getLearnedSpells() as $classSpell) {
-                $known[$classSpell->getSpellLevel()][] = $classSpell;
+                $known[$classSpell->getSpellLevel()][$classSpell->getId()] = $classSpell;
             }
         }
 
