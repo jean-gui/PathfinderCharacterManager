@@ -292,7 +292,7 @@ class CharacterController extends Controller
      */
     public function showEquipmentAction(Character $character)
     {
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
 
         return array("entity" => $character);
     }
