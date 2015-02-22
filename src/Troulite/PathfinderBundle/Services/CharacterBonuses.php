@@ -39,7 +39,15 @@ class CharacterBonuses
     private $expressionLanguage;
 
     /**
+     * Character ids whose bonuses have already been applied
+     * @var array
+     */
+    private static $alreadyApplied = array();
+
+    /**
      * Constructor
+     *
+     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -54,6 +62,9 @@ class CharacterBonuses
      */
     public function applyAll(Character $character)
     {
+        if (in_array($character->getId(), $this->alreadyApplied)) {
+            return $character;
+        }
         $this->applyRace($character);
         $this->applyFeats($character);
         $this->applyClassPowers($character);
@@ -70,6 +81,8 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getBack());
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
+
+        $this->alreadyApplied[] = $character->getId();
 
         return $character;
     }
