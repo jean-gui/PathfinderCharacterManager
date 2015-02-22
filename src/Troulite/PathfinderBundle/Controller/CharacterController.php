@@ -80,6 +80,9 @@ class CharacterController extends Controller
      * @Route("/new", name="characters_new")
      * @Template()
      * @Secure(roles="ROLE_USER")
+     *
+     * @param Request $request
+     * @return array|RedirectResponse
      */
     public function newAction(Request $request)
     {
@@ -397,22 +400,18 @@ class CharacterController extends Controller
      * @Route("/{id}/edit", name="characters_edit")
      * @Method("GET")
      * @Template()
+     *
+     * @param Character $character
+     *
+*@return array
      */
-    public function editAction($id)
+    public function editAction(Character $character)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Character entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($character);
+        $deleteForm = $this->createDeleteForm($character->getId());
 
         return array(
-            'entity' => $entity,
+            'entity' => $character,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -447,19 +446,18 @@ class CharacterController extends Controller
      * @Route("/{id}/update", name="characters_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:Character:edit.html.twig")
+     *
+     * @param Request $request
+     * @param Character $character
+     *
+     * @return array|RedirectResponse
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Character $character)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Character entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($character->getId());
+        $editForm = $this->createEditForm($character);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -467,11 +465,11 @@ class CharacterController extends Controller
 
             $this->get('session')->getFlashBag()->add('success', 'Update successful');
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $id)));
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $character,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -482,13 +480,16 @@ class CharacterController extends Controller
      *
      * @Route("/{id}/levelup", name="characters_levelup")
      * @Template()
+     *
+     * @param Character $character
+     * @return array|RedirectResponse
      */
-    public function levelUpAction(Character $entity)
+    public function levelUpAction(Character $character)
     {
         $level = new Level();
-        $level->setClassDefinition($entity->getFavoredClass());
-        $entity->addLevel($level);
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
+        $level->setClassDefinition($character->getFavoredClass());
+        $character->addLevel($level);
+        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
 
         /** @var $flow LevelUpFlow */
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
@@ -496,7 +497,7 @@ class CharacterController extends Controller
 
         // Add class powers if they were not already added through a form
         if ($level->getClassDefinition()) {
-            foreach ($level->getClassDefinition()->getPowers($entity->getLevel($level->getClassDefinition())) as $power) {
+            foreach ($level->getClassDefinition()->getPowers($character->getLevel($level->getClassDefinition())) as $power) {
                 $alreadyAdded = false;
                 foreach ($level->getClassPowers() as $classPower) {
                     if ($classPower->getClassPower() === $power) {
@@ -536,8 +537,8 @@ class CharacterController extends Controller
                 }
 
                 // Max HP for first level
-                if ($entity->getLevel() === 1) {
-                    $entity->getLevels()[0]->setHpRoll($entity->getLevels()[0]->getClassDefinition()->getHpDice());
+                if ($character->getLevel() === 1) {
+                    $character->getLevels()[0]->setHpRoll($character->getLevels()[0]->getClassDefinition()->getHpDice());
                 }
 
                 /** @var $em EntityManager */
@@ -564,17 +565,17 @@ class CharacterController extends Controller
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    $entity . ' is now level ' . $entity->getLevel()
+                    $character . ' is now level ' . $character->getLevel()
                 );
 
-                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
             }
         }
 
         return array(
             'form' => $form->createView(),
             'flow' => $flow,
-            'entity' => $entity
+            'entity' => $character
         );
     }
 
@@ -583,21 +584,25 @@ class CharacterController extends Controller
      *
      * @Route("/{id}", name="characters_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Character $character
+     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Character $character)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($character->getId());
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroulitePathfinderBundle:Character')->find($id);
+            $character = $em->getRepository('TroulitePathfinderBundle:Character')->find($character->getId());
 
-            if (!$entity) {
+            if (!$character) {
                 throw $this->createNotFoundException('Unable to find Character entity.');
             }
 
-            $em->remove($entity);
+            $em->remove($character);
             $em->flush();
         }
 
