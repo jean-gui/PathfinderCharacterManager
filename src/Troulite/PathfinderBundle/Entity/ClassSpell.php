@@ -129,4 +129,9 @@ class ClassSpell
     {
         return $this->spell;
     }
+
+    public function __toString()
+    {
+        return $this->getSpell()->__toString();
+    }
 }
