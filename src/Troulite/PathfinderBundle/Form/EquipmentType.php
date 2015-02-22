@@ -22,7 +22,7 @@ class EquipmentType extends AbstractType
         $builder
             ->add('mainWeapon')
             ->add('offhandWeapon')
-            ->add('body')
+            ->add('armor')
             ->add('leftFinger')
             ->add('rightFinger')
             ->add('feet')

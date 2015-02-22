@@ -47,12 +47,12 @@ class CharacterEquipment
     private $offhandWeapon;
 
     /**
-     * @var Armor $body
+     * @var Armor $armor
      *
      * @ORM\ManyToOne(targetEntity="Armor")
-     * @ORM\JoinColumn(name="body_item_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="armor_item_id", referencedColumnName="id")
      */
-    private $body;
+    private $armor;
 
     /**
      * @var Ring $leftFinger
@@ -185,25 +185,25 @@ class CharacterEquipment
     }
 
     /**
-     * Get body
+     * Get armor
      *
      * @return Armor
      */
-    public function getBody()
+    public function getArmor()
     {
-        return $this->body;
+        return $this->armor;
     }
 
     /**
-     * Set body
+     * Set armor
      *
-     * @param Armor $body
+     * @param Armor $armor
      *
      * @return CharacterEquipment
      */
-    public function setBody(Armor $body = null)
+    public function setArmor(Armor $armor = null)
     {
-        $this->body = $body;
+        $this->armor = $armor;
 
         return $this;
     }

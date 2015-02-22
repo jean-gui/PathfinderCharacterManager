@@ -70,7 +70,7 @@ class CharacterBonuses
         $this->applyClassPowers($character);
         $this->applyItem($character, $character->getEquipment()->getMainWeapon());
         $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
-        $this->applyItem($character, $character->getEquipment()->getBody());
+        $this->applyItem($character, $character->getEquipment()->getArmor());
         $this->applyItem($character, $character->getEquipment()->getHead());
         $this->applyItem($character, $character->getEquipment()->getHands());
         $this->applyItem($character, $character->getEquipment()->getLeftFinger());

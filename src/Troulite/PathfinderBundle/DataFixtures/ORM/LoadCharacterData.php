@@ -38,7 +38,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
             ->setEquipment(
                 (new CharacterEquipment())
                     ->setMainWeapon($this->getReference('longbow +2'))
-                    ->setBody($this->getReference('mithral chain mail +5'))
+                    ->setArmor($this->getReference('mithral chain mail +5'))
             );
 
         // Level 1

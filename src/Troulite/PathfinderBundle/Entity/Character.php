@@ -750,12 +750,12 @@ class Character extends BaseCharacter
         if ($this->getEquipment()->getOffhandWeapon() instanceof Shield) {
             $maxDexShield = $this->getEquipment()->getOffhandWeapon()->getMaximumDexterityBonus();
         }
-        if ($this->getEquipment()->getBody()) {
+        if ($this->getEquipment()->getArmor()) {
             return
                 10 +
                 min(
                     $this->getAbilityModifier($this->getDexterity()),
-                    $this->getEquipment()->getBody()->getMaximumDexterityBonus(),
+                    $this->getEquipment()->getArmor()->getMaximumDexterityBonus(),
                     $maxDexShield
                 ) +
                 $this->getDefenseBonuses()->ac->getBonus();
@@ -773,12 +773,12 @@ class Character extends BaseCharacter
      */
     public function getTouchAc()
     {
-        if ($this->getEquipment()->getBody()) {
+        if ($this->getEquipment()->getArmor()) {
             return
                 10 +
                 min(
                     $this->getAbilityModifier($this->getDexterity()),
-                    $this->getEquipment()->getBody()->getMaximumDexterityBonus()
+                    $this->getEquipment()->getArmor()->getMaximumDexterityBonus()
                 ) +
                 $this->getDodgeBonus();
         } else {
