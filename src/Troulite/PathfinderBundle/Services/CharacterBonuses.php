@@ -78,7 +78,7 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getBelt());
         $this->applyItem($character, $character->getEquipment()->getFeet());
         $this->applyItem($character, $character->getEquipment()->getNeck());
-        $this->applyItem($character, $character->getEquipment()->getBack());
+        $this->applyItem($character, $character->getEquipment()->getShoulders());
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
 

@@ -7,14 +7,14 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Troulite\PathfinderBundle\Entity\Amulet;
+use Troulite\PathfinderBundle\Entity\Neck;
 use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Belt;
-use Troulite\PathfinderBundle\Entity\Boots;
-use Troulite\PathfinderBundle\Entity\Bracers;
-use Troulite\PathfinderBundle\Entity\Cloak;
-use Troulite\PathfinderBundle\Entity\Gloves;
-use Troulite\PathfinderBundle\Entity\Helm;
+use Troulite\PathfinderBundle\Entity\Feet;
+use Troulite\PathfinderBundle\Entity\Wrists;
+use Troulite\PathfinderBundle\Entity\Shoulders;
+use Troulite\PathfinderBundle\Entity\Hands;
+use Troulite\PathfinderBundle\Entity\Head;
 use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\Entity\ItemPower;
 use Troulite\PathfinderBundle\Entity\Ring;
@@ -70,13 +70,13 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface
                             break;
                         case 'neck':
                         case 'amulet':
-                            $item = new Amulet();
+                            $item = new Neck();
                             break;
                         case 'feet':
-                            $item = new Boots();
+                            $item = new Feet();
                             break;
                         case 'arms':
-                            $item = new Bracers();
+                            $item = new Wrists();
                             break;
                         case 'hands':
                             if ($data['Group'] === 'Weapon') {
@@ -88,15 +88,15 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface
                                 $item->setCritical('');
                                 $item->setCriticalRange('');
                             } else {
-                                $item = new Gloves();
+                                $item = new Hands();
                             }
                             break;
                         case 'head':
                         case 'headband':
-                            $item = new Helm();
+                            $item = new Head();
                             break;
                         case 'shoulders':
-                            $item = new Cloak();
+                            $item = new Shoulders();
                             break;
                         case 'shield':
                             $item = new Shield();

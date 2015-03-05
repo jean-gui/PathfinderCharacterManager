@@ -55,6 +55,22 @@ class CharacterEquipment
     private $armor;
 
     /**
+     * @var Body $body
+     *
+     * @ORM\ManyToOne(targetEntity="Body")
+     * @ORM\JoinColumn(name="body_item_id", referencedColumnName="id")
+     */
+    private $body;
+
+    /**
+     * @var Chest $chest
+     *
+     * @ORM\ManyToOne(targetEntity="Chest")
+     * @ORM\JoinColumn(name="chest_item_id", referencedColumnName="id")
+     */
+    private $chest;
+
+    /**
      * @var Ring $leftFinger
      *
      * @ORM\ManyToOne(targetEntity="Ring")
@@ -71,36 +87,52 @@ class CharacterEquipment
     private $rightFinger;
 
     /**
-     * @var Boots $feet
+     * @var Feet $feet
      *
-     * @ORM\ManyToOne(targetEntity="Boots")
+     * @ORM\ManyToOne(targetEntity="Feet")
      * @ORM\JoinColumn(name="feet_item_id", referencedColumnName="id")
      */
     private $feet;
 
     /**
-     * @var Amulet $neck
+     * @var Neck $neck
      *
-     * @ORM\ManyToOne(targetEntity="Amulet")
+     * @ORM\ManyToOne(targetEntity="Neck")
      * @ORM\JoinColumn(name="neck_item_id", referencedColumnName="id")
      */
     private $neck;
 
     /**
-     * @var Cloak $back
+     * @var Shoulders $shoulders
      *
-     * @ORM\ManyToOne(targetEntity="Cloak")
+     * @ORM\ManyToOne(targetEntity="Chest")
      * @ORM\JoinColumn(name="back_item_id", referencedColumnName="id")
      */
-    private $back;
+    private $shoulders;
 
     /**
-     * @var Helm $head
+     * @var Eyes $eyes
      *
-     * @ORM\ManyToOne(targetEntity="Helm")
+     * @ORM\ManyToOne(targetEntity="Eyes")
+     * @ORM\JoinColumn(name="eyes_item_id", referencedColumnName="id")
+     */
+    private $eyes;
+
+    /**
+     * @var Head $head
+     *
+     * @ORM\ManyToOne(targetEntity="Head")
      * @ORM\JoinColumn(name="head_item_id", referencedColumnName="id")
      */
     private $head;
+
+    /**
+     * @var Headband $headband
+     *
+     * @ORM\ManyToOne(targetEntity="Headband")
+     * @ORM\JoinColumn(name="headband_item_id", referencedColumnName="id")
+     */
+    private $headband;
 
     /**
      * @var Belt $belt
@@ -111,12 +143,20 @@ class CharacterEquipment
     private $belt;
 
     /**
-     * @var Gloves $hands
+     * @var Hands $hands
      *
-     * @ORM\ManyToOne(targetEntity="Gloves")
+     * @ORM\ManyToOne(targetEntity="Hands")
      * @ORM\JoinColumn(name="hands_item_id", referencedColumnName="id")
      */
     private $hands;
+
+    /**
+     * @var Wrists $wrists
+     *
+     * @ORM\ManyToOne(targetEntity="Wrists")
+     * @ORM\JoinColumn(name="wrists_item_id", referencedColumnName="id")
+     */
+    private $wrists;
 
     /**
      * Get id
@@ -305,25 +345,25 @@ class CharacterEquipment
     }
 
     /**
-     * Get back
+     * Get shoulders
      *
      * @return Item
      */
-    public function getBack()
+    public function getShoulders()
     {
-        return $this->back;
+        return $this->shoulders;
     }
 
     /**
-     * Set back
+     * Set shoulders
      *
-     * @param Item $back
+     * @param Item $shoulders
      *
      * @return CharacterEquipment
      */
-    public function setBack(Item $back = null)
+    public function setShoulders(Item $shoulders = null)
     {
-        $this->back = $back;
+        $this->shoulders = $shoulders;
 
         return $this;
     }
@@ -398,5 +438,85 @@ class CharacterEquipment
         $this->hands = $hands;
 
         return $this;
+    }
+
+    /**
+     * @return Body
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param Body $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return Chest
+     */
+    public function getChest()
+    {
+        return $this->chest;
+    }
+
+    /**
+     * @param Chest $chest
+     */
+    public function setChest($chest)
+    {
+        $this->chest = $chest;
+    }
+
+    /**
+     * @return Eyes
+     */
+    public function getEyes()
+    {
+        return $this->eyes;
+    }
+
+    /**
+     * @param Eyes $eyes
+     */
+    public function setEyes($eyes)
+    {
+        $this->eyes = $eyes;
+    }
+
+    /**
+     * @return Headband
+     */
+    public function getHeadband()
+    {
+        return $this->headband;
+    }
+
+    /**
+     * @param Headband $headband
+     */
+    public function setHeadband($headband)
+    {
+        $this->headband = $headband;
+    }
+
+    /**
+     * @return Wrists
+     */
+    public function getWrists()
+    {
+        return $this->wrists;
+    }
+
+    /**
+     * @param Wrists $wrists
+     */
+    public function setWrists($wrists)
+    {
+        $this->wrists = $wrists;
     }
 }

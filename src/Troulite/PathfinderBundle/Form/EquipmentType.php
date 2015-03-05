@@ -27,7 +27,7 @@ class EquipmentType extends AbstractType
             ->add('rightFinger')
             ->add('feet')
             ->add('neck')
-            ->add('back')
+            ->add('shoulders')
             ->add('head')
             ->add('belt')
             ->add('hands')

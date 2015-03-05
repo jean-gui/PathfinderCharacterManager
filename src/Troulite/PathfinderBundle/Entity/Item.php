@@ -15,9 +15,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
- *     "weapon" = "Weapon", "armor" = "Armor", "shield" = "Shield", "cloak" = "Cloak", "ring" = "Ring",
- *     "amulet" = "Amulet", "belt" = "Belt", "bracers" = "Bracers", "boots" = "Boots", "gloves" = "Gloves",
- *     "helm" = "Helm", "item" = "Item"
+ *     "weapon" = "Weapon", "armor" = "Armor", "shield" = "Shield", "shoulders" = "Shoulders", "ring" = "Ring",
+ *     "neck" = "Neck", "belt" = "Belt", "wrists" = "Wrists", "feet" = "Feet", "hands" = "Hands", "eyes" = "Eyes",
+ *     "head" = "Head", "headband" = "Headband", "body" = "Body", "chest" = "Chest", "item" = "Item"
  * })
  */
 class Item
