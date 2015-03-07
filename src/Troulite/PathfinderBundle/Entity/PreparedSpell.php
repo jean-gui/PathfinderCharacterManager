@@ -189,4 +189,12 @@ class PreparedSpell
         }
         return null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getSpell()->__toString();
+    }
 }
