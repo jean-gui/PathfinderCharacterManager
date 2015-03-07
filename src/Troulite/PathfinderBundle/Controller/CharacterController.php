@@ -9,15 +9,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
-use Troulite\PathfinderBundle\Entity\ClassSpell;
+use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
+use Troulite\PathfinderBundle\Entity\Spell;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
@@ -318,32 +320,43 @@ class CharacterController extends Controller
 
         $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
 
-        $castSpellsForm = $this->createForm(new CastSpellsType($this->container->getParameter('bonus_spells')),
-            $entity);
-        $castSpellsForm->handleRequest($request);
-        if ($castSpellsForm->isValid()) {
-            /** @var $f Form */
-            foreach ($castSpellsForm->all() as $f) {
-                if ($f->getName() === 'Cast') {
-                    continue;
+        $castSpellsForm = $this->createForm(
+            new CastSpellsType($this->container->getParameter('bonus_spells')),
+            $entity,
+            array('method' => 'PUT')
+        );
+
+        if ($request->getMethod() === 'PUT') {
+            $values = $request->request->get('troulite_pathfinder_bundle_cast_spells');
+            foreach ($values['castable_spells_by_class_by_spell_level'] as $classKey => $classValue) {
+                foreach ($classValue['spells_by_level'] as $levelKey => $levelValue) {
+                    foreach ($levelValue['spells'] as $spellKey => $spellValue) {
+                        if (array_key_exists('id', $spellValue)) {
+                            $target = $spellValue['targets'];
+                            /** @var ClassDefinition $class */
+                            $class = $castSpellsForm
+                                ->get('castable_spells_by_class_by_spell_level')
+                                ->get($classKey)
+                                ->getData()
+                                ->getClass();
+
+                            /** @var Spell $spellValue */
+                            $spell = $castSpellsForm
+                                ->get('castable_spells_by_class_by_spell_level')
+                                ->get($classKey)
+                                ->get('spells_by_level')
+                                ->get($levelKey)
+                                ->get('spells')
+                                ->get($spellKey)
+                                ->getData();
+
+                            // Should probably break here
+                        }
+                    }
                 }
-
-                $spell = null;
-
-                if ($f->getConfig()->getOption('spell')) { // Prepared Spell
-                    $spell = $f->getConfig()->getOption('spell');
-                } elseif ($f->getData()['spell']) { // Unprepared Spell
-                    /** @var $classSpell ClassSpell */
-                    $classSpell = $f->getData()['spell'];
-                    $spell      = $classSpell->getSpell();
-                }
-                $class  = $f->getConfig()->getOption('class');
-                $target = $f->getData()['targets'];
-
-                if ($target === null || $spell === null) {
-                    continue;
-                }
-
+            }
+            // Is isset appropriate?
+            if (isset($target, $spell, $class)) {
                 switch ($target) {
                     case 'other':
                         $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class);
@@ -372,6 +385,7 @@ class CharacterController extends Controller
         $uncastSpellsForm = $this->createForm(new UncastSpellsType(), $entity);
         $uncastSpellsForm->handleRequest($request);
         if ($uncastSpellsForm->isValid()) {
+            /** @var FormInterface $f */
             foreach ($uncastSpellsForm->all() as $f) {
                 if ($f->getName() === 'Uncast') {
                     continue;

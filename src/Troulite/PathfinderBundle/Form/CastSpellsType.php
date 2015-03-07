@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Character;
-use Troulite\PathfinderBundle\Entity\ClassDefinition;
 
 /**
  * Class CastSpellsType
@@ -49,76 +48,26 @@ class CastSpellsType extends AbstractType
                 /** @var $character Character */
                 $character = $event->getData();
                 $form = $event->getForm();
-                $i = 0;
-                $choices = array('other' => 'Other', 'allies' => 'Allies');
+                $targets = array('other' => 'Other', 'allies' => 'Allies');
                 if ($character->getParty()) {
                     foreach ($character->getParty()->getCharacters() as $ally) {
-                        $choices[$ally->getId()] = $ally->getName();
+                        $targets[$ally->getId()] = $ally->getName();
                     }
                 }
 
-                foreach ($character->getPreparedSpells() as $preparedSpell) {
-                    if (!$preparedSpell->isAlreadyCast()) {
-                        $form->add(
-                            $i++,
-                            new CastPreparedSpellType(),
-                            array(
-                                'label'    => false,
-                                'targets'  => $choices,
-                                'mapped'   => false,
-                                'spell'    => $preparedSpell->getSpell(),
-                                'class'    => $preparedSpell->getClass(),
-                                'required' => false
-                            )
-                        );
-                    }
-                }
-
-                foreach ($character->getLevelPerClass() as $classLevel) {
-                    /** @var $class ClassDefinition */
-                    $class = $classLevel['class'];
-                    /** @var $level int */
-                    $level = $classLevel['level'];
-                    if (!$class->isPreparationNeeded()) {
-                        foreach ($class->getSpellsPerDay() as $spellLevel => $levels) {
-                            $alreadyCast = $character->getNonPreparedCastSpellsCount();
-                            $count = 0;
-                            if (
-                                $alreadyCast &&
-                                array_key_exists($class->getId(), $alreadyCast) &&
-                                array_key_exists($spellLevel, $alreadyCast[$class->getId()])
-                            ) {
-                                $count = $alreadyCast[$class->getId()][$spellLevel];
-                            }
-
-                            $canCastCount =
-                                $levels[$level - 1] +
-                                $this->extra_spells[$character->getModifierByAbility(
-                                    $class->getCastingAbility()
-                                )][$spellLevel];
-
-                            for(; $count < $canCastCount; $count++) {
-                                $form->add(
-                                    $i++,
-                                    new CastUnpreparedSpellType(),
-                                    array(
-                                        'label' => false,
-                                        'targets'  => $choices,
-                                        'class'    => $class,
-                                        'caster' => $character,
-                                        'spellLevel' => $spellLevel,
-                                        'required' => false,
-                                        'mapped' => false,
-                                    )
-                                );
-                            }
-                        }
-                    }
-                }
-
-                if ($form->count() > 0) {
-                    $form->add('Cast', 'submit');
-                }
+                $form->add(
+                    'castable_spells_by_class_by_spell_level',
+                    'collection',
+                    array(
+                        'label'   => false,
+                        'type'    => new CastableClassSpellsType(),
+                        'options' => array(
+                            'caster'  => $character,
+                            'targets' => $targets,
+                            'attr' => array('class' => 'row')
+                        ),
+                    )
+                );
             }
         );
     }
