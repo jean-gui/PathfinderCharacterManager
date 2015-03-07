@@ -15,6 +15,7 @@ use Troulite\PathfinderBundle\Model\AbilitiesBonuses;
 use Troulite\PathfinderBundle\Model\AttackBonuses;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
+use Troulite\PathfinderBundle\Model\CastableClassSpells;
 use Troulite\PathfinderBundle\Model\DefenseBonuses;
 
 /**
@@ -969,7 +970,9 @@ class Character extends BaseCharacter
     public function getLearnedSpells()
     {
         $known = array();
-        foreach ($this->getLearnedSpellsBySpellLevel() as $spells) {
+        $spellsBySpellLevel = $this->getLearnedSpellsBySpellLevel();
+        ksort($spellsBySpellLevel);
+        foreach ($spellsBySpellLevel as $spells) {
             $known = array_merge($known, $spells);
         }
 
@@ -1003,6 +1006,7 @@ class Character extends BaseCharacter
     public function addPreparedSpell(PreparedSpell $preparedSpell)
     {
         $this->preparedSpells[] = $preparedSpell;
+        $preparedSpell->setCharacter($this);
 
         return $this;
     }
@@ -1020,7 +1024,7 @@ class Character extends BaseCharacter
     /**
      * Get preparedSpells
      *
-     * @return Collection|PreparedSpell[]
+     * @return PreparedSpell[]|Collection
      */
     public function getPreparedSpells()
     {
@@ -1030,12 +1034,53 @@ class Character extends BaseCharacter
     /**
      * @return array
      */
-    public function getPreparedSpellsByLevel() {
+    public function getPreparedSpellsByLevel()
+    {
         $preparedSpellsByLevel = array();
         foreach ($this->getPreparedSpells() as $preparedSpell) {
             $preparedSpellsByLevel[$preparedSpell->getSpellLevel()][] = $preparedSpell;
         }
         return $preparedSpellsByLevel;
+    }
+
+    /**
+     * keys: ClassDefinition
+     * data: array of spell level keys, list of spells
+     * @return \SplObjectStorage
+     */
+    public function getCastableSpellsByClassBySpellLevel()
+    {
+        /** @var CastableClassSpells[] $spells */
+        $spells = array();
+        foreach ($this->getPreparedSpells() as $preparedSpell) {
+            if ($preparedSpell->isAlreadyCast()) {
+                continue;
+            }
+
+            $castableClassSpells = $preparedSpell->getClass();
+            if (!array_key_exists($castableClassSpells->getId(), $spells)) {
+                $spells[$castableClassSpells->getId()] = (new CastableClassSpells())->setClass($castableClassSpells);
+            }
+
+            $spells[$castableClassSpells->getId()]->addSpellToLevel(
+                $preparedSpell->getSpell(),
+                $preparedSpell->getSpellLevel()
+            );
+        }
+
+        foreach ($this->getLearnedSpells() as $learnedSpell) {
+            $castableClassSpells = $learnedSpell->getClass();
+            if (!array_key_exists($castableClassSpells->getId(), $spells)) {
+                $spells[$castableClassSpells->getId()] = (new CastableClassSpells())->setClass($castableClassSpells);
+            }
+
+            $spells[$castableClassSpells->getId()]->addSpellToLevel(
+                $learnedSpell->getSpell(),
+                $learnedSpell->getSpellLevel()
+            );
+        }
+
+        return $spells;
     }
 
     /**
