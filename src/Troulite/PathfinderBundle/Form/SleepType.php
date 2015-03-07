@@ -2,6 +2,7 @@
 
 namespace Troulite\PathfinderBundle\Form;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -15,6 +16,7 @@ use Troulite\PathfinderBundle\Entity\PreparedSpell;
  * Class PreparedSpellType
  *
  * @package Troulite\PathfinderBundle\Form
+ * @todo there are bugs when a character has fewer spells than before. Some dropdowns don't get the right default value
  */
 class SleepType extends AbstractType
 {
@@ -42,8 +44,6 @@ class SleepType extends AbstractType
                 $character = $event->getData();
                 $form      = $event->getForm();
 
-                /** @var PreparedSpell[] $preparedSpells */
-                $preparedSpells = array();
                 /** @var int[] $preparedLevels */
                 $preparedLevels = array();
 
@@ -55,9 +55,6 @@ class SleepType extends AbstractType
                     /** @var array $previouslyPreparedSpellsByLevel */
                     $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
 
-                    /** @var PreparedSpell[] $preparedSpells */
-                    $preparedSpells = array();
-
                     if ($class->isPreparationNeeded()) {
                         // $levels starts at 0 but means character level 1, hence the -1 below
                         foreach ($class->getSpellsPerDay() as $spellLevel => $levels) {
@@ -67,30 +64,38 @@ class SleepType extends AbstractType
                             } else {
                                 $previouslyPreparedSpells = array();
                             }
-                            // A character has $levels[$level - 1] spells + some more if he has a ability score
-                            for (
-                                $i = 0;
-                                $i < $levels[$level - 1] +
+                            // A character has $levels[$level - 1] spells + some more if he has a high ability score
+                            $totalSpells = $levels[$level - 1] +
                                 $this->extra_spells
-                                    [$character->getModifierByAbility($class->getCastingAbility())]
-                                    [$spellLevel];
-                                $i++) {
-                                if ($i < count($previouslyPreparedSpells)) {
-                                    $preparedSpells[] = $previouslyPreparedSpells[$i];
-                                } else {
-                                    $preparedSpells[] = new PreparedSpell($character, null, $class);
+                                [$character->getModifierByAbility($class->getCastingAbility())]
+                                [$spellLevel];
+                            $previousTotalSpells = count($previouslyPreparedSpells);
+                            if ($totalSpells < $previousTotalSpells) {
+                                // We have fewer spells than last time we slept, remove some
+                                for ($i = $totalSpells; $i < $previousTotalSpells; $i++) {
+                                    foreach ($character->getPreparedSpells() as $preparedSpell) {
+                                        if ($preparedSpell->getSpellLevel() === $spellLevel) {
+                                            $character->removePreparedSpell($preparedSpell);
+                                            break;
+                                        }
+                                    }
+                                }
+                                // Because ArrayCollections don't get reindexed automatically, do it manually
+                                $character->setPreparedSpells(
+                                    new ArrayCollection(array_values($character->getPreparedSpells()->toArray()))
+                                );
+                            }
+
+                            for ($i = 0; $i < $totalSpells; $i++) {
+                                if ($i >= $previousTotalSpells) {
+                                    // We have more spells than last time we slept, add them
+                                    $character->addPreparedSpell(new PreparedSpell($character, null, $class));
                                 }
 
                                 $preparedLevels[] = $spellLevel;
                             }
                         }
                     }
-                }
-
-                $character->getPreparedSpells()->clear();
-
-                foreach ($preparedSpells as $spell) {
-                    $character->addPreparedSpell($spell);
                 }
 
                 $form->add(

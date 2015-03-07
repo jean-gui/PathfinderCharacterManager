@@ -1014,11 +1014,19 @@ class Character extends BaseCharacter
     /**
      * Remove preparedSpells
      *
-     * @param PreparedSpell $preparedSpells
+     * @param PreparedSpell $preparedSpell
      */
-    public function removePreparedSpell(PreparedSpell $preparedSpells)
+    public function removePreparedSpell(PreparedSpell $preparedSpell)
     {
-        $this->preparedSpells->removeElement($preparedSpells);
+        $this->preparedSpells->removeElement($preparedSpell);
+    }
+
+    /**
+     * @param Collection $preparedSpells
+     */
+    public function setPreparedSpells(Collection $preparedSpells)
+    {
+        $this->preparedSpells = $preparedSpells;
     }
 
     /**
