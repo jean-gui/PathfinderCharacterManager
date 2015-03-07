@@ -75,7 +75,27 @@
 
 {% block troulite_pathfinder_bundle_cast_spells_level_row %}
     <div class="col-xs-6">
-        <h4>Level {{ form.vars.data.level }}</h4>
+        <h4>
+            {% set spellLevel = form.vars.data.level %}
+            {% set class = form.parent.parent.vars.data.class %}
+            Level {{ spellLevel }}
+            {% if not class.preparationNeeded %}
+                <small>
+                    {% if spellLevel > 0 %}
+                        {% set character = form.parent.parent.parent.parent.vars.data %}
+                        {% set classLevel = character.level(class) %}
+                        {% set modifier = character.modifierByAbility(class.castingAbility) %}
+                        {% set extraSpells = form.parent.parent.parent.parent.vars.extra_spells[modifier][spellLevel] %}
+                        Already cast:
+                        {{ character.nonPreparedCastSpellsCount[class.id][spellLevel]|default(0) }}
+                        /
+                        {{ character.castablePerDayPerClass[class.id][spellLevel][classLevel-1] + extraSpells }}
+                    {% else %}
+                        &infin;
+                    {% endif %}
+                </small>
+            {% endif %}
+        </h4>
         {{ form_widget(form) }}
     </div>
 {% endblock %}
