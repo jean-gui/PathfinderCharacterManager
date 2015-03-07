@@ -54,7 +54,7 @@ class Level
      *
      * @var string one of 'skill', 'hp'
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $extraPoint;
 
