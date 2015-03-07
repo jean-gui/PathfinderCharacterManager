@@ -1150,6 +1150,20 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @return array
+     */
+    public function getCastablePerDayPerClass()
+    {
+        $castable = array();
+        foreach ($this->getClasses() as $class) {
+            $classPerDay = $class->getSpellsPerDay();
+            $castable[$class->getId()] = $classPerDay;
+        }
+
+        return $castable;
+    }
+
+    /**
      * Add powerEffects
      *
      * @param PowerEffect $powerEffect
@@ -1187,5 +1201,19 @@ class Character extends BaseCharacter
     public function getPowerEffects()
     {
         return $this->powerEffects;
+    }
+
+    /**
+     * @return ClassDefinition[]
+     */
+    private function getClasses()
+    {
+        $classes = array();
+        foreach ($this->getLevels() as $level) {
+            if (!in_array($level->getClassDefinition(), $classes)) {
+                $classes[] = $level->getClassDefinition();
+            }
+        }
+        return $classes;
     }
 }
