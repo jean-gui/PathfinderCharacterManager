@@ -105,7 +105,7 @@ class CharacterEquipment
     /**
      * @var Shoulders $shoulders
      *
-     * @ORM\ManyToOne(targetEntity="Chest")
+     * @ORM\ManyToOne(targetEntity="Shoulders")
      * @ORM\JoinColumn(name="back_item_id", referencedColumnName="id")
      */
     private $shoulders;
@@ -347,7 +347,7 @@ class CharacterEquipment
     /**
      * Get shoulders
      *
-     * @return Item
+     * @return Shoulders
      */
     public function getShoulders()
     {
@@ -357,11 +357,11 @@ class CharacterEquipment
     /**
      * Set shoulders
      *
-     * @param Item $shoulders
+     * @param Shoulders $shoulders
      *
      * @return CharacterEquipment
      */
-    public function setShoulders(Item $shoulders = null)
+    public function setShoulders(Shoulders $shoulders = null)
     {
         $this->shoulders = $shoulders;
 
