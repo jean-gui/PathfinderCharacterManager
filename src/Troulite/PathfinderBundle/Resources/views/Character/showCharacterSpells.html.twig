@@ -100,17 +100,41 @@
     </div>
 {% endblock %}
 
+{% block troulite_pathfinderbundle_cast_spell_label %}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain) }}
+            <a data-toggle="collapse" href="#{{ form.vars.id }}_desc" aria-expanded="false"
+               aria-controls="{{ form.vars.id ~ '_desc' }}">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{{ 'description'|trans }}"></span>
+            </a>
+        </label>
+    {%- endif -%}
+{% endblock %}
+
 {% block troulite_pathfinderbundle_cast_spell_row %}
     <div class="form-group form-horizontal">
-        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'col-xs-6 col-sm-4' } }) }}
+        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-6 col-sm-4' } }) }}
         <div class="col-xs-4">
             {{ form_label(form.targets, null, { 'label_attr': { 'class': 'sr-only' } }) }}
             {{ form_widget(form.targets) }}
         </div>
-        <a class="btn btn-primary" data-toggle="collapse" href="#{{ form.vars.id }}_desc" aria-expanded="false"
-           aria-controls="{{ form.vars.id ~ '_desc' }}">
-            Description
-        </a>
         {{ form_row(form.id) }}
         <div class="collapse" id="{{ form.vars.id }}_desc">
             <div class="well">
