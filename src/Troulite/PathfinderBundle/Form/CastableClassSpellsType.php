@@ -37,6 +37,7 @@ class CastableClassSpellsType extends AbstractType
                     'targets' => $options['targets'],
                 ),
                 'label' => false,
+                'required' => false
             )
         );
     }

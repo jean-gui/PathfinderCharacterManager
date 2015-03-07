@@ -68,6 +68,7 @@ class CastSpellsType extends AbstractType
                             'targets' => $targets,
                             'attr' => array('class' => 'row')
                         ),
+                        'required' => false
                     )
                 );
             }
