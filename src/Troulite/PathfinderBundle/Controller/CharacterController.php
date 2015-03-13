@@ -325,15 +325,17 @@ class CharacterController extends Controller
         );
         if ($request->getMethod() === 'PUT' && $request->request->get('troulite_pathfinderbundle_inventory')) {
             $inventoryForm->handleRequest($request);
-            foreach ($inventoryForm->all() as $child) {
-                echo $child->getName() . '<br/>';
-            }
+
             foreach($inventoryForm->get('unequipped_inventory')->all() as $child) {
                 /** @var SubmitButton $equip */
                 $equip = $child->get('equip');
                 if ($equip->isClicked()) {
-                    $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
-                    $em->flush();
+                    try {
+                        $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
+                        $em->flush();
+                    } catch (\Exception $e) {
+                        // Tried tot equip a non-equippable item, do nothing
+                    }
                     return $this->redirect($this->generateUrl('character_equipment',
                         array('id' => $character->getId())));
 
