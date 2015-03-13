@@ -18,7 +18,14 @@
         {{ form(equipmentForm) }}
     </div>
     <div class="col-xs-6">
-        <h2>{{ 'inventory'|trans }}</h2>
+        <h2>
+            {{ 'inventory'|trans }}
+            <small>
+                <a href="{{ path('character_inventory_edit', { 'id': entity.id }) }}" title="{{ 'inventory.edit'|trans }}">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </small>
+        </h2>
         {{ form(inventoryForm) }}
     </div>
 </div>

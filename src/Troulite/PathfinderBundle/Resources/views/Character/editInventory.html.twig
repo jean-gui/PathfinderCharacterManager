@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block title entity %}
+
+{% block navbar_current -%}
+    <ul class="nav navbar-nav">
+        <li><a href="{{ path('characters_show', {'id': entity.id}) }}">{{ 'main.profile'|trans }}</a>
+        </li>
+        <li class="active"><a href="{{ path('character_inventory', {'id': entity.id}) }}">{{ 'inventory'|trans }}</a></li>
+        <li><a href="{{ path('character_spells', {'id': entity.id}) }}">{{ 'spells'|trans }}</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
+
+    <h2>{{ 'inventory'|trans }}</h2>
+    {{ form(inventoryForm) }}
+{% endblock %}
+

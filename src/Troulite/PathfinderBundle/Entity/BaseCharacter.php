@@ -261,11 +261,12 @@ class BaseCharacter
     /**
      * Remove inventory
      *
-     * @param Item $inventory
+     * @param Item $item
      */
-    public function removeInventory(Item $inventory)
+    public function removeInventory(Item $item)
     {
-        $this->inventory->removeElement($inventory);
+        $this->getEquipment()->unequip($item);
+        $this->inventory->removeElement($item);
     }
 
     /**

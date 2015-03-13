@@ -25,6 +25,7 @@ use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
 use Troulite\PathfinderBundle\Form\ChangeHpType;
+use Troulite\PathfinderBundle\Form\EditInventoryType;
 use Troulite\PathfinderBundle\Form\EquipmentType;
 use Troulite\PathfinderBundle\Form\InventoryType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
@@ -285,6 +286,36 @@ class CharacterController extends Controller
             'passive_power_effects' => $passivePowerEffects,
             'other_power_effects'   => $otherPowerEffects
         );
+    }
+
+    /**
+     * Display a character's equipment
+     *
+     * @Route("/{id}/inventory/edit", name="character_inventory_edit")
+     * @Template()
+     *
+     * @param Character $character
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function editInventoryAction(Character $character, Request $request)
+    {
+        $inventoryForm = $this->createForm(
+            new EditInventoryType(),
+            $character,
+            array('method' => 'PUT')
+        )->add('submit', 'submit');
+
+        $inventoryForm->handleRequest($request);
+        if ($inventoryForm->isValid()) {
+            $this->get('doctrine.orm.entity_manager')->flush();
+
+            return $this->redirect($this->generateUrl('character_inventory',
+                array('id' => $character->getId())));
+        }
+
+        return array('entity' => $character, 'inventoryForm' => $inventoryForm->createView());
     }
 
     /**
