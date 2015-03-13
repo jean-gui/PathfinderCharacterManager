@@ -38,7 +38,6 @@ class BaseCharacterType extends AbstractType
             ->add('race')
             ->add('favoredClass')
             ->add('abilities', new AbilitiesType())
-            ->add('equipment', new EquipmentType())
             ->add('party')
         ;
     }
