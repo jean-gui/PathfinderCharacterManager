@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="troulite_pathfinder.characterbonuses.class">Troulite\PathfinderBundle\Services\CharacterBonuses</parameter>
+        <parameter key="troulite_pathfinder.characterequipment.class">Troulite\PathfinderBundle\Services\CharacterEquipment</parameter>
         <parameter key="troulite_pathfinder.spellcasting.class">Troulite\PathfinderBundle\Services\SpellCasting</parameter>
         <parameter key="troulite_pathfinder.abilitytools.class">Troulite\PathfinderBundle\Services\AbilityTools</parameter>
         <parameter key="troulite_pathfinder.addcharacterfeat_type.class">Troulite\PathfinderBundle\Form\Type\AddCharacterFeatType</parameter>
@@ -15,6 +16,8 @@
     <services>
         <service id="troulite_pathfinder.character_bonuses" class="%troulite_pathfinder.characterbonuses.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="troulite_pathfinder.character_equipment" class="%troulite_pathfinder.characterequipment.class%">
         </service>
         <service id="troulite_pathfinder.spell_casting" class="%troulite_pathfinder.spellcasting.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>

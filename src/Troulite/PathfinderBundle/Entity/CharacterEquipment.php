@@ -251,7 +251,7 @@ class CharacterEquipment
     /**
      * Get leftFinger
      *
-     * @return Item
+     * @return Ring
      */
     public function getLeftFinger()
     {
@@ -261,11 +261,11 @@ class CharacterEquipment
     /**
      * Set leftFinger
      *
-     * @param Item $leftFinger
+     * @param Ring $leftFinger
      *
      * @return CharacterEquipment
      */
-    public function setLeftFinger(Item $leftFinger = null)
+    public function setLeftFinger(Ring $leftFinger = null)
     {
         $this->leftFinger = $leftFinger;
 
@@ -275,7 +275,7 @@ class CharacterEquipment
     /**
      * Get rightFinger
      *
-     * @return Item
+     * @return Ring
      */
     public function getRightFinger()
     {
@@ -285,11 +285,11 @@ class CharacterEquipment
     /**
      * Set rightFinger
      *
-     * @param Item $rightFinger
+     * @param Ring $rightFinger
      *
      * @return CharacterEquipment
      */
-    public function setRightFinger(Item $rightFinger = null)
+    public function setRightFinger(Ring $rightFinger = null)
     {
         $this->rightFinger = $rightFinger;
 
@@ -299,7 +299,7 @@ class CharacterEquipment
     /**
      * Get feet
      *
-     * @return Item
+     * @return Feet
      */
     public function getFeet()
     {
@@ -309,11 +309,11 @@ class CharacterEquipment
     /**
      * Set feet
      *
-     * @param Item $feet
+     * @param Feet $feet
      *
      * @return CharacterEquipment
      */
-    public function setFeet(Item $feet = null)
+    public function setFeet(Feet $feet = null)
     {
         $this->feet = $feet;
 
@@ -323,7 +323,7 @@ class CharacterEquipment
     /**
      * Get neck
      *
-     * @return Item
+     * @return Neck
      */
     public function getNeck()
     {
@@ -333,11 +333,11 @@ class CharacterEquipment
     /**
      * Set neck
      *
-     * @param Item $neck
+     * @param Neck $neck
      *
      * @return CharacterEquipment
      */
-    public function setNeck(Item $neck = null)
+    public function setNeck(Neck $neck = null)
     {
         $this->neck = $neck;
 
@@ -371,7 +371,7 @@ class CharacterEquipment
     /**
      * Get head
      *
-     * @return Item
+     * @return Head
      */
     public function getHead()
     {
@@ -381,11 +381,11 @@ class CharacterEquipment
     /**
      * Set head
      *
-     * @param Item $head
+     * @param Head $head
      *
      * @return CharacterEquipment
      */
-    public function setHead(Item $head = null)
+    public function setHead(Head $head = null)
     {
         $this->head = $head;
 
@@ -395,7 +395,7 @@ class CharacterEquipment
     /**
      * Get belt
      *
-     * @return Item
+     * @return Belt
      */
     public function getBelt()
     {
@@ -405,11 +405,11 @@ class CharacterEquipment
     /**
      * Set belt
      *
-     * @param Item $belt
+     * @param Belt $belt
      *
      * @return CharacterEquipment
      */
-    public function setBelt(Item $belt = null)
+    public function setBelt(Belt $belt = null)
     {
         $this->belt = $belt;
 
@@ -419,7 +419,7 @@ class CharacterEquipment
     /**
      * Get hands
      *
-     * @return Item
+     * @return Hands
      */
     public function getHands()
     {
@@ -429,11 +429,11 @@ class CharacterEquipment
     /**
      * Set hands
      *
-     * @param Item $hands
+     * @param Hands $hands
      *
      * @return CharacterEquipment
      */
-    public function setHands(Item $hands = null)
+    public function setHands(Hands $hands = null)
     {
         $this->hands = $hands;
 
@@ -450,10 +450,14 @@ class CharacterEquipment
 
     /**
      * @param Body $body
+     *
+     * @return $this
      */
-    public function setBody($body)
+    public function setBody(Body $body = null)
     {
         $this->body = $body;
+
+        return $this;
     }
 
     /**
@@ -466,10 +470,14 @@ class CharacterEquipment
 
     /**
      * @param Chest $chest
+     *
+     * @return $this
      */
-    public function setChest($chest)
+    public function setChest(Chest $chest = null)
     {
         $this->chest = $chest;
+
+        return $this;
     }
 
     /**
@@ -482,10 +490,14 @@ class CharacterEquipment
 
     /**
      * @param Eyes $eyes
+     *
+     * @return $this
      */
-    public function setEyes($eyes)
+    public function setEyes(Eyes $eyes = null)
     {
         $this->eyes = $eyes;
+
+        return $this;
     }
 
     /**
@@ -498,10 +510,14 @@ class CharacterEquipment
 
     /**
      * @param Headband $headband
+     *
+     * @return $this
      */
-    public function setHeadband($headband)
+    public function setHeadband(Headband $headband = null)
     {
         $this->headband = $headband;
+
+        return $this;
     }
 
     /**
@@ -514,9 +530,50 @@ class CharacterEquipment
 
     /**
      * @param Wrists $wrists
+     *
+     * @return $this
      */
-    public function setWrists($wrists)
+    public function setWrists(Wrists $wrists = null)
     {
         $this->wrists = $wrists;
+
+        return $this;
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return bool
+     */
+    public function isEquipped(Item $item)
+    {
+        if (
+            $item === $this->getMainWeapon()  || $item === $this->getOffhandWeapon() ||
+            $item === $this->getRightFinger() || $item === $this->getLeftFinger()    ||
+            $item === $this->getArmor()       || $item === $this->getBelt()          ||
+            $item === $this->getBody()        || $item === $this->getChest()         ||
+            $item === $this->getEyes()        || $item === $this->getFeet()          ||
+            $item === $this->getHands()       || $item === $this->getHead()          ||
+            $item === $this->getHeadband()    || $item === $this->getNeck()          ||
+            $item === $this->getShoulders()   || $item === $this->getWrists()
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEquippedItems()
+    {
+        return $this->getMainWeapon() || $this->getOffhandWeapon() ||
+        $this->getRightFinger()       || $this->getLeftFinger()    ||
+        $this->getArmor()             || $this->getBelt()          ||
+        $this->getBody()              || $this->getChest()         ||
+        $this->getEyes()              || $this->getFeet()          ||
+        $this->getHands()             || $this->getHead()          ||
+        $this->getHeadband()          || $this->getNeck()          ||
+        $this->getShoulders()         || $this->getWrists();
     }
 }

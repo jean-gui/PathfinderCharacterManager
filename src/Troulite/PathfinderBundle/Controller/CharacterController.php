@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -24,6 +25,8 @@ use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
 use Troulite\PathfinderBundle\Form\CastSpellsType;
 use Troulite\PathfinderBundle\Form\ChangeHpType;
+use Troulite\PathfinderBundle\Form\EquipmentType;
+use Troulite\PathfinderBundle\Form\InventoryType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
@@ -291,12 +294,58 @@ class CharacterController extends Controller
      * @Template()
      *
      * @param Character $character
+     * @param Request $request
      *
      * @return array
      */
-    public function showEquipmentAction(Character $character)
+    public function showEquipmentAction(Character $character, Request $request)
     {
-        return array("entity" => $character);
+        $em = $this->getDoctrine()->getManager();
+
+        $equipmentForm = $this->createForm(
+            new EquipmentType(),
+            $character->getEquipment(),
+            array('method' => 'PUT')
+        );
+        if ($request->getMethod() === 'PUT' && $request->request->get('troulite_pathfinderbundle_equipment')) {
+            foreach ($request->request->get('troulite_pathfinderbundle_equipment') as $slot => $unequip) {
+                if ($slot !== '_token') {
+                    $this->get('troulite_pathfinder.character_equipment')->unequipSlot($character, $slot);
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('character_equipment',
+                        array('id' => $character->getId())));
+                }
+            }
+        }
+
+        $inventoryForm = $this->createForm(
+            new InventoryType(),
+            $character,
+            array('method' => 'PUT')
+        );
+        if ($request->getMethod() === 'PUT' && $request->request->get('troulite_pathfinderbundle_inventory')) {
+            $inventoryForm->handleRequest($request);
+            foreach ($inventoryForm->all() as $child) {
+                echo $child->getName() . '<br/>';
+            }
+            foreach($inventoryForm->get('unequipped_inventory')->all() as $child) {
+                /** @var SubmitButton $equip */
+                $equip = $child->get('equip');
+                if ($equip->isClicked()) {
+                    $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
+                    $em->flush();
+                    return $this->redirect($this->generateUrl('character_equipment',
+                        array('id' => $character->getId())));
+
+                }
+            }
+        }
+
+        return array(
+            'entity' => $character,
+            'equipmentForm' => $equipmentForm->createView(),
+            'inventoryForm' => $inventoryForm->createView()
+        );
     }
 
     /**

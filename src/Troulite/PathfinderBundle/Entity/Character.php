@@ -1217,4 +1217,30 @@ class Character extends BaseCharacter
         }
         return $classes;
     }
+
+    /**
+     * @return Item[]|Collection
+     */
+    public function getUnequippedInventory()
+    {
+        return $this->getInventory()->filter(
+            function ($item) {
+                return !$this->getEquipment()->isEquipped($item);
+            }
+        );
+    }
+
+    /**
+     * Dummy function to be able to use unequipped_inventory in forms
+     *
+     * @param $inventory
+     *
+     * @return $this
+     */
+    public function setUnequippedInventory(
+        /** @noinspection PhpUnusedParameterInspection */
+        Collection $inventory)
+    {
+        return $this;
+    }
 }
