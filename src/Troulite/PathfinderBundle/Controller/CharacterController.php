@@ -290,7 +290,7 @@ class CharacterController extends Controller
     /**
      * Display a character's equipment
      *
-     * @Route("/{id}/equipment", name="character_equipment")
+     * @Route("/{id}/inventory", name="character_inventory")
      * @Template()
      *
      * @param Character $character
@@ -312,7 +312,7 @@ class CharacterController extends Controller
                 if ($slot !== '_token') {
                     $this->get('troulite_pathfinder.character_equipment')->unequipSlot($character, $slot);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('character_equipment',
+                    return $this->redirect($this->generateUrl('character_inventory',
                         array('id' => $character->getId())));
                 }
             }
@@ -327,18 +327,29 @@ class CharacterController extends Controller
             $inventoryForm->handleRequest($request);
 
             foreach($inventoryForm->get('unequipped_inventory')->all() as $child) {
-                /** @var SubmitButton $equip */
-                $equip = $child->get('equip');
-                if ($equip->isClicked()) {
-                    try {
-                        $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
-                        $em->flush();
-                    } catch (\Exception $e) {
-                        // Tried tot equip a non-equippable item, do nothing
+                if ($child->has('equip')) {
+                    /** @var SubmitButton $equip */
+                    $equip = $child->get('equip');
+                    if ($equip->isClicked()) {
+                        try {
+                            $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
+                            $em->flush();
+                        } catch (\Exception $e) {
+                            // Tried tot equip a non-equippable item, do nothing
+                        }
+                        return $this->redirect($this->generateUrl('character_inventory',
+                            array('id' => $character->getId())));
                     }
-                    return $this->redirect($this->generateUrl('character_equipment',
-                        array('id' => $character->getId())));
+                }
 
+                /** @var SubmitButton $drop */
+                $drop = $child->get('drop');
+                if ($drop->isClicked()) {
+                    $character->removeInventory($child->getData());
+                    $em->flush();
+
+                    return $this->redirect($this->generateUrl('character_inventory',
+                        array('id' => $character->getId())));
                 }
             }
         }

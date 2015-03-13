@@ -7,7 +7,7 @@
 {% block navbar_current -%}
     <ul class="nav navbar-nav">
         <li class="active"><a href="{{ path('characters_show', {'id': entity.id}) }}">{{ 'main.profile'|trans }}</a></li>
-        <li><a href="{{ path('character_equipment', {'id': entity.id}) }}">{{ 'equipment'|trans }}</a></li>
+        <li><a href="{{ path('character_inventory', {'id': entity.id}) }}">{{ 'inventory'|trans }}</a></li>
         <li><a href="{{ path('character_spells', {'id': entity.id}) }}">{{ 'spells'|trans }}</a></li>
     </ul>
 {% endblock %}

@@ -8,7 +8,7 @@
     <ul class="nav navbar-nav">
         <li><a href="{{ path('characters_show', {'id': entity.id}) }}">{{ 'main.profile'|trans }}</a>
         </li>
-        <li><a href="{{ path('character_equipment', {'id': entity.id}) }}">{{ 'equipment'|trans }}</a>
+        <li><a href="{{ path('character_inventory', {'id': entity.id}) }}">{{ 'inventory'|trans }}</a>
         </li>
         <li class="active"><a href="{{ path('character_spells', {'id': entity.id}) }}">{{ 'spells'|trans }}</a>
         </li>

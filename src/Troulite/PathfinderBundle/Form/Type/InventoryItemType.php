@@ -11,7 +11,10 @@ namespace Troulite\PathfinderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\Item;
 
 /**
  * Class InventoryItemType
@@ -27,9 +30,18 @@ class InventoryItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'equip',
-            'submit'
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($options) {
+                /** @var $item Item */
+                $item = $event->getData();
+                $form      = $event->getForm();
+
+                if (get_class($item) !== 'Troulite\PathfinderBundle\Entity\Item') {
+                    $form->add('equip', 'submit');
+                }
+                $form->add('drop', 'submit');
+            }
         );
     }
 

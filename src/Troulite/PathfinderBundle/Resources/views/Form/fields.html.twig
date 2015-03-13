@@ -27,14 +27,13 @@
 {% endblock %}
 
 {% block unequippeditem_row %}
-    {% for child in form %}
-        <li>
-            {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
-            {% for child in form %}
-                {{ form_widget(child) }}
-            {% endfor %}
-        </li>
-    {% endfor %}
+    <li>
+        {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
+        {% if form.equip is defined %}
+            {{ form_widget(form.equip) }}
+        {% endif %}
+        {{ form_widget(form.drop) }}
+    </li>
 {% endblock %}
 
 {# Spells #}
