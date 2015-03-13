@@ -24,6 +24,7 @@ use Troulite\PathfinderBundle\Model\DefenseBonuses;
  * @ORM\Table()
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({ "Troulite\PathfinderBundle\Entity\Listener\CharacterListener" })
  *
  * @package Troulite\PathfinderBundle\Entity
  */

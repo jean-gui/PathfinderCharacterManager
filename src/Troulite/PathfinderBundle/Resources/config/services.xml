@@ -33,5 +33,10 @@
                  class="%troulite_pathfinder.locale.setter.class%">
             <tag name="kernel.event_subscriber"/>
         </service>
+        <service id="troulite_pathfinder.character_listener"
+                class="Troulite\PathfinderBundle\Entity\Listener\CharacterListener">
+            <argument type="service" id="service_container"/>
+            <tag name="doctrine.orm.entity_listener"/>
+        </service>
     </services>
 </container>

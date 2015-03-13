@@ -132,8 +132,6 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
-
         $needActivationFeats = array();
         $passiveFeats = array();
         $otherFeats = array();
@@ -298,8 +296,6 @@ class CharacterController extends Controller
      */
     public function showEquipmentAction(Character $character)
     {
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
-
         return array("entity" => $character);
     }
 
@@ -317,8 +313,6 @@ class CharacterController extends Controller
     public function showCharacterSpellsAction(Character $entity, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
 
         $castSpellsForm = $this->createForm(
             new CastSpellsType($this->container->getParameter('bonus_spells')),
@@ -504,7 +498,6 @@ class CharacterController extends Controller
         $level = new Level();
         $level->setClassDefinition($character->getFavoredClass());
         $character->addLevel($level);
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
 
         /** @var $flow LevelUpFlow */
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
@@ -654,8 +647,6 @@ class CharacterController extends Controller
      */
     public function sleepAction(Character $entity, Request $request)
     {
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($entity);
-
         /** @var $em EntityManager */
         $em = $this->get('doctrine.orm.entity_manager');
         $sleepForm = $this->createForm(
@@ -693,8 +684,6 @@ class CharacterController extends Controller
      */
     public function hitPointsAction(Character $character, Request $request)
     {
-        $this->get('troulite_pathfinder.character_bonuses')->applyAll($character);
-
         $hpForm = $this->createForm(
             new ChangeHpType(),
             $character,
