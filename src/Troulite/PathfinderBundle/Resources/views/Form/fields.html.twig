@@ -20,12 +20,20 @@
         {% endif %}
 {% endblock %}
 
+{% block _troulite_pathfinderbundle_inventory_unequipped_inventory_widget %}
+    <ul>
+        {{ form_rest(form) }}
+    </ul>
+{% endblock %}
+
 {% block unequippeditem_row %}
     {% for child in form %}
-        {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
-        {% for child in form %}
-            {{ form_widget(child) }}
-        {% endfor %}
+        <li>
+            {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
+            {% for child in form %}
+                {{ form_widget(child) }}
+            {% endfor %}
+        </li>
     {% endfor %}
 {% endblock %}
 
