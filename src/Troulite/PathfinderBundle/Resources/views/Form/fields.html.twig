@@ -73,13 +73,13 @@
         <h4>
             {% set spellLevel = form.vars.data.level %}
             {% set class = form.parent.parent.vars.data.class %}
+            {% set character = form.parent.parent.parent.parent.vars.data %}
+            {% set classLevel = character.level(class) %}
+            {% set modifier = character.modifierByAbility(class.castingAbility) %}
             Level {{ spellLevel }}
             {% if not class.preparationNeeded %}
                 <small>
                     {% if spellLevel > 0 %}
-                        {% set character = form.parent.parent.parent.parent.vars.data %}
-                        {% set classLevel = character.level(class) %}
-                        {% set modifier = character.modifierByAbility(class.castingAbility) %}
                         {% set extraSpells = form.parent.parent.parent.parent.vars.extra_spells[modifier][spellLevel] %}
                         Already cast:
                         {{ character.nonPreparedCastSpellsCount[class.id][spellLevel]|default(0) }}
@@ -89,7 +89,11 @@
                         &infin;
                     {% endif %}
                 </small>
+                <small>, </small>
             {% endif %}
+            <small>
+                {{ 'dc'|trans }}: {{ 10 + spellLevel + modifier }}
+            </small>
         </h4>
         {{ form_widget(form) }}
     </div>
