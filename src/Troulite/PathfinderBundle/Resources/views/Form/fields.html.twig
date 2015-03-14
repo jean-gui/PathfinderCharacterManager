@@ -48,22 +48,22 @@
 {% block troulite_pathfinder_bundle_castable_class_spells_row %}
     <div class="row">
         {% if form.parent|length > 1 %}
-    <h3>{{ form.vars.data.class }}</h3>
-{% endif %}
+            <h3>{{ form.vars.data.class }}</h3>
+        {% endif %}
         {% set i = 0 %}
         {% for child in form.spells_by_level %}
-    {% if i % 2 == 0 %}
-        <div class="row">
-    {% endif %}
-    {{ form_row(child) }}
-    {% if i % 2 == 1 %}
-        </div>
-    {% endif %}
-    {% set i = i+1 %}
-{% endfor %}
+            {% if i % 2 == 0 %}
+                <div class="row">
+            {% endif %}
+            {{ form_row(child) }}
+            {% if i % 2 == 1 %}
+                </div>
+            {% endif %}
+            {% set i = i+1 %}
+        {% endfor %}
         {% if i % 2 != 0 %}
-    </div>
-{% endif %}
+            </div>
+        {% endif %}
         {{ form_rest(form) }}
     </div>
 {% endblock %}
@@ -98,21 +98,21 @@
 {% block troulite_pathfinderbundle_cast_spell_label %}
     {% if label is not sameas(false) -%}
         {% if not compound -%}
-    {% set label_attr = label_attr|merge({'for': id}) %}
-{%- endif %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
         {% if required -%}
-    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-{%- endif %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
         {% if label is empty -%}
-    {%- if label_format is not empty -%}
-        {% set label = label_format|replace({
-        '%name%': name,
-        '%id%': id,
-        }) %}
-    {%- else -%}
-        {% set label = name|humanize %}
-    {%- endif -%}
-{%- endif -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             {{ label|trans({}, translation_domain) }}
             <a data-toggle="collapse" href="#{{ form.vars.id }}_desc" aria-expanded="false"
