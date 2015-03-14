@@ -30,6 +30,8 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

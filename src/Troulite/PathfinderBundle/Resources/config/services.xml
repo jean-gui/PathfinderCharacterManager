@@ -10,7 +10,7 @@
         <parameter key="troulite_pathfinder.spellcasting.class">Troulite\PathfinderBundle\Services\SpellCasting</parameter>
         <parameter key="troulite_pathfinder.abilitytools.class">Troulite\PathfinderBundle\Services\AbilityTools</parameter>
         <parameter key="troulite_pathfinder.addcharacterfeat_type.class">Troulite\PathfinderBundle\Form\Type\AddCharacterFeatType</parameter>
-        <parameter key="troulite_pathfinder.locale.setter.class">Troulite\PathfinderBundle\Event\LocaleSetter</parameter>
+        <parameter key="troulite_pathfinder.locale.redirector.class">Troulite\PathfinderBundle\Event\LocaleRedirector</parameter>
     </parameters>
 
     <services>
@@ -33,7 +33,10 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
         <service id="troulite_pathfinder.locale.setter"
-                 class="%troulite_pathfinder.locale.setter.class%">
+                 class="%troulite_pathfinder.locale.redirector.class%">
+            <argument type="service" id="router"/>
+            <argument>%locale%</argument>
+            <argument>%jms_i18n_routing.locales%</argument>
             <tag name="kernel.event_subscriber"/>
         </service>
         <service id="troulite_pathfinder.character_listener"
