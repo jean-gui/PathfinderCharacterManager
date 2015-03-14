@@ -56,7 +56,7 @@ class UncastSpellsType extends AbstractType
                 }
 
                 if ($form->count() > 0) {
-                    $form->add('Uncast', 'submit');
+                    $form->add('Uncast', 'submit', array('label' => 'uncast'));
                 }
             }
         );

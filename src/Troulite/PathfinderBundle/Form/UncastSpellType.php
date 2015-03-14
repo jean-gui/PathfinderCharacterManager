@@ -31,6 +31,7 @@ class UncastSpellType extends AbstractType
             'checkbox',
             array(
                 'required' => false,
+                'label'    => 'uncast'
             )
         );
     }

@@ -76,7 +76,7 @@
             {% set character = form.parent.parent.parent.parent.vars.data %}
             {% set classLevel = character.level(class) %}
             {% set modifier = character.modifierByAbility(class.castingAbility) %}
-            Level {{ spellLevel }}
+            {{ 'level_value'|trans({'%level%': spellLevel}) }}
             {% if not class.preparationNeeded %}
                 <small>
                     {% if spellLevel > 0 %}

@@ -32,7 +32,7 @@
     {% if known %}
         <h2>{{ 'known.spells'|trans }}</h2>
         {% for spellLevel, classSpells in known %}
-            <h3>Level {{ spellLevel }}</h3>
+            <h3>{{ 'level_value'|trans({'%level%': spellLevel}) }}</h3>
             <ul>
                 {% for classSpell in classSpells %}
                     <li>{{ classSpell.spell }}</li>

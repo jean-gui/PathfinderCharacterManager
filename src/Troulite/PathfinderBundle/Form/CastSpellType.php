@@ -37,7 +37,7 @@ class CastSpellType extends AbstractType
                     'required'    => false,
                 )
             )
-            ->add('id', 'submit', array('label' => 'Cast'));
+            ->add('id', 'submit', array('label' => 'cast'));
     }
 
     /**

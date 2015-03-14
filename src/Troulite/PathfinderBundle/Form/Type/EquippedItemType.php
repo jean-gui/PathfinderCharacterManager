@@ -29,7 +29,8 @@ class EquippedItemType extends AbstractType
     {
         $builder->add(
             'unequip',
-            'submit'
+            'submit',
+            array('label' => 'unequip')
         );
     }
 
