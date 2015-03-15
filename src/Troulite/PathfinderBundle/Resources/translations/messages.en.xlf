@@ -70,25 +70,49 @@
                 <source>strength</source>
                 <target>Strength</target>
             </trans-unit>
+            <trans-unit id="str" resname="str">
+                <source>str</source>
+                <target>str</target>
+            </trans-unit>
             <trans-unit id="dexterity" resname="dexterity">
                 <source>dexterity</source>
                 <target>Dexterity</target>
+            </trans-unit>
+            <trans-unit id="dex" resname="dex">
+                <source>dex</source>
+                <target>dex</target>
             </trans-unit>
             <trans-unit id="constitution" resname="constitution">
                 <source>constitution</source>
                 <target>Constitution</target>
             </trans-unit>
+            <trans-unit id="con" resname="con">
+                <source>con</source>
+                <target>con</target>
+            </trans-unit>
             <trans-unit id="intelligence" resname="intelligence">
                 <source>intelligence</source>
                 <target>Intelligence</target>
+            </trans-unit>
+            <trans-unit id="int" resname="int">
+                <source>int</source>
+                <target>int</target>
             </trans-unit>
             <trans-unit id="wisdom" resname="wisdom">
                 <source>wisdom</source>
                 <target>Wisdom</target>
             </trans-unit>
+            <trans-unit id="wis" resname="wis">
+                <source>wis</source>
+                <target>wis</target>
+            </trans-unit>
             <trans-unit id="charisma" resname="charisma">
                 <source>charisma</source>
                 <target>Charisma</target>
+            </trans-unit>
+            <trans-unit id="cha" resname="cha">
+                <source>cha</source>
+                <target>cha</target>
             </trans-unit>
             <trans-unit id="hit.points" resname="hit.points">
                 <source>hit.points</source>

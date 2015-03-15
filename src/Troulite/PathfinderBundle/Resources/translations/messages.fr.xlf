@@ -70,25 +70,49 @@
                 <source>strength</source>
                 <target>Force</target>
             </trans-unit>
+            <trans-unit id="str" resname="str">
+                <source>str</source>
+                <target>for</target>
+            </trans-unit>
             <trans-unit id="dexterity" resname="dexterity">
                 <source>dexterity</source>
                 <target>Dexterité</target>
+            </trans-unit>
+            <trans-unit id="dex" resname="dex">
+                <source>dex</source>
+                <target>dex</target>
             </trans-unit>
             <trans-unit id="constitution" resname="constitution">
                 <source>constitution</source>
                 <target>Constitution</target>
             </trans-unit>
+            <trans-unit id="con" resname="con">
+                <source>con</source>
+                <target>con</target>
+            </trans-unit>
             <trans-unit id="intelligence" resname="intelligence">
                 <source>intelligence</source>
                 <target>Intelligence</target>
+            </trans-unit>
+            <trans-unit id="int" resname="int">
+                <source>int</source>
+                <target>int</target>
             </trans-unit>
             <trans-unit id="wisdom" resname="wisdom">
                 <source>wisdom</source>
                 <target>Sagesse</target>
             </trans-unit>
+            <trans-unit id="wis" resname="wis">
+                <source>wis</source>
+                <target>sag</target>
+            </trans-unit>
             <trans-unit id="charisma" resname="charisma">
                 <source>charisma</source>
                 <target>Charisme</target>
+            </trans-unit>
+            <trans-unit id="cha" resname="cha">
+                <source>cha</source>
+                <target>cha</target>
             </trans-unit>
             <trans-unit id="hit.points" resname="hit.points">
                 <source>hit.points</source>
@@ -178,13 +202,17 @@
                 <source>ability.modifier</source>
                 <target>Modificateur de caractéristique</target>
             </trans-unit>
+            <trans-unit id="ability.modifier.short" resname="ability.modifier.short">
+                <source>ability.modifier.short</source>
+                <target>Mod. carac.</target>
+            </trans-unit>
             <trans-unit id="ranks" resname="ranks">
                 <source>ranks</source>
                 <target>Rangs</target>
             </trans-unit>
             <trans-unit id="misc.modifiers" resname="misc.modifiers">
                 <source>misc.modifiers</source>
-                <target>Modificateurs divers</target>
+                <target>Mod. divers</target>
             </trans-unit>
             <trans-unit id="powers" resname="powers">
                 <source>powers</source>

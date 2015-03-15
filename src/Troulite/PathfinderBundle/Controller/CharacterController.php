@@ -20,6 +20,7 @@ use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
+use Troulite\PathfinderBundle\Entity\Skill;
 use Troulite\PathfinderBundle\Entity\Spell;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Form\BaseCharacterType;
@@ -271,7 +272,19 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
         }
 
-        $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+        $allSkills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+        $skills = array();
+        // Filter skills that $entity cannot use
+        /** @var Skill $skill */
+        foreach ($allSkills as $skill) {
+            if ($skill->getUntrained() || $entity->getSkillRank($skill) > 0) {
+                $skills[] = $skill;
+            }
+        }
+        // Sort skills by name
+        usort($skills, function (Skill $s1, Skill $s2) {
+            return strcmp($s1->getName(), $s2->getName());
+        });
 
         return array(
             'entity' => $entity,
