@@ -12,7 +12,11 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-            logout:       true
+                check_path:  fos_user_security_check
+                login_path:  fos_user_security_login
+                use_referer: true
+            logout:
+                path:     fos_user_security_logout
             anonymous:    true
 
     access_control:
