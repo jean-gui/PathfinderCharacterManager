@@ -58,6 +58,13 @@
 
     <div class="container-fluid">
         {% block content %}{% endblock %}
+        {{ render_esi(
+            path(
+                'layout_footer',
+                app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
+            )
+        )
+        }}
     </div>
 {% endblock %}
 {% javascripts

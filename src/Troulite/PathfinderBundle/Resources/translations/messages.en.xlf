@@ -2,6 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="language" resname="language">
+                <source>language</source>
+                <target>Language</target>
+            </trans-unit>
             <trans-unit id="score" resname="score">
                 <source>score</source>
                 <target>Score</target>
