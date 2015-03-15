@@ -1,0 +1,49 @@
+<h2>{{ 'unmanaged.powers'|trans }}</h2>
+<table class="table table-hover table-condensed table-responsive">
+    <tbody>
+    {% for feat in other_feats %}
+        <tr>
+            {% if loop.index == 1 %}
+                <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
+            {% endif %}
+            <td>
+                {{ popovers.description(feat.feat.name, feat.feat) }}
+                {{ feat.feat }}
+            </td>
+        </tr>
+    {% endfor %}
+    {% for power in other_class_powers %}
+        <tr>
+            {% if loop.index == 1 %}
+                <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
+            {% endif %}
+            <td>
+                {{ popovers.description(power.classPower.name, power.classPower) }}
+                {{ power.classPower }}
+            </td>
+        </tr>
+    {% endfor %}
+    {% for spellEffect in other_spell_effects %}
+        <tr>
+            {% if loop.index == 1 %}
+                <th rowspan="{{ loop.length }}">{{ 'spells'|trans }}</th>
+            {% endif %}
+            <td>
+                {{ popovers.description(spellEffect.spell.name, spellEffect.spell) }}
+                {{ spellEffect.spell }}
+            </td>
+        </tr>
+    {% endfor %}
+    {% for powerEffect in other_power_effects %}
+        <tr>
+            {% if loop.index == 1 %}
+                <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+            {% endif %}
+            <td>
+                {{ popovers.description(powerEffect.power.name, powerEffect.spell) }}
+                {{ spellEffect.power }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

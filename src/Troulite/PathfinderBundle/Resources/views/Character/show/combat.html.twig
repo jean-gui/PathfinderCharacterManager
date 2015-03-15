@@ -1,0 +1,124 @@
+<h2>{{ 'combat'|trans }}</h2>
+<table id="armor" class="table table-striped table-condensed table-responsive">
+    <tr>
+        <th>{{ 'ac'|trans }}</th>
+        <td>
+            {{ entity.ac }}
+            {{ popovers.bonuses(entity.defenseBonuses.ac) }}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'touch.ac'|trans }}</th>
+        <td>{{ entity.touchAc }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'flat.footed.ac'|trans }}</th>
+        <td>{{ entity.flatFootedAc }}</td>
+    </tr>
+</table>
+
+<table id="saving-throws" class="table table-striped table-condensed table-responsive">
+    <tr>
+        <th>{{ 'reflexes'|trans }}</th>
+        <td>{{ entity.reflexes }}</td>
+        <td>=</td>
+        <td>{{ entity.baseReflexes }}</td>
+        <td>+</td>
+        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+        <td>+</td>
+        <td>
+            {{ entity.defenseBonuses.reflexes }}
+            {{ popovers.bonuses(entity.defenseBonuses.reflexes) }}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'fortitude'|trans }}</th>
+        <td>{{ entity.fortitude }}</td>
+        <td>=</td>
+        <td>{{ entity.baseFortitude }}</td>
+        <td>+</td>
+        <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+        <td>+</td>
+        <td>
+            {{ entity.defenseBonuses.fortitude }}
+            {{ popovers.bonuses(entity.defenseBonuses.fortitude) }}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'will'|trans }}</th>
+        <td>{{ entity.will }}</td>
+        <td>=</td>
+        <td>{{ entity.baseWill }}</td>
+        <td>+</td>
+        <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+        <td>+</td>
+        <td>
+            {{ entity.defenseBonuses.will }}
+            {{ popovers.bonuses(entity.defenseBonuses.will) }}
+        </td>
+    </tr>
+</table>
+<table id="attack-rolls" class="table table-striped table-hover table-condensed table-responsive">
+    <tr>
+        <th>{{ 'bab'|trans }}</th>
+        <td>{{ entity.bab }}</td>
+        {% if entity.bab > 5 -%}
+            <td>{{ entity.bab - 5 }}</td>{% endif %}
+        {% if entity.bab > 10 -%}
+            <td>{{ entity.bab - 10 }}</td>{% endif %}
+        {% if entity.bab > 15 -%}
+            <td>{{ entity.bab - 15 }}</td>{% endif %}
+    </tr>
+    <tr>
+        <th>{{ 'melee.attack.rolls'|trans }}</th>
+        {% for ar in entity.meleeAttackRoll %}
+            <td>
+                {{ ar }}
+                {% if loop.index == loop.length %}
+                    {{ popovers.bonuses(entity.attackBonuses.meleeAttackRolls) }}
+                {% endif %}
+
+            </td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>{{ 'ranged.attack.rolls'|trans }}</th>
+        {% for ar in entity.rangedAttackRoll %}
+            <td>
+                {{ ar }}
+                {% if loop.index == loop.length %}
+                    {{ popovers.bonuses(entity.attackBonuses.rangedAttackRolls) }}
+                {% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+</table>
+<table id="damage-bonus" class="table table-striped table-hover table-condensed table-responsive">
+    <tr>
+        <th>{{ 'melee.damage.bonus'|trans }}</th>
+        <td>
+            {% if entity.meleeDamageRoll > 0 %}+{% endif %}{{ entity.meleeDamageRoll }}
+            {{ popovers.bonuses(entity.attackBonuses.meleeDamage) }}
+        </td>
+    </tr>
+    <tr>
+        <th>{{ 'ranged.damage.bonus'|trans }}</th>
+        <td>
+            {% if entity.rangedAttackRoll > 0 %}+{% endif %}{{ entity.rangedDamageRoll }}
+            {{ popovers.bonuses(entity.attackBonuses.rangedDamage) }}
+        </td>
+    </tr>
+</table>
+<table id="initiative" class="table table-hover table-condensed table-responsive">
+    <tr>
+        <th>{{ 'initiative'|trans }}</th>
+        <td>{{ entity.initiative }}</td>
+        <td>=</td>
+        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+        <td>+</td>
+        <td>
+            {{ entity.attackBonuses.initiative.bonus }}
+            {{ popovers.bonuses(entity.attackBonuses.initiative) }}
+        </td>
+    </tr>
+</table>

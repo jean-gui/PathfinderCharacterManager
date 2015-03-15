@@ -1,0 +1,59 @@
+<h2>{{ 'main.profile'|trans }}</h2>
+<table id="abilities" class="table table-condensed table-striped table-hover table-responsive">
+    <thead>
+    <tr>
+        <th>{{ 'ability'|trans }}</th>
+        <th>{{ 'value'|trans }}</th>
+        <th>{{ 'modifier' }}</th>
+    </tr>
+    </thead>
+    <tr>
+        <th>{{ 'strength'|trans }}</th>
+        <td>
+            {{ entity.strength }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.strength) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.strength) }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'dexterity'|trans }}</th>
+        <td>
+            {{ entity.dexterity }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.dexterity) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'constitution'|trans }}</th>
+        <td>
+            {{ entity.constitution }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.constitution) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'intelligence'|trans }}</th>
+        <td>
+            {{ entity.intelligence }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.intelligence) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.intelligence) }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'wisdom'|trans }}</th>
+        <td>
+            {{ entity.wisdom }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.wisdom) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'charisma'|trans }}</th>
+        <td>
+            {{ entity.charisma }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.charisma) }}
+        </td>
+        <td>{{ entity.abilityModifier(entity.charisma) }}</td>
+    </tr>
+</table>
+{{ render_esi(controller('TroulitePathfinderBundle:Character:hitPoints', { 'id': entity.id })) }}
