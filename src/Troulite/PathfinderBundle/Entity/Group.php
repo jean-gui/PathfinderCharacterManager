@@ -38,6 +38,9 @@ class Group extends BaseGroup
      */
     private $users;
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
@@ -45,6 +48,8 @@ class Group extends BaseGroup
 
     /**
      * Constructor
+     *
+     * @param $name
      */
     public function __construct($name)
     {

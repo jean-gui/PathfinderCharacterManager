@@ -42,6 +42,10 @@ class RaceController extends Controller
      * @Route("/", name="races_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:Race:new.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {

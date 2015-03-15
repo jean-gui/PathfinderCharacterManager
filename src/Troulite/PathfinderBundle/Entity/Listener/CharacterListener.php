@@ -8,7 +8,6 @@
 
 namespace Troulite\PathfinderBundle\Entity\Listener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 

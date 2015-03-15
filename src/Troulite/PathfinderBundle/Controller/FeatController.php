@@ -41,6 +41,10 @@ class FeatController extends Controller
      * @Route("/{id}", name="feats_show")
      * @Method("GET")
      * @Template()
+     *
+     * @param Feat $entity
+     *
+     * @return array
      */
     public function showAction(Feat $entity)
     {

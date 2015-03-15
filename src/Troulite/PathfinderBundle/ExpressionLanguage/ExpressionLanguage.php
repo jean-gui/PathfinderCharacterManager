@@ -3,12 +3,18 @@ namespace Troulite\PathfinderBundle\ExpressionLanguage;
 
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
 
+/**
+ * Class ExpressionLanguage
+ *
+ * @package Troulite\PathfinderBundle\ExpressionLanguage
+ */
 class ExpressionLanguage extends BaseExpressionLanguage
 {
     protected function registerFunctions()
     {
         parent::registerFunctions(); // do not forget to also register core functions
 
+        /** @noinspection PhpUnusedParameterInspection */
         $this->register(
             'div',
             function ($param1, $param2) {
@@ -19,6 +25,7 @@ class ExpressionLanguage extends BaseExpressionLanguage
             }
         );
 
+        /** @noinspection PhpUnusedParameterInspection */
         $this->register(
             'min',
             function ($param1, $param2) {
@@ -29,6 +36,7 @@ class ExpressionLanguage extends BaseExpressionLanguage
             }
         );
 
+        /** @noinspection PhpUnusedParameterInspection */
         $this->register(
             'max',
             function ($param1, $param2) {

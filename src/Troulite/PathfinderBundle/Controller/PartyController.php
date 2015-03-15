@@ -42,6 +42,10 @@ class PartyController extends Controller
      * @Route("/", name="parties_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:Party:new.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {

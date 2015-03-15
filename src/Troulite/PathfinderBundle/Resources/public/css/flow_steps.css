@@ -14,8 +14,8 @@
 }
 
 .craue_formflow_steplist li:before {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border-top: 20px inset transparent;
     border-bottom: 20px inset transparent;
     border-left: 20px solid #fff;
@@ -26,8 +26,8 @@
 }
 
 .craue_formflow_steplist li:after {
-    width: 0px;
-    height: 0px;
+    width: 0;
+    height: 0;
     border-top: 20px inset transparent;
     border-bottom: 20px inset transparent;
     border-left: 20px solid #efefef;

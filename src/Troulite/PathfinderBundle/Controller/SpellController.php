@@ -41,6 +41,10 @@ class SpellController extends Controller
      * @Route("/{id}", name="spells_show")
      * @Method("GET")
      * @Template()
+     *
+     * @param Spell $entity
+     *
+     * @return array
      */
     public function showAction(Spell $entity)
     {

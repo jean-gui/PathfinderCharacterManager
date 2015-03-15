@@ -149,6 +149,9 @@ class CharacterFeat
         return $this->active;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getFeat()->getName();

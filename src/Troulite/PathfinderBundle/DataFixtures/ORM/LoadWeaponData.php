@@ -5,7 +5,6 @@ namespace Troulite\PathfinderBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Troulite\PathfinderBundle\Entity\ItemPower;
 use Troulite\PathfinderBundle\Entity\Weapon;
 
 /**

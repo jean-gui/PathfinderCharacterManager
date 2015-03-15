@@ -5,7 +5,6 @@ namespace Troulite\PathfinderBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Form\Type\InventoryItemType;
 
 /**
  * Class EditInventoryType

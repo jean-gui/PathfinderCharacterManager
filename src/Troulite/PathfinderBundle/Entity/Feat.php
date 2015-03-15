@@ -3,7 +3,6 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Troulite\PathfinderBundle\Entity\Traits\Describable;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
 use Gedmo\Mapping\Annotation as Gedmo;
 

@@ -130,6 +130,9 @@ class ClassSpell
         return $this->spell;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getSpell()->__toString();

@@ -42,6 +42,10 @@ class ClassDefinitionController extends Controller
      * @Route("/", name="classes_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:ClassDefinition:new.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
