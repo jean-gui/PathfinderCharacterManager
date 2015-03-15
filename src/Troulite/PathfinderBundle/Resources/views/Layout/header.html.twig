@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('index') }}">Pathfinder Character Manager</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if route in ['characters_show', 'character_inventory', 'character_inventory_edit', 'character_spells'] %}
+                <ul class="nav navbar-nav">
+                    <li {% if route == 'characters_show' %}class="active"{% endif %}>
+                        <a href="{{ path('characters_show', routeParams) }}">{{ 'main.profile'|trans }}</a>
+                    </li>
+                    <li {% if route in ['character_inventory', 'character_inventory_edit'] %}class="active"{% endif %}>
+                        <a href="{{ path('character_inventory', routeParams) }}">{{ 'inventory'|trans }}</a>
+                    </li>
+                    <li {% if route == 'character_spells' %}class="active"{% endif %}>
+                        <a href="{{ path('character_spells', routeParams) }}">{{ 'spells'|trans }}</a>
+                    </li>
+                </ul>
+            {% endif %}
+            <ul class="nav navbar-nav navbar-right">
+                {% include('TroulitePathfinderBundle:Layout:navbar-right.html.twig') %}
+                {% render(controller("TroulitePathfinderBundle:Security:login")) %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -23,6 +23,27 @@ use Symfony\Component\Intl\Intl;
 class LayoutController extends Controller
 {
     /**
+     * @Route("/layout/header", name="layout_header")
+     * @Template()
+     * @Method("GET")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function headerAction(Request $request)
+    {
+        $route       = $request->query->get('_route');
+        $routeParams = $request->query->all();
+        unset($routeParams['_route']);
+
+        return array(
+            'route'            => $route,
+            'routeParams'      => $routeParams
+        );
+    }
+
+    /**
      * @Route("/layout/footer", name="layout_footer")
      * @Template()
      * @Method("GET")
