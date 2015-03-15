@@ -33,7 +33,7 @@
                 {{ skill }}
             </td>
             <td>{{ value }}</td>
-            <td>{{ skill.keyAbility[0:3]|trans }} ({{ entity.modifierByAbility(skill.keyAbility, entity) }})</td>
+            <td>{{ skill.keyAbility[0:3]|trans|upper }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
             <td>{{ entity.skillRank(skill) }}</td>
             <td>
                 {{ bonus|default(0) }}
