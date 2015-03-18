@@ -202,13 +202,17 @@
                 <source>ability.modifier</source>
                 <target>Ability Modifier</target>
             </trans-unit>
+            <trans-unit id="ability.modifier.short" resname="ability.modifier.short">
+                <source>ability.modifier.short</source>
+                <target>Ability Mod.</target>
+            </trans-unit>
             <trans-unit id="ranks" resname="ranks">
                 <source>ranks</source>
                 <target>Ranks</target>
             </trans-unit>
             <trans-unit id="misc.modifiers" resname="misc.modifiers">
                 <source>misc.modifiers</source>
-                <target>Misc Modifiers</target>
+                <target>Misc Mod.</target>
             </trans-unit>
             <trans-unit id="powers" resname="powers">
                 <source>powers</source>
