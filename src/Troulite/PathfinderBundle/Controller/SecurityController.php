@@ -11,6 +11,7 @@ namespace Troulite\PathfinderBundle\Controller;
 use FOS\UserBundle\Controller\SecurityController as BaseSecurity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SecurityController
@@ -20,21 +21,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class SecurityController extends BaseSecurity
 {
     /**
-     * @Route("/embedded_login", name="embedded_login")
-     * @Method("GET")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * {@inheritdoc}
      */
-    public function loginAction()
+    protected function renderLogin(array $data)
     {
-        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-
-        return $this->container->get('templating')->renderResponse(
-            '::navindicator.html.twig',
-            array(
-                'last_username' => null,
-                'error' => null,
-                'csrf_token' => $csrfToken
-            )
-        );
+        return $this->render('::navindicator.html.twig', $data);
     }
 }

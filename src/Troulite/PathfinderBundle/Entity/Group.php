@@ -12,7 +12,7 @@ namespace Troulite\PathfinderBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\Group as BaseGroup;
+use FOS\UserBundle\Model\Group as BaseGroup;
 
 /**
  * @ORM\Entity

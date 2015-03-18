@@ -11,7 +11,7 @@ namespace Troulite\PathfinderBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
 
 /**
