@@ -1,5 +1,5 @@
 {% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
