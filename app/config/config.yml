@@ -51,6 +51,8 @@ assetic:
             apply_to: "\.less$"
 
 braincrafted_bootstrap:
+    customize:
+        variables_file: %kernel.root_dir%/Resources/less/variables.less
     less_filter: less
 
 # Doctrine Configuration
