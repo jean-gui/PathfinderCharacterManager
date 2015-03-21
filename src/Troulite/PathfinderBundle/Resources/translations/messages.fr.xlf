@@ -50,6 +50,14 @@
                 <source>level</source>
                 <target>Niveau %level%</target>
             </trans-unit>
+            <trans-unit id="edit.levels" resname="edit.levels">
+                <source>edit.levels</source>
+                <target>Edition de niveaux</target>
+            </trans-unit>
+            <trans-unit id="edit.level" resname="edit.level">
+                <source>edit.level</source>
+                <target>Editer niveau %level%</target>
+            </trans-unit>
             <trans-unit id="level.up" resname="level.up">
                 <source>level.up</source>
                 <target>Passer un niveau</target>

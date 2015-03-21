@@ -8,7 +8,7 @@
 
 {% block content %}
     {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
-    <h2>{{ 'level'|trans({'%level%': level.value}) }}</h2>
+    <h2>{{ 'edit.level'|trans({'%level%': level.value}) }}</h2>
     {{ form(form) }}
 {% endblock %}
 
