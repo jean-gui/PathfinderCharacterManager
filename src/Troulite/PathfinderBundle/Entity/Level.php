@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Level
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class Level
 {
@@ -96,6 +96,13 @@ class Level
      *      )
      */
     private $learnedSpells;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $value;
 
     /**
      * Constructor
@@ -409,4 +416,26 @@ class Level
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+
 }

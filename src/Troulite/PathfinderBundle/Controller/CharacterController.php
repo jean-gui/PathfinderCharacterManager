@@ -605,6 +605,7 @@ class CharacterController extends Controller
     public function levelUpAction(Character $character)
     {
         $level = new Level();
+        $level->setValue($character->getLevel() + 1);
         $level->setClassDefinition($character->getFavoredClass());
         $character->addLevel($level);
 
@@ -699,20 +700,18 @@ class CharacterController extends Controller
     /**
      * Edits an existing Character entity.
      *
-     * @Route("/{id}/levels/{level}/edit", name="characters_levels_edit")
+     * @Route("/{character}/levels/{level}/edit", name="characters_levels_edit")
+     * @ParamConverter("level", options={"mapping": {"character" = "character", "level" = "value"}})
      * @Template()
      *
-     * @param Character $character
      * @param Level $level
      * @param Request $request
      *
      * @return array|RedirectResponse
      */
-    public function editLevelAction(Character $character, Level $level, Request $request)
+    public function editLevelAction(Level $level, Request $request)
     {
-        if ($level->getCharacter() !== $character) {
-            throw new NotFoundHttpException('No such level for this character');
-        }
+        $character = $level->getCharacter();
 
         /** @var EntityManager $em */
         $em = $this->get('doctrine.orm.entity_manager');
@@ -728,7 +727,7 @@ class CharacterController extends Controller
             array(
                 'action' => $this->generateUrl(
                     'characters_levels_edit',
-                    array('id' => $character->getId(), 'level' => $level->getId())),
+                    array('character' => $character->getId(), 'level' => $level->getId())),
                 'method' => 'PUT',
             )
         );
@@ -741,7 +740,8 @@ class CharacterController extends Controller
 
         return array(
             'form'   => $form->createView(),
-            'entity' => $character
+            'entity' => $character,
+            'level'  => $level
         );
     }
 

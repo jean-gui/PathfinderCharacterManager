@@ -9,7 +9,7 @@
         <h2>{{ 'edit.levels'|trans }}</h2>
         <ol>
             {% for level in entity.levels %}
-                <li><a href="{{ path('characters_levels_edit', { 'id': entity.id, 'level': level.id}) }}">Edit</a></li>
+                <li><a href="{{ path('characters_levels_edit', { 'character': entity.id, 'level': level.value}) }}">Edit</a></li>
             {% endfor %}
         </ol>
 
