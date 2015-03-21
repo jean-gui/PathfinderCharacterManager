@@ -137,4 +137,12 @@ class LevelSkill
     {
         return $this->skill;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getSkill()->__toString();
+    }
 }
