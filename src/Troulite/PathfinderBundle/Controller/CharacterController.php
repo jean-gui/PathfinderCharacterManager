@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
@@ -481,7 +480,7 @@ class CharacterController extends Controller
                         break;
                 }
 
-                return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('character_spells', array('id' => $entity->getId())));
             }
         }
 
