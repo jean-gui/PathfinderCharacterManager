@@ -6,6 +6,13 @@
 
         {{ form(edit_form) }}
 
+        <h2>{{ 'edit.levels'|trans }}</h2>
+        <ol>
+            {% for level in entity.levels %}
+                <li><a href="{{ path('characters_levels_edit', { 'id': entity.id, 'level': level.id}) }}">Edit</a></li>
+            {% endfor %}
+        </ol>
+
         <ul class="record_actions">
             <li>
                 <a href="{{ path('characters') }}">

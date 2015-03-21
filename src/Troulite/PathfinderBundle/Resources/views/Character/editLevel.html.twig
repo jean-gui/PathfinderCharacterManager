@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block title %}
+    {{ entity }} - Edit Level
+{% endblock %}
+
+{% block content %}
+    {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
+
+    {{ form(form) }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_level_edit_skills_widget %}
+    {% spaceless %}
+        <table {{ block('widget_container_attributes') }}>
+            <thead>
+            <tr>
+                <th>Skill</th>
+                <th>Current Value</th>
+                <th>Increment</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ block('skills_collection_rows') }}
+            </tbody>
+        </table>
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block skills_collection_rows %}
+    {% spaceless %}
+        {{ form_errors(form) }}
+        {% for child in form %}
+            <tr>
+                <td>{{ child.vars.value.skill }}</td>
+                <td>{{ child.parent.parent.vars.value.character.skillRank(child.vars.value.skill) - child.vars.value.value }}</td>
+                <td>{{ form_row(child, {'attr':{'class':'collection-item' }}) }}</td>
+            </tr>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}

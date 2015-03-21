@@ -87,7 +87,7 @@ class Level
     private $classPowers;
 
     /**
-     * @var Collection|Spell[]
+     * @var Collection|ClassSpell[]
      *
      * @ORM\ManyToMany(targetEntity="ClassSpell")
      * @ORM\JoinTable(name="levels_spells",
@@ -396,5 +396,17 @@ class Level
     public function getLearnedSpells()
     {
         return $this->learnedSpells;
+    }
+
+    /**
+     * @param Collection|ClassSpell[] $learnedSpells
+     *
+     * @return $this
+     */
+    public function setLearnedSpells(Collection $learnedSpells)
+    {
+        $this->learnedSpells = $learnedSpells;
+
+        return $this;
     }
 }

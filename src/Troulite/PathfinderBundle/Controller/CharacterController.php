@@ -5,6 +5,7 @@ namespace Troulite\PathfinderBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
@@ -29,6 +31,7 @@ use Troulite\PathfinderBundle\Form\ChangeHpType;
 use Troulite\PathfinderBundle\Form\EditInventoryType;
 use Troulite\PathfinderBundle\Form\EquipmentType;
 use Troulite\PathfinderBundle\Form\InventoryType;
+use Troulite\PathfinderBundle\Form\EditLevelType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
@@ -689,6 +692,55 @@ class CharacterController extends Controller
         return array(
             'form' => $form->createView(),
             'flow' => $flow,
+            'entity' => $character
+        );
+    }
+
+    /**
+     * Edits an existing Character entity.
+     *
+     * @Route("/{id}/levels/{level}/edit", name="characters_levels_edit")
+     * @Template()
+     *
+     * @param Character $character
+     * @param Level $level
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function editLevelAction(Character $character, Level $level, Request $request)
+    {
+        if ($level->getCharacter() !== $character) {
+            throw new NotFoundHttpException('No such level for this character');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $form = $this->createForm(
+            new EditLevelType(
+                $this->container->getParameter('character_advancement'),
+                $em,
+                $this->get('doctrine'),
+                $this->get('property_accessor')
+            ),
+            $level,
+            array(
+                'action' => $this->generateUrl(
+                    'characters_levels_edit',
+                    array('id' => $character->getId(), 'level' => $level->getId())),
+                'method' => 'PUT',
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->flush();
+        }
+
+        return array(
+            'form'   => $form->createView(),
             'entity' => $character
         );
     }
