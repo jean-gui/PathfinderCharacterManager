@@ -525,7 +525,7 @@ class CharacterController extends Controller
     public function editAction(Character $character)
     {
         $editForm = $this->createEditForm($character);
-        $deleteForm = $this->createDeleteForm($character->getId());
+        $deleteForm = $this->createDeleteForm($character);
 
         return array(
             'entity' => $character,
@@ -573,7 +573,7 @@ class CharacterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($character->getId());
+        $deleteForm = $this->createDeleteForm($character);
         $editForm = $this->createEditForm($character);
         $editForm->handleRequest($request);
 
