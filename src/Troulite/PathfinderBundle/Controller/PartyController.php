@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Party;
 use Troulite\PathfinderBundle\Form\PartyType;
@@ -45,24 +47,24 @@ class PartyController extends Controller
      *
      * @param Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function createAction(Request $request)
     {
-        $entity = new Party();
-        $form = $this->createCreateForm($entity);
+        $party = new Party();
+        $form = $this->createCreateForm($party);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($party);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parties_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('parties_show', array('id' => $party->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $party,
             'form' => $form->createView(),
         );
     }
@@ -70,15 +72,15 @@ class PartyController extends Controller
     /**
      * Creates a form to create a Party entity.
      *
-     * @param Party $entity The entity
+     * @param Party $party The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
-    private function createCreateForm(Party $entity)
+    private function createCreateForm(Party $party)
     {
         $form = $this->createForm(
             new PartyType(),
-            $entity,
+            $party,
             array(
                 'action' => $this->generateUrl('parties_create'),
                 'method' => 'POST',
@@ -99,11 +101,11 @@ class PartyController extends Controller
      */
     public function newAction()
     {
-        $entity = new Party();
-        $form = $this->createCreateForm($entity);
+        $party = new Party();
+        $form = $this->createCreateForm($party);
 
         return array(
-            'entity' => $entity,
+            'entity' => $party,
             'form' => $form->createView(),
         );
     }
@@ -114,21 +116,17 @@ class PartyController extends Controller
      * @Route("/{id}", name="parties_show")
      * @Method("GET")
      * @Template()
+     *
+     * @param Party $party
+     *
+     * @return array
      */
-    public function showAction($id)
+    public function showAction(Party $party)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TroulitePathfinderBundle:Party')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Party entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($party);
 
         return array(
-            'entity' => $entity,
+            'entity' => $party,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -139,22 +137,18 @@ class PartyController extends Controller
      * @Route("/{id}/edit", name="parties_edit")
      * @Method("GET")
      * @Template()
+     *
+     * @param Party $party
+     *
+     * @return array
      */
-    public function editAction($id)
+    public function editAction(Party $party)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TroulitePathfinderBundle:Party')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Party entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($party);
+        $deleteForm = $this->createDeleteForm($party);
 
         return array(
-            'entity' => $entity,
+            'entity' => $party,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -163,17 +157,17 @@ class PartyController extends Controller
     /**
      * Creates a form to edit a Party entity.
      *
-     * @param Party $entity The entity
+     * @param Party $party The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
-    private function createEditForm(Party $entity)
+    private function createEditForm(Party $party)
     {
         $form = $this->createForm(
             new PartyType(),
-            $entity,
+            $party,
             array(
-                'action' => $this->generateUrl('parties_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('parties_update', array('party' => $party->getId())),
                 'method' => 'PUT',
             )
         );
@@ -189,29 +183,28 @@ class PartyController extends Controller
      * @Route("/{id}", name="parties_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:Party:edit.html.twig")
+     *
+     * @param Request $request
+     * @param Party $party
+     *
+     * @return array|RedirectResponse
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Party $party)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:Party')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Party entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($party);
+        $editForm = $this->createEditForm($party);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parties_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('parties_edit', array('party' => $party)));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $party,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -222,21 +215,21 @@ class PartyController extends Controller
      *
      * @Route("/{id}", name="parties_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Party $party
+     *
+     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Party $party)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($party);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroulitePathfinderBundle:Party')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Party entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($party);
             $em->flush();
         }
 
@@ -246,14 +239,14 @@ class PartyController extends Controller
     /**
      * Creates a form to delete a Party entity by id.
      *
-     * @param mixed $id The entity id
+     * @param Party $party The party
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Party $party)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('parties_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('parties_delete', array('party' => $party->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();

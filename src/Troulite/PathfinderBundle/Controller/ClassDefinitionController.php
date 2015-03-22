@@ -70,15 +70,15 @@ class ClassDefinitionController extends Controller
     /**
      * Creates a form to create a ClassDefinition entity.
      *
-     * @param ClassDefinition $entity The entity
+     * @param ClassDefinition $classDefinition The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(ClassDefinition $entity)
+    private function createCreateForm(ClassDefinition $classDefinition)
     {
         $form = $this->createForm(
             new ClassDefinitionType(),
-            $entity,
+            $classDefinition,
             array(
                 'action' => $this->generateUrl('classes_create'),
                 'method' => 'POST',
@@ -99,11 +99,11 @@ class ClassDefinitionController extends Controller
      */
     public function newAction()
     {
-        $entity = new ClassDefinition();
-        $form = $this->createCreateForm($entity);
+        $classDefinition = new ClassDefinition();
+        $form = $this->createCreateForm($classDefinition);
 
         return array(
-            'entity' => $entity,
+            'entity' => $classDefinition,
             'form' => $form->createView(),
         );
     }
@@ -114,10 +114,14 @@ class ClassDefinitionController extends Controller
      * @Route("/{id}", name="classes_show")
      * @Method("GET")
      * @Template()
+     *
+     * @param ClassDefinition $classDefinition
+     *
+     * @return array
      */
     public function showAction(ClassDefinition $classDefinition)
     {
-        $deleteForm = $this->createDeleteForm($classDefinition->getId());
+        $deleteForm = $this->createDeleteForm($classDefinition);
 
         return array(
             'entity' => $classDefinition,
@@ -131,22 +135,18 @@ class ClassDefinitionController extends Controller
      * @Route("/{id}/edit", name="classes_edit")
      * @Method("GET")
      * @Template()
+     *
+     * @param ClassDefinition $classDefinition
+     *
+     * @return array
      */
-    public function editAction($id)
+    public function editAction(ClassDefinition $classDefinition)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($classDefinition);
+        $deleteForm = $this->createDeleteForm($classDefinition);
 
         return array(
-            'entity' => $entity,
+            'entity' => $classDefinition,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -155,17 +155,17 @@ class ClassDefinitionController extends Controller
     /**
      * Creates a form to edit a ClassDefinition entity.
      *
-     * @param ClassDefinition $entity The entity
+     * @param ClassDefinition $classDefinition The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(ClassDefinition $entity)
+    private function createEditForm(ClassDefinition $classDefinition)
     {
         $form = $this->createForm(
             new ClassDefinitionType(),
-            $entity,
+            $classDefinition,
             array(
-                'action' => $this->generateUrl('classes_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('classes_update', array('classDefinition' => $classDefinition->getId())),
                 'method' => 'PUT',
             )
         );
@@ -181,29 +181,29 @@ class ClassDefinitionController extends Controller
      * @Route("/{id}", name="classes_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:ClassDefinition:edit.html.twig")
+     *
+     * @param Request $request
+     * @param ClassDefinition $classDefinition
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, ClassDefinition $classDefinition)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($classDefinition);
+        $editForm = $this->createEditForm($classDefinition);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('classes_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('classes_edit', array('classDefinition' => $classDefinition)));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $classDefinition,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -214,21 +214,21 @@ class ClassDefinitionController extends Controller
      *
      * @Route("/{id}", name="classes_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param ClassDefinition $classDefinition
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, ClassDefinition $classDefinition)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($classDefinition);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TroulitePathfinderBundle:ClassDefinition')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find ClassDefinition entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($classDefinition);
             $em->flush();
         }
 
@@ -238,14 +238,14 @@ class ClassDefinitionController extends Controller
     /**
      * Creates a form to delete a ClassDefinition entity by id.
      *
-     * @param mixed $id The entity id
+     * @param ClassDefinition $classDefinition The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(ClassDefinition $classDefinition)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('classes_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('classes_delete', array('classDefinition' => $classDefinition->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'btn-danger')))
             ->getForm();

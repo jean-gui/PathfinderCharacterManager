@@ -2,10 +2,8 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,9 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
-use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
-use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Skill;
 use Troulite\PathfinderBundle\Entity\Spell;
@@ -30,8 +26,6 @@ use Troulite\PathfinderBundle\Form\ChangeHpType;
 use Troulite\PathfinderBundle\Form\EditInventoryType;
 use Troulite\PathfinderBundle\Form\EquipmentType;
 use Troulite\PathfinderBundle\Form\InventoryType;
-use Troulite\PathfinderBundle\Form\EditLevelType;
-use Troulite\PathfinderBundle\Form\LevelUpFlow;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
 use Troulite\PathfinderBundle\Form\UncastSpellsType;
@@ -65,14 +59,15 @@ class CharacterController extends Controller
     /**
      * Creates a form to create a Character entity.
      *
-     * @param Character $entity The entity
+     * @param Character $character The entity
+     *
      * @return Form The form
      */
-    private function createCreateForm(Character $entity)
+    private function createCreateForm(Character $character)
     {
         $form = $this->createForm(
             new BaseCharacterType($this->container->getParameter('character_advancement')),
-            $entity,
+            $character,
             array(
                 'action' => $this->generateUrl('characters_new'),
                 'method' => 'POST',
@@ -96,29 +91,34 @@ class CharacterController extends Controller
      */
     public function newAction(Request $request)
     {
-        $entity = new Character();
-        $form = $this->createCreateForm($entity);
+        $character = new Character();
+        $form = $this->createCreateForm($character);
 
         if($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 /** @var $token TokenInterface */
-                $token = $this->get('security.context')->getToken();
-                $entity->setUser($token->getUser());
+                $token = $this->get('security.token_storage')->getToken();
+                $character->setUser($token->getUser());
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($entity);
+                $em->persist($character);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('characters_levelup', array('id' => $entity->getId())));
+                return $this->redirect(
+                    $this->generateUrl(
+                        'characters_levelup',
+                        array('id' => $character->getId())
+                    )
+                );
             }
         }
 
         $ability_scores = $this->container->getParameter('ability_scores');
 
         return array(
-            'entity' => $entity,
+            'entity' => $character,
             'form' => $form->createView(),
             'ability_scores' => $ability_scores
         );
@@ -130,19 +130,19 @@ class CharacterController extends Controller
      * @Route("/{id}", name="characters_show")
      * @Template()
      *
-     * @param Character $entity
+     * @param Character $character
      * @param Request $request
      *
      * @return array|RedirectResponse
      */
-    public function showAction(Character $entity, Request $request)
+    public function showAction(Character $character, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $needActivationFeats = array();
         $passiveFeats = array();
         $otherFeats = array();
-        foreach ($entity->getFeats() as $spellEffect) {
+        foreach ($character->getFeats() as $spellEffect) {
             if (!$spellEffect->getFeat()->hasEffects()) {
                 $otherFeats[] = $spellEffect;
             } elseif (!$spellEffect->getFeat()->isPassive() || $spellEffect->getFeat()->hasExternalConditions()) {
@@ -155,7 +155,7 @@ class CharacterController extends Controller
         $needActivationClassPowers = array();
         $passiveClassPowers        = array();
         $otherClassPowers       = array();
-        foreach ($entity->getClassPowers() as $classPower) {
+        foreach ($character->getClassPowers() as $classPower) {
             $power = $classPower->getClassPower();
 
             if ($power->hasEffects()) {
@@ -185,7 +185,7 @@ class CharacterController extends Controller
         $needActivationSpellEffects = array();
         $passiveSpellEffects        = array();
         $otherSpellEffects          = array();
-        foreach ($entity->getSpellEffects() as $spellEffect) {
+        foreach ($character->getSpellEffects() as $spellEffect) {
             $spell = $spellEffect->getSpell();
             if (!$spell->hasEffects()) {
                 $otherSpellEffects[] = $spellEffect;
@@ -199,7 +199,7 @@ class CharacterController extends Controller
         $needActivationPowerEffects = array();
         $passivePowerEffects        = array();
         $otherPowerEffects          = array();
-        foreach ($entity->getPowerEffects() as $powerEffect) {
+        foreach ($character->getPowerEffects() as $powerEffect) {
             $power = $powerEffect->getPower();
             if (!$power->hasEffects()) {
                 $otherPowerEffects[] = $powerEffect;
@@ -224,9 +224,9 @@ class CharacterController extends Controller
                     $ccp = $powersActivationForm->get('class_powers')->get($key)->getData();
 
                     if (array_key_exists('cancel', $value) && $value['cancel']) {
-                        foreach ($entity->getParty()->getCharacters() as $target) {
+                        foreach ($character->getParty()->getCharacters() as $target) {
                             foreach ($target->getPowerEffects() as $powerEffect) {
-                                if ($powerEffect->getCaster() === $entity && $powerEffect->getPower() === $ccp->getClassPower()) {
+                                if ($powerEffect->getCaster() === $character && $powerEffect->getPower() === $ccp->getClassPower()) {
                                     $target->removePowerEffect($powerEffect);
                                     break;
                                 }
@@ -243,12 +243,12 @@ class CharacterController extends Controller
                             case 'other':
                                 break;
                             case 'allies':
-                                foreach ($entity->getParty()->getCharacters() as $target) {
+                                foreach ($character->getParty()->getCharacters() as $target) {
                                     $target->addPowerEffect(
                                         (new PowerEffect())
                                             ->setPower($ccp->getClassPower())
-                                            ->setCaster($entity)
-                                            ->setCasterLevel($entity->getLevel($ccp->getClassPower()->getClass()))
+                                            ->setCaster($character)
+                                            ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
                                     );
                                 }
                                 break;
@@ -259,8 +259,8 @@ class CharacterController extends Controller
                                     $target->addPowerEffect(
                                         (new PowerEffect())
                                             ->setPower($ccp->getClassPower())
-                                            ->setCaster($entity)
-                                            ->setCasterLevel($entity->getLevel($ccp->getClassPower()->getClass()))
+                                            ->setCaster($character)
+                                            ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
                                     );
                                 }
                                 break;
@@ -271,7 +271,7 @@ class CharacterController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         $allSkills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
@@ -279,7 +279,7 @@ class CharacterController extends Controller
         // Filter skills that $entity cannot use
         /** @var Skill $skill */
         foreach ($allSkills as $skill) {
-            if ($skill->getUntrained() || $entity->getSkillRank($skill) > 0) {
+            if ($skill->getUntrained() || $character->getSkillRank($skill) > 0) {
                 $skills[] = $skill;
             }
         }
@@ -289,7 +289,7 @@ class CharacterController extends Controller
         });
 
         return array(
-            'entity' => $entity,
+            'entity' => $character,
             'powers_activation_form' => $powersActivationForm->createView(),
             'skills' => $skills,
             'passive_feats' => $passiveFeats,
@@ -324,7 +324,7 @@ class CharacterController extends Controller
 
         $inventoryForm->handleRequest($request);
         if ($inventoryForm->isValid()) {
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirect($this->generateUrl('character_inventory',
                 array('id' => $character->getId())));
@@ -413,18 +413,18 @@ class CharacterController extends Controller
      * @Route("/{id}/spells", name="character_spells")
      * @Template()
      *
-     * @param Character $entity
+     * @param Character $character
      * @param Request $request
      *
      * @return array|RedirectResponse
      */
-    public function showCharacterSpellsAction(Character $entity, Request $request)
+    public function showCharacterSpellsAction(Character $character, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
         $castSpellsForm = $this->createForm(
             new CastSpellsType($this->container->getParameter('bonus_spells')),
-            $entity,
+            $character,
             array('method' => 'PUT')
         );
 
@@ -461,30 +461,30 @@ class CharacterController extends Controller
             if (isset($target, $spell, $class)) {
                 switch ($target) {
                     case 'other':
-                        $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class);
+                        $this->get('troulite_pathfinder.spell_casting')->cast($character, $spell, $class);
                         break;
                     case 'allies':
                         $this->get('troulite_pathfinder.spell_casting')->cast(
-                            $entity,
+                            $character,
                             $spell,
                             $class,
-                            $entity->getParty()->getCharacters()
+                            $character->getParty()->getCharacters()
                         );
                         break;
                     default:
                         $target = $em->getRepository('TroulitePathfinderBundle:Character')->find($target);
                         if ($target) {
-                            $this->get('troulite_pathfinder.spell_casting')->cast($entity, $spell, $class,
+                            $this->get('troulite_pathfinder.spell_casting')->cast($character, $spell, $class,
                                 array($target));
                         }
                         break;
                 }
 
-                return $this->redirect($this->generateUrl('character_spells', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('character_spells', array('id' => $character->getId())));
             }
         }
 
-        $uncastSpellsForm = $this->createForm(new UncastSpellsType(), $entity);
+        $uncastSpellsForm = $this->createForm(new UncastSpellsType(), $character);
         $uncastSpellsForm->handleRequest($request);
         if ($uncastSpellsForm->isValid()) {
             /** @var FormInterface $f */
@@ -501,11 +501,11 @@ class CharacterController extends Controller
             }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         return array(
-            'entity'                 => $entity,
+            'entity'                 => $character,
             'castSpellsForm'         => $castSpellsForm->createView(),
             'uncastSpellsForm'       => $uncastSpellsForm->createView(),
         );
@@ -537,17 +537,17 @@ class CharacterController extends Controller
     /**
      * Creates a form to edit a Character entity.
      *
-     * @param Character $entity The entity
+     * @param Character $character The entity
      *
      * @return Form The form
      */
-    private function createEditForm(Character $entity)
+    private function createEditForm(Character $character)
     {
         $form = $this->createForm(
             new BaseCharacterType($this->container->getParameter('character_advancement')),
-            $entity,
+            $character,
             array(
-                'action' => $this->generateUrl('characters_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('characters_update', array('id' => $character->getId())),
                 'method' => 'PUT',
             )
         );
@@ -593,158 +593,6 @@ class CharacterController extends Controller
     }
 
     /**
-     * Edits an existing Character entity.
-     *
-     * @Route("/{id}/levelup", name="characters_levelup")
-     * @Template()
-     *
-     * @param Character $character
-     * @return array|RedirectResponse
-     */
-    public function levelUpAction(Character $character)
-    {
-        $level = new Level();
-        $level->setValue($character->getLevel() + 1);
-        $level->setClassDefinition($character->getFavoredClass());
-        $character->addLevel($level);
-
-        /** @var $flow LevelUpFlow */
-        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
-        $flow->bind($level);
-
-        // Add class powers if they were not already added through a form
-        if ($level->getClassDefinition()) {
-            foreach ($level->getClassDefinition()->getPowers($character->getLevel($level->getClassDefinition())) as $power) {
-                $alreadyAdded = false;
-                foreach ($level->getClassPowers() as $classPower) {
-                    if ($classPower->getClassPower() === $power) {
-                        $alreadyAdded = true;
-                        break;
-                    }
-                }
-                if (!$alreadyAdded) {
-                    $level->addClassPower((new CharacterClassPower())->setClassPower($power));
-                }
-            }
-        }
-
-        // Cleanup empty feats that may have been added by the form
-        foreach ($level->getFeats() as $feat) {
-            if ($feat === null || $feat->getFeat() === null) {
-                $level->removeFeat($feat);
-            }
-        }
-
-        // form of the current step
-        $form = $flow->createForm();
-        if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData($form);
-
-            if ($flow->nextStep()) {
-                // form for the next step
-                $form = $flow->createForm();
-            } else {
-                // flow finished
-
-                // Cleanup empty skills as well
-                foreach ($level->getSkills() as $levelSkill) {
-                    if ($levelSkill->getValue() === 0) {
-                        $level->removeSkill($levelSkill);
-                    }
-                }
-
-                // Max HP for first level
-                if ($character->getLevel() === 1) {
-                    $character->getLevels()[0]->setHpRoll($character->getLevels()[0]->getClassDefinition()->getHpDice());
-                }
-
-                /** @var $em EntityManager */
-                $em = $this->getDoctrine()->getManager();
-
-                // Add fixed extra feats granted by this level
-                foreach ($level->getClassPowers() as $power) {
-                    $effects = $power->getClassPower()->getEffects();
-                    if (
-                        $power->getClassPower()->hasEffects() &&
-                        array_key_exists('feat', $effects) &&
-                        $effects['feat']['type'] !== 'oneof'
-                    ) {
-                        $feat = $em->getRepository('TroulitePathfinderBundle:Feat')
-                            ->findOneBy(array('name' => $effects['feat']['value']));
-                        if ($feat) {
-                            $level->addFeat((new CharacterFeat())->setFeat($feat));
-                        }
-                    }
-                }
-
-                $em->persist($level);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    $character . ' is now level ' . $character->getLevel()
-                );
-
-                return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'flow' => $flow,
-            'entity' => $character
-        );
-    }
-
-    /**
-     * Edits an existing Character entity.
-     *
-     * @Route("/{character}/levels/{level}/edit", name="characters_levels_edit")
-     * @ParamConverter("level", options={"mapping": {"character" = "character", "level" = "value"}})
-     * @Template()
-     *
-     * @param Level $level
-     * @param Request $request
-     *
-     * @return array|RedirectResponse
-     */
-    public function editLevelAction(Level $level, Request $request)
-    {
-        $character = $level->getCharacter();
-
-        /** @var EntityManager $em */
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $form = $this->createForm(
-            new EditLevelType(
-                $this->container->getParameter('character_advancement'),
-                $em,
-                $this->get('doctrine'),
-                $this->get('property_accessor')
-            ),
-            $level,
-            array(
-                'action' => $this->generateUrl(
-                    'characters_levels_edit',
-                    array('character' => $character->getId(), 'level' => $level->getId())),
-                'method' => 'PUT',
-            )
-        );
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em->flush();
-        }
-
-        return array(
-            'form'   => $form->createView(),
-            'entity' => $character,
-            'level'  => $level
-        );
-    }
-
-    /**
      * Deletes a Character entity.
      *
      * @Route("/{id}", name="characters_delete")
@@ -756,7 +604,7 @@ class CharacterController extends Controller
      */
     public function deleteAction(Request $request, Character $character)
     {
-        $form = $this->createDeleteForm($character->getId());
+        $form = $this->createDeleteForm($character);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -777,14 +625,14 @@ class CharacterController extends Controller
     /**
      * Creates a form to delete a Character entity by id.
      *
-     * @param mixed $id The entity id
+     * @param mixed $character The entity id
      *
      * @return Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Character $character)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('characters_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('characters_delete', array('id' => $character->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
@@ -797,29 +645,28 @@ class CharacterController extends Controller
      * @Method("GET|POST")
      * @Template()
      *
-     * @param Character $entity
+     * @param Character $character
      * @param Request $request
      *
      * @return array|RedirectResponse
      */
-    public function sleepAction(Character $entity, Request $request)
+    public function sleepAction(Character $character, Request $request)
     {
-        /** @var $em EntityManager */
-        $em = $this->get('doctrine.orm.entity_manager');
+        $em = $this->getDoctrine()->getManager();
         $sleepForm = $this->createForm(
             new SleepType($this->container->getParameter('bonus_spells')),
-            $entity, array('em' => $em)
+            $character, array('em' => $em)
         );
 
         $sleepForm->handleRequest($request);
         if ($sleepForm->isValid()) {
-            $entity->setNonPreparedCastSpellsCount(null);
-            foreach ($entity->getPreparedSpells() as $preparedSpell) {
+            $character->setNonPreparedCastSpellsCount(null);
+            foreach ($character->getPreparedSpells() as $preparedSpell) {
                 $preparedSpell->setAlreaydCast(false);
             }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         return array(
@@ -853,9 +700,7 @@ class CharacterController extends Controller
         $hpForm->handleRequest($request);
         if ($hpForm->isValid()) {
             $character->changeHp($hpForm->get('hp_mod')->getData());
-            /** @var EntityManager $em */
-            $em = $this->get('doctrine.orm.entity_manager');
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }

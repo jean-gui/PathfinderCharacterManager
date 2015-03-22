@@ -42,14 +42,14 @@ class FeatController extends Controller
      * @Method("GET")
      * @Template()
      *
-     * @param Feat $entity
+     * @param Feat $feat
      *
      * @return array
      */
-    public function showAction(Feat $entity)
+    public function showAction(Feat $feat)
     {
         return array(
-            'entity'      => $entity,
+            'entity'      => $feat,
         );
     }
 }

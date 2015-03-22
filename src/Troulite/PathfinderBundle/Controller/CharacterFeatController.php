@@ -49,20 +49,20 @@ class CharacterFeatController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new CharacterFeat();
-        $form = $this->createCreateForm($entity);
+        $characterFeat = new CharacterFeat();
+        $form = $this->createCreateForm($characterFeat);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($characterFeat);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characterfeats_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('characterfeats_show', array('id' => $characterFeat->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $characterFeat,
             'form' => $form->createView(),
         );
     }
@@ -70,15 +70,15 @@ class CharacterFeatController extends Controller
     /**
      * Creates a form to create a CharacterFeat entity.
      *
-     * @param CharacterFeat $entity The entity
+     * @param CharacterFeat $characterFeat The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(CharacterFeat $entity)
+    private function createCreateForm(CharacterFeat $characterFeat)
     {
         $form = $this->createForm(
             new CharacterFeatType(),
-            $entity,
+            $characterFeat,
             array(
                 'action' => $this->generateUrl('characterfeats_create'),
                 'method' => 'POST',
@@ -99,11 +99,11 @@ class CharacterFeatController extends Controller
      */
     public function newAction()
     {
-        $entity = new CharacterFeat();
-        $form = $this->createCreateForm($entity);
+        $characterFeat = new CharacterFeat();
+        $form = $this->createCreateForm($characterFeat);
 
         return array(
-            'entity' => $entity,
+            'entity' => $characterFeat,
             'form' => $form->createView(),
         );
     }
@@ -156,17 +156,17 @@ class CharacterFeatController extends Controller
     /**
      * Creates a form to edit a CharacterFeat entity.
      *
-     * @param CharacterFeat $entity The entity
+     * @param CharacterFeat $characterFeat The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(CharacterFeat $entity)
+    private function createEditForm(CharacterFeat $characterFeat)
     {
         $form = $this->createForm(
             new CharacterFeatType(),
-            $entity,
+            $characterFeat,
             array(
-                'action' => $this->generateUrl('characterfeats_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('characterfeats_update', array('id' => $characterFeat->getId())),
                 'method' => 'PUT',
             )
         );

@@ -42,14 +42,14 @@ class SpellController extends Controller
      * @Method("GET")
      * @Template()
      *
-     * @param Spell $entity
+     * @param Spell $spell
      *
      * @return array
      */
-    public function showAction(Spell $entity)
+    public function showAction(Spell $spell)
     {
         return array(
-            'entity'      => $entity,
+            'entity'      => $spell,
         );
     }
 }
