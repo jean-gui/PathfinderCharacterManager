@@ -106,12 +106,14 @@
                     Back to the list
                 </a>
             </li>
+            {#
             <li>
                 <a href="{{ path('classes_edit', { 'id': entity.id }) }}" class="btn btn-primary">
                     Edit
                 </a>
             </li>
             <li>{{ form(delete_form) }}</li>
+            #}
         </ul>
     </div>
 {% endblock %}

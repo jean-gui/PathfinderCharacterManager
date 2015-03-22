@@ -167,7 +167,7 @@ class PartyController extends Controller
             new PartyType(),
             $party,
             array(
-                'action' => $this->generateUrl('parties_update', array('party' => $party->getId())),
+                'action' => $this->generateUrl('parties_update', array('id' => $party->getId())),
                 'method' => 'PUT',
             )
         );
@@ -200,7 +200,7 @@ class PartyController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parties_edit', array('party' => $party)));
+            return $this->redirect($this->generateUrl('parties_edit', array('id' => $party)));
         }
 
         return array(
@@ -246,7 +246,7 @@ class PartyController extends Controller
     private function createDeleteForm(Party $party)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('parties_delete', array('party' => $party->getId())))
+            ->setAction($this->generateUrl('parties_delete', array('id' => $party->getId())))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();

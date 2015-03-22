@@ -21,7 +21,7 @@ class RaceType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('modifiers');
+            ->add('traits');
     }
 
     /**
