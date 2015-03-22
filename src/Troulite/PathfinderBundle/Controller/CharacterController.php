@@ -520,7 +520,7 @@ class CharacterController extends Controller
      *
      * @param Character $character
      *
-*@return array
+     * @return array
      */
     public function editAction(Character $character)
     {
