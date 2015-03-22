@@ -7,15 +7,66 @@
         {{ form(edit_form) }}
 
         <h2>{{ 'edit.levels'|trans }}</h2>
-        <ol>
+
+        <div class="panel-group" id="levels_accordion" role="tablist" aria-multiselectable="true">
             {% for level in entity.levels %}
-                <li>
-                    <a href="{{ path('characters_levels_edit', { 'character': entity.id, 'level': level.value}) }}">
-                        {{ 'edit.level'|trans({'%level%': level.value}) }}
-                    </a>
-                </li>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="level_{{ level.value }}">
+                        <h3 class="panel-title">
+                            <a class="accordion-toggle {% if loop.index > 1 %}collapsed{% endif %}"
+                               data-toggle="collapse" data-parent="#levels_accordion"
+                               href="#collapse_level_{{ level.value }}"
+                               aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}"
+                               aria-controls="collapse_level_{{ level.value }}">
+                                {{ 'level'|trans({'%level%': level.value}) }}
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapse_level_{{ level.value }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}" role="tabpanel"
+                         aria-labelledby="level_{{ level.value }}">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>{{ 'class'|trans }}</dt>
+                                <dd>{{ level.classDefinition }}</dd>
+                                <dt>{{ 'hp.roll'|trans }}</dt>
+                                <dd>{{ level.hpRoll }}</dd>
+                                {% if level.extraAbility %}
+                                    <dt>{{ 'ability.point'|trans }}</dt>
+                                    <dd>{{ level.extraAbility|trans }}</dd>
+                                {% endif %}
+                                {% if level.extraPoint %}
+                                    <dt>{{ 'favored.extra.point'|trans }}</dt>
+                                    <dd>{{ level.extraPoint|trans }}</dd>
+                                {% endif %}
+                                {% if level.feats is not empty %}
+                                    <dt>{{ 'feats'|trans }}</dt>
+                                    {% for feat in level.feats %}
+                                        <dd>{{ feat }}</dd>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if level.classPowers is not empty %}
+                                    <dt>{{ 'class.powers'|trans }}</dt>
+                                    {% for power in level.classPowers %}
+                                        <dd>{{ power }}</dd>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if level.learnedSpells is not empty %}
+                                    <dt>{{ 'learned.spells'|trans }}</dt>
+                                    {% for spell in level.learnedSpells %}
+                                        <dd>{{ spell }} ({{ 'level_value'|trans({'%level%': spell.spellLevel}) }})</dd>
+                                    {% endfor %}
+                                {% endif %}
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ path('characters_levels_edit', { 'character': entity.id, 'level': level.value}) }}">
+                            {{ 'edit.level'|trans }}
+                        </a>
+                    </div>
+                </div>
             {% endfor %}
-        </ol>
+        </div>
 
         <ul class="record_actions">
             <li>

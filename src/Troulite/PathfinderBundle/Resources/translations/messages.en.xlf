@@ -26,6 +26,10 @@
                 <source>fantasy</source>
                 <target>Fantasy</target>
             </trans-unit>
+            <trans-unit id="ability.point" resname="ability.point">
+                <source>ability.point</source>
+                <target>Ability Point</target>
+            </trans-unit>
             <trans-unit id="ability.score.cost" resname="ability.score.cost">
                 <source>ability.score.cost</source>
                 <target>Ability Score Cost</target>
@@ -56,7 +60,11 @@
             </trans-unit>
             <trans-unit id="edit.level" resname="edit.level">
                 <source>edit.level</source>
-                <target>Edit Level %level%</target>
+                <target>Edit Level</target>
+            </trans-unit>
+            <trans-unit id="favored.extra.point" resname="favored.extra.point">
+                <source>favored.extra.point</source>
+                <target>Extra point</target>
             </trans-unit>
             <trans-unit id="level.up" resname="level.up">
                 <source>level.up</source>
@@ -137,6 +145,14 @@
             <trans-unit id="current.hit.points" resname="current.hit.points">
                 <source>current.hit.points</source>
                 <target>Current Hit Points</target>
+            </trans-unit>
+            <trans-unit id="hp" resname="hp">
+                <source>hp</source>
+                <target>HP</target>
+            </trans-unit>
+            <trans-unit id="hp.roll" resname="hp.roll">
+                <source>hp.roll</source>
+                <target>HP roll</target>
             </trans-unit>
             <trans-unit id="hp.rolls.per.level" resname="hp.rolls.per.level">
                 <source>hp.rolls.per.level</source>
@@ -322,6 +338,10 @@
                 <source>known.spells</source>
                 <target>Knownw Spells</target>
             </trans-unit>
+            <trans-unit id="learned.spells" resname="learned.spells">
+                <source>learned.spells</source>
+                <target>Learned spells</target>
+            </trans-unit>
             <trans-unit id="prerequisities" resname="prerequisities">
                 <source>prerequisities</source>
                 <target>Prerequisities</target>
@@ -345,6 +365,10 @@
             <trans-unit id="races" resname="races">
                 <source>races</source>
                 <target>Races</target>
+            </trans-unit>
+            <trans-unit id="class" resname="class">
+                <source>class</source>
+                <target>Class</target>
             </trans-unit>
             <trans-unit id="classes" resname="classes">
                 <source>classes</source>
