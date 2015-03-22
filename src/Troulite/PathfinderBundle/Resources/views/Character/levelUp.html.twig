@@ -26,18 +26,7 @@
             {{ entity }} has {{ entity.availableSkillPoints }} available skill points.
         </p>
         {% elseif flow.currentStepLabel == 'Confirmation' %}
-            <dl>
-                <dt>Class</dt>
-                <dd>{{ flow.formData.classDefinition }}</dd>
-                <dt>HP Roll</dt>
-                <dd>{{ flow.formData.hpRoll }}</dd>
-                <dt>Feats</dt>
-                {% for feat in flow.formData.feats if feat.feat is defined %}
-                    <dd>{{ feat.feat }}</dd>
-                {% else %}
-                    <dd>None</dd>
-                {% endfor %}
-            </dl>
+            {{ include('@TroulitePathfinder/Character/_level_summary.html.twig', {'level': flow.formData}) }}
         {% endif %}
 
         {{ form_errors(form) }}
