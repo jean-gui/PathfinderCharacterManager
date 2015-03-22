@@ -31,6 +31,13 @@ use Troulite\PathfinderBundle\Model\DefenseBonuses;
 class Character extends BaseCharacter
 {
     /**
+     * @var Collection|Feat[]
+     *
+     * @ORM\OneToMany(targetEntity="InventoryItem", mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    private $inventoryItems;
+
+    /**
      * @var Collection|Level[]
      *
      * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
@@ -105,6 +112,7 @@ class Character extends BaseCharacter
         $this->postLoad();
         $this->levels = new ArrayCollection();
         $this->spellEffects = new ArrayCollection();
+        $this->inventoryItems = new ArrayCollection();
     }
 
     /**
@@ -126,6 +134,100 @@ class Character extends BaseCharacter
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return InventoryItem[]|Collection
+     */
+    public function getInventoryItems()
+    {
+        return $this->inventoryItems;
+    }
+
+    /**
+     * @param InventoryItem $inventoryItem
+     *
+     * @return $this
+     */
+    public function addInventoryItem(InventoryItem $inventoryItem)
+    {
+        foreach ($this->getInventoryItems() as $i) {
+            if ($i->getItem() === $inventoryItem->getItem()) {
+                $i->setQuantity($i->getQuantity() + $inventoryItem->getQuantity());
+                return $this;
+            }
+        }
+
+        $inventoryItem->setCharacter($this);
+        $this->inventoryItems->add($inventoryItem);
+
+        return $this;
+    }
+
+    /**
+     * @param InventoryItem $inventoryItem
+     *
+     * @return $this
+     */
+    public function removeInventoryItem(InventoryItem $inventoryItem)
+    {
+        $this->getInventoryItems()->removeElement($inventoryItem);
+
+        return $this;
+    }
+
+    /**
+     * Add inventory
+     *
+     * @param Item $item
+     * @param int $quantity
+     *
+     * @return $this
+     */
+    public function addInventory(Item $item, $quantity = 1)
+    {
+        if ($quantity < 1) {
+            $quantity = 1;
+        }
+
+        foreach ($this->getInventoryItems() as $inventoryItem) {
+            if ($inventoryItem->getItem() === $item) {
+                $inventoryItem->setQuantity($inventoryItem->getQuantity() + 1);
+                return $this;
+            }
+        }
+
+        $inventoryItem = (new InventoryItem())->setCharacter($this)->setItem($item)->setQuantity($quantity);
+        $this->inventoryItems[] = $inventoryItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove inventory
+     *
+     * @param Item $item
+     * @param int $quantity
+     *
+     * @return $this
+     */
+    public function removeInventory(Item $item, $quantity = 1)
+    {
+        foreach ($this->getInventoryItems() as $inventoryItem) {
+            if ($inventoryItem->getItem() === $item) {
+
+                if ($inventoryItem->getQuantity() <= $quantity) {
+                    $this->getInventoryItems()->removeElement($inventoryItem);
+                } else {
+                    $inventoryItem->setQuantity($inventoryItem->getQuantity() - $quantity);
+                }
+                break;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -1219,15 +1321,18 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @return Item[]|Collection
+     * @return InventoryItem[]|Collection
      */
     public function getUnequippedInventory()
     {
+        return $this->getInventoryItems();
+        /*
         return $this->getInventory()->filter(
-            function ($item) {
-                return !$this->getEquipment()->isEquipped($item);
+            function (InventoryItem $inventoryItem) {
+                return $this->getEquipment()->isEquipped($inventoryItem->getItem()) < $inventoryItem->getQuantity();
             }
         );
+        */
     }
 
     /**

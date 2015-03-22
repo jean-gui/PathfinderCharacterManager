@@ -5,6 +5,7 @@ namespace Troulite\PathfinderBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Form\Type\EditInventoryItemType;
 
 /**
  * Class EditInventoryType
@@ -21,15 +22,15 @@ class EditInventoryType extends AbstractType
     {
         $builder
             ->add(
-                'inventory',
+                'inventory_items',
                 'collection',
                 array(
                     'allow_add'    => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'type'         => 'entity',
+                    'type'         => new EditInventoryItemType(),
                     'label'        => false,
-                    'options'      => array('class' => 'Troulite\PathfinderBundle\Entity\Item', 'label' => false)
+                    'options'      => array('label' => false, 'attr' => array('class' => 'form-inline'))
                 )
             )
         ;

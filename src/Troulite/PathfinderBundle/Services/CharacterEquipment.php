@@ -52,40 +52,42 @@ class CharacterEquipment
                 $equipment->setMainWeapon($item);
             }
         } elseif ($item instanceof Armor) {
-            return $equipment->setArmor($item);
+            $equipment->setArmor($item);
         } elseif ($item instanceof Shield) {
-            return $equipment->setOffhandWeapon($item);
+            $equipment->setOffhandWeapon($item);
         } elseif ($item instanceof Shoulders) {
-            return $equipment->setShoulders($item);
+            $equipment->setShoulders($item);
         } elseif ($item instanceof Ring) {
             if ($equipment->getRightFinger()) {
-                return $equipment->setLeftFinger($item);
+                $equipment->setLeftFinger($item);
             } else {
-                return $equipment->setRightFinger();
+                $equipment->setRightFinger();
             }
         } elseif ($item instanceof Neck) {
-            return $equipment->setNeck($item);
+            $equipment->setNeck($item);
         } elseif ($item instanceof Belt) {
-            return $equipment->setBelt($item);
+            $equipment->setBelt($item);
         } elseif ($item instanceof Wrists) {
-            return $equipment->setWrists($item);
+            $equipment->setWrists($item);
         } elseif ($item instanceof Feet) {
-            return $equipment->setFeet($item);
+            $equipment->setFeet($item);
         } elseif ($item instanceof Hands) {
-            return $equipment->setHands($item);
+            $equipment->setHands($item);
         } elseif ($item instanceof Eyes) {
-            return $equipment->setEyes($item);
+            $equipment->setEyes($item);
         } elseif ($item instanceof Head) {
-            return $equipment->setHead($item);
+            $equipment->setHead($item);
         } elseif ($item instanceof Headband) {
-            return $equipment->setHeadband($item);
+            $equipment->setHeadband($item);
         } elseif ($item instanceof Body) {
-            return $equipment->setBody($item);
+            $equipment->setBody($item);
         } elseif ($item instanceof Chest) {
-            return $equipment->setChest($item);
+            $equipment->setChest($item);
         } else {
             throw new \Exception('Cannot equip a non-wearable item');
         }
+
+        $character->removeInventory($item, 1);
 
         return $equipment;
     }
@@ -99,56 +101,78 @@ class CharacterEquipment
     public function unequipSlot(Character $character, $slot)
     {
         $equipment = $character->getEquipment();
+        $item = null;
         switch($slot) {
             case 'headband':
+                $item = $equipment->getHeadband();
                 $equipment->setHeadband();
                 break;
             case 'head':
+                $item = $equipment->getHead();
                 $equipment->setHead();
                 break;
             case 'eyes':
+                $item = $equipment->getEyes();
                 $equipment->setEyes();
                 break;
             case 'neck':
+                $item = $equipment->getNeck();
                 $equipment->setNeck();
                 break;
             case 'shoulders':
+                $item = $equipment->getShoulders();
                 $equipment->setShoulders();
                 break;
             case 'armor':
+                $item = $equipment->getArmor();
                 $equipment->setArmor();
                 break;
             case 'body':
+                $item = $equipment->getBody();
                 $equipment->setBody();
                 break;
             case 'chest':
+                $item = $equipment->getChest();
                 $equipment->setChest();
                 break;
             case 'belt':
+                $item = $equipment->getBelt();
                 $equipment->setBelt();
                 break;
             case 'mainWeapon':
+                $item = $equipment->getMainWeapon();
                 $equipment->setMainWeapon();
                 break;
             case 'offhandWeapon':
+                $item = $equipment->getOffhandWeapon();
                 $equipment->setOffhandWeapon();
                 break;
             case 'wrists':
+                $item = $equipment->getWrists();
                 $equipment->setWrists();
                 break;
             case 'hands':
+                $item = $equipment->getHands();
                 $equipment->setHands();
                 break;
             case 'rightFinger':
+                $item = $equipment->getRightFinger();
                 $equipment->setRightFinger();
                 break;
             case 'leftFinger':
+                $item = $equipment->getLeftFinger();
                 $equipment->setLeftFinger();
                 break;
             case 'feet':
+                $item = $equipment->getFeet();
                 $equipment->setFeet();
                 break;
         }
+
+        if ($item) {
+            $character->addInventory($item);
+        }
+
         return $character;
     }
 } 

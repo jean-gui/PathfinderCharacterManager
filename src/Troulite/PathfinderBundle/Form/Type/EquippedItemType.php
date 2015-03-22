@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class InventoryItemType
+ * Class EquipmentInventoryItemType
  *
  * @package Troulite\PathfinderBundle\Form\Type
  */

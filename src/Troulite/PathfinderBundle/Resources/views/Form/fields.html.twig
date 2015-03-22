@@ -29,6 +29,9 @@
 {% block unequippeditem_row %}
     <li>
         {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
+        {% if form.quantity is defined %}
+            {{ form_widget(form.quantity) }}
+        {% endif %}
         {% if form.equip is defined %}
             {{ form_widget(form.equip) }}
         {% endif %}

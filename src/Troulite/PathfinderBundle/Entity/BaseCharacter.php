@@ -2,7 +2,6 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -72,20 +71,9 @@ class BaseCharacter
     private $lostHP = 0;
 
     /**
-     * @var Collection|Feat[]
-     *
-     * @ORM\ManyToMany(targetEntity="Item")
-     * @ORM\JoinTable(name="inventories",
-     *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")}
-     *      )
-     */
-    private $inventory;
-
-    /**
      * @var CharacterEquipment
      *
-     * @ORM\OneToOne(targetEntity="CharacterEquipment", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="CharacterEquipment", inversedBy="character", cascade={"all"})
      * @ORM\JoinColumn(name="equipment_id", referencedColumnName="id")
      */
     private $equipment;
@@ -242,41 +230,6 @@ class BaseCharacter
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Add inventory
-     *
-     * @param Item $inventory
-     *
-     * @return $this
-     */
-    public function addInventory(Item $inventory)
-    {
-        $this->inventory[] = $inventory;
-
-        return $this;
-    }
-
-    /**
-     * Remove inventory
-     *
-     * @param Item $item
-     */
-    public function removeInventory(Item $item)
-    {
-        $this->getEquipment()->unequip($item);
-        $this->inventory->removeElement($item);
-    }
-
-    /**
-     * Get inventory
-     *
-     * @return Collection
-     */
-    public function getInventory()
-    {
-        return $this->inventory;
     }
 
     /**

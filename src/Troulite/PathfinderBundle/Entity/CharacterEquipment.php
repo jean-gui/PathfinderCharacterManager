@@ -31,6 +31,13 @@ class CharacterEquipment
     private $id;
 
     /**
+     * @var Character
+     *
+     * @ORM\OneToOne(targetEntity="Character", mappedBy="equipment")
+     */
+    private $character;
+
+    /**
      * @var Weapon $mainWeapon
      *
      * @ORM\ManyToOne(targetEntity="Weapon")
@@ -166,6 +173,26 @@ class CharacterEquipment
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Character
+     */
+    public function getCharacter()
+    {
+        return $this->character;
+    }
+
+    /**
+     * @param Character $character
+     *
+     * @return $this
+     */
+    public function setCharacter(Character $character)
+    {
+        $this->character = $character;
+
+        return $this;
     }
 
     /**
@@ -541,25 +568,34 @@ class CharacterEquipment
     }
 
     /**
+     * Returns the number of times an item is equipped (should be 0, 1 or 2 if two identical items are equipped on two
+     * different slots like main hand and off hand
+     *
      * @param Item $item
      *
-     * @return bool
+     * @return int
      */
     public function isEquipped(Item $item)
     {
-        if (
-            $item === $this->getMainWeapon()  || $item === $this->getOffhandWeapon() ||
-            $item === $this->getRightFinger() || $item === $this->getLeftFinger()    ||
-            $item === $this->getArmor()       || $item === $this->getBelt()          ||
-            $item === $this->getBody()        || $item === $this->getChest()         ||
-            $item === $this->getEyes()        || $item === $this->getFeet()          ||
-            $item === $this->getHands()       || $item === $this->getHead()          ||
-            $item === $this->getHeadband()    || $item === $this->getNeck()          ||
-            $item === $this->getShoulders()   || $item === $this->getWrists()
-        ) {
-            return true;
-        }
-        return false;
+        $equipped = 0;
+        if ($item === $this->getMainWeapon()) $equipped++;
+        if ($item === $this->getOffhandWeapon()) $equipped++;
+        if ($item === $this->getRightFinger()) $equipped++;
+        if ($item === $this->getLeftFinger()) $equipped++;
+        if ($item === $this->getArmor()) $equipped++;
+        if ($item === $this->getBelt()) $equipped++;
+        if ($item === $this->getBody()) $equipped++;
+        if ($item === $this->getChest()) $equipped++;
+        if ($item === $this->getEyes()) $equipped++;
+        if ($item === $this->getFeet()) $equipped++;
+        if ($item === $this->getHands()) $equipped++;
+        if ($item === $this->getHead()) $equipped++;
+        if ($item === $this->getHeadband()) $equipped++;
+        if ($item === $this->getNeck()) $equipped++;
+        if ($item === $this->getShoulders()) $equipped++;
+        if ($item === $this->getWrists()) $equipped++;
+
+        return $equipped;
     }
 
     /**
@@ -577,97 +613,4 @@ class CharacterEquipment
         $this->getShoulders()         || $this->getWrists();
     }
 
-    /**
-     * @param Item $item
-     *
-     * @return $this
-     */
-    public function unequip(Item $item)
-    {
-        $class_fragments = explode("\\", get_class($item));
-        $item_class = $class_fragments[count($class_fragments)-1];
-
-        switch ($item_class) {
-            case 'Headband':
-                if ($this->getHeadband() === $item) {
-                    $this->setHeadband();
-                }
-                break;
-            case 'Head':
-                if ($this->getHead() === $item) {
-                    $this->setHead();
-                }
-                break;
-            case 'Eyes':
-                if ($this->getEyes() === $item) {
-                    $this->setEyes();
-                }
-                break;
-            case 'Neck':
-                if ($this->getNeck() === $item) {
-                    $this->setNeck();
-                }
-                break;
-            case 'Shoulders':
-                if ($this->getShoulders() === $item) {
-                    $this->setShoulders();
-                }
-                break;
-            case 'Armor':
-                if ($this->getArmor() === $item) {
-                    $this->setArmor();
-                }
-                break;
-            case 'Body':
-                if ($this->getBody() === $item) {
-                    $this->setBody();
-                }
-                break;
-            case 'Chest':
-                if ($this->getChest() === $item) {
-                    $this->setChest();
-                }
-                break;
-            case 'Belt':
-                if ($this->getBelt() === $item) {
-                    $this->setBelt();
-                }
-                break;
-            case 'Weapon':
-                if ($this->getOffhandWeapon() === $item) {
-                    $this->setOffhandWeapon();
-                } elseif ($this->getMainWeapon() === $item) {
-                    $this->setMainWeapon();
-                }
-                break;
-            case 'Shield':
-                if ($this->getOffhandWeapon() === $item) {
-                    $this->setOffhandWeapon();
-                }
-                break;
-            case 'Wrists':
-                if ($this->getWrists() === $item) {
-                    $this->setWrists();
-                }
-                break;
-            case 'Hands':
-                if ($this->getHands() === $item) {
-                    $this->setHands();
-                }
-                break;
-            case 'Ring':
-                if ($this->getRightFinger() === $item) {
-                    $this->setRightFinger();
-                } elseif ($this->getLeftFinger() === $item) {
-                    $this->setLeftFinger();
-                }
-                break;
-            case 'Feet':
-                if ($this->getFeet() === $item) {
-                    $this->setFeet();
-                }
-                break;
-        }
-        return $this;
-    }
 }

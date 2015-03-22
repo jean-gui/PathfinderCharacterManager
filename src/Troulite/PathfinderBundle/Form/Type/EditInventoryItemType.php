@@ -1,6 +1,6 @@
 <?php
 
-namespace Troulite\PathfinderBundle\Form;
+namespace Troulite\PathfinderBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,9 +20,8 @@ class EditInventoryItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(
-                'inventory'
-            )
+            ->add('item')
+            ->add('quantity')
         ;
     }
     
@@ -32,7 +31,7 @@ class EditInventoryItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+            'data_class' => 'Troulite\PathfinderBundle\Entity\InventoryItem'
         ));
     }
 
@@ -41,6 +40,6 @@ class EditInventoryItemType extends AbstractType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_inventory';
+        return 'troulite_pathfinderbundle_inventoryitem';
     }
 }

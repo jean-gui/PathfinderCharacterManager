@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
+use Troulite\PathfinderBundle\Entity\InventoryItem;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Skill;
 use Troulite\PathfinderBundle\Entity\Spell;
@@ -378,7 +379,13 @@ class CharacterController extends Controller
                     $equip = $child->get('equip');
                     if ($equip->isClicked()) {
                         try {
-                            $this->get('troulite_pathfinder.character_equipment')->equip($character, $child->getData());
+                            /** @var InventoryItem $inventoryItem */
+                            $inventoryItem = $child->getData();
+                            $this->get('troulite_pathfinder.character_equipment')->equip(
+                                $character,
+                                $inventoryItem->getItem()
+                            );
+
                             $em->flush();
                         } catch (\Exception $e) {
                             // Tried tot equip a non-equippable item, do nothing

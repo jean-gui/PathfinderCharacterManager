@@ -5,7 +5,7 @@ namespace Troulite\PathfinderBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Form\Type\InventoryItemType;
+use Troulite\PathfinderBundle\Form\Type\EquipmentInventoryItemType;
 
 /**
  * Class InventoryType
@@ -25,7 +25,7 @@ class InventoryType extends AbstractType
                 'unequipped_inventory',
                 'collection',
                 array(
-                    'type' => new InventoryItemType(),
+                    'type' => new EquipmentInventoryItemType(),
                     'label' => false
                 )
             )

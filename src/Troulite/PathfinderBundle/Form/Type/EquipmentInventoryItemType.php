@@ -14,14 +14,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\InventoryItem;
 
 /**
- * Class InventoryItemType
+ * Class EquipmentInventoryItemType
  *
  * @package Troulite\PathfinderBundle\Form\Type
  */
-class InventoryItemType extends AbstractType
+class EquipmentInventoryItemType extends AbstractType
 {
 
     /**
@@ -33,12 +33,15 @@ class InventoryItemType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
-                /** @var $item Item */
+                /** @var $item InventoryItem */
                 $item = $event->getData();
                 $form      = $event->getForm();
 
-                if (get_class($item) !== 'Troulite\PathfinderBundle\Entity\Item') {
+                if (get_class($item->getItem()) !== 'Troulite\PathfinderBundle\Entity\Item') {
                     $form->add('equip', 'submit', array('label' => 'equip'));
+                }
+                if ($item->getQuantity() > 1) {
+                    $form->add('quantity');
                 }
                 $form->add('drop', 'submit', array('label' => 'drop'));
             }
@@ -60,7 +63,7 @@ class InventoryItemType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\Item'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\InventoryItem'
             )
         );
     }
