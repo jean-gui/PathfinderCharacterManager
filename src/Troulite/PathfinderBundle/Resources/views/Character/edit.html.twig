@@ -1,8 +1,10 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}Edit {{ edit_form.vars.data.name }}{% endblock %}
+
 {% block content -%}
     <div class="container">
-        <h1>Edit {{ edit_form.vars.data.name }}</h1>
+        {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
 
         {{ form(edit_form) }}
 
