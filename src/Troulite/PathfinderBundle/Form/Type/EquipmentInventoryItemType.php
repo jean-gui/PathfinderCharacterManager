@@ -40,9 +40,6 @@ class EquipmentInventoryItemType extends AbstractType
                 if (get_class($item->getItem()) !== 'Troulite\PathfinderBundle\Entity\Item') {
                     $form->add('equip', 'submit', array('label' => 'equip'));
                 }
-                if ($item->getQuantity() > 1) {
-                    $form->add('quantity');
-                }
                 $form->add('drop', 'submit', array('label' => 'drop'));
             }
         );
