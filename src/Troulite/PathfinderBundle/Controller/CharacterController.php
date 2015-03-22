@@ -398,7 +398,7 @@ class CharacterController extends Controller
                 /** @var SubmitButton $drop */
                 $drop = $child->get('drop');
                 if ($drop->isClicked()) {
-                    $character->removeInventory($child->getData());
+                    $character->removeInventoryItem($child->getData());
                     $em->flush();
 
                     return $this->redirect($this->generateUrl('character_inventory',
