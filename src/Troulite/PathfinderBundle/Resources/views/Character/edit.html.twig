@@ -22,7 +22,8 @@
                             </a>
                         </h3>
                     </div>
-                    <div id="collapse_level_{{ level.value }}" class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}" role="tabpanel"
+                    <div id="collapse_level_{{ level.value }}"
+                         class="panel-collapse collapse {% if loop.index == 1 %}in{% endif %}" role="tabpanel"
                          aria-labelledby="level_{{ level.value }}">
                         <div class="panel-body">
                             {{ include('@TroulitePathfinder/Character/_level_summary.html.twig', {'level': level}) }}
