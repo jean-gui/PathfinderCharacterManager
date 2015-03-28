@@ -14,13 +14,8 @@
         {% set bonus = 0 %}
         {%- set shortname = skill.shortname -%}
         {%- spaceless -%}
-            {% set value = entity.modifierByAbility(skill.keyAbility, entity) + entity.skillRank(skill) %}
-            {% if entity.hasClassBonus(skill) and entity.skillRank(skill) > 0 %}
-                {% set value = value + 3 %}
-            {% endif %}
             {% if attribute(entity.skillsBonuses, shortname) is defined %}
                 {% set bonus = attribute(entity.skillsBonuses, shortname).bonus %}
-                {% set value = value + bonus %}
             {% endif %}
         {%- endspaceless -%}
         <tr>
@@ -32,8 +27,8 @@
                 {% endif %}
                 {{ skill }}
             </td>
-            <td>{{ value }}</td>
-            <td>{{ skill.keyAbility[0:3]|trans|upper }} {{ entity.modifierByAbility(skill.keyAbility, entity) }}</td>
+            <td>{{ entity.skillValue(skill) }}</td>
+            <td>{{ skill.keyAbility[0:3]|trans|upper }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
             <td>{{ entity.skillRank(skill) }}</td>
             <td>
                 {{ bonus|default(0) }}

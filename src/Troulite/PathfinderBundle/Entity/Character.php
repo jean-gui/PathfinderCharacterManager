@@ -94,7 +94,7 @@ class Character extends BaseCharacter
     private $hpBonuses;
 
     /**
-     * @var array
+     * @var Bonuses[]
      */
     private $skillsBonuses;
 
@@ -311,7 +311,7 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @return array
+     * @return Bonuses[]
      */
     public function &getSkillsBonuses()
     {
@@ -376,6 +376,24 @@ class Character extends BaseCharacter
         }
 
         return $rank;
+    }
+
+    /**
+     * @param Skill $skill
+     *
+     * @return int
+     */
+    public function getSkillValue(Skill $skill)
+    {
+        $value = $this->getSkillRank($skill) + $this->getModifierByAbility($skill->getKeyAbility(), $this);
+        if ($this->hasClassBonus($skill) && $this->getSkillRank($skill) > 0) {
+            $value += 3;
+        }
+        if (array_key_exists($skill->getShortname(), $this->getSkillsBonuses())) {
+            $value += $this->getSkillsBonuses()[$skill->getShortname()]->getBonus();
+        }
+
+        return $value;
     }
 
     /**
