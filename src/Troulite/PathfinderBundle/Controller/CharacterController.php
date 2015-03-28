@@ -277,15 +277,7 @@ class CharacterController extends Controller
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
-        $allSkills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
-        $skills = array();
-        // Filter skills that $entity cannot use
-        /** @var Skill $skill */
-        foreach ($allSkills as $skill) {
-            if ($skill->getUntrained() || $character->getSkillRank($skill) > 0) {
-                $skills[] = $skill;
-            }
-        }
+        $skills = $em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
         // Sort skills by name
         usort($skills, function (Skill $s1, Skill $s2) {
             return strcmp($s1->getName(), $s2->getName());
