@@ -349,6 +349,12 @@ class CharacterBonuses
                 $effect['value'],
                 array("c" => $character)
             );
+
+            // No need to add empty bonuses
+            if ($value == 0) {
+                continue;
+            }
+
             $type = $effect['type'];
             $bonus = new Bonus($source, $value, $type);
 

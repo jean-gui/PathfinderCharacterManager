@@ -93,6 +93,10 @@ class Bonuses {
         foreach ($this->getBonuses() as $bonus) {
             $type = $bonus->getType();
 
+            if ($bonus->getValue() == 0) {
+                continue;
+            }
+
             if (!$type) { // Non typed bonuses stack unless they come from the same source
                 $applicable[] = $bonus;
             } elseif ($type === 'dodge') { // Dodge bonuses stack
