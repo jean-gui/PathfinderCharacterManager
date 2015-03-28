@@ -1,7 +1,10 @@
 <?php
 namespace Troulite\PathfinderBundle\ExpressionLanguage;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
+use Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface;
 
 /**
  * Class ExpressionLanguage
@@ -10,6 +13,22 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLan
  */
 class ExpressionLanguage extends BaseExpressionLanguage
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @param ParserCacheInterface $cache
+     * @param ExpressionFunctionProviderInterface[] $providers
+     * @param EntityManager $em
+     */
+    public function __construct(ParserCacheInterface $cache = null, array $providers = array(), EntityManager $em = null)
+    {
+        parent::__construct($cache, $providers);
+        $this->em = $em;
+    }
+
     protected function registerFunctions()
     {
         parent::registerFunctions(); // do not forget to also register core functions
@@ -44,6 +63,25 @@ class ExpressionLanguage extends BaseExpressionLanguage
             },
             function ($arguments, $param1, $param2) {
                 return (max($param1, $param2));
+            }
+        );
+
+        /** @noinspection PhpUnusedParameterInspection */
+        $this->register(
+            'skill',
+            function ($param1) {
+                return sprintf("if ($this->em) {
+                    return $this->em->getRepository('TroulitePathfinderBundle:Skill')->findOneBy(
+                        array('shortname' => %s)
+                    );
+                }", $param1);
+            },
+            function ($arguments, $param1) {
+                if ($this->em) {
+                    return $this->em->getRepository('TroulitePathfinderBundle:Skill')->findOneBy(
+                        array('shortname' => $param1)
+                    );
+                }
             }
         );
     }

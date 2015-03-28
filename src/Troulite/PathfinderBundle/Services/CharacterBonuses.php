@@ -52,7 +52,7 @@ class CharacterBonuses
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->expressionLanguage = new ExpressionLanguage();
+        $this->expressionLanguage = new ExpressionLanguage(null, array(), $this->em);
     }
 
     /**
