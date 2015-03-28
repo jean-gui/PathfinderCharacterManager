@@ -9,6 +9,7 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -45,23 +46,41 @@ class ClassPower
      * @var ClassDefinition
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition", inversedBy="powers")
-     * @ORM\JoinColumn(name="class_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="class_id", referencedColumnName="id", nullable=true)
      */
     private $class;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $level;
 
     /**
      * @var bool Whether the power acts as a spell and is castable
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $castable = false;
+
+    /**
+     * @var ClassPower[]|Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ClassPower", mappedBy="parents", cascade={"all"})
+     */
+    private $children;
+
+    /**
+     * @var ClassPower[]|Collection
+     *
+     * @ORM\ManyToMany(targetEntity="ClassPower", inversedBy="children", cascade={"all"})
+     * @ORM\JoinTable(name="class_power_children",
+     *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id")}
+     *      )
+     */
+    private $parents;
 
     /**
      * Get id
@@ -151,6 +170,48 @@ class ClassPower
     public function isCastable()
     {
         return $this->castable;
+    }
+
+    /**
+     * @return Collection|ClassPower[]
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @return ClassPower[]|Collection
+     */
+    public function getParents()
+    {
+        return $this->parents;
+    }
+
+    /**
+     * @param ClassPower $parent
+     *
+     * @return $this
+     */
+    public function addParent(ClassPower $parent)
+    {
+        $this->parents[] = $parent;
+        $parent->children[] = $this;
+
+        return $this;
+    }
+
+    /**
+     * @param ClassPower $parent
+     *
+     * @return $this
+     */
+    public function removeParent(ClassPower $parent)
+    {
+        $this->parents->remove($parent);
+        $parent->children->remove($this);
+
+        return $this;
     }
 
     /**

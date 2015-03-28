@@ -62,6 +62,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         );
 
         $ranger = new ClassDefinition();
+        /** @noinspection PhpParamsInspection */
         $ranger
             ->setName("Ranger")
             ->setHpDice(10)
@@ -809,6 +810,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         }
 
         $barbarian = new ClassDefinition();
+        /** @noinspection PhpParamsInspection */
         $barbarian
             ->setName("Barbarian")
             ->setHpDice(12)
@@ -1005,6 +1007,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         );
 
         $paladin = new ClassDefinition();
+        /** @noinspection PhpParamsInspection */
         $paladin
             ->setName("Paladin")
             ->setHpDice(10)
@@ -1327,6 +1330,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
 
 
         $bard = new ClassDefinition();
+        /** @noinspection PhpParamsInspection */
         $bard
             ->setName("Bard")
             ->setHpDice(8)
@@ -1585,7 +1589,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('First Versatile Performance (Ex)')
             ->setLevel(2)
             ->setClass($bard)
-            ->setPassive(true);
+            ->setPassive(true)
+        ;
         $bard->addPower($power);
         if (array_key_exists($power->getName(), $powers)) {
             $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
@@ -1636,10 +1641,207 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         }
         $this->addReference('versatile-performance-5', $power);
 
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Act')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'bluff'      => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('bluff'))"
+                    ],
+                    'disguise' => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('disguise'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-act', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Comedy')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'bluff'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('bluff'))"
+                    ],
+                    'intimidate' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('intimidate'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-comedy', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Dance')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'acrobatics'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('acrobatics'))"
+                    ],
+                    'fly' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('fly'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-dance', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Keyboard Instruments')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'diplomacy'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('diplomacy'))"
+                    ],
+                    'intimidate' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('intimidate'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-keyboard-instruments', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Oratory')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'diplomacy'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('diplomacy'))"
+                    ],
+                    'sense-motive' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('sense-motive'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-oratory', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Percussion Instruments')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'handle-animal'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('handle-animal'))"
+                    ],
+                    'intimidate' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('intimidate'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-percussion', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Sing')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'bluff'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('bluff'))"
+                    ],
+                    'sense-motive' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('sense-motive'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-sing', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - String Instruments')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'bluff'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('bluff'))"
+                    ],
+                    'diplomacy' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('diplomacy'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-string', $power);
+
+        /** @noinspection PhpParamsInspection */
+        $power = (new ClassPower())
+            ->setName('Versatile Performance - Wind Instruments')
+            ->addParent($this->getReference('versatile-performance-1'))
+            ->addParent($this->getReference('versatile-performance-2'))
+            ->addParent($this->getReference('versatile-performance-3'))
+            ->addParent($this->getReference('versatile-performance-4'))
+            ->addParent($this->getReference('versatile-performance-5'))
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'diplomacy'    => [
+                        'type'  => 'class',
+                        'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('diplomacy'))"
+                    ],
+                    'handle-animal' => ['type'  => 'class',
+                                   'value' => "c.getSkillValue(skill('perform')) - c.getSkillValue(skill('handle-animal'))"
+                    ],
+                )
+            );
+        $this->addReference('versatile-performance-wind', $power);
+
         $power = (new ClassPower())
             ->setName('Well Versed (Ex)')
-            ->setLevel(2)
-            ->setClass($bard)
             ->setPassive(true)
             ->setEffects(
                 array(
@@ -1704,6 +1906,7 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
         );
 
         $cleric = new ClassDefinition();
+        /** @noinspection PhpParamsInspection */
         $cleric
             ->setName("Cleric")
             ->setHpDice(8)
