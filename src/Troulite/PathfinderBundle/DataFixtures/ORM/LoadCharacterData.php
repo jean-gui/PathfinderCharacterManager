@@ -44,6 +44,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 1
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(1)
             ->setHpRoll(10)
             ->setExtraPoint('hp')
             ->addFeat(
@@ -102,6 +103,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 2
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(2)
             ->setHpRoll(5)
             ->setExtraPoint('hp')
             ->addFeat(
@@ -158,6 +160,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 3
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(3)
             ->setHpRoll(2)
             ->setExtraPoint('hp')
             ->addFeat(
@@ -218,6 +221,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 4
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(4)
             ->setHpRoll(4)
             ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::DEXTERITY)
@@ -265,6 +269,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 5
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(5)
             ->setHpRoll(4)
             ->setExtraPoint('hp')
             ->addFeat((new CharacterFeat())->setFeat($this->getReference('feat - Point-Blank Shot')))
@@ -312,6 +317,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 6
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(6)
             ->setHpRoll(7)
             ->setExtraPoint('hp')
             ->addClassPower(
@@ -358,6 +364,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 7
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(7)
             ->setHpRoll(6)
             ->setExtraPoint('hp')
             ->addClassPower(
@@ -404,6 +411,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 8
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(8)
             ->setHpRoll(2)
             ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::DEXTERITY)
@@ -455,6 +463,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 9
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(9)
             ->setHpRoll(3)
             ->setExtraPoint('hp')
             ->addFeat((new CharacterFeat())->setFeat($this->getReference('feat - Dodge')))
@@ -502,6 +511,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 10
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(10)
             ->setHpRoll(8)
             ->setExtraPoint('hp')
             ->addClassPower(
@@ -552,6 +562,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 11
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(11)
             ->setHpRoll(10)
             ->setExtraPoint('hp')
             ->addFeat(
@@ -597,6 +608,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 12
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(12)
             ->setHpRoll(9)
             ->setExtraPoint('hp')
             ->setExtraAbility(Abilities::WISDOM)
@@ -639,6 +651,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 13
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(13)
             ->setHpRoll(1)
             ->setExtraPoint('hp')
             ->addFeat(
@@ -679,6 +692,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
         // Level 14
         $level = (new Level())
             ->setClassDefinition($this->getReference('ranger'))
+            ->setValue(14)
             ->setHpRoll(8)
             ->setExtraPoint('hp')
             ->addClassPower(
