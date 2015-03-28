@@ -2,6 +2,7 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -138,6 +139,7 @@ class CharacterController extends Controller
      */
     public function showAction(Character $character, Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $needActivationFeats = array();

@@ -15,8 +15,7 @@ use Troulite\PathfinderBundle\Entity\Feat;
  *
  * @package Troulite\PathfinderBundle\DataFixtures\ORM
  */
-class
-LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
+class LoadFeatData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
