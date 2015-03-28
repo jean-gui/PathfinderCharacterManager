@@ -19,7 +19,7 @@
             {% endif %}
             <td>
                 {{ popovers.description(power.classPower.name, power.classPower) }}
-                {{ power.classPower }} ({{ power.extraInformation }})
+                {{ power.classPower }} {% if power.extraInformation %}({{ power.extraInformation }}){% endif %}
             </td>
         </tr>
     {% endfor %}
