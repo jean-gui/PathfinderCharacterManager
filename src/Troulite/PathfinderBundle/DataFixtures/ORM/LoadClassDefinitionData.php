@@ -1860,7 +1860,8 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setName('Lore Master (Ex)')
             ->setLevel(5)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(false)
+        ;
         $bard->addPower($power);
         if (array_key_exists($power->getName(), $powers)) {
             $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
@@ -1869,9 +1870,42 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
 
         $power = (new ClassPower())
             ->setName('Jack of All Trades (Ex)')
-            ->setLevel(5)
+            ->setLevel(10)
             ->setClass($bard)
-            ->setPassive(false);
+            ->setPassive(true)
+            ->setEffects(
+                array(
+                    'disable-device' => [
+                        'type'  => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('disable-device'))) > 0 ? 3 : 0"
+                    ],
+                    'fly'            => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('fly'))) > 0 ? 3 : 0"
+                    ],
+                    'handle-animal'  => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('handle-animal'))) > 0 ? 3 : 0"
+                    ],
+                    'heal'           => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('heal'))) > 0 ? 3 : 0"
+                    ],
+                    'ride'           => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('ride'))) > 0 ? 3 : 0"
+                    ],
+                    'survival'       => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('survival'))) > 0 ? 3 : 0"
+                    ],
+                    'swim'           => [
+                        'type' => null,
+                        'value' => "(c.getLevel(4) >= 16 && c.getSkillRank(skill('swim'))) > 0 ? 3 : 0"
+                    ]
+                )
+            )
+        ;
         $bard->addPower($power);
         if (array_key_exists($power->getName(), $powers)) {
             $translationsRepository->translate($power, 'name', 'fr', $powers[$power->getName()]['name_fr']);
