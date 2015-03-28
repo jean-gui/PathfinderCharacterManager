@@ -25,7 +25,7 @@
                 {% else %}
                     <span class="glyphicon glyphicon-unchecked"></span>
                 {% endif %}
-                {{ skill }}
+                {{ skill }}{% if not skill.untrained %}*{% endif %}
             </td>
             <td>{{ entity.skillValue(skill) }}</td>
             <td>{{ skill.keyAbility[0:3]|trans|upper }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
