@@ -35,3 +35,12 @@ assetic:
 swiftmailer:
     disable_delivery: true
 #    delivery_address: me@example.com
+
+jms_translation:
+    configs:
+        app:
+            dirs: [%kernel.root_dir%, %kernel.root_dir%/../src]
+            output_dir: %kernel.root_dir%/../src/Troulite/PathfinderBundle/Resources/translations
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs]
+            output_format: xlf
