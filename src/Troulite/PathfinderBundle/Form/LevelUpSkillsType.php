@@ -72,8 +72,8 @@ class LevelUpSkillsType extends AbstractType
             array(
                 'type' => new LevelSkillType(),
                 'attr' => array('class' => 'table table-hover table-striped table-condensed table-responsive'),
-                'label' => false,
-                'options' => array('label' => false)
+                'label' => /** @Ignore */ false,
+                'options' => array('label' => /** @Ignore */ false)
             )
         );
     }

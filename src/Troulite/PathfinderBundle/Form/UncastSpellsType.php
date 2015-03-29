@@ -45,7 +45,7 @@ class UncastSpellsType extends AbstractType
                                     new UncastSpellType(),
                                     array(
                                         'mapped'      => false,
-                                        'label'       => $spellEffect->getSpell() . ' on ' . $spellEffect->getCharacter(
+                                        'label'       => /** @Ignore */ $spellEffect->getSpell() . ' on ' . $spellEffect->getCharacter(
                                             ),
                                         'spellEffect' => $spellEffect
                                     )

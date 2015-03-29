@@ -23,7 +23,7 @@ class LevelSkillType extends AbstractType
             ->add(
                 'value',
                 'integer',
-                array('label' => false))
+                array('label' => /** @Ignore */ false))
         ;
     }
     

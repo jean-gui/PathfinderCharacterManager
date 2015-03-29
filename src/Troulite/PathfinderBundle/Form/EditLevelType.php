@@ -93,12 +93,18 @@ class EditLevelType extends AbstractType
                         'choice',
                         array(
                             'choices' => array(
-                                Abilities::STRENGTH     => mb_convert_case(Abilities::STRENGTH, MB_CASE_TITLE),
-                                Abilities::DEXTERITY    => mb_convert_case(Abilities::DEXTERITY, MB_CASE_TITLE),
-                                Abilities::CONSTITUTION => mb_convert_case(Abilities::CONSTITUTION, MB_CASE_TITLE),
-                                Abilities::INTELLIGENCE => mb_convert_case(Abilities::INTELLIGENCE, MB_CASE_TITLE),
-                                Abilities::WISDOM       => mb_convert_case(Abilities::WISDOM, MB_CASE_TITLE),
-                                Abilities::CHARISMA     => mb_convert_case(Abilities::CHARISMA, MB_CASE_TITLE)
+                                /** @Ignore */
+                                Abilities::STRENGTH     => Abilities::STRENGTH,
+                                /** @Ignore */
+                                Abilities::DEXTERITY    => Abilities::DEXTERITY,
+                                /** @Ignore */
+                                Abilities::CONSTITUTION => Abilities::CONSTITUTION,
+                                /** @Ignore */
+                                Abilities::INTELLIGENCE => Abilities::INTELLIGENCE,
+                                /** @Ignore */
+                                Abilities::WISDOM       => Abilities::WISDOM,
+                                /** @Ignore */
+                                Abilities::CHARISMA     => Abilities::CHARISMA
                             )
                         )
                     );
@@ -121,12 +127,14 @@ class EditLevelType extends AbstractType
                             'learnedSpells',
                             'collection',
                             array(
+                                /** @Ignore */
                                 'label' => 'New Spell' . ($level->getLearnedSpells()->count() > 1 ? 's' : ''),
                                 'type' => new AddCharacterSpellType(),
                                 'options' => array(
                                     'learned' => $learned->toArray(),
                                     'em'      => $this->em,
                                     'class-definition' => $level->getClassDefinition(),
+                                    /** @Ignore */
                                     'label'   => false
                                 )
                             )
@@ -154,7 +162,7 @@ class EditLevelType extends AbstractType
                     array(
                         'type'    => new LevelSkillType(),
                         'attr'    => array('class' => 'table table-hover table-striped table-condensed table-responsive'),
-                        'options' => array('label' => false)
+                        'options' => array('label' => /** @Ignore */false)
                     )
                 );
             }

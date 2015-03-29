@@ -61,7 +61,7 @@ class CastSpellsType extends AbstractType
                     'castable_spells_by_class_by_spell_level',
                     'collection',
                     array(
-                        'label'   => false,
+                        'label'   => /** @Ignore */ false,
                         'type'    => new CastableClassSpellsType(),
                         'options' => array(
                             'caster'  => $character,

@@ -71,9 +71,9 @@ class LevelUpClassSummaryHpType extends AbstractType
                     'classPowers',
                     'collection',
                     array(
-                        'label' => false,
+                        'label' => /** @Ignore */ false,
                         'type' => new ClassPowerChoiceType(),
-                        'options' => array('label' => false)
+                        'options' => array('label' => /** @Ignore */ false)
                     )
                 );
             }

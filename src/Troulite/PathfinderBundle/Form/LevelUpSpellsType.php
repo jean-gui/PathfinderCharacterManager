@@ -85,13 +85,13 @@ class LevelUpSpellsType extends AbstractType
                         'learnedSpells',
                         'collection',
                         array(
-                            'label'   => 'New Spell' . ($level->getLearnedSpells()->count() > 1 ? 's' : ''),
+                            'label'   => /** @Ignore */ 'New Spell' . ($level->getLearnedSpells()->count() > 1 ? 's' : ''),
                             'type'    => new AddCharacterSpellType(),
                             'options' => array(
                                 'learned' => $learned,
                                 'em'      => $em,
                                 'class-definition' => $class,
-                                'label' => false
+                                'label' => /** @Ignore */ false
                             )
                         )
                     );

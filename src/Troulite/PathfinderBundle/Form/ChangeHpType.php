@@ -24,7 +24,7 @@ class ChangeHpType extends AbstractType
                 'hp_mod',
                 'integer',
                 array(
-                    'label'  => false,
+                    'label'  => /** @Ignore */ false,
                     'mapped' => false,
                     'horizontal_input_wrapper_class' => 'col-xs-5',
                     'widget_form_group_attr' => array('class' => false),

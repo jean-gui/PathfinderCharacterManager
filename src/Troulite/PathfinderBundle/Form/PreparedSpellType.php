@@ -44,7 +44,7 @@ class PreparedSpellType extends AbstractType
                     'spell',
                     null,
                     array(
-                        'label' => 'Level ' . $options['preparedLevels'][(int)$form->getName()] . ' Spell',
+                        'label' => /** @Ignore */ 'Level ' . $options['preparedLevels'][(int)$form->getName()] . ' Spell',
                         'query_builder' => $qb,
                     )
                 );

@@ -79,6 +79,7 @@ class AddCharacterSpellType extends AbstractType
                     'spell',
                     'entity',
                     array(
+                        /** @Ignore */
                         'label'   => 'Level ' . $classSpell->getSpellLevel() . ' Spell',
                         'class'   => 'TroulitePathfinderBundle:Spell',
                         'choices' => $spells

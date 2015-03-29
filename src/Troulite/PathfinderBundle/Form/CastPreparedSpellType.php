@@ -30,7 +30,7 @@ class CastPreparedSpellType extends AbstractType
             'targets',
             'choice',
             array(
-                'label'       => $options['spell'] . ' (' . $options['class'] . ')',
+                'label'       => /** @Ignore */ $options['spell'] . ' (' . $options['class'] . ')',
                 'choices'     => $options['targets'],
                 'empty_value' => 'Target'
             )

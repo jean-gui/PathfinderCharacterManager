@@ -38,6 +38,7 @@ class ClassPowerChoiceType extends AbstractType
                         'extraInformation',
                         'choice',
                         array(
+                            /** @Ignore */
                             'label' => $characterClassPower->getClassPower(),
                             'choices' => array_combine(
                                 $characterClassPower->getClassPower()->getEffects()['choice'],

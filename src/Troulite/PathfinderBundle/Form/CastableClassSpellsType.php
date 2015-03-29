@@ -36,7 +36,7 @@ class CastableClassSpellsType extends AbstractType
                     'caster'  => $options['caster'],
                     'targets' => $options['targets'],
                 ),
-                'label' => false,
+                'label' => /** @Ignore */ false,
                 'required' => false
             )
         );

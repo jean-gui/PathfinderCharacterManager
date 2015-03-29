@@ -32,7 +32,7 @@ class CastSpellsLevelType extends AbstractType
             array(
                 'type'    => new CastSpellType(),
                 'options' => array('targets' => $options['targets'], 'caster' => $options['caster']),
-                'label'   => false,
+                'label'   => /** @Ignore */ false,
                 'required' => false
             )
         );
