@@ -31,7 +31,9 @@
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js' %}
+    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+    '@TroulitePathfinderBundle/Resources/public/*.js'
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
@@ -43,14 +45,6 @@
             app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
         )
     ) }}
-{% endblock %}
-
-{% block foot_script_assetic %}
-    {% javascripts
-        '@TroulitePathfinderBundle/Resources/public/*.js'
-    %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
 {% endblock %}
 
 {% block content_row %}{% block content %}{% endblock %}{% endblock %}
