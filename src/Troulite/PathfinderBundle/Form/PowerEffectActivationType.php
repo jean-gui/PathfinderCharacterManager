@@ -34,7 +34,7 @@ class PowerEffectActivationType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\PowerEffect'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\PowerEffect',
             )
         );
     }

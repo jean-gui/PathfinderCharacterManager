@@ -6,7 +6,7 @@
 <div class="container">
 <h1>Level Up</h1>
     <div class=wizard">
-        {% include 'CraueFormFlowBundle:FormFlow:stepList.html.twig' %}
+        {% include 'MopaBootstrapBundle:Form:formflow_stepList.html.twig' %}
     </div>
     <form method="post" {{ form_enctype(form) }}>
         {% if flow.currentStepLabel == 'Class Summary' %}
@@ -32,7 +32,7 @@
         {{ form_errors(form) }}
         {{ form_rest(form) }}
 
-        {% include 'CraueFormFlowBundle:FormFlow:buttons.html.twig' %}
+        {% include 'MopaBootstrapBundle:Form:formflow_buttons.html.twig' %}
     </form>
 </div>
 {% endblock %}
@@ -84,15 +84,15 @@
         {% for feat in child %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ number }}">
+                    <h3 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ number }}">
                             {{ form_label(
                                    feat,
                                    'feat_number'|trans({'%number%': number}),
                                    {'label_attr': {'style': 'font-weight: inherit; display: inherit; cursor: inherit'}})
                             }}
                         </a>
-                    </h4>
+                    </h3>
                 </div>
                 <div id="collapse{{ number }}" class="panel-collapse collapse{% if number == 1 %} in{% endif %}">
                     <div class="panel-body">

@@ -3,6 +3,18 @@ form[name="classpoweractivation"] label {
     font-weight: normal;
 }
 
+form[name="classpoweractivation"] .checkbox {
+    margin-top: 0;
+    margin-bottom: 0;
+
+}
+
+#troulite_pathfinderbundle_level_edit_skills .collection-item,
+#troulite_pathfinderbundle_level_edit_skills .form-group,
+{
+    margin-bottom: 0;
+}
+
 a.mypopover {
     color: #C7C7C7;
 }

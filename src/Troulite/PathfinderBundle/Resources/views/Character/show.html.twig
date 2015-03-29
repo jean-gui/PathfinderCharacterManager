@@ -2,7 +2,7 @@
 
 {% import '::popovers.html.twig' as popovers %}
 
-{% block title entity %}
+{% block subtitle entity %}
 
 {% block content -%}
     {% include('@TroulitePathfinder/Character/character_h1.html.twig') %}
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row">
-        <div id="skills">
+        <div id="skills" class="col-xs-12">
             {{ include('TroulitePathfinderBundle:Character/show:skills.html.twig') }}
         </div>
     </div>

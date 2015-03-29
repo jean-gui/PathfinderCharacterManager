@@ -37,13 +37,13 @@
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "twbs/bootstrap": "3.1.*",
         "jquery/jquery": "1.11.*",
-        "braincrafted/bootstrap-bundle": "2.1.0-beta1",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/security-extra-bundle": "~1.2",
         "craue/formflow-bundle": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.1",
         "jms/i18n-routing-bundle": "~1.0",
-        "symfony/intl": "v2.6.4"
+        "symfony/intl": "v2.6.4",
+        "mopa/bootstrap-bundle": "~3.0@dev"
     },
     "scripts": {
         "post-install-cmd": [
@@ -52,7 +52,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install"
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -60,7 +60,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install"
+            "Mopa\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::postInstallSymlinkTwitterBootstrap"
         ]
     },
     "config": {

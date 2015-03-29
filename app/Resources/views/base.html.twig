@@ -1,57 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Pathfinder Character Manager - {% block title "Home" %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% stylesheets
+{% extends 'MopaBootstrapBundle::base_less.html.twig' %}
+
+{% block title %}Pathfinder Character Manager - {% block subtitle "Home" %}{% endblock %}
+
+{% block head_style %}
+    {% stylesheets filter='less,cssrewrite'
+        '../app/Resources/less/bootstrap.less'
         '@CraueFormFlowBundle/Resources/assets/css/buttons.css'
-        '@TroulitePathfinderBundle/Resources/public/css/*.css'
-    %}
+        '@TroulitePathfinderBundle/Resources/public/css/*.css' %}
         <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
-    {% block stylesheets %}{% endblock stylesheets %}
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
-    <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
-    {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
-</head>
-
-<body>
-{{ render_esi(
-    path(
-        'layout_header',
-        app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
-    )
-) }}
-
-{% block body %}
-    {% for type, messages in app.session.flashbag.all %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
-                            class="sr-only">Close</span></button>
-                <strong>Notice</strong>: {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-
-    <div class="container">
-        {% block content %}{% endblock %}
-        {{ render_esi(
-            path(
-                'layout_footer',
-                app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
-            )
-        )
-        }}
-    </div>
 {% endblock %}
-{% javascripts
-    'js/jquery.js'
-    'js/bootstrap.js'
-    'js/bootstrap_popover_9.js'
-    '@TroulitePathfinderBundle/Resources/public/*.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
+
+{% block page_header %}{% endblock %}
+
+{% block navbar %}
+    {{ render_esi(
+        path(
+            'layout_header',
+            app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
+        )
+    ) }}
+{% endblock %}
+
+{% block foot_script %}
+    {% javascripts
+    'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
+    '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+    '@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
+    '@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
+    '@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
+    '@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
+    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+    '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block footer %}
+    {{ render_esi(
+        path(
+            'layout_footer',
+            app.request.attributes.get('_route_params')|merge({ '_route': app.request.attributes.get('_route')})
+        )
+    ) }}
+{% endblock %}
+
+{% block foot_script_assetic %}
+    {% javascripts
+        '@TroulitePathfinderBundle/Resources/public/*.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
-</body>
-</html>
+{% endblock %}
+
+{% block content_row %}{% block content %}{% endblock %}{% endblock %}

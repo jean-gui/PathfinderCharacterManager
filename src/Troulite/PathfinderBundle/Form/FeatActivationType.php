@@ -23,7 +23,7 @@ class FeatActivationType extends AbstractType
             ->add(
                 'active',
                 null,
-                array("required" => false)
+                array("required" => false, 'horizontal_input_wrapper_class' => null)
             );
     }
 
@@ -34,7 +34,7 @@ class FeatActivationType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterFeat'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\CharacterFeat',
             )
         );
     }

@@ -13,6 +13,7 @@ use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Entity\LevelSkill;
+use Troulite\PathfinderBundle\Entity\Skill;
 use Troulite\PathfinderBundle\Form\Type\AddCharacterSpellType;
 
 /**
@@ -45,6 +46,9 @@ class EditLevelType extends AbstractType
             array(),
             array('name' => 'ASC')
         );
+        usort($this->skills, function (Skill $s1, Skill $s2) {
+            return strcmp($s1->getName(), $s2->getName());
+        });
     }
 
     /**

@@ -29,8 +29,11 @@ class EditInventoryType extends AbstractType
                     'allow_delete' => true,
                     'by_reference' => false,
                     'type'         => new EditInventoryItemType(),
-                    'label'        => false,
-                    'options'      => array('label' => false, 'attr' => array('class' => 'form-inline'))
+                    'label'        => 'items',
+                    'options'      => array('label' => false),
+                    'widget_add_btn' => array('icon' => 'plus-sign', 'label' => 'add.item'),
+                    'widget_remove_btn' => array('icon' => 'trash', 'label' => 'remove.item'),
+                    'show_legend' => false
                 )
             )
         ;

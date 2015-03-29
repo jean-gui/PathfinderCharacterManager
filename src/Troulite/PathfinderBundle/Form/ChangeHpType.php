@@ -25,7 +25,10 @@ class ChangeHpType extends AbstractType
                 'integer',
                 array(
                     'label'  => false,
-                    'mapped' => false
+                    'mapped' => false,
+                    'horizontal_input_wrapper_class' => 'col-xs-5',
+                    'widget_form_group_attr' => array('class' => false),
+                    'widget_form_group' => false
                 )
             )
             ->add('submit', 'submit', array('label' => 'heal.harm'))
@@ -39,7 +42,8 @@ class ChangeHpType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Troulite\PathfinderBundle\Entity\Character',
-            'attr'       => array('class' => 'form-inline')
+            'widget_form_group' => true,
+            'widget_form_group_attr' => array('class' => 'row')
         ));
     }
 

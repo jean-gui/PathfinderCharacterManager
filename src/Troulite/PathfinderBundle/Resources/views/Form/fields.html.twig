@@ -41,34 +41,30 @@
 
 {# Spells #}
 {% block troulite_pathfinder_bundle_cast_spells_widget %}
-    <div class="container-fluid">
         {% for child in form.castable_spells_by_class_by_spell_level %}
             {{ form_row(child) }}
         {% endfor %}
-    </div>
 {% endblock %}
 
 {% block troulite_pathfinder_bundle_castable_class_spells_row %}
-    <div class="row">
-        {% if form.parent|length > 1 %}
-            <h3>{{ form.vars.data.class }}</h3>
+    {% if form.parent|length > 1 %}
+        <h3>{{ form.vars.data.class }}</h3>
+    {% endif %}
+    {% set i = 0 %}
+    {% for child in form.spells_by_level %}
+        {% if i % 2 == 0 %}
+            <div class="row">
         {% endif %}
-        {% set i = 0 %}
-        {% for child in form.spells_by_level %}
-            {% if i % 2 == 0 %}
-                <div class="row">
-            {% endif %}
-            {{ form_row(child) }}
-            {% if i % 2 == 1 %}
-                </div>
-            {% endif %}
-            {% set i = i+1 %}
-        {% endfor %}
-        {% if i % 2 != 0 %}
+        {{ form_row(child) }}
+        {% if i % 2 == 1 %}
             </div>
         {% endif %}
-        {{ form_rest(form) }}
-    </div>
+        {% set i = i+1 %}
+    {% endfor %}
+    {% if i % 2 != 0 %}
+        </div>
+    {% endif %}
+    {{ form_rest(form) }}
 {% endblock %}
 
 {% block troulite_pathfinder_bundle_cast_spells_level_row %}
@@ -132,13 +128,12 @@
 
 {% block troulite_pathfinderbundle_cast_spell_row %}
     <div class="form-group form-horizontal">
-        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-12 col-sm-5' } }) }}
-        <div class="col-xs-10 col-sm-4">
-            {{ form_label(form.targets, null, { 'label_attr': { 'class': 'sr-only' } }) }}
+        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-6 col-sm-5' } }) }}
+        <div class="col-xs-4 col-sm-4">
             {{ form_widget(form.targets) }}
         </div>
-        {{ form_row(form.id) }}
-        <div class="collapse" id="{{ form.vars.id }}_desc">
+            {{ form_widget(form.id) }}
+        <div class="collapse" id="{{ form.vars.id }}_desc" style="margin-top: 3em">
             <div class="well">
                 {% if form.vars.data.shortDescription %}
                     <p><em>{{ form.vars.data.shortDescription|raw }}</em></p>

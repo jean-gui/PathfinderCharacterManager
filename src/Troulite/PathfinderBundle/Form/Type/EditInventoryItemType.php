@@ -20,8 +20,8 @@ class EditInventoryItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item')
-            ->add('quantity')
+            ->add('item', null, array('widget_type' => 'inline'))
+            ->add('quantity', null, array('widget_type' => 'inline'))
         ;
     }
     
@@ -31,7 +31,7 @@ class EditInventoryItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troulite\PathfinderBundle\Entity\InventoryItem'
+            'data_class' => 'Troulite\PathfinderBundle\Entity\InventoryItem',
         ));
     }
 

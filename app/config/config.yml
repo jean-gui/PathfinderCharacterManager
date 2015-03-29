@@ -36,7 +36,6 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'TroulitePathfinderBundle' ]
     #java: /usr/bin/java
     filters:
         cssrewrite:
@@ -49,11 +48,6 @@ assetic:
             node: /usr/bin/node
             node_paths: [/usr/local/lib/node_modules]
             apply_to: "\.less$"
-
-braincrafted_bootstrap:
-    customize:
-        variables_file: %kernel.root_dir%/Resources/less/variables.less
-    less_filter: less
 
 # Doctrine Configuration
 doctrine:
@@ -118,3 +112,17 @@ jms_i18n_routing:
     default_locale: %locale%
     locales: [en, fr]
     strategy: prefix_except_default
+
+mopa_bootstrap:
+    form:
+        #horizontal_label_class: ~
+        #horizontal_input_wrapper_class: ~
+        render_optional_text: false
+        checkbox_label: 'label'
+        show_legend: false
+
+services:
+    twig.text_extension:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - name: twig.extension

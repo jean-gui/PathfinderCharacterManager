@@ -2,12 +2,15 @@
 
 <h2>{{ 'hit.points'|trans }}</h2>
 {{ character.maxHp - character.lostHP }} / {{ character.maxHp }} {{ popovers.bonuses(character.hpBonuses) }}
-{{ form(form) }}
 {% if character.level > 1 %}
-    <span data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per level</span>
+    <small data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per level</small>
+
     {% set sumhp = 0 %}
     {% for level in character.levels|slice(1) %}
         {% set sumhp = sumhp + level.hpRoll %}
     {% endfor %}
     {{ (sumhp / ((character.levels|length)-1))|number_format(1) }}
 {% endif %}
+<div class="row">
+    {{ form(form) }}
+</div>

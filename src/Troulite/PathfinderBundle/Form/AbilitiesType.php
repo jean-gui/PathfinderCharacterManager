@@ -20,12 +20,12 @@ class AbilitiesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('baseStrength')
-            ->add('baseDexterity')
-            ->add('baseConstitution')
-            ->add('baseIntelligence')
-            ->add('baseWisdom')
-            ->add('baseCharisma')
+            ->add('baseStrength', null, array('label' => 'strength'))
+            ->add('baseDexterity', null, array('label' => 'dexterity'))
+            ->add('baseConstitution', null, array('label' => 'constitution'))
+            ->add('baseIntelligence', null, array('label' => 'intelligence'))
+            ->add('baseWisdom', null, array('label' => 'wisdom'))
+            ->add('baseCharisma', null, array('label' => 'charisma'))
         ;
     }
     

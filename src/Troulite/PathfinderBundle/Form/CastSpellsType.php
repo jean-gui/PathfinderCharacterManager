@@ -101,5 +101,6 @@ class CastSpellsType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['extra_spells'] = $this->extra_spells;
+        $view->vars['horizontal'] = false;
     }
 }

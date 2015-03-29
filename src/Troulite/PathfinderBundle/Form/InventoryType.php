@@ -38,7 +38,8 @@ class InventoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troulite\PathfinderBundle\Entity\Character'
+            'data_class' => 'Troulite\PathfinderBundle\Entity\Character',
+            'horizontal' => false
         ));
     }
 
