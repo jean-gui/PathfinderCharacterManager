@@ -1,7 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-<div class="container">
+{% block content -%}
     <h1>
         {{ entity.name }}
         {% if entity.classes %}
@@ -19,7 +18,7 @@
     {% endif %}
 
     {% if entity.longDescription %}
-        <p>{{ entity.longDescription }}</p>
+        <p>{{ entity.longDescription|raw }}</p>
     {% endif %}
 
     <dl class="dl-horizontal">
@@ -76,5 +75,4 @@
         </a>
     </li>
 </ul>
-</div>
 {% endblock %}
