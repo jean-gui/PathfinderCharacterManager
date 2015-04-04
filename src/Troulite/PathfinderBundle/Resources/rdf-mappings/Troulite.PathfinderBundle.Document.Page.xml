@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<type
+        xmlns:schema="http://schema.org/"
+        typeof="schema:WebPage"
+        >
+    <children>
+        <property property="schema:headline" identifier="title"/>
+        <property property="schema:text" identifier="content"/>
+    </children>
+</type>

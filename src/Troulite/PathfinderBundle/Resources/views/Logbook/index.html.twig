@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block subtitle %}{{ entity }} - Logbook{% endblock %}
+
+{% block content -%}
+    {{ logbook|raw }}
+{% endblock %}
+
+{% block foot_script %}
+    {{ parent() }}
+    {% javascripts
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/jquery-ui.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/jquery.rdfquery.core.min-1.0.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/jquery.rdfquery.rules.min-1.0.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/modernizr.min.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/underscore-min.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/backbone.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/vie.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/rangy-core.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/hallo.js'
+        '@TroulitePathfinderBundle/Resources/public/vendor/js/create.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
