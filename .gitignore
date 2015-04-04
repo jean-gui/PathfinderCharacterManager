@@ -1,4 +1,5 @@
 /web/bundles/
+/web/assets/
 /web/js/
 /web/css/
 /web/img/
@@ -13,3 +14,4 @@
 /vendor/
 /composer.phar
 *.sqlite
+.idea/
