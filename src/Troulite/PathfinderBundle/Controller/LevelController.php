@@ -158,7 +158,7 @@ class LevelController extends Controller
             array(
                 'action' => $this->generateUrl(
                     'characters_levels_edit',
-                    array('character' => $character->getId(), 'level' => $level->getId())),
+                    array('character' => $character->getId(), 'level' => $level->getValue())),
                 'method' => 'PUT',
             )
         );
@@ -167,6 +167,8 @@ class LevelController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         return array(
