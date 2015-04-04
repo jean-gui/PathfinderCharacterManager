@@ -5,6 +5,9 @@
 {% block head_style %}
     {% stylesheets filter='less,cssrewrite'
         '../app/Resources/less/bootstrap.less'
+        'http://createjs.org/css/themes/midgard-notifications/midgardnotif.css'
+        'http://createjs.org/css/themes/create-ui/css/create-ui.css'
+        'http://createjs.org/js/deps/font-awesome/css/font-awesome.css'
         '@CraueFormFlowBundle/Resources/assets/css/buttons.css'
         '@TroulitePathfinderBundle/Resources/public/css/*.css' %}
         <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>

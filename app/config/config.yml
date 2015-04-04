@@ -79,6 +79,12 @@ doctrine:
                         prefix: Gedmo\Translator\Entity
                         dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
                         is_bundle: false
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -107,6 +113,7 @@ stof_doctrine_extensions:
     orm:
         default:
             translatable: true
+            tree:         true
 
 jms_i18n_routing:
     default_locale: %locale%

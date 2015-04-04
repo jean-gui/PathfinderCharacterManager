@@ -52,6 +52,13 @@ class Party
     private $characters;
 
     /**
+     * @var Logbook
+     *
+     * @ORM\OneToOne(targetEntity="Logbook", mappedBy="party", cascade={"all"})
+     */
+    private $logbook;
+
+    /**
      * Add characters
      *
      * @param Character $character
@@ -157,5 +164,26 @@ class Party
     public function getDungeonMaster()
     {
         return $this->dungeonMaster;
+    }
+
+    /**
+     * @return Logbook
+     */
+    public function getLogbook()
+    {
+        return $this->logbook;
+    }
+
+    /**
+     * @param Logbook $logbook
+     *
+     * @return $this
+     */
+    public function setLogbook(Logbook $logbook)
+    {
+        $this->logbook = $logbook;
+        $logbook->setParty($this);
+
+        return $this;
     }
 }
