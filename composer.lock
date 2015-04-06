@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3a40fdcbea0fa66900da72445981afa6",
+    "hash": "ee06bef4f3c15be04f39914e57c6b924",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1766,53 +1766,6 @@
             "time": "2014-12-12 05:04:05"
         },
         {
-            "name": "midgard/createphp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/flack/createphp.git",
-                "reference": "263f6420b0a3c739c1b299e3f302516eeb441ee9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/flack/createphp/zipball/263f6420b0a3c739c1b299e3f302516eeb441ee9",
-                "reference": "263f6420b0a3c739c1b299e3f302516eeb441ee9",
-                "shasum": ""
-            },
-            "require-dev": {
-                "doctrine/common": "~2.3.0",
-                "twig/twig": "~1.8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Midgard\\CreatePHP": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL",
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Flack",
-                    "email": "flack@contentcontrol-berlin.de",
-                    "homepage": "http://www.contentcontrol-berlin.de/"
-                }
-            ],
-            "description": "PHP adapter for Create.js",
-            "keywords": [
-                "rdfa"
-            ],
-            "time": "2015-02-11 09:06:20"
-        },
-        {
             "name": "monolog/monolog",
             "version": "1.13.1",
             "source": {
@@ -2921,8 +2874,7 @@
     "stability-flags": {
         "doctrine/doctrine-fixtures-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
-        "mopa/bootstrap-bundle": 20,
-        "midgard/createphp": 20
+        "mopa/bootstrap-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -1,0 +1,26 @@
+{% if edit is not defined %}
+    {% set edit = false %}
+{% endif %}
+<li{% if first is defined and first %} class="active"{% endif %}>
+    <a class="main" href="#entry_{{ entry.id }}">{{ entry.title|raw }}</a>
+    {% if edit %}
+        <a class="btn"
+           data-collection-add-btn="{{ index }}_form_group">
+            <span class="glyphicon glyphicon-plus"></span>{{ 'subpage.new'|trans }}
+        </a>
+    {% endif %}
+    {% if edit or entry.children|length > 0 %}
+        <ul class="nav nav-stacked">
+            {% for subentry in entry.children %}
+                {{ include(
+                    '@TroulitePathfinder/Logbook/_logbook_menu_entry.html.twig',
+                    {
+                        'entry': subentry,
+                        'first': false,
+                        'edit': edit,
+                        'index': index ~ '_' ~ loop.index0 ~ '_children'
+                    }) }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block subtitle %}{{ entity }} - Logbook{% endblock %}
+
+{% block content -%}
+    <div class="row">
+        <div class="col-md-9" role="main">
+            {% for entry in entity.logbook.entries %}
+                {{ block('_logbook_entry') }}
+            {% endfor %}
+        </div>
+        <div class="col-md-3 logbook-show" role="complementary">
+            {{ include('@TroulitePathfinder/Logbook/_logbook_menu.html.twig', { 'entity': entity }) }}
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-default" href="{{ path('logbook_edit', { 'id': entity.id }) }}">Edit</a>
+    </div>
+{% endblock %}
+
+{% block _logbook_entry %}
+    <section id="entry_{{ entry.id }}">
+        <h{{ entry.lvl + 1 }}>{{ entry.title|raw }}</h{{ entry.lvl + 1 }}>
+        <div>{{ entry.content|raw }}</div>
+        {% for entry in entry.children %}
+            {{ block('_logbook_entry') }}
+        {% endfor %}
+    </section>
+{% endblock %}

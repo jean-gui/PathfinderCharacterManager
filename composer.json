@@ -44,8 +44,7 @@
         "jms/i18n-routing-bundle": "~1.0",
         "symfony/intl": "v2.6.4",
         "mopa/bootstrap-bundle": "~3.0@dev",
-        "jms/translation-bundle": "~1.0",
-        "midgard/createphp": "1.1.*@dev"
+        "jms/translation-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

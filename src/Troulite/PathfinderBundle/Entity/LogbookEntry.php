@@ -32,7 +32,7 @@ class LogbookEntry
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string")
+     * @ORM\Column(name="content", type="string", nullable=true)
      */
     private $content;
 
@@ -147,7 +147,6 @@ class LogbookEntry
     public function setParent(LogbookEntry $parent = null)
     {
         $this->parent = $parent;
-        $parent->addChild($this);
 
         return $this;
     }
@@ -231,7 +230,30 @@ class LogbookEntry
             $this->children = new ArrayCollection();
         }
         $this->children->add($entry);
+        $entry->setParent($this);
+        return $this;
+    }
+
+    /**
+     * @param LogbookEntry $entry
+     *
+     * @return $this
+     */
+    public function removeChild(LogbookEntry $entry)
+    {
+        if (!$this->children) {
+            $this->children = new ArrayCollection();
+        }
+        $this->children->removeElement($entry);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

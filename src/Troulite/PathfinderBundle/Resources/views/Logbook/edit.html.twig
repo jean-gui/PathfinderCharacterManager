@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block subtitle %}{{ entity }} - Logbook{% endblock %}
+
+{% block content -%}
+    <div class="row">
+        <div class="froala-view col-md-9" role="main">
+            {{ form_start(form, { 'attr': {'class': ''}}) }}
+            {#{{ form(form) }}#}
+{#
+            {% for form in form.logbook.entries %}
+                {{ block('_logbook_entry_form') }}
+            {% endfor %}
+#}            {{ form_rest(form) }}
+
+            {{ form_end(form) }}
+        </div>
+        <div class="col-md-3" role="complementary">
+            {{ include('@TroulitePathfinder/Logbook/_logbook_menu.html.twig', { 'entity': entity, 'edit': true }) }}
+        </div>
+    </div>
+{% endblock %}
+
+{#
+{% block _troulite_pathfinderbundle_partylogbook_logbook_entries_entry_row %}
+    {% if form.vars.data %}
+        <h1>{{ form_row(form.title) }}</h1>
+        <div>{{ form_row(form.content) }}</div>
+        {{ form_rest(form) }}
+    {% endif %}
+{% endblock %}
+#}
+{% block troulite_pathfinderbundle_logbookentry_widget %}
+    {% if form.vars.data %}
+        <h{{ form.vars.data.lvl + 1 }}>{{ form_row(form.title) }}</h{{ form.vars.data.lvl + 1 }}>
+        <div>{{ form_row(form.content) }}</div>
+        {{ form_rest(form) }}
+    {% else %}
+        {% if form.parent.parent.vars.name == 'logbook' %}
+            {% set lvl = 1 %}
+        {% else %}
+            {% set lvl = form.parent.parent.vars.data.lvl + 2 %}
+        {% endif %}
+        <h{{ lvl }}>{{ form_row(form.title) }}</h{{ lvl }}>
+        <div>{{ form_row(form.content) }}</div>
+        {{ form_rest(form) }}
+    {% endif %}
+{% endblock %}
+
+
+{% block collection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set prototype_markup = form_row(prototype) %}
+        {% set data_prototype_name = form.vars.form.vars.prototype.vars.name|default('__name__') %}
+        {% set data_prototype_label = form.vars.form.vars.prototype.vars.label|default('__name__label__') %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({
+        'data-prototype': prototype_markup,
+        'data-prototype-name': data_prototype_name,
+        'data-prototype-label': data_prototype_label
+        })|merge(attr) %}
+    {% endif %}
+    {# Add row by default use attr.class to change#}
+	{% if 'collection' in form.vars.block_prefixes and attr.class is defined %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('row') ~ ' ' ~ attr.class}) %}
+    {% endif %}
+    {# collection item adds class {form_id}_form-group  too #}
+    {% set widget_form_group_attr = widget_form_group_attr|merge({'id': 'collection' ~ id ~ '_form_group', 'class': widget_form_group_attr.class ~ ' collection-items ' ~ id ~ '_form_group'}) %}
+
+    <div {% for attrname,attrvalue in widget_form_group_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+    {# Add initial prototype form #}
+    {% if form.vars.value|length == 0 and prototype is defined %}
+        {% for name in prototype_names %}
+            {{ prototype_markup|replace({'__name__': name})|raw }}
+        {% endfor %}
+    {% endif %}
+    {{ block('form_widget') }}
+    </div>
+{% endspaceless %}
+{% endblock collection_widget %}

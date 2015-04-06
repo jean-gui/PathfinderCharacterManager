@@ -3,14 +3,13 @@
 namespace Troulite\PathfinderBundle\Controller;
 
 
-use Midgard\CreatePHP\ArrayLoader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Party;
-use Troulite\PathfinderBundle\Mapper\DoctrineOrmMapper;
+use Troulite\PathfinderBundle\Form\PartyLogbookType;
 
 /**
  * Logbook controller.
@@ -19,84 +18,59 @@ use Troulite\PathfinderBundle\Mapper\DoctrineOrmMapper;
  */
 class LogbookController extends Controller
 {
-
     /**
-     * @var array
-     */
-    private $config = array(
-        'types' => array(
-            'Troulite\\PathfinderBundle\\Entity\\Logbook' => array(
-                'config'       => array(
-                    'storage' => 'Logbook',
-                ),
-                'typeof'       => 'schema:WebPage',
-                "rev"          => array("dcterms:partOf"),
-                'vocabularies' => array(
-                    'viejs'   => 'http://viejs.org/ns/',
-                    'skos'    => 'http://www.w3.org/2004/02/skos/core#',
-                    'schema'  => 'http://schema.org/',
-                    'dcterms' => 'http://purl.org/dc/terms/',
-                ),
-                'children'     => array(
-                    "entries" => array(
-                        "nodeType" => "collection",
-                        "rel"      => "skos:related",
-                        "tag-name" => "ul",
-                        "rev"      => "dcterms:partOf"
-                    ),
-                ),
-            ),
-            'Troulite\\PathfinderBundle\\Entity\\LogbookEntry' => array(
-                'config'       => array(
-                    'storage' => 'LogbookEntry',
-                ),
-                'typeof'       => 'schema:WebPage',
-                "rev" => array("dcterms:partOf"),
-                'vocabularies' => array(
-                    'viejs'  => 'http://viejs.org/ns/',
-                    'skos'   => 'http://www.w3.org/2004/02/skos/core#',
-                    'schema' => 'http://schema.org/',
-                    'dcterms' => 'http://purl.org/dc/terms/',
-                ),
-                'children'     => array(
-                    'title'    => array(
-                        'property' => 'viejs:headline',
-                        'tag-name' => 'h2'
-                    ),
-                    'content'  => array(
-                        'property' => 'viejs:text'
-                    ),
-                    "children" => array(
-                        "nodeType" => "collection",
-                        "rel"      => "skos:related",
-                        "tag-name" => "ul",
-                        //"childtypes" => array('schema:WebPage')
-                        "rev"      => "dcterms:partOf"
-                    ),
-                ),
-            ),
-        )
-    );
-
-    /**
-     * Lists all Feat entities.
+     * Display a party's logbook.
      *
      * @Route("/{id}", name="logbook")
-     * @Method("GET")
+     * @Method({"GET"})
      * @Template()
      * @param Party $party
      *
      * @return array
      */
-    public function indexAction(Party $party)
+    public function showAction(Party $party)
     {
-        $mapper = new DoctrineOrmMapper(
-            array('http://schema.org/WebPage' => 'Troulite\\PathfinderBundle\\Entity\\Logbook'),
-            $this->getDoctrine()
-        );
-        $loader = new ArrayLoader($this->config);
+        return array('entity' => $party);
+    }
 
-        $manager = $loader->getManager($mapper);
+    /**
+     * Lists all Feat entities.
+     *
+     * @Route("/{id}/edit", name="logbook_edit")
+     * @Method({"GET", "PUT"})
+     * @Template()
+     * @param Party $party
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function editAction(Party $party, Request $request)
+    {
+        $form = $this->createForm(
+            new PartyLogbookType(),
+            $party,
+            array(
+                'method' => 'PUT',
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Save'));
+
+        if ($request->getMethod() == 'PUT') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+
+                return $this->redirect(
+                    $this->generateUrl(
+                        'logbook',
+                        array('id' => $party->getId())
+                    )
+                );
+            }
+        }
 
         //$em = $this->getDoctrine()->getManager();
 
@@ -109,7 +83,7 @@ class LogbookController extends Controller
 
         return array(
             'entity'  => $party,
-            'logbook' => $manager->getEntity($party->getLogbook())
+            'form'    => $form->createView()
         );
 
     }
@@ -127,26 +101,6 @@ class LogbookController extends Controller
      */
     public function updateLogbookAction(Request $request)
     {
-        $mapper  = new DoctrineOrmMapper(
-            array('http://schema.org/WebPage' => 'Troulite\\PathfinderBundle\\Entity\\Logbook'),
-            $this->getDoctrine()
-        );
 
-        $loader = new ArrayLoader($this->config);
-
-        $manager = $loader->getManager($mapper);
-        $type = $manager->getType('Troulite\\PathfinderBundle\\Entity\\Logbook');
-
-        $received_data = json_decode($request->getContent(), true);
-        $service       = $manager->getRestHandler($received_data);
-
-        $subject = str_replace('<', '', $received_data['@subject']);
-        $subject = str_replace('>', '', $subject);
-
-        $jsonld = $service->run($received_data, $type, $subject, strtolower($request->getMethod()));
-
-        //$model = $mapper->getBySubject($subject);
-
-        return array('entity' => json_encode($jsonld));
     }
 }

@@ -1,0 +1,22 @@
+{% if edit is not defined %}
+    {% set edit = false %}
+{% endif %}
+<nav data-spy="affix" data-offset-top="60" data-offset-bottom="200"
+     class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+    {% if edit or entity.logbook.entries|length > 0 %}
+        <ul class="nav nav-stacked bs-docs-sidenav">
+            {% for subentry in entity.logbook.entries %}
+                {% set index = '.troulite_pathfinderbundle_partylogbook_logbook_entries_' ~ loop.index0 ~ '_children' %}
+                {{ include('@TroulitePathfinder/Logbook/_logbook_menu_entry.html.twig', {'entry': subentry, 'first': (loop.index0 == 0), 'edit': edit, 'index': index}) }}
+            {% endfor %}
+            {% if edit %}
+                <li>
+                    <a class="btn"
+                       data-collection-add-btn=".troulite_pathfinderbundle_partylogbook_logbook_entries_form_group">
+                        <span class="glyphicon glyphicon-plus"></span>{{ 'page.new'|trans }}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</nav>
