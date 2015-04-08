@@ -1,4 +1,6 @@
 <?php
+// Workaround to buggy libxml
+libxml_disable_entity_loader(false);
 
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
