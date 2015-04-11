@@ -1845,12 +1845,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phiamo/MopaBootstrapBundle.git",
-                "reference": "2d4cadf2a54b163a255d78b617c152fa43ae15a1"
+                "reference": "818b0f47ebd352559950e9a64431ff9472e8a9dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/2d4cadf2a54b163a255d78b617c152fa43ae15a1",
-                "reference": "2d4cadf2a54b163a255d78b617c152fa43ae15a1",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/818b0f47ebd352559950e9a64431ff9472e8a9dd",
+                "reference": "818b0f47ebd352559950e9a64431ff9472e8a9dd",
                 "shasum": ""
             },
             "require": {
@@ -1901,7 +1901,7 @@
                 "form",
                 "template"
             ],
-            "time": "2015-04-01 21:47:50"
+            "time": "2015-04-10 09:34:23"
         },
         {
             "name": "mopa/composer-bridge",
@@ -2082,17 +2082,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v2.3.13",
+            "version": "v2.3.14",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9"
+                "reference": "cb8195ddf5b310b34033921edec638829ccfa201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/c344892aa9f09f0005b395d79ad2531a7deaedc9",
-                "reference": "c344892aa9f09f0005b395d79ad2531a7deaedc9",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/cb8195ddf5b310b34033921edec638829ccfa201",
+                "reference": "cb8195ddf5b310b34033921edec638829ccfa201",
                 "shasum": ""
             },
             "require": {
@@ -2124,7 +2124,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-03-26 11:09:17"
+            "time": "2015-04-10 06:19:33"
         },
         {
             "name": "sensio/framework-extra-bundle",
