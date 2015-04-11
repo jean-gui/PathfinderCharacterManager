@@ -6,7 +6,7 @@
  * Time: 14:49
  */
 
-namespace Troulite\PathfinderBundle\DataFixtures\ORM;
+namespace Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated\UserRelated;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

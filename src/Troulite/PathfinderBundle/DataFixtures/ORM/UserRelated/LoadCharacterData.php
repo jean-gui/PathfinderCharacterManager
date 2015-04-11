@@ -1,6 +1,6 @@
 <?php
 
-namespace Troulite\PathfinderBundle\DataFixtures\ORM;
+namespace Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -17,7 +17,7 @@ use Troulite\PathfinderBundle\Entity\PreparedSpell;
 /**
  * Class LoadCharacterData
  *
- * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated
  */
 class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -30,7 +30,7 @@ class LoadCharacterData extends AbstractFixture implements OrderedFixtureInterfa
 
         $gwendae
             ->setName("Gwendaë")
-            ->setUser($this->getReference('jean-gui'))
+            ->setUser($this->getReference('user1'))
             ->setParty($this->getReference('sit'))
             ->setRace($this->getReference('elf'))
             ->setFavoredClass($this->getReference('ranger'))

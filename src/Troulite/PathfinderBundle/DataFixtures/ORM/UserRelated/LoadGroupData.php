@@ -6,7 +6,7 @@
  * Time: 14:49
  */
 
-namespace Troulite\PathfinderBundle\DataFixtures\ORM;
+namespace Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -16,7 +16,7 @@ use Troulite\PathfinderBundle\Entity\Group;
 /**
  * Class LoadGroupData
  *
- * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated
  */
 class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
 {

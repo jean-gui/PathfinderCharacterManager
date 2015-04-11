@@ -6,7 +6,7 @@
  * Time: 14:49
  */
 
-namespace Troulite\PathfinderBundle\DataFixtures\ORM;
+namespace Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -16,7 +16,7 @@ use Troulite\PathfinderBundle\Entity\Party;
 /**
  * Class LoadPartyData
  *
- * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM\UserRelated
  */
 class LoadPartyData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -27,7 +27,7 @@ class LoadPartyData extends AbstractFixture implements OrderedFixtureInterface
     {
         $party = new Party();
         $party->setName("Service d'Intervention de Trincavel")
-            ->setDungeonMaster($this->getReference('kujar'));
+            ->setDungeonMaster($this->getReference('user5'));
         $manager->persist($party);
         $manager->flush();
 

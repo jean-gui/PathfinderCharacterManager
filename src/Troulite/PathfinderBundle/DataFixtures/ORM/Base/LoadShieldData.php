@@ -1,6 +1,6 @@
 <?php
 
-namespace Troulite\PathfinderBundle\DataFixtures\ORM;
+namespace Troulite\PathfinderBundle\DataFixtures\ORM\Base;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -10,7 +10,7 @@ use Troulite\PathfinderBundle\Entity\Shield;
 /**
  * Class LoadShieldData
  *
- * @package Troulite\PathfinderBundle\DataFixtures\ORM
+ * @package Troulite\PathfinderBundle\DataFixtures\ORM\Base
  */
 class LoadShieldData extends AbstractFixture implements OrderedFixtureInterface
 {
