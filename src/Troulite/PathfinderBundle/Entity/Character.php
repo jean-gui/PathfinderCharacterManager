@@ -104,6 +104,13 @@ class Character extends BaseCharacter
     private $speedBonuses;
 
     /**
+     * @var Collection|Counter[]
+     *
+     * @ORM\OneToMany(targetEntity="Counter", mappedBy="character", cascade={"all"})
+     */
+    private $counters;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -113,6 +120,7 @@ class Character extends BaseCharacter
         $this->levels = new ArrayCollection();
         $this->spellEffects = new ArrayCollection();
         $this->inventoryItems = new ArrayCollection();
+        $this->counters = new ArrayCollection();
     }
 
     /**
@@ -1364,6 +1372,38 @@ class Character extends BaseCharacter
         /** @noinspection PhpUnusedParameterInspection */
         Collection $inventory)
     {
+        return $this;
+    }
+
+    /**
+     * @return Collection|Counter[]
+     */
+    public function getCounters()
+    {
+        return $this->counters;
+    }
+
+    /**
+     * @param Counter $counter
+     *
+     * @return $this
+     */
+    public function addCounter(Counter $counter)
+    {
+        $this->counters->add($counter);
+
+        return $this;
+    }
+
+    /**
+     * @param Counter $counter
+     *
+     * @return $this
+     */
+    public function removeCounter(Counter $counter)
+    {
+        $this->counters->removeElement($counter);
+
         return $this;
     }
 }

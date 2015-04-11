@@ -197,3 +197,54 @@
 {% block _targets_label %}
     {{ form_label(form, { 'attr': { 'class': 'sr-only' } }) }}
 {% endblock %}
+
+{# Counters #}
+{% block _troulite_pathfinderbundle_countersincrease_row %}
+    {{ form(form.counters) }}
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_countersincrease_counters_row %}
+    {% for child in form %}
+        {% set form = child %}
+        {{ block('_troulite_pathfinderbundle_countersincrease_counters_entry_row') }}
+    {% endfor %}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_countersincrease_counters_entry_row %}
+    {% spaceless %}
+        {% set counter = form.vars.data %}
+        {% set maxReached = counter.current >= counter.max %}
+        {% if maxReached %}
+            {% set class = 'danger' %}
+        {% elseif counter.current == counter.max - 1 %}
+            {% set class = 'warning' %}
+        {% else %}
+            {% set class = 'success' %}
+        {% endif %}
+        <div class="col-md-3">
+            <div class="panel panel-{{ class }}">
+                <div class="panel-heading">
+                    <h2 style="display:inline-block; width:50%" class="panel-title">
+                        {{ counter }}
+                    </h2>
+                    <span style="text-align: right; display:inline-block; width:50%">
+                        {{ form_widget(form.delete) }}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <span style="display:inline-block; width:50%">{{ counter.current }} / {{ counter.max }}</span>
+                    {% if not maxReached %}
+                        <span style="text-align: right; display:inline-block; width:50%">
+                            {{ form_widget(form.increase) }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block troulite_pathfinderbundle_counterincrease_delete_widget %}
+lol
+{% endblock %}

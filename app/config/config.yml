@@ -114,6 +114,7 @@ stof_doctrine_extensions:
         default:
             translatable: true
             tree:         true
+            sluggable:    true
 
 jms_i18n_routing:
     default_locale: %locale%

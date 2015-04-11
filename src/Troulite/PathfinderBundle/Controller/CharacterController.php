@@ -665,6 +665,14 @@ class CharacterController extends Controller
             foreach ($character->getPreparedSpells() as $preparedSpell) {
                 $preparedSpell->setAlreaydCast(false);
             }
+
+            // Reset counters
+            foreach ($character->getCounters() as $counter) {
+                if ($counter->isResetOnSleep()) {
+                    $counter->setCurrent(0);
+                }
+            }
+
             $em->flush();
 
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));

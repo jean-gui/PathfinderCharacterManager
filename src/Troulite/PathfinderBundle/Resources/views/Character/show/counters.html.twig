@@ -1,0 +1,9 @@
+<h2 id="counters">
+    {{ 'counters'|trans }}
+    <small>
+        <a href="{{ path('counter_new', { 'character': entity.id }) }}" title="New Counter"><span
+                    class="glyphicon glyphicon-plus"></span></a>
+    </small>
+</h2>
+
+{{ render_esi(controller('TroulitePathfinderBundle:Counter:show', { 'character': entity.id })) }}
