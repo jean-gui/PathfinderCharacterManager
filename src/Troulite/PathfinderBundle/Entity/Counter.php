@@ -174,7 +174,11 @@ class Counter
      */
     public function setCurrent($current)
     {
-        $this->current = $current;
+        if ($current <= $this->max) {
+            $this->current = $current;
+        } else {
+            $this->current = $this->max;
+        }
 
         return $this;
     }
@@ -185,7 +189,9 @@ class Counter
      * @return $this
      */
     public function increase() {
-        $this->current++;
+        if ($this->current < $this->max) {
+            $this->current++;
+        }
 
         return $this;
     }
