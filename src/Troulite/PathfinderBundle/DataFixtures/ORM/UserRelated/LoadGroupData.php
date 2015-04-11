@@ -26,7 +26,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $group1 = new Group('Foobar');
-        $group1->addUser($this->getReference('jean-gui'));
+        $group1->addUser($this->getReference('user1'));
         $manager->persist($group1);
         $manager->flush();
 
