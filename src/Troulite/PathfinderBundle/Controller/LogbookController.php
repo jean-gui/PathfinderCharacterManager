@@ -14,14 +14,14 @@ use Troulite\PathfinderBundle\Form\PartyLogbookType;
 /**
  * Logbook controller.
  *
- * @Route("/logbook")
+ * @Route("/parties")
  */
 class LogbookController extends Controller
 {
     /**
      * Display a party's logbook.
      *
-     * @Route("/{id}", name="logbook")
+     * @Route("/{id}/logbook", name="logbook")
      * @Method({"GET"})
      * @Template()
      * @param Party $party
@@ -36,7 +36,7 @@ class LogbookController extends Controller
     /**
      * Lists all Feat entities.
      *
-     * @Route("/{id}/edit", name="logbook_edit")
+     * @Route("/{id}/logbook/edit", name="logbook_edit")
      * @Method({"GET", "PUT"})
      * @Template()
      * @param Party $party
@@ -85,22 +85,6 @@ class LogbookController extends Controller
             'entity'  => $party,
             'form'    => $form->createView()
         );
-
-    }
-
-    /**
-     * Lists all Feat entities.
-     *
-     * @Route("/update", name="logbook_update")
-     * @Method({"PUT", "POST"})
-     * @Template()
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function updateLogbookAction(Request $request)
-    {
 
     }
 }
