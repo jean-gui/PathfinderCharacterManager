@@ -2,9 +2,9 @@ Pathfinder Character Manager
 ============================
 
 Requirements:
- * [PHP][phpsite] with an appropriate database mod (mod_sqlite, mod_mysql, ...)
- * [Composer][composer]
- * [Less][less]
+ * [PHP][1] with an appropriate database mod (mod_sqlite, mod_mysql, ...)
+ * [Composer][2]
+ * [Less][3]
  * For production, a Web server able to run PHP scripts 
 
 Install
@@ -38,9 +38,9 @@ Or to test the production environment:
 ### Production
 
 For production, it is recommended to use a Web server such as Apache or Nginx.
-See [Symfony doc][sfserver] to setup such a server
+See [Symfony doc][4] to setup such a server
     
-[phpsite] http://www.php.net/
-[composer]: https://getcomposer.org/
-[less]: http://lesscss.org/
-[sfserver]: http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
+[1]: http://www.php.net/
+[2]: https://getcomposer.org/
+[3]: http://lesscss.org/
+[4]: http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
