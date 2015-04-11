@@ -33,6 +33,7 @@ Run
     ./app/console server:run 0.0.0.0:8000 --verbose
 
 Or to test the production environment:
+
     ./app/console --env=prod server:run 0.0.0.0:8000 --verbose
     
 ### Production
