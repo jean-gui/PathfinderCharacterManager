@@ -1,0 +1,10 @@
+{% block _party_h1 %}
+<h1>
+    {{ entity }}
+    <small>
+        <a href="{{ path('parties_edit', {'id': entity.id}) }}">
+            <span class="glyphicon glyphicon-edit"></span>
+        </a>
+    </small>
+</h1>
+{% endblock %}

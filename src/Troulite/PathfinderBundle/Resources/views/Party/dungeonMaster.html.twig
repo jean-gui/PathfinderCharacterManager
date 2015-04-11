@@ -1,17 +1,32 @@
 {% extends '::base.html.twig' %}
 
+{% block subtitle entity ~ ' - Dungeon Master' %}
+
 {% block content %}
+    {% include('@TroulitePathfinder/Party/_party_h1.html.twig') %}
+
     <div class="row">
         {% for character in entity.characters %}
+            {% set currentHp = character.maxHp - character.lostHP %}
+            {% set quarterHp = character.maxHp / 4 %}
+            {% if currentHp > (3 * quarterHp) %}
+                {% set hpClass = 'success' %}
+            {% elseif currentHp > (2 * quarterHp) %}
+                {% set hpClass = 'info' %}
+            {% elseif currentHp > quarterHp %}
+                {% set hpClass = 'warning' %}
+            {% else %}
+                {% set hpClass = 'danger' %}
+            {% endif %}
             <div class="col-lg-3 col-md-3">
-                <div class="panel panel-primary">
+                <div class="panel panel-{{ hpClass }}">
                     <div class="panel-heading">
                         <h2 class="panel-title">
                             <a href="{{ path('characters_show', { 'id': character.id }) }}">{{ character }}</a>
                         </h2>
                     </div>
                     <div class="panel-body">
-                        {{ 'hit.points'|trans }}: {{ character.maxHp - character.lostHP }} / {{ character.maxHp }}
+                        {{ 'hit.points'|trans }}: {{ currentHp }} / {{ character.maxHp }}
                     </div>
                 </div>
             </div>
