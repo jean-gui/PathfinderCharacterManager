@@ -1,8 +1,8 @@
 Pathfinder Character Manager
 ============================
 
-Pathfinder Character Management is a Web application aimed at helping Pathfinder RPG players to manage
-their characters.
+Pathfinder Character Manager is a Web application aimed at helping Pathfinder RPG players to manage
+their characters and interactions between them by automatically applying bonuses and maluses to their character sheet.
 
 Some of the features include:
  * Creation of new player characters
