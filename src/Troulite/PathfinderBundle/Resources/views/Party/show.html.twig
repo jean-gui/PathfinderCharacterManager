@@ -34,15 +34,10 @@
             {% endfor %}
             </tbody>
         </table>
-        <ul class="list-group">
-
-        </ul>
 
         <ul class="record_actions">
             <li>
-                <a href="{{ path('parties') }}">
-                    Back to the list
-                </a>
+                <a href="{{ path('logbook', { 'id': entity.id }) }}">Logbook</a>
             </li>
             <li>
                 <a href="{{ path('parties_edit', { 'id': entity.id }) }}">
