@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        {% for character in entity.characters %}
+            <div class="col-lg-3 col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            <a href="{{ path('characters_show', { 'id': character.id }) }}">{{ character }}</a>
+                        </h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ 'hit.points'|trans }}: {{ character.maxHp - character.lostHP }} / {{ character.maxHp }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

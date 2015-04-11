@@ -251,4 +251,18 @@ class PartyController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
     }
+
+    /**
+     * @param Party $party
+     *
+     * @Route("/{id}/dm", name="party_dm")
+     * @Template()
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function dungeonMasterAction(Party $party)
+    {
+        return array('entity' => $party);
+    }
 }
