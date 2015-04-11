@@ -28,5 +28,5 @@ Run
 
     ./app/console server:run 0.0.0.0:8000 --verbose
     
-[1] https://getcomposer.org/
-[2] http://lesscss.org/
+[1]: https://getcomposer.org/
+[2]: http://lesscss.org/
