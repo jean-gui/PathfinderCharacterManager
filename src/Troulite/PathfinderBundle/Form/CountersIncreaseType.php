@@ -4,7 +4,10 @@ namespace Troulite\PathfinderBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\Character;
 
 /**
  * Class CountersIncreaseType
@@ -24,12 +27,23 @@ class CountersIncreaseType extends AbstractType
                 'counters',
                 'collection',
                 array(
-                    'type' => new CounterIncreaseType(),
+                    'type'         => new CounterIncreaseType(),
                     'label_render' => false,
                 )
-            )
-            ->add('increase_all', 'submit', array('icon' => 'menu-up'))
-        ;
+            );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                /** @var $character Character */
+                $character = $event->getData();
+                $form      = $event->getForm();
+
+                if ($character->getCounters()->count() > 0) {
+                    $form->add('increase_all', 'submit', array('icon' => 'menu-up'));
+                }
+            }
+        );
     }
     
     /**

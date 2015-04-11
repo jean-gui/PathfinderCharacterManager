@@ -49,7 +49,7 @@ class CounterController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
-                if ($form->get('increase_all')->isClicked()) {
+                if ($form->has('increase_all') && $form->get('increase_all')->isClicked()) {
                     foreach($character->getCounters() as $counter) {
                         $counter->increase();
                     }
