@@ -434,11 +434,12 @@ class CharacterBonuses
                 case 'intimidate':
                 case 'knowledge-arcana':
                 case 'knowledge-dungeoneering':
+                case 'knowledge-engineering':
                 case 'knowledge-geography':
                 case 'knowledge-history':
                 case 'knowledge-local':
                 case 'knowledge-nature':
-                case 'knwoledge-nobility':
+                case 'knowledge-nobility':
                 case 'knowledge-planes':
                 case 'knowledge-religion':
                 case 'linguistics':

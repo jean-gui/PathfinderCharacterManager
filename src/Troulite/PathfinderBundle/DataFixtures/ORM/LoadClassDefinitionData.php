@@ -1381,11 +1381,12 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array(
                     'knowledge-arcana'        => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-dungeoneering' => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
+                    'knowledge-engineering' => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-geography'     => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-history'       => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-local'         => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-nature'        => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
-                    'knwoledge-nobility'      => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
+                    'knowledge-nobility'      => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-planes'        => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))'],
                     'knowledge-religion'      => ['type' => 'class', 'value' => 'max(1, div(c.getLevel(4), 2))']
                 )
