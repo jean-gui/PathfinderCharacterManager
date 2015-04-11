@@ -92,6 +92,7 @@ class BaseCharacter
     public function __construct()
     {
         $this->abilities = new Abilities();
+        $this->equipment = new CharacterEquipment();
     }
 
     /**
