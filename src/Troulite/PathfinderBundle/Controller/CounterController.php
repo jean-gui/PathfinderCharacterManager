@@ -49,13 +49,23 @@ class CounterController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
 
+                if ($form->get('increase_all')->isClicked()) {
+                    foreach($character->getCounters() as $counter) {
+                        $counter->increase();
+                    }
+
+                    $em->flush();
+
+                    return $this->redirectToRoute('characters_show', array('id' => $character->getId()));
+                }
+
                 foreach ($form->get('counters') as $child) {
                     if ($child->get('increase')->isClicked()) {
                         /** @var Counter $counter */
                         $counter = $child->getData();
 
                         if ($counter->getCurrent() < $counter->getMax()) {
-                            $counter->setCurrent($counter->getCurrent() + 1);
+                            $counter->increase();
 
                             $em->flush();
                         } else {

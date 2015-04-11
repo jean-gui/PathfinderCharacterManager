@@ -28,6 +28,7 @@ class CountersIncreaseType extends AbstractType
                     'label_render' => false,
                 )
             )
+            ->add('increase_all', 'submit', array('icon' => 'menu-up'))
         ;
     }
     

@@ -20,8 +20,8 @@ class CounterIncreaseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('increase', 'submit')
-            ->add('delete', 'submit', array('icon' => 'trash', 'icon_inverted' => true))
+            ->add('increase', 'submit', array('icon' => 'menu-up'))
+            ->add('delete', 'submit', array('icon' => 'trash'))
         ;
     }
     

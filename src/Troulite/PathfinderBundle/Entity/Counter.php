@@ -180,6 +180,17 @@ class Counter
     }
 
     /**
+     * Increase counter by 1
+     *
+     * @return $this
+     */
+    public function increase() {
+        $this->current++;
+
+        return $this;
+    }
+
+    /**
      * @return boolean
      */
     public function isResetOnSleep()
