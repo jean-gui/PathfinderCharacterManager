@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
+            new JMS\CommandBundle\JMSCommandBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
