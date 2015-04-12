@@ -50,6 +50,11 @@ class EditLevelType extends AbstractType
     private $em;
 
     /**
+     * @var Skill[]
+     */
+    private $skills;
+
+    /**
      * @param $advancement
      * @param EntityManager $em
      */
