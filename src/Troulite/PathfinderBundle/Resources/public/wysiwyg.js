@@ -29,7 +29,17 @@ $(window).on('add.mopa-collection-item', function (event, $collection, $row) {
     $('textarea[id$="_title"]', $row).editable(titleParams);
 });
 
-$('body').scrollspy({
-    target: '.bs-docs-sidebar',
-    offset: 40
+var classDefParams = {
+    inlineMode: false,
+    alwaysVisible: true,
+    buttons: ["bold", "italic", "underline", "strikeThrough", "subscript", "superscript", "fontFamily", "fontSize", "color",
+        "sep", "formatBlock", "blockStyle", "align", "insertOrderedList", "insertUnorderedList", "outdent", "indent",
+        "sep", "createLink", "insertHorizontalRule", "table", "undo", "redo", "removeFormat", "html"],
+    theme: 'froala-pathfinder'
+};
+
+$('form[name="troulite_pathfinderbundle_classdefinition"] textarea[id$="Description"]').editable(classDefParams);
+
+$(window).on('add.mopa-collection-item', function (event, $collection, $row) {
+    $('textarea[id$="Description"]', $row).editable(classDefParams);
 });

@@ -242,6 +242,67 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block troulite_pathfinderbundle_counterincrease_delete_widget %}
-lol
+{# class definition #}
+{% block _troulite_pathfinderbundle_classdefinition_bab_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_classdefinition_reflexes_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_classdefinition_will_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_classdefinition_fortitude_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block classdefinition_collection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set prototype_markup = form_row(prototype) %}
+        {% set data_prototype_name = form.vars.form.vars.prototype.vars.name|default('__name__') %}
+        {% set data_prototype_label = form.vars.form.vars.prototype.vars.label|default('__name__label__') %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({
+        'data-prototype': prototype_markup,
+        'data-prototype-name': data_prototype_name,
+        'data-prototype-label': data_prototype_label
+        })|merge(attr) %}
+    {% endif %}
+    {# Add row by default use attr.class to change#}
+	{% if 'collection' in form.vars.block_prefixes and attr.class is defined %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('row') ~ ' ' ~ attr.class}) %}
+    {% endif %}
+    {# collection item adds class {form_id}_form-group  too #}
+    {% set widget_form_group_attr = widget_form_group_attr|merge({'id': 'collection' ~ id ~ '_form_group', 'class': widget_form_group_attr.class ~ ' collection-items ' ~ id ~ '_form_group'}) %}
+
+    {# Add initial prototype form #}
+    {% if form.vars.value|length == 0 and prototype is defined %}
+        {% for name in prototype_names %}
+            {{ prototype_markup|replace({'__name__': name})|raw }}
+        {% endfor %}
+    {% endif %}
+    {% for child in form %}
+        {{ form_widget(child, {'attr': {'style': 'padding-left: 0; padding-right: 0; width: 47px; display: inline'}}) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_classdefinition_spellsPerDay_entry_row %}
+    {{ block('classdefinition_collection_spells') }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_classdefinition_knownSpellsPerLevel_entry_row %}
+    {{ block('classdefinition_collection_spells') }}
+{% endblock %}
+
+{% block classdefinition_collection_spells %}
+    {{ form_label(form) }}
+    <div>
+    {% for child in form %}
+        {{ form_widget(child, {'attr': {'style': 'padding-left: 0; padding-right: 0; width: 40px; display: inline'}}) }}
+    {% endfor %}
+    </div>
 {% endblock %}

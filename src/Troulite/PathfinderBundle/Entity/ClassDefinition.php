@@ -23,16 +23,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Troulite\PathfinderBundle\Entity\Traits\Describable;
 
 
 /**
  * ClassDefinition
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ClassDefinitionRepository")
  */
 class ClassDefinition
 {
+    use Describable;
+
     /**
      * @var integer
      *
@@ -142,7 +145,7 @@ class ClassDefinition
     /**
      * @var Collection|ClassSpell[]
      *
-     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class")
+     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class", orphanRemoval=true)
      */
     private $spells;
 
@@ -503,6 +506,15 @@ class ClassDefinition
      */
     public function addSpell(ClassSpell $spell)
     {
+        foreach ($this->spells as $classSpell) {
+            // If already there, simply change its level
+            if ($classSpell->getSpell() === $spell->getSpell()) {
+                $classSpell->setSpellLevel($spell->getSpellLevel());
+
+                return $this;
+            }
+        }
+
         $this->spells[] = $spell;
         $spell->setClass($this);
 
@@ -527,6 +539,59 @@ class ClassDefinition
     public function getSpells()
     {
         return $this->spells;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSpellsByLevel()
+    {
+        $spellsByLevel = array();
+        for ($i = 0; $i < 10; $i++) {
+            $spellsByLevel[$i] = array();
+        }
+        foreach($this->getSpells() as $spell) {
+            $spellsByLevel[$spell->getSpellLevel()][] = $spell->getSpell();
+        }
+
+        return $spellsByLevel;
+    }
+
+    /**
+     * @param array $spellsByLevel
+     *
+     * @return $this
+     */
+    public function setSpellsByLevel($spellsByLevel)
+    {
+        foreach ($this->spells as $classSpell) {
+            $classSpell->setClass();
+        }
+
+        $newSpells = new ArrayCollection();
+        foreach ($spellsByLevel as $level => $spells) {
+            /** @var Spell $spell */
+            foreach ($spells as $spell) {
+                $olds = $this->spells->filter(function (ClassSpell $s) use ($spell) {
+                    return $s->getSpell() === $spell;
+                });
+
+                if ($olds->count() === 1) {
+                    $oldClassSpell = $olds->first();
+                    $oldClassSpell->setClass($this)->setSpellLevel($level);
+                    $newSpells->add($oldClassSpell);
+                } else {
+                    $new = new ClassSpell();
+                    $new->setClass($this)->setSpell($spell)->setSpellLevel($level);
+                    $newSpells->add($new);
+                }
+            }
+        }
+
+        $this->spells->clear();
+        $this->spells = $newSpells;
+
+        return $this;
     }
 
     /**

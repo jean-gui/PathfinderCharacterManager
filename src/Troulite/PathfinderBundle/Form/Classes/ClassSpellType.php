@@ -16,18 +16,20 @@
  * limitations under the License.
  */
 
-namespace Troulite\PathfinderBundle\Form;
+namespace Troulite\PathfinderBundle\Form\Classes;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
- * Class ClassDefinitionType
+ * Class ClassSpellType
  *
- * @package Troulite\PathfinderBundle\Form
+ * @package Troulite\PathfinderBundle\Form\Classes
  */
-class ClassDefinitionType extends AbstractType
+class ClassSpellType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -35,15 +37,13 @@ class ClassDefinitionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $spells = $options['spells'];
+
         $builder
-            ->add('name')
-            ->add('hpDice')
-            ->add('skillPoints')
-            ->add('bab')
-            ->add('reflexes')
-            ->add('fortitude')
-            ->add('will')
-            ->add('spellsPerDay');
+            ->add('spell', 'entity', array('class' => 'Troulite\PathfinderBundle\Entity\Spell', 'choices' => $spells))
+            ->add('spellLevel')
+        ;
+
     }
 
     /**
@@ -53,7 +53,8 @@ class ClassDefinitionType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'data_class' => 'Troulite\PathfinderBundle\Entity\ClassDefinition'
+                'data_class' => 'Troulite\PathfinderBundle\Entity\ClassSpell',
+                'spells'     => array()
             )
         );
     }
@@ -63,6 +64,6 @@ class ClassDefinitionType extends AbstractType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_classdefinition';
+        return 'class_spell';
     }
 }
