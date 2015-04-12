@@ -111,13 +111,6 @@ class ClassDefinition
     private $classSkills;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="specials", type="json_array", nullable=true)
-     */
-    private $specials;
-
-    /**
      * @var Collection|ClassPower[]
      *
      * @ORM\OneToMany(targetEntity="ClassPower", mappedBy="class", cascade={"all"})
@@ -152,6 +145,16 @@ class ClassDefinition
      * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class")
      */
     private $spells;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->powers      = new ArrayCollection();
+        $this->spells      = new ArrayCollection();
+        $this->classSkills = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -356,14 +359,6 @@ class ClassDefinition
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->classSkills = new ArrayCollection();
-    }
-
-    /**
      * Add classSkills
      *
      * @param Skill $classSkills
@@ -397,35 +392,16 @@ class ClassDefinition
     }
 
     /**
-     * @return array
-     */
-    public function getSpecials()
-    {
-        return $this->specials;
-    }
-
-    /**
-     * @param $specials
-     *
-     * @return $this
-     */
-    public function setSpecials($specials)
-    {
-        $this->specials = $specials;
-
-        return $this;
-    }
-
-    /**
      * Add powers
      *
-     * @param ClassPower $powers
+     * @param ClassPower $power
      *
      * @return ClassDefinition
      */
-    public function addPower(ClassPower $powers)
+    public function addPower(ClassPower $power)
     {
-        $this->powers[] = $powers;
+        $this->powers[] = $power;
+        $power->setClass($this);
 
         return $this;
     }
@@ -528,6 +504,7 @@ class ClassDefinition
     public function addSpell(ClassSpell $spell)
     {
         $this->spells[] = $spell;
+        $spell->setClass($this);
 
         return $this;
     }
