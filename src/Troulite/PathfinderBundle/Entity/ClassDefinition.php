@@ -145,7 +145,7 @@ class ClassDefinition
     /**
      * @var Collection|ClassSpell[]
      *
-     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class", orphanRemoval=true, cascade={"all"})
      */
     private $spells;
 

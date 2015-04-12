@@ -1,6 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block content %}
-    {{ form(form) }}
+    <div class=wizard">
+        {% include 'MopaBootstrapBundle:Form:formflow_stepList.html.twig' %}
+    </div>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_rest(form) }}
+
+    {% include 'MopaBootstrapBundle:Form:formflow_buttons.html.twig' %}
+    {{ form_end(form) }}
 {% endblock %}
 

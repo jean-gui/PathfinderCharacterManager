@@ -32,6 +32,11 @@
             <argument>%character_advancement%</argument>
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
+        <service id="troulite_pathfinder.form.flow.classdefinition"
+                 class="Troulite\PathfinderBundle\Form\Classes\ClassDefinitionFlow"
+                 parent="craue.form.flow"
+                 scope="request">
+        </service>
         <service id="troulite_pathfinder.locale.setter"
                  class="%troulite_pathfinder.locale.redirector.class%">
             <argument type="service" id="router"/>

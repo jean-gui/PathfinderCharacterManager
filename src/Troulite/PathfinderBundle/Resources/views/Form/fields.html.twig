@@ -306,3 +306,15 @@
     {% endfor %}
     </div>
 {% endblock %}
+
+{% block troulite_pathfinderbundle_classdefinition_class_spell_type_label %}
+    {{ form_label(form, form.vars.data.spell) }}
+{% endblock %}
+
+{% block troulite_pathfinderbundle_classdefinition_class_spell_type_widget %}
+    {% for child in form %}
+        <div class="col-sm-7">
+            {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+{% endblock %}

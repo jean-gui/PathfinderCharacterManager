@@ -18,13 +18,14 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
-use Troulite\PathfinderBundle\Form\Classes\ClassDefinitionType;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
+use Troulite\PathfinderBundle\Form\Classes\ClassDefinitionFlow;
 
 /**
  * ClassDefinition controller.
@@ -57,117 +58,33 @@ class ClassDefinitionController extends Controller
      * @Method({"GET", "POST"})
      * @Template()
      *
-     * @param Request $request
-     *
      * @return array
      */
-    public function newAction(Request $request)
+    public function newAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
         $classDefinition = new ClassDefinition();
         $array20 = array();
         for ($i = 0; $i < 20; $i++) {
             $array20[] = null;
         }
-        $array10 = array();
-        for ($i = 0; $i < 10; $i++) {
-            $array10[$i] = $array20;
-        }
-        $array9 = array();
-        for ($i = 1; $i < 10; $i++) {
-            $array9[$i] = $array20;
-        }
-        $classDefinition->setBab($array20);
-        $classDefinition->setReflexes($array20);
-        $classDefinition->setWill($array20);
-        $classDefinition->setFortitude($array20);
-        $classDefinition->setSpellsPerDay($array9);
-        $classDefinition->setKnownSpellsPerLevel($array10);
 
-        $form = $this->createForm(
-            new ClassDefinitionType(),
-            $classDefinition,
-            array('method' => 'POST')
-        );
-        $form->add('submit', 'submit');
 
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
+        return $this->createClassDefinitionForm($classDefinition);
 
-            if ($form->isValid()) {
-                $this->removeEmptyArrays($classDefinition->getSpellsPerDay());
-                $this->removeEmptyArrays($classDefinition->getKnownSpellsPerLevel());
-
-                $em->persist($classDefinition);
-
-                $em->flush();
-
-                $this->addFlash('success', 'class_definition.created');
-
-                return $this->redirectToRoute('classes_show', array('id' => $classDefinition->getId()));
-            }
-        }
-
-        return array('form' => $form->createView());
     }
 
     /**
      * @Route("/{id}/edit", name="classes_edit")
-     * @Method({"GET", "PUT"})
+     * @Method({"GET", "PUT", "POST"})
      * @Template()
      *
      * @param ClassDefinition $classDefinition
-     * @param Request $request
      *
      * @return array
      */
-    public function editAction(ClassDefinition $classDefinition, Request $request)
+    public function editAction(ClassDefinition $classDefinition)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $array20 = array();
-        for ($i = 0; $i < 20; $i++) {
-            $array20[] = null;
-        }
-
-        $knownSpellsPerLevel = $classDefinition->getKnownSpellsPerLevel();
-        for ($i = count($knownSpellsPerLevel); $i < 10; $i++) {
-            $knownSpellsPerLevel[$i] = $array20;
-        }
-        $classDefinition->setKnownSpellsPerLevel($knownSpellsPerLevel);
-
-        $spellsPerDay = $classDefinition->getSpellsPerDay();
-        for ($i = count($spellsPerDay) + 1; $i < 10; $i++) {
-            $spellsPerDay[$i] = $array20;
-        }
-        $classDefinition->setSpellsPerDay($spellsPerDay);
-
-        $form = $this->createForm(
-            new ClassDefinitionType(),
-            $classDefinition,
-            array('method' => 'PUT')
-        );
-        $form->add('submit', 'submit');
-
-        if ($request->getMethod() == 'PUT') {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $this->removeEmptyArrays($classDefinition->getSpellsPerDay());
-                $this->removeEmptyArrays($classDefinition->getKnownSpellsPerLevel());
-
-                $em->persist($classDefinition);
-
-                $em->flush();
-
-                $this->addFlash('success', 'class_definition.updated');
-
-                return $this->redirectToRoute('classes_show', array('id' => $classDefinition->getId()));
-            }
-        }
-
-        return array('form' => $form->createView());
+        return $this->createClassDefinitionForm($classDefinition);
     }
 
     /**
@@ -201,6 +118,112 @@ class ClassDefinitionController extends Controller
     {
         return array(
             'entity' => $classDefinition,
+        );
+    }
+
+    /**
+     * @param ClassDefinition $classDefinition
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    private function createClassDefinitionForm(ClassDefinition $classDefinition)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $array20 = array();
+        for ($i = 0; $i < 20; $i++) {
+            $array20[] = null;
+        }
+
+        if (count($classDefinition->getBab()) === 0) {
+            $classDefinition->setBab($array20);
+        }
+
+        if (count($classDefinition->getReflexes()) === 0) {
+            $classDefinition->setReflexes($array20);
+        }
+        if (count($classDefinition->getWill()) === 0) {
+            $classDefinition->setWill($array20);
+        }
+        if (count($classDefinition->getFortitude()) === 0) {
+            $classDefinition->setFortitude($array20);
+        }
+
+        $knownSpellsPerLevel = $classDefinition->getKnownSpellsPerLevel();
+        for ($i = count($knownSpellsPerLevel); $i < 10; $i++) {
+            $knownSpellsPerLevel[$i] = $array20;
+        }
+        $classDefinition->setKnownSpellsPerLevel($knownSpellsPerLevel);
+
+        $spellsPerDay = $classDefinition->getSpellsPerDay();
+        for ($i = count($spellsPerDay) + 1; $i < 10; $i++) {
+            $spellsPerDay[$i] = $array20;
+        }
+        $classDefinition->setSpellsPerDay($spellsPerDay);
+
+        /** @var $flow ClassDefinitionFlow */
+        $flow = $this->get('troulite_pathfinder.form.flow.classdefinition');
+
+        // Hmm, that's ugly! But improves performances
+        if ($flow->getStorage()->get('flow_classDefinition_data')[1]['castingAbility']) {
+            $spells    = $em->getRepository('TroulitePathfinderBundle:Spell')->findAll();
+            $newSpells = array();
+            foreach ($spells as $spell) {
+                /** @noinspection PhpUnusedParameterInspection */
+                if (!$classDefinition->getSpells()->exists(function ($key, ClassSpell $cs) use ($spell) {
+                    return $spell === $cs->getSpell();
+                })
+                ) {
+                    $classSpell = new ClassSpell();
+                    $classSpell->setSpell($spell);
+                    $newSpells[] = $classSpell;
+                }
+            }
+
+            foreach ($newSpells as $classSpell) {
+                $classDefinition->addSpell($classSpell);
+            }
+        }
+
+        $flow->bind($classDefinition);
+
+        $form = $flow->createForm();
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm();
+            } else {
+                // flow finished
+                $this->removeEmptyArrays($classDefinition->getSpellsPerDay());
+                $this->removeEmptyArrays($classDefinition->getKnownSpellsPerLevel());
+
+                foreach ($classDefinition->getSpells() as $classSpell) {
+                    if (!$classSpell->getSpellLevel()) {
+                        $classDefinition->removeSpell($classSpell);
+                    }
+                }
+
+                if (!$classDefinition->getId()) {
+                    $em->persist($classDefinition);
+                }
+
+                $em->flush();
+
+                $flow->reset(); // remove step data from the session
+
+                $this->addFlash('success', 'class_definition.updated');
+
+                return $this->redirectToRoute('classes_show', array('id' => $classDefinition->getId()));
+            }
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'flow' => $flow,
         );
     }
 }
