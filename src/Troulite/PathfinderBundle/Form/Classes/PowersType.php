@@ -44,6 +44,7 @@ class PowersType extends AbstractType
                     'type'                           => new ClassPowerType(),
                     'allow_add'                      => true,
                     'allow_delete'                   => true,
+                    'by_reference'                   => false,
                     'horizontal_label_class'         => 'col-sm-2',
                     'horizontal_input_wrapper_class' => 'col-sm-10',
                     'options'                        => array(
