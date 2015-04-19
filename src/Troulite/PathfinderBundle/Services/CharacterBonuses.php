@@ -262,7 +262,12 @@ class CharacterBonuses
             switch($type) {
                 case 'weapon-type':
                     $weapon = $character->getEquipment()->getMainWeapon();
-                    if (!$weapon || $weapon->getType() !== $condition) {
+                    if (!$weapon ||
+                        (
+                            $weapon->getType() !== $condition &&
+                            (is_array($condition) && !in_array($weapon->getType(), $condition))
+                        )
+                    ) {
                         return false;
                     }
                     break;
