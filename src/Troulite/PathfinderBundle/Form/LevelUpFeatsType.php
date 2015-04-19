@@ -79,10 +79,6 @@ class LevelUpFeatsType extends AbstractType
 
                 $availableFeats = $em->getRepository('TroulitePathfinderBundle:Feat')->findByAvailableFor($character);
 
-                foreach ($level->getFeats() as $key => $feat) {
-                    $choices[$key] = $availableFeats;
-                }
-
                 // Racial bonus feats
                 if (
                     $character->getRace() &&
@@ -128,7 +124,7 @@ class LevelUpFeatsType extends AbstractType
                                 $featsToAdd += $value;
                             } elseif (array_key_exists('feat', $effects)) {
                                 if ($effects['feat']['type'] === 'oneof') {
-                                    $choices[] = $em->getRepository('TroulitePathfinderBundle:Feat')->findBy(
+                                    $choices[0] = $em->getRepository('TroulitePathfinderBundle:Feat')->findBy(
                                         array('name' => $effects['feat']['value'])
                                     );
 
