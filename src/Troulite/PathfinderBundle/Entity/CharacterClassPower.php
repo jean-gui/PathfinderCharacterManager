@@ -71,6 +71,14 @@ class CharacterClassPower
     private $extraInformation;
 
     /**
+     * @var ClassPower
+     *
+     * @ORM\ManyToOne(targetEntity="ClassPower")
+     * @ORM\JoinColumn(name="child_power", referencedColumnName="id", nullable=true)
+     */
+    private $childPower;
+
+    /**
      * Get id
      *
      * @return integer
@@ -135,6 +143,9 @@ class CharacterClassPower
      */
     public function getClassPower()
     {
+        if ($this->getChildPower()) {
+            return $this->childPower;
+        }
         return $this->classPower;
     }
 
@@ -191,6 +202,28 @@ class CharacterClassPower
     {
         return $this->extraInformation;
     }
+
+    /**
+     * @return ClassPower
+     */
+    public function getChildPower()
+    {
+        return $this->childPower;
+    }
+
+    /**
+     * @param ClassPower $childPower
+     *
+     * @return $this
+     */
+    public function setChildPower(ClassPower $childPower)
+    {
+        $this->childPower = $childPower;
+
+        return $this;
+    }
+
+
 
     /**
      * @return string

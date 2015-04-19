@@ -125,3 +125,33 @@
         <td>{{ feat.vars.choices[feat_choice.vars.value].data.shortDescription }}</td>
     </tr>
 {% endblock feat_entity %}
+
+{% block _troulite_pathfinderbundle_level_classPowers_row %}
+    <div class="form-group">
+        {% for child in form.children %}
+            {% if
+                child.vars.data.classPower.children.count > 0 or
+                child.vars.data.classPower.effects['choice'] is defined
+            %}
+                {{ form_label(child) }}
+                {{ form_widget(child) }}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_level_classPowers_entry_label %}
+    {{ form_label(form, form.vars.data) }}
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_level_classPowers_entry_childPower_row %}
+    <div class="col-sm-9">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block _troulite_pathfinderbundle_level_classPowers_entry_extraInformation_row %}
+    <div class="col-sm-9">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}

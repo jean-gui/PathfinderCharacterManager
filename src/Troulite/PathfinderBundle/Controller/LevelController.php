@@ -57,9 +57,6 @@ class LevelController extends Controller
         $level->setClassDefinition($character->getFavoredClass());
         $character->addLevel($level);
 
-        /** @var $flow LevelUpFlow */
-        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
-        $flow->bind($level);
 
         // Add class powers if they were not already added through a form
         if ($level->getClassDefinition()) {
@@ -83,6 +80,11 @@ class LevelController extends Controller
                 $level->removeFeat($feat);
             }
         }
+
+
+        /** @var $flow LevelUpFlow */
+        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
+        $flow->bind($level);
 
         // form of the current step
         $form = $flow->createForm();

@@ -61,6 +61,15 @@ class ClassPowerChoiceType extends AbstractType
                             )
                         )
                     );
+                } elseif ($characterClassPower->getClassPower()->getChildren()->count() > 0) {
+                    $form->add(
+                        'childPower',
+                        'entity',
+                        array(
+                            'choices' => $characterClassPower->getClassPower()->getChildren(),
+                            'class'   => 'TroulitePathfinderBundle:ClassPower'
+                        )
+                    );
                 }
             }
         );
