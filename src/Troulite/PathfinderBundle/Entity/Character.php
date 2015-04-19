@@ -885,8 +885,6 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @todo dexterity modifier limited by armor
-     * @todo bonuses
      * @return int
      */
     public function getAc()
@@ -1028,6 +1026,7 @@ class Character extends BaseCharacter
 
             // Add Intelligence mod. Available points can't be < 1 after applying intelligence
             $levelPoints += $this->getModifierByAbility('intelligence');
+
             if ($levelPoints < 1) {
                 $levelPoints = 1;
             }
