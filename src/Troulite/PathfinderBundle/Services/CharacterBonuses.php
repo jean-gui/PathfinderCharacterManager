@@ -392,6 +392,9 @@ class CharacterBonuses
                 case 'charisma':
                     $character->getAbilitiesBonuses()->charisma->add($bonus);
                     break;
+                case 'max-dexterity-bonus':
+                    $character->getAbilitiesBonuses()->maxDexterityBonuses->add($bonus);
+                    break;
                 case 'fortitude':
                     $character->getDefenseBonuses()->fortitude->add($bonus);
                     break;

@@ -932,17 +932,11 @@ class Character extends BaseCharacter
             case 'strength':
                 return $this->getAbilityModifier($this->getStrength());
             case 'dexterity':
-                $mod    = $this->getAbilityModifier($this->getDexterity());
-                $armor  = $this->getEquipment()->getArmor();
-                $shield = $this->getEquipment()->getOffhandWeapon();
-                if (!$shield || !$shield instanceof Shield) {
-                    $shield = $this->getEquipment()->getMainWeapon();
-                }
-                if ($armor && $armor->getMaximumDexterityBonus() < $mod) {
-                    $mod = $armor->getMaximumDexterityBonus();
-                }
-                if ($shield && $shield instanceof Shield && $shield->getMaximumDexterityBonus() < $mod) {
-                    $mod = $shield->getMaximumDexterityBonus();
+                $mod         = $this->getAbilityModifier($this->getDexterity());
+                $maxDexBonus = $this->getMaximumDexterityBonus();
+
+                if ($maxDexBonus) {
+                    return min($mod, $maxDexBonus);
                 }
                 return $mod;
             case 'constitution':
@@ -955,6 +949,57 @@ class Character extends BaseCharacter
                 return $this->getAbilityModifier($this->getCharisma());
         }
         return 0;
+    }
+
+    /**
+     * Get maximum dexterity bonus dependent on armor and shield
+     * @return int|null maximum dexterity bonus or null if no limit
+     */
+    public function getMaximumDexterityBonus()
+    {
+        $max = null;
+        $armor  = $this->getEquipment()->getArmor();
+        $shield = $this->getEquipment()->getOffhandWeapon();
+        $shield2 = $this->getEquipment()->getMainWeapon(); // there could be two shields
+
+        if ($armor) {
+            $max = $armor->getMaximumDexterityBonus();
+        }
+        if ($shield && $shield instanceof Shield && $shield->getMaximumDexterityBonus() < $max) {
+            $max = $shield->getMaximumDexterityBonus();
+        }
+        if ($shield2 && $shield2 instanceof Shield && $shield2->getMaximumDexterityBonus() < $max) {
+            $max = $shield2->getMaximumDexterityBonus();
+        }
+
+        foreach ($this->getAbilitiesBonuses()->maxDexterityBonuses->getApplicableBonuses() as $bonus) {
+            $max += $bonus->getValue();
+        }
+
+        return $max;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArmorCheckPenalty()
+    {
+        $value   = 0;
+        $armor   = $this->getEquipment()->getArmor();
+        $shield  = $this->getEquipment()->getOffhandWeapon();
+        $shield2 = $this->getEquipment()->getMainWeapon(); // there could be two shields
+
+        if ($armor) {
+            $value += $armor->getArmorCheckPenalty();
+        }
+        if ($shield && $shield instanceof Shield) {
+            $value += $shield->getArmorCheckPenalty();
+        }
+        if ($shield2 && $shield2 instanceof Shield) {
+            $value += $shield2->getArmorCheckPenalty();
+        }
+
+        return $value;
     }
 
     /**

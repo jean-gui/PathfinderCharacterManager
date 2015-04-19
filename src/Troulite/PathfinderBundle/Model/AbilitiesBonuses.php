@@ -62,6 +62,11 @@ class AbilitiesBonuses
     public $charisma;
 
     /**
+     * @var Bonuses
+     */
+    public $maxDexterityBonuses;
+
+    /**
      * Create a new AbilitiesBonuses instance
      */
     public function __construct()
@@ -72,5 +77,6 @@ class AbilitiesBonuses
         $this->intelligence = new Bonuses();
         $this->wisdom = new Bonuses();
         $this->charisma = new Bonuses();
+        $this->maxDexterityBonuses = new Bonuses();
     }
 } 

@@ -116,7 +116,7 @@ class Bonuses {
                 $applicable[] = $bonus;
             } elseif ($type === 'dodge') { // Dodge bonuses stack
                 $applicable[] = $bonus;
-            } elseif($type === 'enhancement') {
+            } elseif ($type === 'enhancement') {
                 $apply = true;
                 foreach ($applicable as $bonus2) {
                     if (
