@@ -440,7 +440,7 @@ class Character extends BaseCharacter
      */
     public function getRangedAttackRoll()
     {
-        return $this->getAttackRoll("ranged", $this->getAbilityModifier($this->getDexterity()));
+        return $this->getAttackRoll("ranged", $this->getModifierByAbility('dexterity'));
     }
 
     /**
@@ -448,7 +448,7 @@ class Character extends BaseCharacter
      */
     public function getMeleeDamageRoll()
     {
-        return $this->attackBonuses->meleeDamage->getBonus() + $this->getAbilityModifier($this->getStrength());
+        return $this->attackBonuses->meleeDamage->getBonus() + $this->getModifierByAbility('strength');
     }
 
     /**
@@ -584,7 +584,7 @@ class Character extends BaseCharacter
      */
     public function getMeleeAttackRoll()
     {
-        return $this->getAttackRoll("melee", $this->getAbilityModifier($this->getStrength()));
+        return $this->getAttackRoll("melee", $this->getModifierByAbility('strength'));
     }
 
     /**
@@ -647,7 +647,7 @@ class Character extends BaseCharacter
     {
         $hp = $this->getHpBonuses()->getBonus();
         foreach ($this->getLevels() as $level) {
-            $hp += $level->getHpRoll() + $this->getAbilityModifier($this->getConstitution());
+            $hp += $level->getHpRoll() + $this->getModifierByAbility('constitution');
 
             // Extra hit point if favored class
             if ($level->getExtraPoint() === 'hp' && $level->isFavoredClass()) {
@@ -731,7 +731,7 @@ class Character extends BaseCharacter
     public function getReflexes()
     {
         return $this->getBaseReflexes()
-        + $this->getAbilityModifier($this->getDexterity())
+        + $this->getModifierByAbility('dexterity')
         + $this->getDefenseBonuses()->reflexes->getBonus();
     }
 
@@ -760,7 +760,7 @@ class Character extends BaseCharacter
     public function getFortitude()
     {
         return $this->getBaseFortitude()
-        + $this->getAbilityModifier($this->getConstitution())
+        + $this->getModifierByAbility('constitution')
         + $this->getDefenseBonuses()->fortitude->getBonus();
     }
 
@@ -789,7 +789,7 @@ class Character extends BaseCharacter
     public function getWill()
     {
         return $this->getBaseWill()
-        + $this->getAbilityModifier($this->getWisdom())
+        + $this->getModifierByAbility('wisdom')
         + $this->getDefenseBonuses()->will->getBonus();
     }
 
@@ -891,25 +891,7 @@ class Character extends BaseCharacter
      */
     public function getAc()
     {
-        $maxDexShield = 1000;
-        if ($this->getEquipment()->getOffhandWeapon() instanceof Shield) {
-            $maxDexShield = $this->getEquipment()->getOffhandWeapon()->getMaximumDexterityBonus();
-        }
-        if ($this->getEquipment()->getArmor()) {
-            return
-                10 +
-                min(
-                    $this->getAbilityModifier($this->getDexterity()),
-                    $this->getEquipment()->getArmor()->getMaximumDexterityBonus(),
-                    $maxDexShield
-                ) +
-                $this->getDefenseBonuses()->ac->getBonus();
-        } else {
-            return
-                10 +
-                $this->getAbilityModifier($this->getDexterity()) +
-                $this->getDefenseBonuses()->ac->getBonus();
-        }
+        return 10 + $this->getModifierByAbility('dexterity') + $this->getDefenseBonuses()->ac->getBonus();
     }
 
     /**
@@ -918,17 +900,7 @@ class Character extends BaseCharacter
      */
     public function getTouchAc()
     {
-        if ($this->getEquipment()->getArmor()) {
-            return
-                10 +
-                min(
-                    $this->getAbilityModifier($this->getDexterity()),
-                    $this->getEquipment()->getArmor()->getMaximumDexterityBonus()
-                ) +
-                $this->getDodgeBonus();
-        } else {
-            return 10 + $this->getAbilityModifier($this->getDexterity()) + $this->getDodgeBonus();
-        }
+        return 10 + $this->getModifierByAbility('dexterity') + $this->getDodgeBonus();
     }
 
     /**
@@ -945,7 +917,7 @@ class Character extends BaseCharacter
      */
     public function getInitiative()
     {
-        return $this->getAbilityModifier($this->getDexterity()) +
+        return $this->getModifierByAbility('dexterity') +
             $this->getAttackBonuses()->initiative->getBonus();
     }
 
@@ -960,7 +932,19 @@ class Character extends BaseCharacter
             case 'strength':
                 return $this->getAbilityModifier($this->getStrength());
             case 'dexterity':
-                return $this->getAbilityModifier($this->getDexterity());
+                $mod    = $this->getAbilityModifier($this->getDexterity());
+                $armor  = $this->getEquipment()->getArmor();
+                $shield = $this->getEquipment()->getOffhandWeapon();
+                if (!$shield || !$shield instanceof Shield) {
+                    $shield = $this->getEquipment()->getMainWeapon();
+                }
+                if ($armor && $armor->getMaximumDexterityBonus() < $mod) {
+                    $mod = $armor->getMaximumDexterityBonus();
+                }
+                if ($shield && $shield instanceof Shield && $shield->getMaximumDexterityBonus() < $mod) {
+                    $mod = $shield->getMaximumDexterityBonus();
+                }
+                return $mod;
             case 'constitution':
                 return $this->getAbilityModifier($this->getConstitution());
             case 'intelligence':
@@ -998,7 +982,7 @@ class Character extends BaseCharacter
             $levelPoints = $level->getClassDefinition()->getSkillPoints();
 
             // Add Intelligence mod. Available points can't be < 1 after applying intelligence
-            $levelPoints += $this->getAbilityModifier($intelligence);
+            $levelPoints += $this->getModifierByAbility('intelligence');
             if ($levelPoints < 1) {
                 $levelPoints = 1;
             }

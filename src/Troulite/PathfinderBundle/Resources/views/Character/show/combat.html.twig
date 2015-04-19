@@ -24,7 +24,7 @@
         <td>=</td>
         <td>{{ entity.baseReflexes }}</td>
         <td>+</td>
-        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+        <td>{{ entity.modifierByAbility('dexterity') }}</td>
         <td>+</td>
         <td>
             {{ entity.defenseBonuses.reflexes }}
@@ -37,7 +37,7 @@
         <td>=</td>
         <td>{{ entity.baseFortitude }}</td>
         <td>+</td>
-        <td>{{ entity.abilityModifier(entity.constitution) }}</td>
+        <td>{{ entity.modifierByAbility('constitution') }}</td>
         <td>+</td>
         <td>
             {{ entity.defenseBonuses.fortitude }}
@@ -50,7 +50,7 @@
         <td>=</td>
         <td>{{ entity.baseWill }}</td>
         <td>+</td>
-        <td>{{ entity.abilityModifier(entity.wisdom) }}</td>
+        <td>{{ entity.modifierByAbility('wisdom') }}</td>
         <td>+</td>
         <td>
             {{ entity.defenseBonuses.will }}
@@ -114,7 +114,7 @@
         <th>{{ 'initiative'|trans }}</th>
         <td>{{ entity.initiative }}</td>
         <td>=</td>
-        <td>{{ entity.abilityModifier(entity.dexterity) }}</td>
+        <td>{{ entity.modifierByAbility('dexterity') }}</td>
         <td>+</td>
         <td>
             {{ entity.attackBonuses.initiative.bonus }}

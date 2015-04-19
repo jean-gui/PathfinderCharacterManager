@@ -1077,17 +1077,17 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array(
                     'melee-attack-roll'  => [
                         'type'  => null,
-                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                        'value' => 'max(0, c.getModifierByAbility("charisma"))'
                     ],
                     'ranged-attack-roll' => [
                         'type'  => null,
-                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                        'value' => 'max(0, c.getModifierByAbility("charisma"))'
                     ],
                     'melee-damage-roll'  => ['type' => null, 'value' => 'c.getLevel(3)'],
                     'ranged-damage-roll' => ['type' => null, 'value' => 'c.getLevel(3)'],
                     'ac'                 => [
                         'type'  => 'deflection',
-                        'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'
+                        'value' => 'max(0, c.getModifierByAbility("charisma"))'
                     ]
                 )
             );
@@ -1107,9 +1107,9 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
             ->setPassive(true)
             ->setEffects(
                 array(
-                    'fortitude' => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'),
-                    'reflexes'  => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))'),
-                    'will'      => array('type' => null, 'value' => 'max(0, c.getAbilityModifier(c.getCharisma()))')
+                    'fortitude' => array('type' => null, 'value' => 'max(0, c.getModifierByAbility("charisma"))'),
+                    'reflexes'  => array('type' => null, 'value' => 'max(0, c.getModifierByAbility("charisma"))'),
+                    'will'      => array('type' => null, 'value' => 'max(0, c.getModifierByAbility("charisma"))')
                 )
             );
         $paladin->addPower($power);
@@ -1227,17 +1227,17 @@ class LoadClassDefinitionData extends AbstractFixture implements OrderedFixtureI
                 array(
                     'melee-attack-roll'  => [
                         'type'  => null,
-                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                        'value' => 'max(0, caster.getModifierByAbility("charisma"))'
                     ],
                     'ranged-attack-roll' => [
                         'type'  => null,
-                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                        'value' => 'max(0, caster.getModifierByAbility("charisma"))'
                     ],
                     'melee-damage-roll'  => ['type' => null, 'value' => 'caster.getLevel(3)'],
                     'ranged-damage-roll' => ['type' => null, 'value' => 'caster.getLevel(3)'],
                     'ac'                 => [
                         'type'  => 'deflection',
-                        'value' => 'max(0, caster.getAbilityModifier(caster.getCharisma()))'
+                        'value' => 'max(0, caster.getModifierByAbility("charisma"))'
                     ]
                 )
             );
