@@ -45,6 +45,14 @@ class MagicType extends AbstractType
                     'horizontal_input_wrapper_class' => 'col-sm-10'
                 )
             )
+            ->add('ableToLearnLowerLevelSpells',
+                'checkbox',
+                array(
+                    'required'                       => false,
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10'
+                )
+            )
             ->add('spellsPerDay',
                 'collection',
                 array(

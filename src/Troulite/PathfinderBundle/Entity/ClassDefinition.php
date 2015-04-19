@@ -150,6 +150,13 @@ class ClassDefinition
     private $spells;
 
     /**
+     * @var bool true if this class can learn lower level spells in higher level slots
+     *
+     * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     */
+    private $ableToLearnLowerLevelSpells = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -610,5 +617,21 @@ class ClassDefinition
         }
 
         return null;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAbleToLearnLowerLevelSpells()
+    {
+        return $this->ableToLearnLowerLevelSpells;
+    }
+
+    /**
+     * @param boolean $ableToLearnLowerLevelSpells
+     */
+    public function setAbleToLearnLowerLevelSpells($ableToLearnLowerLevelSpells)
+    {
+        $this->ableToLearnLowerLevelSpells = $ableToLearnLowerLevelSpells;
     }
 }
