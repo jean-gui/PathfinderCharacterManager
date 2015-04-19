@@ -26,7 +26,7 @@
             {{ 'conditions'|trans }}:
             <ul>
                 {% for key, value in object.conditions %}
-                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                <li>{{ key|capitalize }}: {{ value|join(', ') }}</li>
                 {% endfor %}
                 {% for key, value in object.externalConditions %}
                 <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
