@@ -52,7 +52,10 @@ class PreparedSpellType extends AbstractType
                 $qb = $em->createQueryBuilder()->select('sp')->from('TroulitePathfinderBundle:Spell', 'sp')
                     ->join('TroulitePathfinderBundle:ClassSpell', 'cs', Join::WITH, 'sp = cs.spell')
                     ->andWhere('cs.class = ?1')
-                    ->andWhere('cs.spellLevel = ?2');
+                    ->andWhere('cs.spellLevel <= ?2')
+                    ->addOrderBy('cs.spellLevel', 'ASC')
+                    ->addOrderBy('sp.name', 'ASC')
+                ;
                 $qb->setParameter(1, $preparedSpell->getClass())
                     ->setParameter(2, $options['preparedLevels'][(int)$form->getName()]);
 
