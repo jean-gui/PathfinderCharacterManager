@@ -23,9 +23,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\Entity\Weapon;
+use Troulite\PathfinderBundle\Form\Item\ArmorType;
 use Troulite\PathfinderBundle\Form\Item\ItemType;
+use Troulite\PathfinderBundle\Form\Item\ShieldType;
 use Troulite\PathfinderBundle\Form\Item\WeaponType;
 
 
@@ -91,6 +95,10 @@ class ItemsController extends Controller
         $formType = new ItemType();
         if ($item instanceof Weapon) {
             $formType = new WeaponType();
+        } elseif ($item instanceof Armor) {
+            $formType = new ArmorType();
+        } elseif ($item instanceof Shield) {
+            $formType = new ShieldType();
         }
 
         $form = $this->createForm(

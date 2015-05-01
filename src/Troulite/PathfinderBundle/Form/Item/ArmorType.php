@@ -18,16 +18,15 @@
 
 namespace Troulite\PathfinderBundle\Form\Item;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class ItemType
+ * Class ArmorType
  *
  * @package Troulite\PathfinderBundle\Form\Item
  */
-class ItemType extends AbstractType
+class ArmorType extends ItemType
 {
 
     /**
@@ -36,35 +35,23 @@ class ItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
-            ->add('name')
-            ->add('shortDescription')
-            ->add('longDescription')
-            ->add('weight')
-            ->add('cost')
-            ->add(
-                'powers',
-                'collection',
-                array(
-                    'type'         => 'entity',
-                    'by_reference' => false,
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                    'options'      => array(
-                        'label_render' => false,
-                        'class'        => 'Troulite\PathfinderBundle\Entity\ItemPower'
-                    )
-                )
-            );
+            ->add('category', null, array('position' => array('before' => 'weight')))
+            ->add('ac', null, array('position' => array('before' => 'weight')))
+            ->add('maximumDexterityBonus', null, array('position' => array('before' => 'weight')))
+            ->add('armorCheckPenalty', null, array('position' => array('before' => 'weight')))
+            ->add('arcaneSpellFailure', null, array('position' => array('before' => 'weight')))
+        ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Troulite\PathfinderBundle\Entity\Item'
+            'data_class' => 'Troulite\PathfinderBundle\Entity\Armor'
         ));
     }
 
@@ -73,6 +60,6 @@ class ItemType extends AbstractType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_item';
+        return 'troulite_pathfinderbundle_armor';
     }
 }

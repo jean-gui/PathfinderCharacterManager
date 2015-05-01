@@ -18,7 +18,6 @@
 
 namespace Troulite\PathfinderBundle\Form\Item;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -38,13 +37,13 @@ class WeaponType extends ItemType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('category')
-            ->add('type')
-            ->add('damages')
-            ->add('criticalRange')
-            ->add('critical')
-            ->add('dualWield')
-            ->add('range')
+            ->add('category', null, array('position' => array('before' => 'weight')))
+            ->add('type', null, array('position' => array('before' => 'weight')))
+            ->add('damages', null, array('position' => array('before' => 'weight')))
+            ->add('criticalRange', null, array('position' => array('before' => 'weight')))
+            ->add('critical', null, array('position' => array('before' => 'weight')))
+            ->add('dualWield', null, array('position' => array('before' => 'weight')))
+            ->add('range', null, array('position' => array('before' => 'weight')))
         ;
     }
     
@@ -63,6 +62,6 @@ class WeaponType extends ItemType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_basecharacter';
+        return 'troulite_pathfinderbundle_weapon';
     }
 }
