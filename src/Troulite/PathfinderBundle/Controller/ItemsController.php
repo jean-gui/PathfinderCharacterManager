@@ -57,7 +57,7 @@ class ItemsController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="items_show")
+     * @Route("/{id}", name="items_show", requirements={"id"="\d+"})
      *
      * @param Item $item
      *
@@ -81,7 +81,60 @@ class ItemsController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="items_edit")
+     * @Route(
+     *     path="/new/{type}",
+     *     name="items_new",
+     *     defaults={"type" = "item"},
+     *     requirements={"type" = "item|headband|head|eyes|neck|shoulders|armor|body|chest|belt|shield|weapon|wrists|hands|ring|feet"}
+     * )
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @param string $type
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function newAction($type, Request $request)
+    {
+        $class = 'Troulite\PathfinderBundle\Entity\\' . ucfirst($type);
+        $item = new $class();
+
+        $formType = new ItemType();
+        if ($item instanceof Weapon) {
+            $formType = new WeaponType();
+        } elseif ($item instanceof Armor) {
+            $formType = new ArmorType();
+        } elseif ($item instanceof Shield) {
+            $formType = new ShieldType();
+        }
+
+        $form = $this->createForm(
+            $formType,
+            $item,
+            array(
+                'method' => 'POST',
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+
+            $em->flush();
+
+            $this->addFlash('success', $item->getName() . ' successfully created');
+            $this->redirectToRoute('items_show', array('id' => $item->getId()));
+        }
+
+        return array('entity' => $item, 'form' => $form->createView());
+    }
+
+    /**
+     * @Route("/{id}/edit", name="items_edit", requirements={"id"="\d+"})
      * @Method({"GET", "PUT"})
      * @Template()
      *
@@ -116,6 +169,7 @@ class ItemsController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', $item->getName() . ' successfully saved');
+            $this->redirectToRoute('items_show', array('id' => $item->getId()));
         }
 
         return array('entity' => $item, 'form' => $form->createView());
