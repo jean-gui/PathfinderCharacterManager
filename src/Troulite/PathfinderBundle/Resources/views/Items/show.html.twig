@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ entity.name }}</h1>
+
+    {% if entity.shortDescription %}
+        <p><em>{{ entity.shortDescription }}</em></p>
+    {% endif %}
+
+    {% if entity.longDescription %}
+        <p>{{ entity.longDescription|raw }}</p>
+    {% endif %}
+
+    <dl class="dl-horizontal">
+        {% block beforeWeight %}{% endblock %}
+        <dt>{{ 'weight'|trans }}</dt>
+        <dd>{{ entity.weight }}</dd>
+        {% block afterWeight %}{% endblock %}
+        {% block beforePowers %}{% endblock %}
+        <dt>
+            {{ 'powers'|trans }}
+            {% set cost = 0 %}
+            {% for power in entity.powers %}
+                {% if power.cost is defined %}
+                    {% set cost = cost + power.cost %}
+                {% endif %}
+            {% endfor %}
+            {% if cost > 0 %}(+{{ cost }}){% endif %}
+        </dt>
+        <dd>
+            {% if entity.powers|length > 0 %}
+                <ul>
+                    {% for power in entity.powers %}
+                        <li>{{ power }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </dd>
+        {% block afterPowers %}{% endblock %}
+    </dl>
+
+    <a href="{{ path('items_edit', { 'id': entity.id }) }}">Edit</a>
+</div>
+{% endblock %}
+

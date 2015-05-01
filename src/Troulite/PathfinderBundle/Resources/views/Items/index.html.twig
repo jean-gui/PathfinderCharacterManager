@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+    <div class="container">
+        <h1>Items</h1>
+
+        <ul class="list-group">
+            {% for entity in entities %}
+                <li class="list-group-item">
+                    <a href="{{ path('items_show', { 'id': entity.id }) }}">{{ entity }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

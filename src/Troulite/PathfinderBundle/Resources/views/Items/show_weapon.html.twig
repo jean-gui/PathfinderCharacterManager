@@ -1,0 +1,18 @@
+{% extends 'TroulitePathfinderBundle:Items:show.html.twig' %}
+
+{% block beforeWeight %}
+    <dt>{{ 'category'|trans }}</dt>
+    <dd>{{ entity.category }}</dd>
+    <dt>{{ 'type'|trans }}</dt>
+    <dd>{{ entity.type }}</dd>
+    <dt>{{ 'dual_wield'|trans }}</dt>
+    <dd>{{ entity.dualWield ? 'Yes' : 'No' }}</dd>
+    {% if entity.range %}
+        <dt>{{ 'range'|trans }}</dt>
+        <dd>{{ entity.range }}</dd>
+    {% endif %}
+    <dt>{{ 'damages'|trans }}</dt>
+    <dd>{{ entity.damages }}</dd>
+    <dt>{{ 'critical'|trans }}</dt>
+    <dd>{{ entity.criticalRange }}{% if entity.criticalRange < 20 %}–20{% endif %}/×{{ entity.critical }}</dd>
+{% endblock %}
