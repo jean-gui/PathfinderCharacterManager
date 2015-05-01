@@ -42,14 +42,6 @@ class Feat
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     * @Gedmo\Translatable()
-     */
-    private $name;
-
-    /**
      * Get id
      *
      * @return integer
@@ -57,30 +49,6 @@ class Feat
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Feat
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

@@ -50,15 +50,6 @@ class Spell
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank()
-     * @Gedmo\Translatable()
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Translatable()
      */
@@ -126,30 +117,6 @@ class Spell
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Spell
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

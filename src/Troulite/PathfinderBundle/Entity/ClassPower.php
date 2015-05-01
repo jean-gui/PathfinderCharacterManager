@@ -50,14 +50,6 @@ class ClassPower
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Gedmo\Translatable()
-     */
-    private $name;
-
-    /**
      * @var ClassDefinition
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition", inversedBy="powers")
@@ -105,26 +97,6 @@ class ClassPower
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param $name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
