@@ -398,7 +398,7 @@ class CharacterController extends Controller
 
                             $em->flush();
                         } catch (\Exception $e) {
-                            // Tried tot equip a non-equippable item, do nothing
+                            $this->addFlash('danger', $child->getData() . ' is not equippable');
                         }
                         return $this->redirect($this->generateUrl('character_inventory',
                             array('id' => $character->getId())));

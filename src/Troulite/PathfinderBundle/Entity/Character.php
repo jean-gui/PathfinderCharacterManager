@@ -209,8 +209,12 @@ class Character extends BaseCharacter
      *
      * @return $this
      */
-    public function addInventory(Item $item, $quantity = 1)
+    public function addInventory(Item $item = null, $quantity = 1)
     {
+        if (!$item) {
+            return $this;
+        }
+
         if ($quantity < 1) {
             $quantity = 1;
         }

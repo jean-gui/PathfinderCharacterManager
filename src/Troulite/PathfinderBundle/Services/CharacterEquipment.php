@@ -61,10 +61,11 @@ class CharacterEquipment
         $equipment = $character->getEquipment();
 
         if ($item instanceof Weapon) {
-            if ($equipment->getMainWeapon()) {
-                $equipment->setOffhandWeapon($item);
-            } else {
+            // Equip weapon in main hand if free or offhand wielding a shield
+            if (!$equipment->getMainWeapon() || $equipment->getOffhandWeapon() instanceof Shield) {
                 $equipment->setMainWeapon($item);
+            } else {
+                $equipment->setOffhandWeapon($item);
             }
         } elseif ($item instanceof Armor) {
             $equipment->setArmor($item);
@@ -76,7 +77,7 @@ class CharacterEquipment
             if ($equipment->getRightFinger()) {
                 $equipment->setLeftFinger($item);
             } else {
-                $equipment->setRightFinger();
+                $equipment->setRightFinger($item);
             }
         } elseif ($item instanceof Neck) {
             $equipment->setNeck($item);
@@ -119,73 +120,53 @@ class CharacterEquipment
         $item = null;
         switch($slot) {
             case 'headband':
-                $item = $equipment->getHeadband();
                 $equipment->setHeadband();
                 break;
             case 'head':
-                $item = $equipment->getHead();
                 $equipment->setHead();
                 break;
             case 'eyes':
-                $item = $equipment->getEyes();
                 $equipment->setEyes();
                 break;
             case 'neck':
-                $item = $equipment->getNeck();
                 $equipment->setNeck();
                 break;
             case 'shoulders':
-                $item = $equipment->getShoulders();
                 $equipment->setShoulders();
                 break;
             case 'armor':
-                $item = $equipment->getArmor();
                 $equipment->setArmor();
                 break;
             case 'body':
-                $item = $equipment->getBody();
                 $equipment->setBody();
                 break;
             case 'chest':
-                $item = $equipment->getChest();
                 $equipment->setChest();
                 break;
             case 'belt':
-                $item = $equipment->getBelt();
                 $equipment->setBelt();
                 break;
             case 'mainWeapon':
-                $item = $equipment->getMainWeapon();
                 $equipment->setMainWeapon();
                 break;
             case 'offhandWeapon':
-                $item = $equipment->getOffhandWeapon();
                 $equipment->setOffhandWeapon();
                 break;
             case 'wrists':
-                $item = $equipment->getWrists();
                 $equipment->setWrists();
                 break;
             case 'hands':
-                $item = $equipment->getHands();
                 $equipment->setHands();
                 break;
             case 'rightFinger':
-                $item = $equipment->getRightFinger();
                 $equipment->setRightFinger();
                 break;
             case 'leftFinger':
-                $item = $equipment->getLeftFinger();
                 $equipment->setLeftFinger();
                 break;
             case 'feet':
-                $item = $equipment->getFeet();
                 $equipment->setFeet();
                 break;
-        }
-
-        if ($item) {
-            $character->addInventory($item);
         }
 
         return $character;

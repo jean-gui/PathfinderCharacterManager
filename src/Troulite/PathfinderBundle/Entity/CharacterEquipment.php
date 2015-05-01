@@ -233,6 +233,7 @@ class CharacterEquipment
         if ($weapon instanceof Weapon && $weapon->isDualWield()) {
             $this->setOffhandWeapon(null);
         }
+        $this->character->addInventory($this->getMainWeapon());
         $this->mainWeapon = $weapon;
 
         return $this;
@@ -257,10 +258,11 @@ class CharacterEquipment
      */
     public function setOffhandWeapon(Item $weapon = null)
     {
-        // Unequip left-hand weapon if this weapon is dual-weilded
+        // If weapon is dual wielded then equip in main hand instead
         if ($weapon instanceof Weapon && $weapon->isDualWield()) {
-            $this->setMainWeapon(null);
+            $this->setMainWeapon($weapon);
         }
+        $this->character->addInventory($this->getOffhandWeapon());
         $this->offhandWeapon = $weapon;
 
         return $this;
@@ -285,6 +287,7 @@ class CharacterEquipment
      */
     public function setArmor(Armor $armor = null)
     {
+        $this->character->addInventory($this->getArmor());
         $this->armor = $armor;
 
         return $this;
@@ -309,6 +312,7 @@ class CharacterEquipment
      */
     public function setLeftFinger(Ring $leftFinger = null)
     {
+        $this->character->addInventory($this->getLeftFinger());
         $this->leftFinger = $leftFinger;
 
         return $this;
@@ -333,6 +337,7 @@ class CharacterEquipment
      */
     public function setRightFinger(Ring $rightFinger = null)
     {
+        $this->character->addInventory($this->getRightFinger());
         $this->rightFinger = $rightFinger;
 
         return $this;
@@ -357,6 +362,7 @@ class CharacterEquipment
      */
     public function setFeet(Feet $feet = null)
     {
+        $this->character->addInventory($this->getFeet());
         $this->feet = $feet;
 
         return $this;
@@ -381,6 +387,7 @@ class CharacterEquipment
      */
     public function setNeck(Neck $neck = null)
     {
+        $this->character->addInventory($this->getNeck());
         $this->neck = $neck;
 
         return $this;
@@ -405,6 +412,7 @@ class CharacterEquipment
      */
     public function setShoulders(Shoulders $shoulders = null)
     {
+        $this->character->addInventory($this->getShoulders());
         $this->shoulders = $shoulders;
 
         return $this;
@@ -429,6 +437,7 @@ class CharacterEquipment
      */
     public function setHead(Head $head = null)
     {
+        $this->character->addInventory($this->getHead());
         $this->head = $head;
 
         return $this;
@@ -453,6 +462,7 @@ class CharacterEquipment
      */
     public function setBelt(Belt $belt = null)
     {
+        $this->character->addInventory($this->getBelt());
         $this->belt = $belt;
 
         return $this;
@@ -477,6 +487,7 @@ class CharacterEquipment
      */
     public function setHands(Hands $hands = null)
     {
+        $this->character->addInventory($this->getHands());
         $this->hands = $hands;
 
         return $this;
@@ -497,6 +508,7 @@ class CharacterEquipment
      */
     public function setBody(Body $body = null)
     {
+        $this->character->addInventory($this->getBody());
         $this->body = $body;
 
         return $this;
@@ -517,6 +529,7 @@ class CharacterEquipment
      */
     public function setChest(Chest $chest = null)
     {
+        $this->character->addInventory($this->getChest());
         $this->chest = $chest;
 
         return $this;
@@ -537,6 +550,7 @@ class CharacterEquipment
      */
     public function setEyes(Eyes $eyes = null)
     {
+        $this->character->addInventory($this->getEyes());
         $this->eyes = $eyes;
 
         return $this;
@@ -557,6 +571,7 @@ class CharacterEquipment
      */
     public function setHeadband(Headband $headband = null)
     {
+        $this->character->addInventory($this->getHeadband());
         $this->headband = $headband;
 
         return $this;
@@ -577,6 +592,7 @@ class CharacterEquipment
      */
     public function setWrists(Wrists $wrists = null)
     {
+        $this->character->addInventory($this->getWrists());
         $this->wrists = $wrists;
 
         return $this;
