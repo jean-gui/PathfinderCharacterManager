@@ -32,6 +32,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class NotesType extends AbstractType
 {
+    private static $counter = 0;
+    private $id;
+
+    public function __construct()
+    {
+        $this->id = self::$counter++;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -45,7 +52,8 @@ class NotesType extends AbstractType
                 'textarea',
                 array(
                     'property_path' => $options['type'] . 'Notes',
-                    'required'      => false
+                    'required'      => false,
+                    'attr' => array('id' => 'lol' . $options['type'])
                 )
             )
         ;
@@ -68,7 +76,7 @@ class NotesType extends AbstractType
      */
     public function getName()
     {
-        return 'troulite_pathfinderbundle_notes';
+        return 'troulite_pathfinderbundle_notes' . $this->id;
     }
 
     /**

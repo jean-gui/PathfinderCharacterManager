@@ -7,8 +7,7 @@
         '../app/Resources/less/bootstrap.less'
         '@CraueFormFlowBundle/Resources/assets/css/buttons.css'
         'bundles/troulitepathfinder/vendor/froala/css/font-awesome.min.css'
-        'bundles/troulitepathfinder/vendor/froala/css/froala_editor.min.css'
-        'bundles/troulitepathfinder/vendor/froala/css/froala_style.min.css'
+        'https://raw.githubusercontent.com/wysiwygjs/wysiwyg.js/master/dist/wysiwyg-editor.css'
         'bundles/troulitepathfinder/css/*.css'
     %}
         <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>
@@ -28,7 +27,7 @@
 
 {% block foot_script %}
     {% javascripts
-    'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
+    'http://code.jquery.com/jquery-1.11.1.min.js'
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
@@ -38,8 +37,8 @@
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-    '@TroulitePathfinderBundle/Resources/public/vendor/froala/js/froala_editor.min.js'
-    '@TroulitePathfinderBundle/Resources/public/vendor/froala/js/plugins/*.js'
+    'http://wysiwygjs.github.io/src/wysiwyg.js'
+    'http://wysiwygjs.github.io/src/wysiwyg-editor.js'
     '@TroulitePathfinderBundle/Resources/public/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
