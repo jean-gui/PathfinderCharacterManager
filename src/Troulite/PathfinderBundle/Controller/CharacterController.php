@@ -774,7 +774,17 @@ class CharacterController extends Controller
         if ($form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
+            switch($type) {
+                case 'inventory':
+                    $route = 'character_inventory';
+                    break;
+                case 'spell':
+                    $route = 'character_spells';
+                    break;
+                default:
+                    $route = 'characters_show';
+            }
+            return $this->redirect($this->generateUrl($route, array('id' => $character->getId())));
         }
 
         return array('form' => $form->createView());
