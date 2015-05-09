@@ -35,4 +35,7 @@
             {{ include('TroulitePathfinderBundle:Character/show:passive_powers.html.twig') }}
         </div>
     </div>
+    <div class="row">
+        {{ render_esi(controller('TroulitePathfinderBundle:Character:notes', { 'id': entity.id, 'type': 'general' })) }}
+    </div>
 {% endblock %}

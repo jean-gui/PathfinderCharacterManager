@@ -17,6 +17,8 @@
         {{ form(uncastSpellsForm) }}
     {% endif %}
 
+    {{ render_esi(controller('TroulitePathfinderBundle:Character:notes', { 'id': entity.id, 'type': 'spell' })) }}
+
     {% set known = entity.learnedSpellsBySpellLevel %}
     {% if known %}
         <h2>{{ 'known.spells'|trans }}</h2>

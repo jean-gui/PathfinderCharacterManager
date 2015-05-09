@@ -65,4 +65,5 @@ powers_activation_form.spell_effects|length > 0 %}
     {{ form_row(powers_activation_form._token) }}
     {{ form_row(powers_activation_form.submit) }}
     {{ form_end(powers_activation_form, {'render_rest': false}) }}
+    {{ render_esi(controller('TroulitePathfinderBundle:Character:notes', { 'id': entity.id, 'type': 'power' })) }}
 {% endif %}

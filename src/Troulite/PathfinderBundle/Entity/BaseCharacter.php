@@ -103,6 +103,33 @@ class BaseCharacter
     private $party;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $generalNotes;
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $powerNotes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $inventoryNotes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $spellNotes;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -319,5 +346,85 @@ class BaseCharacter
     public function getEquipment()
     {
         return $this->equipment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGeneralNotes()
+    {
+        return $this->generalNotes;
+    }
+
+    /**
+     * @param string $generalNotes
+     *
+     * @return $this
+     */
+    public function setGeneralNotes($generalNotes)
+    {
+        $this->generalNotes = $generalNotes;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPowerNotes()
+    {
+        return $this->powerNotes;
+    }
+
+    /**
+     * @param string $powerNotes
+     *
+     * @return $this
+     */
+    public function setPowerNotes($powerNotes)
+    {
+        $this->powerNotes = $powerNotes;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInventoryNotes()
+    {
+        return $this->inventoryNotes;
+    }
+
+    /**
+     * @param string $inventoryNotes
+     *
+     * @return $this
+     */
+    public function setInventoryNotes($inventoryNotes)
+    {
+        $this->inventoryNotes = $inventoryNotes;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpellNotes()
+    {
+        return $this->spellNotes;
+    }
+
+    /**
+     * @param string $spellNotes
+     *
+     * @return $this
+     */
+    public function setSpellNotes($spellNotes)
+    {
+        $this->spellNotes = $spellNotes;
+
+        return $this;
     }
 }

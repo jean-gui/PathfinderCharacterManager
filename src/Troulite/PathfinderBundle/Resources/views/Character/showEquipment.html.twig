@@ -19,6 +19,7 @@
             </small>
         </h2>
         {{ form(inventoryForm) }}
+        {{ render_esi(controller('TroulitePathfinderBundle:Character:notes', { 'id': entity.id, 'type': 'inventory' })) }}
     </div>
 </div>
 {% endblock %}

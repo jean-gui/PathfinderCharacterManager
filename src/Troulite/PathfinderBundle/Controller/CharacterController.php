@@ -44,6 +44,8 @@ use Troulite\PathfinderBundle\Form\ChangeHpType;
 use Troulite\PathfinderBundle\Form\EditInventoryType;
 use Troulite\PathfinderBundle\Form\EquipmentType;
 use Troulite\PathfinderBundle\Form\InventoryType;
+use Troulite\PathfinderBundle\Form\Notes\NotesType;
+use Troulite\PathfinderBundle\Form\Notes\PowerNotesType;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
 use Troulite\PathfinderBundle\Form\UncastSpellsType;
@@ -310,7 +312,7 @@ class CharacterController extends Controller
             'passive_spell_effects' => $passiveSpellEffects,
             'other_spell_effects' => $otherSpellEffects,
             'passive_power_effects' => $passivePowerEffects,
-            'other_power_effects'   => $otherPowerEffects
+            'other_power_effects'   => $otherPowerEffects,
         );
     }
 
@@ -731,5 +733,50 @@ class CharacterController extends Controller
         }
 
         return array('character' => $character, 'form' => $hpForm->createView());
+    }
+
+    /**
+     * Character notes.
+     *
+     * @Route(
+     *     "/{id}/notes/{type}",
+     *     name="characters_notes",
+     *     requirements={"type" = "general|power|inventory|spell"},
+     *     defaults={"type" = "general"}
+     * )
+     * @Method("GET|PUT")
+     * @Template()
+     *
+     * @param Character $character
+     * @param $type
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function notesAction(Character $character, $type, Request $request)
+    {
+
+        $form = $this->createForm(
+            new NotesType(),
+            $character,
+            array(
+                'type'   => $type,
+                'method' => 'PUT',
+                'action' => $this->generateUrl(
+                    'characters_notes',
+                    array('id' => $character->getId(), 'type' => $type)),
+                'type'   => $type
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Save notes'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
+        }
+
+        return array('form' => $form->createView());
     }
 }
