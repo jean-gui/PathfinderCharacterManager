@@ -49,6 +49,7 @@ class BaseType extends AbstractType
                 array(
                     'horizontal_label_class'         => 'col-sm-2',
                     'horizontal_input_wrapper_class' => 'col-sm-10',
+                    'attr' => array('class' => 'wysiwyg')
                 )
             )
             ->add('hpDice',

@@ -21,7 +21,7 @@ class FeatType extends AbstractType
             ->add('name')
             ->add('shortDescription', null, array('attr' => array('class' => 'wysiwyg')))
             ->add('longDescription', null, array('attr' => array('class' => 'wysiwyg')))
-            ->add('passive')
+            ->add('passive', null, array('required' => false))
             ->add(
                 $builder->create(
                     'effects',

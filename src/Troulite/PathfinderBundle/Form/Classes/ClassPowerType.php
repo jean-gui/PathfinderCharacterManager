@@ -41,25 +41,36 @@ class ClassPowerType extends AbstractType
 
         $builder
             ->add('name')
-            ->add('shortDescription')
-            ->add('longDescription')
+            ->add('shortDescription', null, array('attr' => array('class' => 'wysiwyg')))
+            ->add('longDescription', null, array('attr' => array('class' => 'wysiwyg')))
             ->add('level')
             ->add('castable', null, array('required' => false))
             ->add('passive', null, array('required' => false))
             ->add(
-                $builder->create('prerequisities', 'textarea', array('required' => false))
+                $builder->create('prerequisities', 'textarea', array(
+                    'required' => false,
+                    'attr'     => array('class' => 'code-json')
+                ))
                     ->addModelTransformer($arrayToJsonTransformer)
             )
-            ->add($builder->create('conditions', 'textarea', array('required' => false))
+            ->add($builder->create('conditions', 'textarea', array(
+                'required' => false,
+                'attr'     => array('class' => 'code-json')
+            ))
                 ->addModelTransformer($arrayToJsonTransformer)
             )
-            ->add($builder->create('externalConditions', 'textarea', array('required' => false))
+            ->add($builder->create('externalConditions', 'textarea', array(
+                'required' => false,
+                'attr'     => array('class' => 'code-json')
+            ))
                 ->addModelTransformer($arrayToJsonTransformer)
             )
-            ->add($builder->create('effects', 'textarea', array('required' => false))
+            ->add($builder->create('effects', 'textarea', array(
+                'required' => false,
+                'attr'     => array('class' => 'code-json')
+            ))
                 ->addModelTransformer($arrayToJsonTransformer)
-            )
-        ;
+            );
 
     }
 
