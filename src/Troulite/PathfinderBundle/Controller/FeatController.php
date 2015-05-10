@@ -56,7 +56,7 @@ class FeatController extends Controller
     /**
      * Finds and displays a Feat entity.
      *
-     * @Route("/{id}", name="feats_show")
+     * @Route("/{id}", name="feats_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Template()
      *
@@ -95,6 +95,43 @@ class FeatController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', $feat . ' successfully updated');
+            $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
+        }
+
+        return array(
+            'form'   => $form->createView(),
+            'entity' => $feat
+        );
+    }
+
+    /**
+     * @Route("/new", name="feats_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function newAction(Request $request)
+    {
+        $feat = new Feat();
+
+        $form = $this->createForm(
+            new FeatType(),
+            $feat,
+            array('method' => 'POST')
+        );
+        $form->add('submit', 'submit', array('label' => 'save'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($feat);
+            $em->flush();
+
+            $this->addFlash('success', $feat . ' successfully saved');
             $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
         }
 
