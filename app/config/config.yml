@@ -30,7 +30,7 @@ twig:
     strict_variables: "%kernel.debug%"
     form:
         resources:
-            -: 'TroulitePathfinderBundle:Form:fields.html.twig'
+            - 'TroulitePathfinderBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -48,6 +48,8 @@ assetic:
             node: /usr/bin/node
             node_paths: [/usr/local/lib/node_modules]
             apply_to: "\.less$"
+    bundles:
+        - MopaBootstrapBundle
 
 # Doctrine Configuration
 doctrine:
