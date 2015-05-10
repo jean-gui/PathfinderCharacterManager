@@ -755,7 +755,6 @@ class CharacterController extends Controller
      */
     public function notesAction(Character $character, $type, Request $request)
     {
-
         $form = $this->createForm(
             new NotesType(),
             $character,
@@ -765,7 +764,6 @@ class CharacterController extends Controller
                 'action' => $this->generateUrl(
                     'characters_notes',
                     array('id' => $character->getId(), 'type' => $type)),
-                'type'   => $type
             )
         );
         $form->add('submit', 'submit', array('label' => 'Save notes'));
