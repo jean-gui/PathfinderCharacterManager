@@ -245,3 +245,10 @@ $('textarea[id^="troulite_pathfinderbundle_notes"]').each(function (index, eleme
         buttons: $.extend({}, limited, list)
     });
 });
+
+$('textarea.wysiwyg').each(function (index, element) {
+    $(element).wysiwyg({
+        toolbar: 'top',
+        buttons: full
+    });
+});

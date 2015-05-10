@@ -23,7 +23,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Feat;
+use Troulite\PathfinderBundle\Form\FeatType;
 
 /**
  * Feat controller.
@@ -66,6 +68,39 @@ class FeatController extends Controller
     {
         return array(
             'entity'      => $feat,
+        );
+    }
+
+    /**
+     * @Route("/{id}/edit", name="feats_edit")
+     * @Method({"GET", "PUT"})
+     * @Template()
+     *
+     * @param Feat $feat
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function editAction(Feat $feat, Request $request)
+    {
+        $form = $this->createForm(
+            new FeatType(),
+            $feat,
+            array('method' => 'PUT')
+        );
+        $form->add('submit', 'submit', array('label' => 'save'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', $feat . ' successfully updated');
+            $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
+        }
+
+        return array(
+            'form'   => $form->createView(),
+            'entity' => $feat
         );
     }
 }

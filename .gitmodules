@@ -1,0 +1,9 @@
+[submodule "src/Troulite/PathfinderBundle/Resources/public/vendor/jsonlint"]
+	path = src/Troulite/PathfinderBundle/Resources/public/vendor/jsonlint
+	url = https://github.com/zaach/jsonlint
+[submodule "src/Troulite/PathfinderBundle/Resources/public/vendor/codemirror"]
+	path = src/Troulite/PathfinderBundle/Resources/public/vendor/codemirror
+	url = https://github.com/codemirror/codemirror
+[submodule "src/Troulite/PathfinderBundle/Resources/public/vendor/wysiwyg.js"]
+	path = src/Troulite/PathfinderBundle/Resources/public/vendor/wysiwyg.js
+	url = https://github.com/wysiwygjs/wysiwyg.js

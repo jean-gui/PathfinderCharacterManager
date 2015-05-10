@@ -6,8 +6,11 @@
     {% stylesheets filter='less'
         '../app/Resources/less/bootstrap.less'
         '@CraueFormFlowBundle/Resources/assets/css/buttons.css'
-        'bundles/troulitepathfinder/vendor/froala/css/font-awesome.min.css'
-        'https://raw.githubusercontent.com/wysiwygjs/wysiwyg.js/master/dist/wysiwyg-editor.css'
+        '//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+        '@TroulitePathfinderBundle/Resources/public/vendor/wysiwyg.js/src/wysiwyg-editor.css'
+        '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/lib/codemirror.css'
+        '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/addon/lint/lint.css'
+        '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/theme/base16-dark.css'
         'bundles/troulitepathfinder/css/*.css'
     %}
         <link type="text/css" rel="stylesheet" href="{{ asset_url }}"/>
@@ -37,9 +40,16 @@
     '@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
     '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-    'http://wysiwygjs.github.io/src/wysiwyg.js'
-    'http://wysiwygjs.github.io/src/wysiwyg-editor.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/wysiwyg.js/dist/wysiwyg-editor.min.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/lib/codemirror.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/mode/javascript/javascript.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/addon/edit/closebrackets.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/addon/edit/matchbrackets.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/jsonlint/lib/jsonlint.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/addon/lint/lint.js'
+    '@TroulitePathfinderBundle/Resources/public/vendor/codemirror/addon/lint/json-lint.js'
     '@TroulitePathfinderBundle/Resources/public/*.js'
+    '@TroulitePathfinderBundle/Resources/public/js/*.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
