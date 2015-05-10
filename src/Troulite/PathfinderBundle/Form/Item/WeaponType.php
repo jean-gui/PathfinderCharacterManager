@@ -38,6 +38,7 @@ class WeaponType extends ItemType
         parent::buildForm($builder, $options);
         $builder
             ->add('category', null, array('position' => array('before' => 'weight')))
+            ->add('light', null, array('position' => array('before' => 'weight'), 'required' => false))
             ->add('type', null, array('position' => array('before' => 'weight')))
             ->add('damages', null, array('position' => array('before' => 'weight')))
             ->add('criticalRange', null, array('position' => array('before' => 'weight')))

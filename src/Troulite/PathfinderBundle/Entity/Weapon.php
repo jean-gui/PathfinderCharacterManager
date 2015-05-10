@@ -36,6 +36,13 @@ class Weapon extends Item
     private $category;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="light", type="boolean", nullable=false, options={"default": false})
+     */
+    private $light = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255, nullable=false)
@@ -98,6 +105,26 @@ class Weapon extends Item
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isLight()
+    {
+        return $this->light;
+    }
+
+    /**
+     * @param boolean $light
+     *
+     * @return $this
+     */
+    public function setLight($light)
+    {
+        $this->light = $light;
+
+        return $this;
     }
 
     /**

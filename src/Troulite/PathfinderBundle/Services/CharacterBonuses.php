@@ -32,6 +32,7 @@ use Troulite\PathfinderBundle\Entity\Item;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Shield;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
+use Troulite\PathfinderBundle\Entity\Weapon;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
@@ -262,21 +263,29 @@ class CharacterBonuses
             switch($type) {
                 case 'weapon-type':
                     $weapon = $character->getEquipment()->getMainWeapon();
-                    if (!$weapon ||
-                        (
-                            $weapon->getType() !== $condition &&
-                            (is_array($condition) && !in_array($weapon->getType(), $condition))
-                        )
-                    ) {
+                    if (!$weapon) {
                         return false;
                     }
-                    break;
+                    if (is_array($condition)) {
+                        if (in_array($weapon->getType(), $condition)) {
+                            return true;
+                        } elseif (in_array('light-weapon', $condition) && $weapon->isLight()) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    if ($condition === 'light-weapon') {
+                        return $weapon->isLight();
+                    }
+                    return $weapon->getType() !== $condition;
                 case 'equipped':
                     $mainHand = $character->getEquipment()->getMainWeapon();
                     $offHand  = $character->getEquipment()->getOffhandWeapon();
                     switch ($condition) {
                         case 'shield':
-                            return $mainHand instanceof Shield or $offHand instanceof Shield;
+                            return ($mainHand instanceof Shield) || ($offHand instanceof Shield);
+                        case 'dual-wielding':
+                            return ($mainHand instanceof Weapon) && ($offHand instanceof Weapon);
                     }
             }
         }
