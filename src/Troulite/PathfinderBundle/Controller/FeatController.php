@@ -95,7 +95,8 @@ class FeatController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', $feat . ' successfully updated');
-            $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
+
+            return $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
         }
 
         return array(
@@ -132,7 +133,8 @@ class FeatController extends Controller
             $em->flush();
 
             $this->addFlash('success', $feat . ' successfully saved');
-            $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
+
+            return $this->redirectToRoute('feats_show', array('id' => $feat->getId()));
         }
 
         return array(
