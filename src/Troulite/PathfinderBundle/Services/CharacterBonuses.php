@@ -277,7 +277,7 @@ class CharacterBonuses
                     if ($condition === 'light-weapon') {
                         return $weapon->isLight();
                     }
-                    return $weapon->getType() !== $condition;
+                    return $weapon->getType() === $condition;
                 case 'equipped':
                     $mainHand = $character->getEquipment()->getMainWeapon();
                     $offHand  = $character->getEquipment()->getOffhandWeapon();
