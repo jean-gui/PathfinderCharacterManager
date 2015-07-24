@@ -261,6 +261,7 @@ class CharacterEquipment
         // If weapon is dual wielded then equip in main hand instead
         if ($weapon instanceof Weapon && $weapon->isDualWield()) {
             $this->setMainWeapon($weapon);
+            return $this;
         }
         $this->character->addInventory($this->getOffhandWeapon());
         $this->offhandWeapon = $weapon;
