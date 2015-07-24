@@ -29,7 +29,7 @@
         {% if entity.conditions %}
             <dt>Conditions</dt>
             {% for key, condition in entity.conditions %}
-                <dd>{{ key }}: {{ condition }}</dd>
+                <dd>{{ key }}: {{ condition|join(", ") }}</dd>
             {% endfor %}
         {% endif %}
 
