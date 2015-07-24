@@ -75,6 +75,8 @@ class CharacterBonuses
      * @param Character $character
      *
      * @return Character
+     *
+     * @todo bug when some powers enhance abilities and others depend on abilities (ability bonuses should be applied first)
      */
     public function applyAll(Character $character)
     {
@@ -82,11 +84,6 @@ class CharacterBonuses
             return $character;
         }
         $this->applyRace($character);
-        $this->applyFeats($character);
-        $this->applyClassPowers($character);
-        $this->applyItem($character, $character->getEquipment()->getMainWeapon());
-        $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
-        $this->applyItem($character, $character->getEquipment()->getArmor());
         $this->applyItem($character, $character->getEquipment()->getHeadband());
         $this->applyItem($character, $character->getEquipment()->getHead());
         $this->applyItem($character, $character->getEquipment()->getHands());
@@ -96,6 +93,12 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getFeet());
         $this->applyItem($character, $character->getEquipment()->getNeck());
         $this->applyItem($character, $character->getEquipment()->getShoulders());
+        $this->applyItem($character, $character->getEquipment()->getWrists());
+        $this->applyItem($character, $character->getEquipment()->getArmor());
+        $this->applyItem($character, $character->getEquipment()->getMainWeapon());
+        $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
+        $this->applyFeats($character);
+        $this->applyClassPowers($character);
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
 
