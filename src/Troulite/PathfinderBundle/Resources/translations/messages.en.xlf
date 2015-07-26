@@ -298,13 +298,13 @@
                 <source>main.weapon</source>
                 <target>Main Weapon</target>
             </trans-unit>
-            <trans-unit id="9f811ba7d83e9d0e0ba035517ec2e3d6" resname="melee.attack.rolls">
-                <source>melee.attack.rolls</source>
-                <target>Melee Attack Rolls</target>
+            <trans-unit id="9f811ba7d83e9d0e0ba035517ec2e3d6" resname="main.attack.rolls">
+                <source>main.attack.rolls</source>
+                <target>Main Attack Rolls</target>
             </trans-unit>
-            <trans-unit id="ad514f84c3d1738a83239c075cc230f6" resname="melee.damage.bonus">
-                <source>melee.damage.bonus</source>
-                <target>Melee Damage Bonus</target>
+            <trans-unit id="ad514f84c3d1738a83239c075cc230f6" resname="Main.damage.bonus">
+                <source>main.damage.bonus</source>
+                <target>Main Damage Bonus</target>
             </trans-unit>
             <trans-unit id="1fc8ff27ea603f816505dbc08e5db60b" resname="misc.modifiers">
                 <source>misc.modifiers</source>
@@ -342,13 +342,13 @@
                 <source>races</source>
                 <target>Races</target>
             </trans-unit>
-            <trans-unit id="edb8e99774d883374f8832f9efbe92f4" resname="ranged.attack.rolls">
-                <source>ranged.attack.rolls</source>
-                <target>Ranged Attack Rolls</target>
+            <trans-unit id="edb8e99774d883374f8832f9efbe92f4" resname="offhand.attack.rolls">
+                <source>offhand.attack.rolls</source>
+                <target>Offhand Attack Rolls</target>
             </trans-unit>
-            <trans-unit id="6431a4a4492d65be3092b91a8414aeed" resname="ranged.damage.bonus">
-                <source>ranged.damage.bonus</source>
-                <target>Ranged Damage Bonus</target>
+            <trans-unit id="6431a4a4492d65be3092b91a8414aeed" resname="offhand.damage.bonus">
+                <source>offhand.damage.bonus</source>
+                <target>Offhand Damage Bonus</target>
             </trans-unit>
             <trans-unit id="87b731afb7a12a9872120e5e5f95e1fe" resname="ranks">
                 <source>ranks</source>

@@ -66,7 +66,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface
                             $item = new Weapon();
                             $item->setCategory('');
                             $item->setType('');
-                            $item->setDualWield(false);
+                            $item->setTwoHanded(false);
                             $item->setDamages('');
                             $item->setCritical('');
                             $item->setCriticalRange('');
@@ -99,7 +99,7 @@ class LoadItemData extends AbstractFixture implements OrderedFixtureInterface
                                 $item = new Weapon();
                                 $item->setCategory('');
                                 $item->setType('');
-                                $item->setDualWield(false);
+                                $item->setTwoHanded(false);
                                 $item->setDamages('');
                                 $item->setCritical('');
                                 $item->setCriticalRange('');
