@@ -46,7 +46,8 @@
         "mopa/bootstrap-bundle": "~3.0@dev",
         "jms/translation-bundle": "~1.0",
         "jms/command-bundle": "dev-master",
-        "egeloen/ordered-form-bundle": "~1.0"
+        "egeloen/ordered-form-bundle": "~1.0",
+        "pinano/select2-bundle": "~4.0"
     },
     "scripts": {
         "post-install-cmd": [

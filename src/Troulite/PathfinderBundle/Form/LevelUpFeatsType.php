@@ -155,7 +155,6 @@ class LevelUpFeatsType extends AbstractType
                         'feats',
                         'collection',
                         array(
-                            'label' => /** @Ignore */ 'New Feat' . ($level->getFeats()->count() > 1 ? 's' : ''),
                             'type' => 'addcharacterfeat',
                             'options' => array(
                                 'label' => /** @Ignore */ false,

@@ -71,60 +71,26 @@
 
 {% block _troulite_pathfinderbundle_level_feats_widget %}
     {% spaceless %}
-        <div class="panel-group" id="accordion">
-            {{ block('feats_collection_rows') }}
-        </div>
         {{ form_rest(form) }}
+        <script class="select2_descriptions" type="text/javascript">
+            var select2_descriptions = {
+            {% for child in form %}
+            {{ child.feat.vars.id }}:
+            {
+                {% for feat_choice in child.feat.vars.choices %}
+                {{ feat_choice.data.id }}:
+                "{{ feat_choice.data.shortDescription|escape('js') }}"{% if not loop.last %},
+                {% endif %}
+                {% endfor %}
+            }
+            {% if not loop.last %},{% endif %}
+            {% endfor %}
+            }
+            ;
+        </script>
+
     {% endspaceless %}
 {% endblock _troulite_pathfinderbundle_level_feats_widget %}
-
-{% block feats_collection_rows %}
-    {% for child in form %}
-        {% set number = loop.index %}
-        {% for feat in child %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ number }}">
-                            {{ form_label(
-                                   feat,
-                                   'feat_number'|trans({'%number%': number}),
-                                   {'label_attr': {'style': 'font-weight: inherit; display: inherit; cursor: inherit'}})
-                            }}
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapse{{ number }}" class="panel-collapse collapse{% if number == 1 %} in{% endif %}">
-                    <div class="panel-body">
-                        <table {{ block('widget_container_attributes') }}
-                                class="table table-striped table-hover table-condensed table-responsive">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Description</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for feat_choice in feat %}
-                                {{ block('feat_entity') }}
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% endfor %}
-{% endblock feats_collection_rows %}
-
-{% block feat_entity %}
-    <tr>
-        <td>{{ form_widget(feat_choice) }}</td>
-        <td>{{ form_label(feat_choice) }}</td>
-        <td>{{ feat.vars.choices[feat_choice.vars.value].data.shortDescription }}</td>
-    </tr>
-{% endblock feat_entity %}
 
 {% block _troulite_pathfinderbundle_level_classPowers_row %}
     <div class="form-group">

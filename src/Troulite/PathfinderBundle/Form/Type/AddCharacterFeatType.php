@@ -50,7 +50,7 @@ class AddCharacterFeatType extends AbstractType
             array(
                 'class'   => 'TroulitePathfinderBundle:Feat',
                 'choices' => $options['choices'][$builder->getName()],
-                'expanded' => true
+                'label'   => false
             )
         );
     }
