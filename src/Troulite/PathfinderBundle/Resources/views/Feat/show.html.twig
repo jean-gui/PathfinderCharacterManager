@@ -36,7 +36,7 @@
         {% if entity.externalConditions %}
             <dt>Externalconditions</dt>
             {% for key, conditions in entity.externalConditions %}
-                <dd>{{ key }}: {{ condition }}</dd>
+                <dd>{{ key }}: {{ condition|join(', ') }}</dd>
             {% endfor %}
         {% endif %}
     </dl>
