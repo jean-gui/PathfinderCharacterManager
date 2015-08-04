@@ -305,6 +305,7 @@ class CharacterBonuses
                     if (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !== $condition) {
                         return false;
                     }
+                    break;
                 case 'equipped':
                     $mainHand = $character->getEquipment()->getMainWeapon();
                     $offHand  = $character->getEquipment()->getOffhandWeapon();
@@ -314,6 +315,7 @@ class CharacterBonuses
                         case 'dual-wielding':
                             return ($mainHand instanceof Weapon) && ($offHand instanceof Weapon);
                     }
+                    break;
             }
         }
 
