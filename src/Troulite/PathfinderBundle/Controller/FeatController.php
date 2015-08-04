@@ -19,6 +19,8 @@
 namespace Troulite\PathfinderBundle\Controller;
 
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -44,9 +46,21 @@ class FeatController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TroulitePathfinderBundle:Feat')->findAll();
+        $dql = <<<___DQL
+            SELECT f FROM TroulitePathfinderBundle:Feat f ORDER BY f.name
+___DQL;
+
+        $query = $em->createQuery($dql);
+
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        $entities = $query->getResult();
 
         return array(
             'entities' => $entities,

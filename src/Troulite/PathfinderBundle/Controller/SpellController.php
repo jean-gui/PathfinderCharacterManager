@@ -19,6 +19,8 @@
 namespace Troulite\PathfinderBundle\Controller;
 
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -42,9 +44,24 @@ class SpellController extends Controller
      */
     public function indexAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('TroulitePathfinderBundle:Spell')->findAll();
+        $dql = <<<___DQL
+            SELECT s, cs, c FROM TroulitePathfinderBundle:Spell s
+            JOIN s.classes cs
+            JOIN cs.class c
+             ORDER BY s.name
+___DQL;
+
+        $query = $em->createQuery($dql);
+
+        $query->setHint(
+            Query::HINT_CUSTOM_OUTPUT_WALKER,
+            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+        );
+
+        $entities = $query->getResult();
 
         return array(
             'entities' => $entities,
