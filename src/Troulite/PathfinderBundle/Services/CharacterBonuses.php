@@ -293,17 +293,18 @@ class CharacterBonuses
                         return false;
                     }
                     if (is_array($condition)) {
-                        if (in_array($weapon->getType(), $condition)) {
-                            return true;
-                        } elseif (in_array('light-weapon', $condition) && $weapon->isLight()) {
-                            return true;
+                        if (
+                            in_array($weapon->getType(), $condition) ||
+                            (in_array('light-weapon', $condition) && $weapon->isLight())
+                        ) {
+                            // continue
+                        } else {
+                            return false;
                         }
+                    }
+                    if (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !== $condition) {
                         return false;
                     }
-                    if ($condition === 'light-weapon') {
-                        return $weapon->isLight();
-                    }
-                    return $weapon->getType() === $condition;
                 case 'equipped':
                     $mainHand = $character->getEquipment()->getMainWeapon();
                     $offHand  = $character->getEquipment()->getOffhandWeapon();
