@@ -236,6 +236,7 @@ class CharacterController extends Controller
         $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
         $powersActivationForm->get('spell_effects')->setData($needActivationSpellEffects);
         $powersActivationForm->get('power_effects')->setData($needActivationPowerEffects);
+        $powersActivationForm->get('item_power_effects')->setData($character->getItemPowerEffects());
         $powersActivationForm->handleRequest($request);
 
         if ($powersActivationForm->isValid()) {

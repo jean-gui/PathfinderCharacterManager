@@ -89,6 +89,13 @@ class Character extends BaseCharacter
     private $powerEffects;
 
     /**
+     * @var Collection|ItemPowerEffect[]
+     *
+     * @ORM\OneToMany(targetEntity="ItemPowerEffect", mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    private $itemPowerEffects;
+
+    /**
      * @var AbilitiesBonuses
      */
     public $abilitiesBonuses;
@@ -412,7 +419,7 @@ class Character extends BaseCharacter
      */
     public function getSkillValue(Skill $skill)
     {
-        $value = $this->getSkillRank($skill) + $this->getModifierByAbility($skill->getKeyAbility(), $this);
+        $value = $this->getSkillRank($skill) + $this->getModifierByAbility($skill->getKeyAbility());
         if ($this->hasClassBonus($skill) && $this->getSkillRank($skill) > 0) {
             $value += 3;
         }
@@ -1484,6 +1491,47 @@ class Character extends BaseCharacter
     {
         return $this->powerEffects;
     }
+
+    /**
+     * Add itemPowerEffects
+     *
+     * @param ItemPowerEffect $itemPowerEffect
+     *
+     * @return Character
+     */
+    public function addItemPowerEffect(ItemPowerEffect $itemPowerEffect)
+    {
+        foreach ($this->itemPowerEffects as $pe) {
+            if ($itemPowerEffect->getPower() === $pe->getPower()) {
+                return $this;
+            }
+        }
+        $itemPowerEffect->setCharacter($this);
+        $this->itemPowerEffects[] = $itemPowerEffect;
+
+        return $this;
+    }
+
+    /**
+     * Remove itemPowerEffect
+     *
+     * @param ItemPowerEffect $itemPowerEffect
+     */
+    public function removeItemPowerEffect(ItemPowerEffect $itemPowerEffect)
+    {
+        $this->itemPowerEffects->removeElement($itemPowerEffect);
+    }
+
+    /**
+     * Get itemPowerEffects
+     *
+     * @return Collection|ItemPowerEffect[]
+     */
+    public function getItemPowerEffects()
+    {
+        return $this->itemPowerEffects;
+    }
+
 
     /**
      * @return ClassDefinition[]

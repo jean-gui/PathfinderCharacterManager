@@ -1,7 +1,9 @@
 {% if
 powers_activation_form.feats|length > 0 or
 powers_activation_form.class_powers|length > 0 or
-powers_activation_form.spell_effects|length > 0 %}
+powers_activation_form.spell_effects|length > 0 or
+powers_activation_form.power_effects|length > 0 or
+powers_activation_form.item_power_effects|length > 0 %}
     {{ form_start(powers_activation_form) }}
     <h2 id="feats">{{ 'powers'|trans }}</h2>
     {{ form_errors(powers_activation_form) }}
@@ -52,6 +54,18 @@ powers_activation_form.spell_effects|length > 0 %}
             <tr>
                 {% if loop.index == 1 %}
                     <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
+                {% endif %}
+                <td>
+                    {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
+                    {{ form_label(powerEffect.active, powerEffect.vars.value.power.name) }}
+                </td>
+                <td>{{ form_widget(powerEffect.active) }}</td>
+            </tr>
+        {% endfor %}
+        {% for powerEffect in powers_activation_form.item_power_effects %}
+            <tr>
+                {% if loop.index == 1 %}
+                    <th rowspan="{{ loop.length }}">{{ 'item_powers'|trans }}</th>
                 {% endif %}
                 <td>
                     {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
