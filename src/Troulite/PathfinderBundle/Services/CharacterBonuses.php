@@ -120,8 +120,8 @@ class CharacterBonuses
             $this->applyEffects($character, $malus, $character->getEquipment()->getOffhandWeapon());
         }
 
-        $this->applyFeats($character);
         $this->applyClassPowers($character);
+        $this->applyFeats($character);
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
         $this->applyItemPowerEffects($character);
@@ -308,9 +308,6 @@ class CharacterBonuses
         $character = $characterPower->getCharacter();
         $power = null;
         if ($characterPower instanceof CharacterFeat) {
-            if ($characterPower->getFeat()->getId() == 204) {
-                $foo = true;
-            }
             $power = $characterPower->getFeat();
         } elseif ($characterPower instanceof CharacterClassPower) {
             $power = $characterPower->getClassPower();
