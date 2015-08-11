@@ -133,6 +133,8 @@ class Bonuses {
                 if ($apply) {
                     $applicable[] = $bonus;
                 }
+            } elseif ($type === 'armor-check-penalty') { // ACP stacks
+                $applicable[] = $bonus;
             } elseif (
                 !array_key_exists($type, $bonusValues) || $bonus->getValue() > $bonusValues[$type]
             ) { // Other types do not stack
@@ -171,10 +173,20 @@ class Bonuses {
     public function getBonus()
     {
         $finalBonus = 0;
-
+        $acp = 0;
+        $acpBonus = 0;
         foreach ($this->getApplicableBonuses() as $bonus) {
-            $finalBonus += $bonus->getValue();
+            if ($bonus->getType() === 'armor-check-penalty') {
+                if ($bonus->getValue() < 0) {
+                    $acp += $bonus->getValue();
+                } else {
+                    $acpBonus += $bonus->getValue();
+                }
+            } else {
+                $finalBonus += $bonus->getValue();
+            }
         }
+        $finalBonus += min(0, $acp + $acpBonus);
         return $finalBonus;
     }
 

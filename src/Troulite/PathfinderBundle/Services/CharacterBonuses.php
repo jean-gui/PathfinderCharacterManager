@@ -420,7 +420,7 @@ class CharacterBonuses
                 foreach ($skills as $skill) {
                     if ($skill->getArmorCheckPenalty()) {
                         $effects[$skill->getShortname()] = array(
-                            'type' => null,
+                            'type' => 'armor-check-penalty',
                             'value' => $item->getArmorCheckPenalty()
                         );
                     }
@@ -482,6 +482,20 @@ class CharacterBonuses
                     break;
                 case 'max-dexterity-bonus':
                     $character->getAbilitiesBonuses()->maxDexterityBonuses->add($bonus);
+                    break;
+                case 'armor-check-penalty':
+                    $skills = $this->em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
+                    foreach ($skills as $skill) {
+                        if ($skill->getArmorCheckPenalty() && $character->getArmorCheckPenalty() < 0) {
+                            $shortname = $skill->getShortname();
+                            if (!array_key_exists($shortname, $character->getSkillsBonuses())) {
+                                $character->getSkillsBonuses()[$shortname] = new Bonuses();
+                            }
+                            /** @var $bonuses Bonuses */
+                            $bonuses = $character->getSkillsBonuses()[$shortname];
+                            $bonuses->add($bonus);
+                        }
+                    }
                     break;
                 case 'fortitude':
                     $character->getDefenseBonuses()->fortitude->add($bonus);

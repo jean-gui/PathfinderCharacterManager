@@ -424,7 +424,8 @@ class Character extends BaseCharacter
             $value += 3;
         }
         if (array_key_exists($skill->getShortname(), $this->getSkillsBonuses())) {
-            $value += $this->getSkillsBonuses()[$skill->getShortname()]->getBonus();
+            $bonuses = $this->getSkillsBonuses()[$skill->getShortname()];
+            $value += $bonuses->getBonus();
         }
 
         return $value;
