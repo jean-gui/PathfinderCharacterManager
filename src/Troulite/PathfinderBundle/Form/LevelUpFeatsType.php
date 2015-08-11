@@ -124,7 +124,7 @@ class LevelUpFeatsType extends AbstractType
                                 $featsToAdd += $value;
                             } elseif (array_key_exists('feat', $effects)) {
                                 if ($effects['feat']['type'] === 'oneof') {
-                                    $choices[0] = $em->getRepository('TroulitePathfinderBundle:Feat')->findBy(
+                                    $choices[] = $em->getRepository('TroulitePathfinderBundle:Feat')->findBy(
                                         array('name' => $effects['feat']['value'])
                                     );
 

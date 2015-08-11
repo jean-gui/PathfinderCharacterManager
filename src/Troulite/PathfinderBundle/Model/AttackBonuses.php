@@ -34,7 +34,37 @@ class AttackBonuses
     /**
      * @var Bonuses
      */
+    public $mainAttackRolls;
+
+    /**
+     * @var Bonuses
+     */
+    public $offhandAttackRolls;
+
+    /**
+     * @var Bonuses
+     */
+    public $mainDamage;
+
+    /**
+     * @var Bonuses
+     */
+    public $offhandDamage;
+
+    /**
+     * @var Bonuses
+     */
     public $rangedAttackRolls = 0;
+
+    /**
+     * @var Bonuses
+     */
+    public $mainAttacks;
+
+    /**
+     * @var Bonuses
+     */
+    public $offhandAttacks;
 
     /**
      * @var Bonuses
@@ -81,6 +111,14 @@ class AttackBonuses
      */
     public function __construct()
     {
+        $this->mainAttacks     = new Bonuses();
+        $this->mainAttackRolls = new Bonuses();
+        $this->mainDamage = new Bonuses();
+
+        $this->offhandAttacks     = new Bonuses();
+        $this->offhandAttackRolls = new Bonuses();
+        $this->offhandDamage = new Bonuses();
+
         $this->meleeAttackRolls = new Bonuses();
         $this->meleeAttacks = new Bonuses();
         $this->meleeDamage = new Bonuses();

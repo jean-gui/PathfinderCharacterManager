@@ -89,6 +89,13 @@ class Character extends BaseCharacter
     private $powerEffects;
 
     /**
+     * @var Collection|ItemPowerEffect[]
+     *
+     * @ORM\OneToMany(targetEntity="ItemPowerEffect", mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    private $itemPowerEffects;
+
+    /**
      * @var AbilitiesBonuses
      */
     public $abilitiesBonuses;
@@ -412,7 +419,7 @@ class Character extends BaseCharacter
      */
     public function getSkillValue(Skill $skill)
     {
-        $value = $this->getSkillRank($skill) + $this->getModifierByAbility($skill->getKeyAbility(), $this);
+        $value = $this->getSkillRank($skill) + $this->getModifierByAbility($skill->getKeyAbility());
         if ($this->hasClassBonus($skill) && $this->getSkillRank($skill) > 0) {
             $value += 3;
         }
@@ -442,9 +449,112 @@ class Character extends BaseCharacter
     /**
      * @return array
      */
+    public function getMainAttackRoll()
+    {
+        $weapon = $this->getEquipment()->getMainWeapon();
+
+        if (!$weapon || $weapon->getRange() == 0) {
+            $mod = $this->getModifierByAbility('strength');
+        } else {
+            $mod = $this->getModifierByAbility('dexterity');
+        }
+
+        $bab          = $this->getBab();
+        $ar           = $bab + $mod;
+        $ars          = array();
+
+        $ar += $this->attackBonuses->mainAttackRolls->getBonus();
+        $bonusAttacks = $this->attackBonuses->mainAttacks->getBonus();
+
+        /** @noinspection PhpExpressionResultUnusedInspection */
+        for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
+            $ars[] = $ar;
+        }
+        /** @noinspection PhpExpressionResultUnusedInspection */
+        for ($bab; $bab > 0; $bab -= 5) {
+            $ars[] = $ar;
+            $ar -= 5;
+        }
+
+        return $ars;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOffhandAttackRoll()
+    {
+        $weapon = $this->getEquipment()->getOffhandWeapon();
+
+        if (!$weapon || $weapon->getRange() == 0) {
+            $mod = $this->getModifierByAbility('strength');
+        } else {
+            $mod = $this->getModifierByAbility('dexterity');
+        }
+
+        $bab = $this->getBab();
+        $ar  = $bab + $mod;
+        $ars = array();
+
+        $ar += $this->attackBonuses->offhandAttackRolls->getBonus();
+        $bonusAttacks = $this->attackBonuses->offhandAttacks->getBonus();
+
+        $ars[] = $ar;
+
+        /** @noinspection PhpExpressionResultUnusedInspection */
+        for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
+            $ars[] = $ar;
+        }
+
+        return $ars;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMeleeAttackRoll()
+    {
+        return $this->getAttackRoll("melee", $this->getModifierByAbility('strength'));
+    }
+
+    /**
+     * @return array
+     */
     public function getRangedAttackRoll()
     {
         return $this->getAttackRoll("ranged", $this->getModifierByAbility('dexterity'));
+    }
+
+    /**
+     * @return int
+     */
+    public function getMainDamageRoll()
+    {
+        $weapon = $this->getEquipment()->getMainWeapon();
+
+        if (!$weapon || $weapon->getRange() == 0) {
+            $mod = $this->getModifierByAbility('strength');
+        } else {
+            $mod = 0;
+        }
+
+        return $this->attackBonuses->mainDamage->getBonus() + $mod;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOffhandDamageRoll()
+    {
+        $weapon = $this->getEquipment()->getOffhandWeapon();
+
+        if (!$weapon || $weapon->getRange() == 0) {
+            $mod = $this->getModifierByAbility('strength');
+        } else {
+            $mod = 0;
+        }
+
+        return $this->attackBonuses->offhandDamage->getBonus() + $mod;
     }
 
     /**
@@ -581,14 +691,6 @@ class Character extends BaseCharacter
             $this->getAbilities()->getBaseCharisma() +
             $this->getAbilitiesBonuses()->charisma->getBonus() +
             $levelBonus;
-    }
-
-    /**
-     * @return array
-     */
-    public function getMeleeAttackRoll()
-    {
-        return $this->getAttackRoll("melee", $this->getModifierByAbility('strength'));
     }
 
     /**
@@ -984,16 +1086,12 @@ class Character extends BaseCharacter
     /**
      * @return int
      */
-    public function getArmorCheckPenalty()
+    public function getShieldCheckPenalty()
     {
-        $value   = 0;
-        $armor   = $this->getEquipment()->getArmor();
+        $value = 0;
         $shield  = $this->getEquipment()->getOffhandWeapon();
         $shield2 = $this->getEquipment()->getMainWeapon(); // there could be two shields
 
-        if ($armor) {
-            $value += $armor->getArmorCheckPenalty();
-        }
         if ($shield && $shield instanceof Shield) {
             $value += $shield->getArmorCheckPenalty();
         }
@@ -1002,6 +1100,21 @@ class Character extends BaseCharacter
         }
 
         return $value;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArmorCheckPenalty()
+    {
+        $value   = 0;
+        $armor   = $this->getEquipment()->getArmor();
+
+        if ($armor) {
+            $value += $armor->getArmorCheckPenalty();
+        }
+
+        return $value + $this->getShieldCheckPenalty();
     }
 
     /**
@@ -1380,6 +1493,47 @@ class Character extends BaseCharacter
     }
 
     /**
+     * Add itemPowerEffects
+     *
+     * @param ItemPowerEffect $itemPowerEffect
+     *
+     * @return Character
+     */
+    public function addItemPowerEffect(ItemPowerEffect $itemPowerEffect)
+    {
+        foreach ($this->itemPowerEffects as $pe) {
+            if ($itemPowerEffect->getPower() === $pe->getPower()) {
+                return $this;
+            }
+        }
+        $itemPowerEffect->setCharacter($this);
+        $this->itemPowerEffects[] = $itemPowerEffect;
+
+        return $this;
+    }
+
+    /**
+     * Remove itemPowerEffect
+     *
+     * @param ItemPowerEffect $itemPowerEffect
+     */
+    public function removeItemPowerEffect(ItemPowerEffect $itemPowerEffect)
+    {
+        $this->itemPowerEffects->removeElement($itemPowerEffect);
+    }
+
+    /**
+     * Get itemPowerEffects
+     *
+     * @return Collection|ItemPowerEffect[]
+     */
+    public function getItemPowerEffects()
+    {
+        return $this->itemPowerEffects;
+    }
+
+
+    /**
      * @return ClassDefinition[]
      */
     private function getClasses()
@@ -1399,13 +1553,6 @@ class Character extends BaseCharacter
     public function getUnequippedInventory()
     {
         return $this->getInventoryItems();
-        /*
-        return $this->getInventory()->filter(
-            function (InventoryItem $inventoryItem) {
-                return $this->getEquipment()->isEquipped($inventoryItem->getItem()) < $inventoryItem->getQuantity();
-            }
-        );
-        */
     }
 
     /**
@@ -1452,5 +1599,14 @@ class Character extends BaseCharacter
         $this->counters->removeElement($counter);
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDualWielding()
+    {
+        return $this->getEquipment()->getMainWeapon() instanceof Weapon &&
+            $this->getEquipment()->getOffhandWeapon() instanceof Weapon;
     }
 }

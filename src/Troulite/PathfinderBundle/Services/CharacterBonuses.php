@@ -29,8 +29,10 @@ use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
 use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\ItemPowerEffect;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Shield;
+use Troulite\PathfinderBundle\Entity\Skill;
 use Troulite\PathfinderBundle\Entity\SpellEffect;
 use Troulite\PathfinderBundle\Entity\Weapon;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
@@ -96,11 +98,33 @@ class CharacterBonuses
         $this->applyItem($character, $character->getEquipment()->getWrists());
         $this->applyItem($character, $character->getEquipment()->getArmor());
         $this->applyItem($character, $character->getEquipment()->getMainWeapon());
-        $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
-        $this->applyFeats($character);
+        if ($character->getEquipment()->getMainWeapon() !== $character->getEquipment()->getOffhandWeapon()) {
+            $this->applyItem($character, $character->getEquipment()->getOffhandWeapon());
+        }
+
+        // Malus if dual-wielding
+        if ($character->isDualWielding()) {
+            if ($character->getEquipment()->getOffhandWeapon()->isLight()) {
+                $malus = [
+                    'main-attack-roll'    => ['type' => null, 'value' => -4],
+                    'offhand-attack-roll' => ['type' => null, 'value' => -8],
+                ];
+
+            }
+            else {
+                $malus = [
+                    'main-attack-roll'    => ['type' => null, 'value' => -6],
+                    'offhand-attack-roll' => ['type' => null, 'value' => -10],
+                ];
+            }
+            $this->applyEffects($character, $malus, $character->getEquipment()->getOffhandWeapon());
+        }
+
         $this->applyClassPowers($character);
+        $this->applyFeats($character);
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
+        $this->applyItemPowerEffects($character);
 
         self::$alreadyApplied[] = $character->getId();
 
@@ -212,6 +236,22 @@ class CharacterBonuses
 
     /**
      * @param Character $character
+     *
+     * @return Character
+     */
+    private function applyItemPowerEffects(Character $character)
+    {
+        foreach ($character->getItemPowerEffects() as $powerEffect) {
+            if ($this->isApplicable($powerEffect)) {
+                $this->applyItemPowerEffect($character, $powerEffect);
+            }
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param Character $character
      * @param PowerEffect $powerEffect
      *
      * @return Character
@@ -231,6 +271,28 @@ class CharacterBonuses
         }
 
         return $this->applyEffects($character, $effects, $powerEffect);
+    }
+
+    /**
+     * @param Character $character
+     * @param ItemPowerEffect $itemPowerEffect
+     *
+     * @return Character
+     */
+    private function applyItemPowerEffect(Character $character, ItemPowerEffect $itemPowerEffect)
+    {
+        $effects = array();
+        foreach ($itemPowerEffect->getPower()->getEffects() as $stat => $effect) {
+            $computedEffect = (int)$this->expressionLanguage->evaluate(
+                (string)($effect['value']),
+                array(
+                    'c' => $itemPowerEffect->getCharacter(),
+                )
+            );
+            $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
+        }
+
+        return $this->applyEffects($character, $effects, $itemPowerEffect);
     }
 
     /**
@@ -257,6 +319,8 @@ class CharacterBonuses
             $power = $characterPower->getSpell();
         } elseif ($characterPower instanceof PowerEffect) {
             $power = $characterPower->getPower();
+        } elseif ($characterPower instanceof ItemPowerEffect) {
+            $power = $characterPower->getPower();
         }
 
         if ($power === null) {
@@ -271,17 +335,19 @@ class CharacterBonuses
                         return false;
                     }
                     if (is_array($condition)) {
-                        if (in_array($weapon->getType(), $condition)) {
-                            return true;
-                        } elseif (in_array('light-weapon', $condition) && $weapon->isLight()) {
-                            return true;
+                        if (
+                            in_array($weapon->getType(), $condition) ||
+                            (in_array('light-weapon', $condition) && $weapon->isLight())
+                        ) {
+                            // continue
+                        } else {
+                            return false;
                         }
+                    }
+                    if (($condition === 'light-weapon' && !$weapon->isLight()) && $weapon->getType() !== $condition) {
                         return false;
                     }
-                    if ($condition === 'light-weapon') {
-                        return $weapon->isLight();
-                    }
-                    return $weapon->getType() === $condition;
+                    break;
                 case 'equipped':
                     $mainHand = $character->getEquipment()->getMainWeapon();
                     $offHand  = $character->getEquipment()->getOffhandWeapon();
@@ -291,6 +357,7 @@ class CharacterBonuses
                         case 'dual-wielding':
                             return ($mainHand instanceof Weapon) && ($offHand instanceof Weapon);
                     }
+                    break;
             }
         }
 
@@ -338,7 +405,9 @@ class CharacterBonuses
             }
 
             foreach ($item->getPowers() as $power) {
-                $this->applyEffects($character, $power->getEffects(), $item);
+                if ($power->isPassive() && !$power->hasExternalConditions()) {
+                    $this->applyEffects($character, $power->getEffects(), $item);
+                }
             }
 
             // Armor check penalty
@@ -347,6 +416,7 @@ class CharacterBonuses
                 $skills = $this->em->getRepository('TroulitePathfinderBundle:Skill')->findAll();
 
                 $effects = array();
+                /** @var Skill $skill */
                 foreach ($skills as $skill) {
                     if ($skill->getArmorCheckPenalty()) {
                         $effects[$skill->getShortname()] = array(
@@ -437,6 +507,24 @@ class CharacterBonuses
                 case 'cmd':
                     $character->getAttackBonuses()->cmd->add($bonus);
                     break;
+                case 'main-attack-roll':
+                    $character->getAttackBonuses()->mainAttackRolls->add($bonus);
+                    break;
+                case 'main-damage-roll':
+                    $character->getAttackBonuses()->mainDamage->add($bonus);
+                    break;
+                case 'main-attacks':
+                    $character->getAttackBonuses()->mainAttacks->add($bonus);
+                    break;
+                case 'offhand-attack-roll':
+                    $character->getAttackBonuses()->offhandAttackRolls->add($bonus);
+                    break;
+                case 'offhand-damage-roll':
+                    $character->getAttackBonuses()->offhandDamage->add($bonus);
+                    break;
+                case 'offhand-attacks':
+                    $character->getAttackBonuses()->offhandAttacks->add($bonus);
+                    break;
                 case 'melee-attack-roll':
                     $character->getAttackBonuses()->meleeAttackRolls->add($bonus);
                     break;
@@ -454,6 +542,45 @@ class CharacterBonuses
                     break;
                 case 'ranged-attacks':
                     $character->getAttackBonuses()->rangedAttacks->add($bonus);
+                    break;
+                case 'attack-roll':
+                    $character->getAttackBonuses()->mainAttackRolls->add($bonus);
+                    $character->getAttackBonuses()->offhandAttackRolls->add($bonus);
+                    break;
+                case 'damage-roll':
+                    $character->getAttackBonuses()->mainDamage->add($bonus);
+                    $character->getAttackBonuses()->offhandDamage->add($bonus);
+                    break;
+                case 'wielded-attack-roll':
+                    if ($bonus->getSource() === $character->getEquipment()->getMainWeapon()) {
+                        $character->getAttackBonuses()->mainAttackRolls->add($bonus);
+                        if ($character->getEquipment()->getOffhandWeapon() === $bonus->getSource()) {
+                            $character->getAttackBonuses()->offhandAttackRolls->add($bonus);
+                        }
+                    }
+
+                    if (
+                        $bonus->getSource() === $character->getEquipment()->getOffhandWeapon() &&
+                        $character->getEquipment()->getOffhandWeapon() !== $bonus->getSource()
+                    ) {
+                        $character->getAttackBonuses()->offhandAttackRolls->add($bonus);
+                    }
+                    // if wielded-attack-roll is on anything other than a weapon, it is lost
+                    break;
+                case 'wielded-damage-roll':
+                    if ($bonus->getSource() === $character->getEquipment()->getMainWeapon()) {
+                        $character->getAttackBonuses()->mainDamage->add($bonus);
+                        if ($character->getEquipment()->getOffhandWeapon() === $bonus->getSource()) {
+                            $character->getAttackBonuses()->offhandDamage->add($bonus);
+                        }
+                    }
+
+                    if (
+                        $bonus->getSource() === $character->getEquipment()->getOffhandWeapon() &&
+                        $character->getEquipment()->getOffhandWeapon() !== $bonus->getSource()
+                    ) {
+                        $character->getAttackBonuses()->offhandDamage->add($bonus);
+                    }
                     break;
                 case 'acrobatics':
                 case 'appraise':

@@ -43,7 +43,7 @@ class WeaponType extends ItemType
             ->add('damages', null, array('position' => array('before' => 'weight')))
             ->add('criticalRange', null, array('position' => array('before' => 'weight')))
             ->add('critical', null, array('position' => array('before' => 'weight')))
-            ->add('dualWield', null, array('position' => array('before' => 'weight'), 'required' => false))
+            ->add('twoHanded', null, array('position' => array('before' => 'weight'), 'required' => false))
             ->add('range', null, array('position' => array('before' => 'weight')))
         ;
     }

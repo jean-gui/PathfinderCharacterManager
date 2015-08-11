@@ -230,7 +230,7 @@ class CharacterEquipment
     public function setMainWeapon(Weapon $weapon = null)
     {
         // Unequip right-hand weapon if this weapon is dual-weilded
-        if ($weapon instanceof Weapon && $weapon->isDualWield()) {
+        if ($weapon instanceof Weapon && $weapon->isTwoHanded()) {
             $this->setOffhandWeapon(null);
         }
         $this->character->addInventory($this->getMainWeapon());
@@ -252,14 +252,14 @@ class CharacterEquipment
     /**
      * Set offhandHand
      *
-     * @param Weapon|Shield $weapon
+     * @param Weapon|Shield|Item $weapon
      *
      * @return CharacterEquipment
      */
     public function setOffhandWeapon(Item $weapon = null)
     {
-        // If weapon is dual wielded then equip in main hand instead
-        if ($weapon instanceof Weapon && $weapon->isDualWield()) {
+        // If weapon is two-handed then equip in main hand instead
+        if ($weapon instanceof Weapon && $weapon->isTwoHanded()) {
             $this->setMainWeapon($weapon);
             return $this;
         }

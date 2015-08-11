@@ -52,9 +52,9 @@ class Weapon extends Item
     /**
      * @var bool
      *
-     * @ORM\Column(name="dual_wield", type="boolean", nullable=false)
+     * @ORM\Column(name="two_handed", type="boolean", nullable=false)
      */
-    private $dualWield;
+    private $twoHanded;
 
     /**
      * @var string
@@ -244,25 +244,26 @@ class Weapon extends Item
     }
 
     /**
-     * Set dualWield
+     * Set twoHanded
      *
-     * @param boolean $dualWield
-     * @return Weapon
+     * @param boolean $twoHanded
+     *
+*@return Weapon
      */
-    public function setDualWield($dualWield)
+    public function setTwoHanded($twoHanded)
     {
-        $this->dualWield = $dualWield;
+        $this->twoHanded = $twoHanded;
 
         return $this;
     }
 
     /**
-     * Get dualWield
+     * Get twoHanded
      *
      * @return boolean
      */
-    public function isDualWield()
+    public function isTwoHanded()
     {
-        return $this->dualWield;
+        return $this->twoHanded;
     }
 }

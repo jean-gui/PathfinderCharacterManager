@@ -34,6 +34,7 @@ use Troulite\PathfinderBundle\Entity\Hands;
 use Troulite\PathfinderBundle\Entity\Head;
 use Troulite\PathfinderBundle\Entity\Headband;
 use Troulite\PathfinderBundle\Entity\Item;
+use Troulite\PathfinderBundle\Entity\ItemPowerEffect;
 use Troulite\PathfinderBundle\Entity\Neck;
 use Troulite\PathfinderBundle\Entity\Ring;
 use Troulite\PathfinderBundle\Entity\Shield;
@@ -105,6 +106,12 @@ class CharacterEquipment
 
         $character->removeInventory($item, 1);
 
+        foreach ($item->getPowers() as $power) {
+            if ((!$power->isPassive() || $power->hasExternalConditions()) && $power->getEffects()) {
+                $character->addItemPowerEffect((new ItemPowerEffect())->setPower($power));
+            }
+        }
+
         return $equipment;
     }
 
@@ -120,54 +127,79 @@ class CharacterEquipment
         $item = null;
         switch($slot) {
             case 'headband':
+                $item = $equipment->getHeadband();
                 $equipment->setHeadband();
                 break;
             case 'head':
+                $item = $equipment->getHead();
                 $equipment->setHead();
                 break;
             case 'eyes':
+                $item = $equipment->getEyes();
                 $equipment->setEyes();
                 break;
             case 'neck':
+                $item = $equipment->getNeck();
                 $equipment->setNeck();
                 break;
             case 'shoulders':
+                $item = $equipment->getShoulders();
                 $equipment->setShoulders();
                 break;
             case 'armor':
+                $item = $equipment->getShoulders();
                 $equipment->setArmor();
                 break;
             case 'body':
+                $item = $equipment->getBody();
                 $equipment->setBody();
                 break;
             case 'chest':
+                $item = $equipment->getChest();
                 $equipment->setChest();
                 break;
             case 'belt':
+                $item = $equipment->getBelt();
                 $equipment->setBelt();
                 break;
             case 'mainWeapon':
+                $item = $equipment->getMainWeapon();
                 $equipment->setMainWeapon();
                 break;
             case 'offhandWeapon':
+                $item = $equipment->getOffhandWeapon();
                 $equipment->setOffhandWeapon();
                 break;
             case 'wrists':
+                $item = $equipment->getWrists();
                 $equipment->setWrists();
                 break;
             case 'hands':
+                $item = $equipment->getHands();
                 $equipment->setHands();
                 break;
             case 'rightFinger':
+                $item = $equipment->getRightFinger();
                 $equipment->setRightFinger();
                 break;
             case 'leftFinger':
+                $item = $equipment->getLeftFinger();
                 $equipment->setLeftFinger();
                 break;
             case 'feet':
+                $item = $equipment->getFeet();
                 $equipment->setFeet();
                 break;
         }
+
+        foreach ($character->getItemPowerEffects() as $itemPowerEffect) {
+            foreach ($item->getPowers() as $power) {
+                if ($power === $itemPowerEffect->getPower()) {
+                    $character->removeItemPowerEffect($itemPowerEffect);
+                }
+            }
+        }
+
 
         return $character;
     }

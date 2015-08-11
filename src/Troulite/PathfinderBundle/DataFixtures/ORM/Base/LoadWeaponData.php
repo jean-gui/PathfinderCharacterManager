@@ -48,7 +48,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
                 'At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood.'
             )
             ->setRange(20)
-            ->setDualWield(true)
+            ->setTwoHanded(true)
             ->setWeight(1.5);
 
         $manager->persist($longbow);
@@ -68,7 +68,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
                 'At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood.'
             )
             ->setRange(20)
-            ->setDualWield(true)
+            ->setTwoHanded(true)
             ->setWeight(1.5)
             ->addPower($this->getReference('ranged-weapon-power-enhancement-2'));
 
@@ -90,7 +90,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
                 'A longsword (also spelled long sword, long-sword) is a type of sword characterized as having a cruciform hilt with a grip for two handed use and a straight double-edged blade of around 100–122 cm (39–48 in).'
             )
             ->setRange(0)
-            ->setDualWield(false)
+            ->setTwoHanded(false)
             ->setWeight(2)
             ->addPower($this->getReference('melee-weapon-power-enhancement-1'));
 
@@ -108,7 +108,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setCritical(2)
             ->setDamages('2d6')
             ->setRange(0)
-            ->setDualWield(true)
+            ->setTwoHanded(true)
             ->setWeight(2)
             ->addPower($this->getReference('melee-weapon-power-enhancement-5'));
 
@@ -125,7 +125,7 @@ class LoadWeaponData extends AbstractFixture implements OrderedFixtureInterface
             ->setCritical(2)
             ->setDamages('1d3')
             ->setRange(0)
-            ->setDualWield(false)
+            ->setTwoHanded(false)
             ->setWeight(1)
             ->addPower($this->getReference('melee-weapon-power-enhancement-1'));
 
