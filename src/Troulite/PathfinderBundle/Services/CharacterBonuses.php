@@ -444,7 +444,7 @@ class CharacterBonuses
     private function applyEffects(Character $character, array $effects, $source)
     {
         foreach ($effects as $stat => $effect) {
-            if ($stat === 'choice' || $stat === 'feat' || $stat === 'extra-feats') {
+            if ($stat === 'choice' || $stat === 'feat' || $stat === 'extra-feats' || $stat === 'spell') {
                 // Don't process effects that apply when leveling up
                 continue;
             }

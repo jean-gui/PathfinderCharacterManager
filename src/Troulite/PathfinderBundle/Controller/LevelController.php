@@ -28,9 +28,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\CharacterFeat;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\Level;
 use Troulite\PathfinderBundle\Form\EditLevelType;
 use Troulite\PathfinderBundle\Form\LevelUpFlow;
+use Troulite\PathfinderBundle\Repository\ClassSpellRepository;
 
 /**
  * Level controller.
@@ -115,6 +117,7 @@ class LevelController extends Controller
                 // Add fixed extra feats granted by this level
                 foreach ($level->getClassPowers() as $power) {
                     $effects = $power->getClassPower()->getEffects();
+                    // Extra Feat
                     if (
                         $power->getClassPower()->hasEffects() &&
                         array_key_exists('feat', $effects) &&
@@ -124,6 +127,20 @@ class LevelController extends Controller
                             ->findOneBy(array('name' => $effects['feat']['value']));
                         if ($feat) {
                             $level->addFeat((new CharacterFeat())->setFeat($feat));
+                        }
+                    }
+                    // Extra spell
+                    elseif (
+                        $power->getClassPower()->hasEffects() &&
+                        array_key_exists('spell', $effects) &&
+                        $effects['spell']['type'] !== 'oneof'
+                    ) {
+                        /** @var ClassSpellRepository $csRepo */
+                        $csRepo = $em->getRepository('TroulitePathfinderBundle:ClassSpell');
+                        /** @var ClassSpell $classSpell */
+                        $classSpell = $csRepo->findByNameAndClass($effects['spell']['value'], $level->getClassDefinition());
+                        if ($classSpell && !$character->getLearnedSpell($classSpell->getSpell(), $level->getClassDefinition())) {
+                            $level->addLearnedSpell($classSpell);
                         }
                     }
                 }
@@ -163,6 +180,7 @@ class LevelController extends Controller
     {
         $character = $level->getCharacter();
 
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(
