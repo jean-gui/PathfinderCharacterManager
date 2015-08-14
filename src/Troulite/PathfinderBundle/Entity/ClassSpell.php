@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ClassSpell
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Troulite\PathfinderBundle\Repository\ClassSpellRepository")
  */
 class ClassSpell
 {
