@@ -229,6 +229,10 @@ $(window).on('add.mopa-collection-item', function (event, $collection, $row) {
         toolbar: 'top',
         buttons: limited
     });
+    $('.wysiwyg', $row).wysiwyg({
+        toolbar: 'top',
+        buttons: full
+    });
 });
 
 $('textarea[id$="_content"]').each(function (index, element) {
@@ -243,6 +247,13 @@ $('textarea[id^="troulite_pathfinderbundle_notes"]').each(function (index, eleme
     $(element).wysiwyg({
         toolbar: 'top',
         buttons: $.extend({}, limited, list)
+    });
+});
+
+$('textarea.wysiwyg').each(function (index, element) {
+    $(element).wysiwyg({
+        toolbar: 'top',
+        buttons: full
     });
 });
 
