@@ -202,7 +202,7 @@ class ClassDefinitionController extends Controller
                 $this->removeEmptyArrays($classDefinition->getKnownSpellsPerLevel());
 
                 foreach ($classDefinition->getSpells() as $classSpell) {
-                    if (!$classSpell->getSpellLevel()) {
+                    if ($classSpell->getSpellLevel() === null) {
                         $classDefinition->removeSpell($classSpell);
                     }
                 }
