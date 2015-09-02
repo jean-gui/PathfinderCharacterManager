@@ -29,10 +29,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\InventoryItem;
 use Troulite\PathfinderBundle\Entity\PowerEffect;
 use Troulite\PathfinderBundle\Entity\Skill;
@@ -44,8 +46,8 @@ use Troulite\PathfinderBundle\Form\ChangeHpType;
 use Troulite\PathfinderBundle\Form\EditInventoryType;
 use Troulite\PathfinderBundle\Form\EquipmentType;
 use Troulite\PathfinderBundle\Form\InventoryType;
+use Troulite\PathfinderBundle\Form\LearnSpellType;
 use Troulite\PathfinderBundle\Form\Notes\NotesType;
-use Troulite\PathfinderBundle\Form\Notes\PowerNotesType;
 use Troulite\PathfinderBundle\Form\PowersActivationType;
 use Troulite\PathfinderBundle\Form\SleepType;
 use Troulite\PathfinderBundle\Form\UncastSpellsType;
@@ -784,6 +786,57 @@ class CharacterController extends Controller
                     $route = 'characters_show';
             }
             return $this->redirect($this->generateUrl($route, array('id' => $character->getId())));
+        }
+
+        return array('form' => $form->createView());
+    }
+
+    /**
+     * Learn spell
+     *
+     * @Route(
+     *     "/{id}/learn-spell",
+     *     name="characters_learn_spell",
+     * )
+     * @Method("GET|PUT")
+     * @Template()
+     *
+     * @param Character $character
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function learnSpellAction(Character $character, Request $request)
+    {
+        if (!$character->canLearnSpells()) {
+            throw new NotFoundHttpException('This character cannot learn spells');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(
+            new LearnSpellType($em),
+            $character,
+            array(
+                'method' => 'PUT',
+                'action' => $this->generateUrl(
+                    'characters_learn_spell',
+                    array('id' => $character->getId())
+                ),
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Learn Spell'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var ClassSpell $spell */
+            $spell = $form->get('spell')->getData();
+            $character->addExtraSpell($spell);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', $spell . ' learned  successfully');
+            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
         return array('form' => $form->createView());

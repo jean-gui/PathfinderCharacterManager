@@ -10,7 +10,11 @@
         <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
                     class="glyphicon glyphicon-plus"></span></a>
         <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}"><span
-                    class="glyphicon glyphicon-plus glyphicon-time"></span></a>
+                    class="glyphicon glyphicon-time"></span></a>
+        {% if entity.canLearnSpells %}
+            <a href="{{ path('characters_learn_spell', {'id': entity.id}) }}" title="{{ 'learn_spell'|trans }}"><span
+                        class="glyphicon glyphicon-book"></span></a>
+        {% endif %}
     </small>
 </h1>
 {% endblock %}

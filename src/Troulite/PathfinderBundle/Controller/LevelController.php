@@ -83,7 +83,6 @@ class LevelController extends Controller
             }
         }
 
-
         /** @var $flow LevelUpFlow */
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
         $flow->bind($level);
