@@ -25,6 +25,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Troulite\PathfinderBundle\Entity\Character;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\PreparedSpell;
 
 /**
@@ -43,28 +45,48 @@ class PreparedSpellType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
-                /** @var $character PreparedSpell */
+                /** @var PreparedSpell $preparedSpell */
                 $preparedSpell = $event->getData();
+                /** @var Character $character */
+                $character     = $options['character'];
                 $form          = $event->getForm();
+                $groupedSpells = array();
                 /** @var $em EntityManager */
                 $em = $options['em'];
 
-                $qb = $em->createQueryBuilder()->select('sp')->from('TroulitePathfinderBundle:Spell', 'sp')
-                    ->join('TroulitePathfinderBundle:ClassSpell', 'cs', Join::WITH, 'sp = cs.spell')
-                    ->andWhere('cs.class = ?1')
-                    ->andWhere('cs.spellLevel <= ?2')
-                    ->addOrderBy('cs.spellLevel', 'ASC')
-                    ->addOrderBy('sp.name', 'ASC')
-                ;
-                $qb->setParameter(1, $preparedSpell->getClass())
-                    ->setParameter(2, $options['preparedLevels'][(int)$form->getName()]);
+                for ($i=0; $i <= $options['preparedLevels'][(int)$form->getName()]; $i++) {
+                    if ($preparedSpell->getClass()->getKnownSpellsPerLevel() && $i > 0) {
+                        $spellsBySpellLevel = $character->getLearnedSpellsBySpellLevel();
+                        /** @var ClassSpell[] $spells */
+                        foreach ($spellsBySpellLevel as $level => $spells) {
+                            foreach ($spells as $classSpell) {
+                                $groupedSpells['Level ' . $classSpell->getSpellLevel() . ' spells'][] = $classSpell->getSpell();
+                            }
+                        }
+                    } else {
+                        $qb = $em->createQueryBuilder()->select('sp')->from('TroulitePathfinderBundle:Spell', 'sp')
+                            ->join('TroulitePathfinderBundle:ClassSpell', 'cs', Join::WITH, 'sp = cs.spell')
+                            ->andWhere('cs.class = ?1')
+                            ->andWhere('cs.spellLevel = ?2')
+                            ->addOrderBy('cs.spellLevel', 'ASC')
+                            ->addOrderBy('sp.name', 'ASC');
+                        $qb->setParameter(1, $preparedSpell->getClass())
+                            ->setParameter(2, $i);
+
+                        /** @var ClassSpell[] $spells */
+                        $spells = $qb->getQuery()->execute();
+                        if ($spells) {
+                            $groupedSpells['Level ' . $i . ' spells'] = $spells;
+                        }
+                    }
+                }
 
                 $form->add(
                     'spell',
                     null,
                     array(
                         'label' => /** @Ignore */ 'Level ' . $options['preparedLevels'][(int)$form->getName()] . ' Spell',
-                        'query_builder' => $qb,
+                        'choices' => $groupedSpells,
                     )
                 );
             }
@@ -79,7 +101,7 @@ class PreparedSpellType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Troulite\PathfinderBundle\Entity\PreparedSpell'
         ));
-        $resolver->setRequired(array('em', 'preparedLevels'));
+        $resolver->setRequired(array('em', 'preparedLevels', 'character'));
     }
 
     /**
