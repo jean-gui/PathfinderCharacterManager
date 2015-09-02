@@ -121,7 +121,10 @@ class SpellCasting
 
         if ($class->isPreparationNeeded()) {
             $preparedSpell = $caster->getPreparedSpell($spell, $class);
-            $preparedSpell->setAlreaydCast(true);
+            // Level 0 spells are not lost after use
+            if ($preparedSpell->getSpellLevel() > 0) {
+                $preparedSpell->setAlreaydCast(true);
+            }
         } else {
             $cast = $caster->getNonPreparedCastSpellsCount();
             $classSpell = $caster->getLearnedSpell($spell, $class);
