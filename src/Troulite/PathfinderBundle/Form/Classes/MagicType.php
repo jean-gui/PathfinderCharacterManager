@@ -21,7 +21,6 @@ namespace Troulite\PathfinderBundle\Form\Classes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Abilities;
 
 /**
  * Class MagicType
@@ -46,6 +45,14 @@ class MagicType extends AbstractType
                 )
             )
             ->add('ableToLearnLowerLevelSpells',
+                'checkbox',
+                array(
+                    'required'                       => false,
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10'
+                )
+            )
+            ->add('ableToLearnNewSpells',
                 'checkbox',
                 array(
                     'required'                       => false,

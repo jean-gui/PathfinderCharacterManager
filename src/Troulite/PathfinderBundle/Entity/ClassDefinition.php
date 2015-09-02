@@ -157,6 +157,13 @@ class ClassDefinition
     private $ableToLearnLowerLevelSpells = false;
 
     /**
+     * @var bool true if this class can learn new spells from spellbooks
+     *
+     * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     */
+    private $ableToLearnNewSpells = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -629,9 +636,33 @@ class ClassDefinition
 
     /**
      * @param boolean $ableToLearnLowerLevelSpells
+     *
+     * @return $this
      */
     public function setAbleToLearnLowerLevelSpells($ableToLearnLowerLevelSpells)
     {
         $this->ableToLearnLowerLevelSpells = $ableToLearnLowerLevelSpells;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAbleToLearnNewSpells()
+    {
+        return $this->ableToLearnNewSpells;
+    }
+
+    /**
+     * @param boolean $ableToLearnNewSpells
+     *
+     * @return $this
+     */
+    public function setAbleToLearnNewSpells($ableToLearnNewSpells)
+    {
+        $this->ableToLearnNewSpells = $ableToLearnNewSpells;
+
+        return $this;
     }
 }
