@@ -81,10 +81,11 @@ class SleepType extends AbstractType
                                 $previouslyPreparedSpells = array();
                             }
                             // A character has $levels[$level - 1] spells + some more if he has a high ability score
-                            $totalSpells = $levels[$level - 1] +
-                                $this->extra_spells
-                                [$character->getModifierByAbility($class->getCastingAbility())]
-                                [$spellLevel];
+                            $totalSpells = $levels[$level - 1];
+                            if ($levels[$level - 1] > -1) {
+                                $abMod = $character->getModifierByAbility($class->getCastingAbility());
+                                $totalSpells += $this->extra_spells[$abMod][$spellLevel];
+                            }
                             $previousTotalSpells = count($previouslyPreparedSpells);
                             if ($totalSpells < $previousTotalSpells) {
                                 // We have fewer spells than last time we slept, remove some
@@ -121,8 +122,8 @@ class SleepType extends AbstractType
                         'label' => 'Prepare Spells',
                         'type' => new PreparedSpellType(),
                         'options' => array(
-                            'label' => /** @Ignore */ false,
-                            'em'    => $options['em'],
+                            'label'          => /** @Ignore */ false,
+                            'em'             => $options['em'],
                             'preparedLevels' => $preparedLevels
                         )
                     )
