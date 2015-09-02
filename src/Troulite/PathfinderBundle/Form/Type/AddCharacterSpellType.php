@@ -76,11 +76,11 @@ class AddCharacterSpellType extends AbstractType
 
                 $queryString = 'SELECT s FROM TroulitePathfinderBundle:Spell s
                             JOIN s.classes cs
-                            WHERE cs.spellLevel = ?1';
+                            WHERE cs.class = ?2';
                 if ($this->class->isAbleToLearnLowerLevelSpells()) {
-                    $queryString .= 'AND cs.class <= ?2';
+                    $queryString .= 'AND cs.spellLevel <= ?1 AND cs.spellLevel > 0';
                 } else {
-                    $queryString .= 'AND cs.class = ?2';
+                    $queryString .= 'AND cs.spellLevel = ?1';
                 }
                 if ($learned && count($learned) > 0) {
                     $queryString .= 'AND cs NOT IN(?3)';
