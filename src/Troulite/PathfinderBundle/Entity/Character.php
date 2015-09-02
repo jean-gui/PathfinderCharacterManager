@@ -1265,6 +1265,7 @@ class Character extends BaseCharacter
         foreach ($spellsBySpellLevel as $spells) {
             $known = array_merge($known, $spells);
         }
+        $known = array_merge($known, $this->getExtraSpells()->toArray());
 
         return $known;
     }
@@ -1281,6 +1282,10 @@ class Character extends BaseCharacter
             foreach ($level->getLearnedSpells() as $classSpell) {
                 $known[$classSpell->getSpellLevel()][$classSpell->getId()] = $classSpell;
             }
+        }
+
+        foreach ($this->getExtraSpells() as $classSpell) {
+            $known[$classSpell->getSpellLevel()][$classSpell->getId()] = $classSpell;
         }
 
         return $known;
@@ -1367,6 +1372,9 @@ class Character extends BaseCharacter
         }
 
         foreach ($this->getLearnedSpells() as $learnedSpell) {
+            if ($learnedSpell->getClass()->isPreparationNeeded()) {
+                continue;
+            }
             $castableClassSpells = $learnedSpell->getClass();
             if (!array_key_exists($castableClassSpells->getId(), $spells)) {
                 $spells[$castableClassSpells->getId()] = (new CastableClassSpells())->setClass($castableClassSpells);
@@ -1537,7 +1545,7 @@ class Character extends BaseCharacter
     /**
      * @return ClassDefinition[]
      */
-    private function getClasses()
+    public function getClasses()
     {
         $classes = array();
         foreach ($this->getLevels() as $level) {
@@ -1609,5 +1617,19 @@ class Character extends BaseCharacter
     {
         return $this->getEquipment()->getMainWeapon() instanceof Weapon &&
             $this->getEquipment()->getOffhandWeapon() instanceof Weapon;
+    }
+
+    /**
+     * @return bool
+     */
+    public function canLearnSpells()
+    {
+        foreach ($this->getClasses() as $class) {
+            if ($class->isAbleToLearnNewSpells()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -18,6 +18,8 @@
 
 namespace Troulite\PathfinderBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -130,12 +132,24 @@ class BaseCharacter
     private $spellNotes;
 
     /**
+     * @var Collection|ClassSpell[]
+     *
+     * @ORM\ManyToMany(targetEntity="ClassSpell")
+     * @ORM\JoinTable(name="character_spells",
+     *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="classspell_id", referencedColumnName="id")}
+     *      )
+     */
+    private $extraSpells;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->abilities = new Abilities();
         $this->equipment = new CharacterEquipment();
+        $this->extraSpells = new ArrayCollection();
     }
 
     /**
@@ -424,6 +438,52 @@ class BaseCharacter
     public function setSpellNotes($spellNotes)
     {
         $this->spellNotes = $spellNotes;
+
+        return $this;
+    }
+
+    /**
+     * Add extra spell
+     *
+     * @param ClassSpell $extraSpell
+     *
+     * @return $this
+     */
+    public function addExtraSpell(ClassSpell $extraSpell)
+    {
+        $this->extraSpells[] = $extraSpell;
+
+        return $this;
+    }
+
+    /**
+     * Remove extra spell
+     *
+     * @param ClassSpell $extraSpell
+     */
+    public function removeExtraSpell(ClassSpell $extraSpell)
+    {
+        $this->extraSpells->removeElement($extraSpell);
+    }
+
+    /**
+     * Get extra spells
+     *
+     * @return Collection|ClassSpell[]
+     */
+    public function getExtraSpells()
+    {
+        return $this->extraSpells;
+    }
+
+    /**
+     * @param Collection|ClassSpell[] $extraSpells
+     *
+     * @return $this
+     */
+    public function setExtraSpells(Collection $extraSpells)
+    {
+        $this->extraSpells = $extraSpells;
 
         return $this;
     }
