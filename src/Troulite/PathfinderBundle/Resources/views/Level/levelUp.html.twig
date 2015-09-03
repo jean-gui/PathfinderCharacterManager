@@ -13,9 +13,9 @@
             <p>At this level, the {{ form.vars.value.classDefinition }} class will grant {{ entity }} the following
                 powers:</p>
             <ul>
-            {% for power in form.vars.value.classDefinition.powers if power.level == entity.level(form.vars.value.classDefinition) %}
-                <li>{{ power }}</li>
-            {% endfor %}
+                {% for power in form.vars.value.classPowers %}
+                    <li>{{ power }}</li>
+                {% endfor %}
             </ul>
             <p>
                 Note that some of these bonuses may have restrictions that are not taken into account by the tool.
