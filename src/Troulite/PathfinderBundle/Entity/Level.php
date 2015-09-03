@@ -59,6 +59,17 @@ class Level
     private $classDefinition;
 
     /**
+     * @var Collection|SubClass[]
+     *
+     * @ORM\ManyToMany(targetEntity="SubClass")
+     * @ORM\JoinTable(name="levels_subclasses",
+     *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="subclass_id", referencedColumnName="id")}
+     *      )
+     */
+    private $subClasses;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer")
@@ -125,6 +136,7 @@ class Level
      */
     public function __construct()
     {
+        $this->subClasses  = new ArrayCollection();
         $this->skills      = new ArrayCollection();
         $this->feats       = new ArrayCollection();
         $this->classPowers = new ArrayCollection();
@@ -187,6 +199,38 @@ class Level
     public function getClassDefinition()
     {
         return $this->classDefinition;
+    }
+
+    /**
+     * @return Collection|SubClass[]
+     */
+    public function getSubClasses()
+    {
+        return $this->subClasses;
+    }
+
+    /**
+     * @param SubClass $subClass
+     *
+     * @return $this
+     */
+    public function addSubClass($subClass)
+    {
+        $this->subClasses[] = $subClass;
+
+        return $this;
+    }
+
+    /**
+     * @param SubClass $subClass
+     *
+     * @return $this
+     */
+    public function removeSubClass($subClass)
+    {
+        $this->subClasses->removeElement($subClass);
+
+        return $this;
     }
 
     /**

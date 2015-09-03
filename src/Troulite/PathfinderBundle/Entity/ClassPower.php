@@ -26,8 +26,8 @@ namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Troulite\PathfinderBundle\Entity\Traits\Power;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Troulite\PathfinderBundle\Entity\Traits\Power;
 
 /**
  * Class ClassPower
@@ -56,6 +56,14 @@ class ClassPower
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id", nullable=true)
      */
     private $class;
+
+    /**
+     * @var SubClass
+     *
+     * @ORM\ManyToOne(targetEntity="SubClass", inversedBy="powers")
+     * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id", nullable=true)
+     */
+    private $subClass;
 
     /**
      * @var int
@@ -137,6 +145,27 @@ class ClassPower
     public function getClass()
     {
         return $this->class;
+    }
+
+
+    /**
+     * @param SubClass $subClass
+     *
+     * @return $this
+     */
+    public function setSubClass($subClass)
+    {
+        $this->subClass = $subClass;
+
+        return $this;
+    }
+
+    /**
+     * @return SubClass
+     */
+    public function getSubClass()
+    {
+        return $this->subClass;
     }
 
     /**

@@ -21,8 +21,8 @@ namespace Troulite\PathfinderBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Describable;
 
 
@@ -52,6 +52,20 @@ class ClassDefinition
      * @Gedmo\Translatable()
      */
     private $name;
+
+    /**
+     * @var Collection|SubClass[]
+     *
+     * @ORM\OneToMany(targetEntity="SubClass", mappedBy="parent", cascade={"all"})
+     */
+    private $subClasses;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $subClassesNumber;
 
     /**
      * @var integer
@@ -168,6 +182,7 @@ class ClassDefinition
      */
     public function __construct()
     {
+        $this->subClasses  = new ArrayCollection();
         $this->powers      = new ArrayCollection();
         $this->spells      = new ArrayCollection();
         $this->classSkills = new ArrayCollection();
@@ -406,6 +421,59 @@ class ClassDefinition
     public function getClassSkills()
     {
         return $this->classSkills;
+    }
+
+    /**
+     * @return Collection|SubClass[]
+     */
+    public function getSubClasses()
+    {
+        return $this->subClasses;
+    }
+
+    /**
+     * Add subclass
+     *
+     * @param SubClass $subClass
+     *
+     * @return SubClass
+     */
+    public function addSubClass(SubClass $subClass)
+    {
+        $this->subClasses[] = $subClass;
+        $subClass->setParent($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove sublcass
+     *
+     * @param SubClass $subClass
+     */
+    public function removeSubClass(SubClass $subClass)
+    {
+        $this->subClasses->removeElement($subClass);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSubClassesNumber()
+    {
+        return $this->subClassesNumber;
+    }
+
+    /**
+     * @param int $subClassesNumber
+     *
+     * @return $this
+     */
+    public function setSubClassesNumber($subClassesNumber)
+    {
+        $this->subClassesNumber = $subClassesNumber;
+
+        return $this;
     }
 
     /**

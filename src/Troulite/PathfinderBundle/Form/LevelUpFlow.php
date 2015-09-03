@@ -25,7 +25,9 @@ namespace Troulite\PathfinderBundle\Form;
 
 
 use Craue\FormFlowBundle\Form\FormFlow;
+use Craue\FormFlowBundle\Form\FormFlowInterface;
 use Doctrine\ORM\EntityManager;
+use Troulite\PathfinderBundle\Entity\Level;
 
 /**
  * Class LevelUpFlow
@@ -71,6 +73,17 @@ class LevelUpFlow extends FormFlow
             array(
                 'label' => 'Base',
                 'type'  => new LevelUpClassType($this->advancement),
+            ),
+            array(
+                'label' => 'Subclass',
+                'type'  => new LevelUpSubClassType(),
+                'skip'  => function ($estimatedCurrentStepNumber, FormFlowInterface $flow) {
+                    /** @var Level $level */
+                    $level = $this->getFormData();
+                    return !$level->getClassDefinition()->getSubClasses()
+                        || $level->getClassDefinition()->getSubClasses()->count() === 0
+                        || $level->getValue() !== 1;
+                }
             ),
             array(
                 'label' => 'Class Summary',

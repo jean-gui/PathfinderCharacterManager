@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block content -%}
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('subclasses') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
