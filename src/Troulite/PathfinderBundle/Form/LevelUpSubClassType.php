@@ -18,10 +18,12 @@
 
 namespace Troulite\PathfinderBundle\Form;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Level;
+use Troulite\PathfinderBundle\Entity\SubClass;
 
 /**
  * Class LevelUpSubClassType
@@ -30,6 +32,15 @@ use Troulite\PathfinderBundle\Entity\Level;
  */
 class LevelUpSubClassType extends AbstractType
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -37,12 +48,20 @@ class LevelUpSubClassType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $qb = $this->em->createQueryBuilder()->select('sc')->from('TroulitePathfinderBundle:SubClass', 'sc')
+            ->andWhere('sc.parent = ?1')
+            ->addOrderBy('sc.name', 'ASC');
+        $qb->setParameter(1, $builder->getData()->getClassDefinition()->getId());
+
+        /** @var SubClass[] $choices */
+        $choices = $qb->getQuery()->execute();
         $builder
             ->add(
                 'subClasses',
                 null,
                 array(
-                    'multiple' => true
+                    'multiple' => true,
+                    'choices'  => $choices
                 )
             )
         ;

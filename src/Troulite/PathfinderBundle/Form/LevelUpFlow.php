@@ -76,7 +76,7 @@ class LevelUpFlow extends FormFlow
             ),
             array(
                 'label' => 'Subclass',
-                'type'  => new LevelUpSubClassType(),
+                'type'  => new LevelUpSubClassType($this->em),
                 'skip'  => function ($estimatedCurrentStepNumber, FormFlowInterface $flow) {
                     /** @var Level $level */
                     $level = $this->getFormData();
