@@ -74,8 +74,8 @@ class AddCharacterSpellType extends AbstractType
                     }
                 );
 
-                $queryString = 'SELECT s FROM TroulitePathfinderBundle:Spell s
-                            JOIN s.classes cs
+                $queryString = 'SELECT cs, s FROM TroulitePathfinderBundle:ClassSpell cs
+                            JOIN cs.spell s
                             WHERE cs.class = ?2';
                 if ($this->class->isAbleToLearnLowerLevelSpells()) {
                     $queryString .= 'AND cs.spellLevel <= ?1 AND cs.spellLevel > 0';
@@ -85,6 +85,7 @@ class AddCharacterSpellType extends AbstractType
                 if ($learned && count($learned) > 0) {
                     $queryString .= 'AND cs NOT IN(?3)';
                 }
+                $queryString .= ' ORDER BY cs.spellLevel DESC';
                 $query = $em
                     ->createQuery($queryString)
                     ->setParameter(1, $classSpell->getSpellLevel())
@@ -92,14 +93,19 @@ class AddCharacterSpellType extends AbstractType
                 if ($learned && count($learned) > 0) {
                     $query->setParameter(3, $learned);
                 }
-                $spells = $query->getResult();
+                /** @var ClassSpell[] $classSpells */
+                $classSpells = $query->getResult();
+
+                $spells = array();
+                foreach ($classSpells as $cs) {
+                    $spells['Level ' . $cs->getSpellLevel()][] = $cs->getSpell();
+                }
 
                 $form->add(
                     'spell',
                     'entity',
                     array(
                         /** @Ignore */
-                        'label'   => 'Level ' . $classSpell->getSpellLevel() . ' Spell',
                         'class'   => 'TroulitePathfinderBundle:Spell',
                         'choices' => $spells
                     )
