@@ -124,7 +124,8 @@ class SleepType extends AbstractType
                         'options' => array(
                             'label'          => /** @Ignore */ false,
                             'em'             => $options['em'],
-                            'preparedLevels' => $preparedLevels
+                            'preparedLevels' => $preparedLevels,
+                            'character'      => $character
                         )
                     )
                 );
