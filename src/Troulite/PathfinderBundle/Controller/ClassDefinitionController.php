@@ -157,7 +157,7 @@ class ClassDefinitionController extends Controller
         $classDefinition->setKnownSpellsPerLevel($knownSpellsPerLevel);
 
         $spellsPerDay = $classDefinition->getSpellsPerDay();
-        for ($i = count($spellsPerDay) + 1; $i < 10; $i++) {
+        for ($i = count($spellsPerDay); $i < 10; $i++) {
             $spellsPerDay[$i] = $array20;
         }
         $classDefinition->setSpellsPerDay($spellsPerDay);
@@ -200,6 +200,16 @@ class ClassDefinitionController extends Controller
                 // flow finished
                 $this->removeEmptyArrays($classDefinition->getSpellsPerDay());
                 $this->removeEmptyArrays($classDefinition->getKnownSpellsPerLevel());
+
+                // All cells must be filled for the array not be set to null
+                foreach ($classDefinition->getKnownSpellsPerLevel() as $level) {
+                    foreach ($level as $number) {
+                        if ($number === null) {
+                            $classDefinition->setKnownSpellsPerLevel(null);
+                            break 2;
+                        }
+                    }
+                }
 
                 foreach ($classDefinition->getSpells() as $classSpell) {
                     if ($classSpell->getSpellLevel() === null) {
