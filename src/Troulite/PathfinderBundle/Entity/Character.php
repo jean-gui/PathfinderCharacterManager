@@ -55,7 +55,7 @@ class Character extends BaseCharacter
     /**
      * @var Collection|Level[]
      *
-     * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Level", mappedBy="character", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"id": "ASC"})
      */
     private $levels;

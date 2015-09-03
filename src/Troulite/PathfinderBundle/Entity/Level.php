@@ -61,7 +61,7 @@ class Level
     /**
      * @var Collection|SubClass[]
      *
-     * @ORM\ManyToMany(targetEntity="SubClass")
+     * @ORM\ManyToMany(targetEntity="SubClass", orphanRemoval=true)
      * @ORM\JoinTable(name="levels_subclasses",
      *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="subclass_id", referencedColumnName="id")}
@@ -95,28 +95,28 @@ class Level
     /**
      * @var Collection|CharacterFeat[]
      *
-     * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="level", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="CharacterFeat", mappedBy="level", cascade={"all"}, orphanRemoval=true)
      */
     private $feats;
 
     /**
      * @var Collection|LevelSkill[]
      *
-     * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="LevelSkill", mappedBy="level", cascade={"all"}, orphanRemoval=true)
      */
     private $skills;
 
     /**
      * @var Collection|CharacterClassPower[]
      *
-     * @ORM\OneToMany(targetEntity="CharacterClassPower", mappedBy="level", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="CharacterClassPower", mappedBy="level", cascade={"all"}, orphanRemoval=true)
      */
     private $classPowers;
 
     /**
      * @var Collection|ClassSpell[]
      *
-     * @ORM\ManyToMany(targetEntity="ClassSpell")
+     * @ORM\ManyToMany(targetEntity="ClassSpell", orphanRemoval=true)
      * @ORM\JoinTable(name="levels_spells",
      *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="classspell_id", referencedColumnName="id")}
