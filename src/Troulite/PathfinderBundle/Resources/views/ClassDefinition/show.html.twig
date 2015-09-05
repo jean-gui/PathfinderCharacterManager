@@ -11,6 +11,12 @@
             <dd>{{ entity.skillPoints }} + INT modifier</dd>
             <dt>Class Skills</dt>
             <dd>{{ entity.classSkills|join(', ') }}</dd>
+            {% if entity.subClasses and entity.subClasses|length > 0 %}
+                <dt>Subclasses</dt>
+                {% for subclass in entity.subClasses %}
+                    <dd><a href="{{ path('subclasses_show', { 'id': subclass.id }) }}">{{ subclass }}</a></dd>
+                {% endfor %}
+            {% endif %}
         </dl>
 
         <table class="table table-condensed table-striped table-hover table-responsive">
