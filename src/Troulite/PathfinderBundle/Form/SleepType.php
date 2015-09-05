@@ -115,7 +115,9 @@ class SleepType extends AbstractType
                                 for ($i = 0; $i < $totalSpells; $i++) {
                                     if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
                                         $pps = array_shift($previouslyPreparedSpellsByLevel[$spellLevel]);
-                                        $pps = $pps->getSpell();
+                                        if ($pps) {
+                                            $pps = $pps->getSpell();
+                                        }
                                     } else {
                                         $pps = null;
                                     }
