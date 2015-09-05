@@ -1307,13 +1307,14 @@ class Character extends BaseCharacter
     }
 
     /**
-     * Remove preparedSpells
+     * Remove preparedSpell
      *
-     * @param PreparedSpell $preparedSpell
+     * @param PreparedSpell $preparedSpell reference to a prepared spell (allowing effective call to setCharacter)
      */
-    public function removePreparedSpell(PreparedSpell $preparedSpell)
+    public function removePreparedSpell(PreparedSpell &$preparedSpell)
     {
         $this->preparedSpells->removeElement($preparedSpell);
+        $preparedSpell->setCharacter(null);
     }
 
     /**
@@ -1321,6 +1322,9 @@ class Character extends BaseCharacter
      */
     public function setPreparedSpells(Collection $preparedSpells)
     {
+        foreach ($preparedSpells as $ps) {
+            $this->removePreparedSpell($ps);
+        }
         $this->preparedSpells = $preparedSpells;
     }
 

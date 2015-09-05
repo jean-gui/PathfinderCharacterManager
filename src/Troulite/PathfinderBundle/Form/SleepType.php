@@ -76,6 +76,9 @@ class SleepType extends AbstractType
                     $level = $classLevel['level'];
                     /** @var array $previouslyPreparedSpellsByLevel */
                     $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
+                    foreach ($character->getPreparedSpells() as $ps) {
+                        $character->removePreparedSpell($ps);
+                    }
                     $character->setPreparedSpells(new ArrayCollection());
 
                     if ($class->isPreparationNeeded()) {
