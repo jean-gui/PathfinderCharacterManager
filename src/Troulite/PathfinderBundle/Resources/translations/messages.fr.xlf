@@ -446,6 +446,18 @@
         <source>wrists</source>
         <target>Poignets</target>
       </trans-unit>
+      <trans-unit id="4011bdcc6234556f62a4c339b7e028c6" resname="granted.powers">
+        <source>granted.powers</source>
+        <target>Pouvoirs accordés</target>
+      </trans-unit>
+      <trans-unit id="b068931cc450442b63f5b3d276ea4297" resname="name">
+        <source>name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit id="76c62c912f24cf0168daa9c0a2a06255" resname="spell.level">
+        <source>spell.level</source>
+        <target>Niveau de sort</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
