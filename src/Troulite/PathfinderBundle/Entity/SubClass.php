@@ -69,11 +69,25 @@ class SubClass
     private $powers;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
+     */
+    private $extraSpellSlot = false;
+
+    /**
+     * @var Collection|ClassSpell[]
+     *
+     * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="subClass", orphanRemoval=true, cascade={"all"})
+     */
+    private $spells;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->powers = new ArrayCollection();
+        $this->powers      = new ArrayCollection();
     }
 
     /**
@@ -178,5 +192,72 @@ class SubClass
         }
 
         return $this->powers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getExtraSpellSlot()
+    {
+        return $this->extraSpellSlot;
+    }
+
+    /**
+     * @param bool $extraSpellSlot
+     *
+     * @return $this
+     */
+    public function setExtraSpellSlot($extraSpellSlot)
+    {
+        $this->extraSpellSlot = $extraSpellSlot;
+
+        return $this;
+    }
+
+    /**
+     * Add spell
+     *
+     * @param ClassSpell $spell
+     *
+     * @return $this
+     */
+    public function addSpell(ClassSpell $spell)
+    {
+        foreach ($this->spells as $classSpell) {
+            // If already there, simply change its level
+            if ($classSpell->getSpell() === $spell->getSpell()) {
+                $classSpell->setSpellLevel($spell->getSpellLevel());
+
+                return $this;
+            }
+        }
+
+        $this->spells[] = $spell;
+        $spell->setSubClass($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove spell
+     *
+     * @param ClassSpell $spell
+     *
+     * @return $this
+     */
+    public function removeSpell(ClassSpell $spell)
+    {
+        $this->spells->removeElement($spell);
+        return $this;
+    }
+
+    /**
+     * Get spells
+     *
+     * @return Collection|ClassSpell[]
+     */
+    public function getSpells()
+    {
+        return $this->spells;
     }
 }

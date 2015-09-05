@@ -19,6 +19,8 @@
 namespace Troulite\PathfinderBundle\Form;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -26,7 +28,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\ClassDefinition;
+use Troulite\PathfinderBundle\Entity\ClassSpell;
 use Troulite\PathfinderBundle\Entity\PreparedSpell;
+use Troulite\PathfinderBundle\Entity\SubClass;
 
 /**
  * Class PreparedSpellType
@@ -62,55 +66,158 @@ class SleepType extends AbstractType
 
                 /** @var int[] $preparedLevels */
                 $preparedLevels = array();
+                $choices = array();
+                $slots = 0;
 
                 foreach ($character->getLevelPerClass() as $classLevel) {
+                    /** @var EntityManager $em */
+                    $em = $options['em'];
                     /** @var $class ClassDefinition */
                     $class = $classLevel['class'];
                     /** @var $level int */
                     $level = $classLevel['level'];
                     /** @var array $previouslyPreparedSpellsByLevel */
                     $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
+                    $character->setPreparedSpells(new ArrayCollection());
 
                     if ($class->isPreparationNeeded()) {
-                        // $levels starts at 0 but means character level 1, hence the -1 below
-                        foreach ($class->getSpellsPerDay() as $spellLevel => $levels) {
-                            /** @var PreparedSpell[] $previouslyPreparedSpells */
-                            if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
-                                $previouslyPreparedSpells = $previouslyPreparedSpellsByLevel[$spellLevel];
-                            } else {
-                                $previouslyPreparedSpells = array();
-                            }
-                            // A character has $levels[$level - 1] spells + some more if he has a high ability score
-                            $totalSpells = $levels[$level - 1];
-                            if ($levels[$level - 1] > -1) {
-                                $abMod = $character->getModifierByAbility($class->getCastingAbility());
-                                $totalSpells += $this->extra_spells[$abMod][$spellLevel];
-                            }
-                            $previousTotalSpells = count($previouslyPreparedSpells);
-                            if ($totalSpells < $previousTotalSpells) {
-                                // We have fewer spells than last time we slept, remove some
-                                for ($i = $totalSpells; $i < $previousTotalSpells; $i++) {
-                                    foreach ($character->getPreparedSpells() as $preparedSpell) {
-                                        if ($preparedSpell->getSpellLevel() === $spellLevel) {
-                                            $character->removePreparedSpell($preparedSpell);
-                                            break;
+                        // Get all sublcasses of this class adding extra slots
+                        /** @var SubClass[] $subClasses */
+                        $subClasses = array();
+                        if ($class->getSubClasses() && $class->getSubClasses()->count() > 0) {
+                            foreach ($character->getLevels() as $l) {
+                                if (
+                                    $l->getClassDefinition() === $class &&
+                                    $l->getSubClasses() && $l->getSubClasses()->count() > 0
+                                ) {
+                                    foreach ($l->getSubClasses() as $sc) {
+                                        if ($sc->getExtraSpellSlot()) {
+                                            $subClasses[] = $sc;
                                         }
                                     }
                                 }
-                                // Because ArrayCollections don't get reindexed automatically, do it manually
-                                $character->setPreparedSpells(
-                                    new ArrayCollection(array_values($character->getPreparedSpells()->toArray()))
-                                );
                             }
+                        }
 
-                            for ($i = 0; $i < $totalSpells; $i++) {
-                                if ($i >= $previousTotalSpells) {
-                                    // We have more spells than last time we slept, add them
-                                    $character->addPreparedSpell(new PreparedSpell($character, null, $class));
+                        // $levels starts at 0 but means character level 1, hence the -1 below
+                        foreach ($class->getSpellsPerDay() as $spellLevel => $levels) {
+                            $spellsForClassForSpellLevel = array();
+                            $spellsPerDayForLevel = $levels[$level - 1];
+                            // -1 means "cannot cast spells for this level"
+                            if ($spellsPerDayForLevel > -1) {
+                                // A character has $levels[$level - 1] spells + some more if he has a high ability score
+                                $abMod = $character->getModifierByAbility($class->getCastingAbility());
+                                $extraSpellsCount = $this->extra_spells[$abMod][$spellLevel];
+                                $totalSpells = $spellsPerDayForLevel + $extraSpellsCount;
+                                $slots += $totalSpells;
+
+                                for ($i = 0; $i < $totalSpells; $i++) {
+                                    if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
+                                        $pps = array_shift($previouslyPreparedSpellsByLevel[$spellLevel]);
+                                        $pps = $pps->getSpell();
+                                    } else {
+                                        $pps = null;
+                                    }
+                                    $character->addPreparedSpell(
+                                        new PreparedSpell($character, $pps, $class)
+                                    );
                                 }
 
-                                $preparedLevels[] = $spellLevel;
+                                // this class learns spells at every level (profane magic)
+                                if ($class->getKnownSpellsPerLevel()) {
+                                    $knownSpellsBySpellLevel = $character->getLearnedSpellsBySpellLevel();
+                                    $spellsForClassForSpellLevel = $knownSpellsBySpellLevel[$spellLevel];
+                                    $spellsForClassForSpellLevel = array_filter(
+                                        $spellsForClassForSpellLevel,
+                                        function ($l) use ($spellLevel) {
+                                            return $l <= $spellLevel;
+                                        },
+                                        ARRAY_FILTER_USE_KEY
+                                    );
+                                    $spellsForClassForSpellLevel = array_map(
+                                        function (ClassSpell $cs) { return $cs->getSpell(); },
+                                        $spellsForClassForSpellLevel
+                                    );
+                                } else { // this class knows all spells (divine magic)
+                                    $qb = $em->createQueryBuilder()->select('cs')
+                                        ->from('TroulitePathfinderBundle:ClassSpell', 'cs')
+                                        ->join('TroulitePathfinderBundle:Spell', 'sp', Join::WITH, 'sp = cs.spell')
+                                        ->andWhere('cs.class = ?1')
+                                        ->andWhere('cs.spellLevel <= ?2')
+                                        ->addOrderBy('cs.spellLevel', 'ASC')
+                                        ->addOrderBy('sp.name', 'ASC');
+                                    $qb->setParameter(1, $class)
+                                        ->setParameter(2, $spellLevel);
+
+                                    /** @var ClassSpell[] $spells */
+                                    $spells = $qb->getQuery()->execute();
+                                    if ($spells) {
+                                        foreach ($spells as $cs) {
+                                            $spellsForClassForSpellLevel['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                        }
+                                    }
+                                }
+
+                                if (count($spellsForClassForSpellLevel) > 0) {
+                                    for ($i = 0; $i < $totalSpells; $i++) {
+                                        $choices[$spellLevel][] = $spellsForClassForSpellLevel;
+                                    }
+                                }
+
+                                // Bonus slots and spells provided by subclasses
+                                if ($spellLevel > 0 && count($subClasses) > 0) {
+                                    /** @var ClassSpell[] $subClassesClassSpells */
+                                    $subClassesClassSpells = array();
+                                    /** @var ClassSpell[] $subClassSpells */
+                                    $subClassSpells      = array();
+                                    foreach ($subClasses as $subClass) {
+                                        if ($subClass->getSpells() && $subClass->getSpells()->count() > 0) {
+                                            $subClassClassSpells = array_filter(
+                                                $subClass->getSpells()->toArray(),
+                                                function (ClassSpell $cs) use ($spellLevel) {
+                                                    return $cs->getSpellLevel() <= $spellLevel;
+                                                }
+                                            );
+                                            $subClassesClassSpells = array_merge(
+                                                $subClassesClassSpells,
+                                                $subClassClassSpells
+                                            );
+                                        }
+                                    }
+
+                                    foreach ($subClassesClassSpells as $cs) {
+                                        $subClassSpells['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                    }
+
+                                    if (count($subClassesClassSpells) > 0) {
+                                        $choices[$spellLevel][] = $subClassSpells;
+                                        $slots++;
+                                    } else {
+                                        $choices[$spellLevel][] = $spellsForClassForSpellLevel;
+                                        $slots++;
+                                    }
+
+                                    $spell = null;
+                                    // Try to find the most likely spell to place in a subclass spell slot
+                                    if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
+                                        // Should most likely be the last prepared spell, hence array_reverse
+                                        $reverse = array_reverse($previouslyPreparedSpellsByLevel[$spellLevel]);
+                                        while ($pps = array_shift($reverse)) {
+                                            foreach ($choices[$spellLevel][count($choices[$spellLevel]) - 1] as $s) {
+                                                if (in_array($pps->getSpell(), $s)) {
+                                                    $spell = $pps->getSpell();
+                                                    break 2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    $character->addPreparedSpell(
+                                        new PreparedSpell($character, $spell, $class)
+                                    );
+                                }
                             }
+
+
                         }
                     }
                 }
@@ -125,7 +232,8 @@ class SleepType extends AbstractType
                             'label'          => /** @Ignore */ false,
                             'em'             => $options['em'],
                             'preparedLevels' => $preparedLevels,
-                            'character'      => $character
+                            'character'      => $character,
+                            'choices'        => $choices
                         )
                     )
                 );

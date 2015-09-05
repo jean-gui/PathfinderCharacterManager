@@ -16,10 +16,49 @@ class SubClassType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('shortDescription')
-            ->add('longDescription')
-            ->add('parent')
+            ->add(
+                'name',
+                null,
+                array(
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                )
+            )
+            ->add(
+                'shortDescription',
+                null,
+                array(
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                    'attr'                           => array('class' => 'wysiwyg')
+                )
+            )
+            ->add(
+                'longDescription',
+                null,
+                array(
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                    'attr'                           => array('class' => 'wysiwyg')
+                )
+            )
+            ->add(
+                'parent',
+                null,
+                array(
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                )
+            )
+            ->add(
+                'extraSpellSlot',
+                null,
+                array(
+                    'required' => false,
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                )
+            )
             ->add(
                 'powers',
                 'collection',

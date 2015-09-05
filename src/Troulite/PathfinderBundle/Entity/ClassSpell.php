@@ -43,9 +43,16 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition", inversedBy="spells")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id")
-     * @Assert\NotBlank()
      */
     private $class;
+
+    /**
+     * @var SubClass
+     *
+     * @ORM\ManyToOne(targetEntity="SubClass", inversedBy="spells")
+     * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id")
+     */
+    private $subClass;
 
     /**
      * @var Spell
@@ -79,7 +86,7 @@ class ClassSpell
      *
      * @param integer $spellLevel
      *
-*@return $this
+     * @return $this
      */
     public function setSpellLevel($spellLevel)
     {
@@ -120,6 +127,25 @@ class ClassSpell
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * @return SubClass
+     */
+    public function getSubClass()
+    {
+        return $this->subClass;
+    }
+
+    /**
+     * @param SubClass $subClass
+     *
+     * @return $this
+     */
+    public function setSubClass(SubClass $subClass = null)
+    {
+        $this->subClass = $subClass;
+        return $this;
     }
 
     /**
