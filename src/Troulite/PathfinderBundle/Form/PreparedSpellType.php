@@ -18,13 +18,11 @@
 
 namespace Troulite\PathfinderBundle\Form;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\PreparedSpell;
 
 /**
@@ -43,14 +41,7 @@ class PreparedSpellType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
-                /** @var PreparedSpell $preparedSpell */
-                $preparedSpell = $event->getData();
-                /** @var Character $character */
-                $character     = $options['character'];
                 $form          = $event->getForm();
-                $groupedSpells = array();
-                /** @var $em EntityManager */
-                $em = $options['em'];
 
                 $allChoices = $options['choices'];
                 $slotNumber = (int) $form->getName();
@@ -88,7 +79,7 @@ class PreparedSpellType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Troulite\PathfinderBundle\Entity\PreparedSpell'
         ));
-        $resolver->setRequired(array('em', 'preparedLevels', 'character', 'choices'));
+        $resolver->setRequired(array('choices'));
     }
 
     /**

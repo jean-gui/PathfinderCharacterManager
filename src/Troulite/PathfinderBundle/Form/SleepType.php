@@ -64,8 +64,6 @@ class SleepType extends AbstractType
                 $character = $event->getData();
                 $form      = $event->getForm();
 
-                /** @var int[] $preparedLevels */
-                $preparedLevels = array();
                 $choices = array();
                 $slots = 0;
 
@@ -230,9 +228,6 @@ class SleepType extends AbstractType
                         'type' => new PreparedSpellType(),
                         'options' => array(
                             'label'          => /** @Ignore */ false,
-                            'em'             => $options['em'],
-                            'preparedLevels' => $preparedLevels,
-                            'character'      => $character,
                             'choices'        => $choices
                         )
                     )
