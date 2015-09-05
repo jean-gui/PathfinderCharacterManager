@@ -24,6 +24,7 @@
 namespace Troulite\PathfinderBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Troulite\PathfinderBundle\Entity\Armor;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\CharacterClassPower;
@@ -52,6 +53,11 @@ class CharacterBonuses
     private $em;
 
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * @var ExpressionLanguage
      */
     private $expressionLanguage;
@@ -66,10 +72,12 @@ class CharacterBonuses
      * Constructor
      *
      * @param EntityManager $em
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, ContainerInterface $container)
     {
         $this->em = $em;
+        $this->container = $container;
         $this->expressionLanguage = new ExpressionLanguage(null, array(), $this->em);
     }
 
@@ -205,7 +213,12 @@ class CharacterBonuses
     private function applySpellEffect(Character $character, SpellEffect $spellEffect)
     {
         $effects = array();
+
         foreach ($spellEffect->getSpell()->getEffects() as $stat => $effect) {
+            if ($spellEffect->getCaster() !== $character && !in_array($spellEffect->getCaster()->getId(), self::$alreadyApplied)) {
+                $spellEffect->getCaster()->postLoad();
+                $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
+            }
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(
@@ -260,6 +273,10 @@ class CharacterBonuses
     {
         $effects = array();
         foreach ($powerEffect->getPower()->getEffects() as $stat => $effect) {
+            if ($powerEffect->getCaster() !== $character && !in_array($powerEffect->getCaster()->getId(), self::$alreadyApplied)) {
+                $powerEffect->getCaster()->postLoad();
+                $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
+            }
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(
