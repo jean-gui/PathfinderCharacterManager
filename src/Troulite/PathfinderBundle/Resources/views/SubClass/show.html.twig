@@ -1,38 +1,54 @@
 {% extends '::base.html.twig' %}
 
 {% block content -%}
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Shortdescription</th>
-                <td>{{ entity.shortDescription }}</td>
-            </tr>
-            <tr>
-                <th>Longdescription</th>
-                <td>{{ entity.longDescription }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container">
+    <h1>{{ entity.name }} ({{ entity.parent }})</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('subclasses') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('subclasses_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <p>{{ entity.shortDescription|raw }}</p>
+    <p>{{ entity.longDescription|raw }}</p>
+
+    <h2>{{ 'granted.powers'|trans }}</h2>
+
+    {% for power in entity.powers %}
+        <h3>{{ power }}</h3>
+        <p>{{ power.shortDescription|raw }}</p>
+        <p>{{ power.longDescription|raw }}</p>
+    {% endfor %}
+
+    {% if entity.spells is defined and entity.spells|length > 0 %}
+        <h2>{{ 'spells'|trans }}</h2>
+        <table class="table table-condensed table-striped table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'description'|trans }}</th>
+                <th>{{ 'spell.level'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for spellClass in entity.spells %}
+                <tr>
+                    <td>{{ spellClass.spell }}</td>
+                    <td>{{ spellClass.spell.shortDescription }}</td>
+                    <td>{{ spellClass.spellLevel }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('subclasses') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('subclasses_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+</div>
 {% endblock %}
