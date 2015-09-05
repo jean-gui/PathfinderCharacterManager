@@ -215,10 +215,12 @@ class CharacterBonuses
         $effects = array();
 
         foreach ($spellEffect->getSpell()->getEffects() as $stat => $effect) {
+            /*
             if ($spellEffect->getCaster() !== $character && !in_array($spellEffect->getCaster()->getId(), self::$alreadyApplied)) {
                 $spellEffect->getCaster()->postLoad();
                 $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
             }
+            */
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(
@@ -273,10 +275,12 @@ class CharacterBonuses
     {
         $effects = array();
         foreach ($powerEffect->getPower()->getEffects() as $stat => $effect) {
+            /*
             if ($powerEffect->getCaster() !== $character && !in_array($powerEffect->getCaster()->getId(), self::$alreadyApplied)) {
                 $powerEffect->getCaster()->postLoad();
                 $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
             }
+            */
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(
