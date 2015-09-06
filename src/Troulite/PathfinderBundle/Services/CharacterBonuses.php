@@ -69,6 +69,13 @@ class CharacterBonuses
     private static $alreadyApplied = array();
 
     /**
+     * Character ids whose bonuses are being applied
+     *
+     * @var array
+     */
+    private static $applying = array();
+
+    /**
      * Constructor
      *
      * @param EntityManager $em
@@ -90,9 +97,11 @@ class CharacterBonuses
      */
     public function applyAll(Character $character)
     {
-        if (in_array($character->getId(), self::$alreadyApplied)) {
+        if (in_array($character->getId(), self::$alreadyApplied) || in_array($character->getId(), self::$applying)) {
             return $character;
         }
+        self::$applying[] = $character->getId();
+
         $this->applyRace($character);
         $this->applyItem($character, $character->getEquipment()->getHeadband());
         $this->applyItem($character, $character->getEquipment()->getHead());
@@ -135,6 +144,11 @@ class CharacterBonuses
         $this->applyItemPowerEffects($character);
 
         self::$alreadyApplied[] = $character->getId();
+        foreach (self::$applying as $key => $id) {
+            if ($id === $character->getId()) {
+                unset(self::$applying[$key]);
+            }
+        }
 
         return $character;
     }
@@ -215,12 +229,13 @@ class CharacterBonuses
         $effects = array();
 
         foreach ($spellEffect->getSpell()->getEffects() as $stat => $effect) {
-            /*
-            if ($spellEffect->getCaster() !== $character && !in_array($spellEffect->getCaster()->getId(), self::$alreadyApplied)) {
+            if ($spellEffect->getCaster() !== $character &&
+                !in_array($spellEffect->getCaster()->getId(), self::$alreadyApplied) &&
+                !in_array($spellEffect->getCaster()->getId(), self::$applying)
+            ) {
                 $spellEffect->getCaster()->postLoad();
-                $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
             }
-            */
+
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(
@@ -275,12 +290,14 @@ class CharacterBonuses
     {
         $effects = array();
         foreach ($powerEffect->getPower()->getEffects() as $stat => $effect) {
-            /*
-            if ($powerEffect->getCaster() !== $character && !in_array($powerEffect->getCaster()->getId(), self::$alreadyApplied)) {
+
+            if ($powerEffect->getCaster() !== $character &&
+                !in_array($powerEffect->getCaster()->getId(), self::$alreadyApplied) &&
+                !in_array($powerEffect->getCaster()->getId(), self::$applying)
+            ) {
                 $powerEffect->getCaster()->postLoad();
-                $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
             }
-            */
+
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
                 array(

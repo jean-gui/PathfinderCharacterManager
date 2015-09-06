@@ -150,12 +150,12 @@ class Character extends BaseCharacter
      */
     public function postLoad()
     {
-        $this->abilitiesBonuses = new AbilitiesBonuses();
-        $this->defenseBonuses   = new DefenseBonuses();
-        $this->attackBonuses    = new AttackBonuses();
-        $this->hpBonuses        = new Bonuses();
-        $this->skillsBonuses    = array();
-        $this->speedBonuses     = new Bonuses();
+        if (!$this->abilitiesBonuses) $this->abilitiesBonuses = new AbilitiesBonuses();
+        if (!$this->defenseBonuses)   $this->defenseBonuses   = new DefenseBonuses();
+        if (!$this->attackBonuses)    $this->attackBonuses    = new AttackBonuses();
+        if (!$this->hpBonuses)        $this->hpBonuses        = new Bonuses();
+        if (!$this->skillsBonuses)    $this->skillsBonuses    = array();
+        if (!$this->speedBonuses)     $this->speedBonuses     = new Bonuses();
     }
 
     /**

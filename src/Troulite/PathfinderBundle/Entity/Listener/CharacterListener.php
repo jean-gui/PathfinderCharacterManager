@@ -54,6 +54,7 @@ class CharacterListener  {
      */
     public function postLoad(Character $character)
     {
+        $character->postLoad();
         $this->container->get('troulite_pathfinder.character_bonuses')->applyAll($character);
     }
 }
