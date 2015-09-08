@@ -2,7 +2,11 @@
 
 {% block fos_user_content %}
     {% if error %}
-        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+        <div class="symfony-form-errors">
+            <div class="alert alert-danger fade in ">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        </div>
     {% endif %}
 
     <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
