@@ -397,6 +397,15 @@ class CharacterBonuses
                             return ($mainHand instanceof Weapon) && ($offHand instanceof Weapon);
                     }
                     break;
+                case 'active-power':
+                    $classPower = $this->em->getRepository('TroulitePathfinderBundle:ClassPower')->findOneBy(['name' => $condition]);
+                    foreach ($character->getClassPowers() as $cp) {
+                        if ($cp->getClassPower() === $classPower && $cp->isActive()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                    break;
             }
         }
 
