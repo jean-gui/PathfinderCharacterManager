@@ -32,6 +32,7 @@ use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
 use Troulite\PathfinderBundle\Model\CastableClassSpells;
 use Troulite\PathfinderBundle\Model\DefenseBonuses;
+use Troulite\PathfinderBundle\Model\SpellSlotBonuses;
 
 /**
  * Class BaseCharacter
@@ -126,6 +127,11 @@ class Character extends BaseCharacter
     private $speedBonuses;
 
     /**
+     * @var SpellSlotBonuses
+     */
+    private $spellSlotBonuses;
+
+    /**
      * @var Collection|Counter[]
      *
      * @ORM\OneToMany(targetEntity="Counter", mappedBy="character", cascade={"all"})
@@ -156,6 +162,7 @@ class Character extends BaseCharacter
         if (!$this->hpBonuses)        $this->hpBonuses        = new Bonuses();
         if (!$this->skillsBonuses)    $this->skillsBonuses    = array();
         if (!$this->speedBonuses)     $this->speedBonuses     = new Bonuses();
+        if (!$this->spellSlotBonuses) $this->spellSlotBonuses = new SpellSlotBonuses();
     }
 
     /**
@@ -961,6 +968,26 @@ class Character extends BaseCharacter
     {
         return $this->speedBonuses;
     }
+
+    /**
+     * @return SpellSlotBonuses
+     */
+    public function getSpellSlotBonuses()
+    {
+        return $this->spellSlotBonuses;
+    }
+
+    /**
+     * @param SpellSlotBonuses $spellSlotBonuses
+     *
+     * @return $this
+     */
+    public function setSpellSlotBonuses(SpellSlotBonuses $spellSlotBonuses)
+    {
+        $this->spellSlotBonuses = $spellSlotBonuses;
+        return $this;
+    }
+
 
     /**
      * Return all feats this character possesses

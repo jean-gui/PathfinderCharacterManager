@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: jean-gui
- * Date: 06/07/14
- * Time: 20:13
+ * Date: 18/07/14
+ * Time: 22:45
  */
 /*
  * Copyright 2015 Jean-Guilhem Rouel
@@ -25,68 +25,53 @@ namespace Troulite\PathfinderBundle\Model;
 
 
 /**
- * Class Bonus
+ * Class SpellSlotBonuses
  *
  * @package Troulite\PathfinderBundle\Model
  */
-class Bonus
+class SpellSlotBonuses
 {
     /**
-     * @var object
+     * @var array
      */
-    private $source;
+    private $slots;
 
     /**
-     * @var mixed
+     * Create a new AbilitiesBonuses instance
      */
-    private $value;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @param object $source
-     * @param mixed $value
-     * @param null $type
-     */
-    public function __construct($source, $value, $type = null)
+    public function __construct()
     {
-        $this->source = $source;
-        $this->value  = $value;
-        $this->type = $type;
+        $this->slots = array();
     }
 
     /**
-     * @return object
+     * @param $level
+     * @param $value
+     *
+     * @return $this
      */
-    public function getSource()
+    public function addSlots($level, $value)
     {
-        return $this->source;
+        if (array_key_exists($level, $this->slots)) {
+            $this->slots[$level] += $value;
+        } else {
+            $this->slots[$level] = $value;
+        }
+
+        return $this;
     }
 
     /**
+     * @param $level
+     *
      * @return int
      */
-    public function getValue()
+    public function get($level)
     {
-        return $this->value;
+        if (!array_key_exists($level, $this->slots)) {
+            return 0;
+        }
+        return $this->slots[$level];
     }
 
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 } 

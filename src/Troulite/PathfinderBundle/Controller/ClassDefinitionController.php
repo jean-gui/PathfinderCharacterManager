@@ -34,7 +34,6 @@ use Troulite\PathfinderBundle\Form\Classes\ClassDefinitionFlow;
  */
 class ClassDefinitionController extends Controller
 {
-
     /**
      * Lists all ClassDefinition entities.
      *
@@ -63,11 +62,6 @@ class ClassDefinitionController extends Controller
     public function newAction()
     {
         $classDefinition = new ClassDefinition();
-        $array20 = array();
-        for ($i = 0; $i < 20; $i++) {
-            $array20[] = null;
-        }
-
 
         return $this->createClassDefinitionForm($classDefinition);
 

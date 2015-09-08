@@ -178,6 +178,13 @@ class ClassDefinition
     private $ableToLearnNewSpells = false;
 
     /**
+     * @var bool true if this is a prestige class
+     *
+     * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     */
+    private $prestige = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -731,6 +738,25 @@ class ClassDefinition
     {
         $this->ableToLearnNewSpells = $ableToLearnNewSpells;
 
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPrestige()
+    {
+        return $this->prestige;
+    }
+
+    /**
+     * @param boolean $prestige
+     *
+     * @return $this
+     */
+    public function setPrestige($prestige = false)
+    {
+        $this->prestige = $prestige;
         return $this;
     }
 }

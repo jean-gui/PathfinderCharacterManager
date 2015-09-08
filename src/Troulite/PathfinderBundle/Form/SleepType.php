@@ -112,6 +112,8 @@ class SleepType extends AbstractType
                                 $totalSpells = $spellsPerDayForLevel + $extraSpellsCount;
                                 $slots += $totalSpells;
 
+                                $slots += $character->getSpellSlotBonuses()->get($spellLevel);
+
                                 for ($i = 0; $i < $totalSpells; $i++) {
                                     if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
                                         $pps = array_shift($previouslyPreparedSpellsByLevel[$spellLevel]);

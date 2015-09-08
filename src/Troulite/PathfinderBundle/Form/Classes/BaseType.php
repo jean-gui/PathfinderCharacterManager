@@ -74,6 +74,15 @@ class BaseType extends AbstractType
                 )
             )
             ->add(
+                'prestige',
+                null,
+                array(
+                    'required'                       => false,
+                    'horizontal_label_class'         => 'col-sm-2',
+                    'horizontal_input_wrapper_class' => 'col-sm-10',
+                )
+            )
+            ->add(
                 'castingAbility',
                 'choice',
                 array(

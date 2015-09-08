@@ -39,6 +39,7 @@ use Troulite\PathfinderBundle\Entity\Weapon;
 use Troulite\PathfinderBundle\ExpressionLanguage\ExpressionLanguage;
 use Troulite\PathfinderBundle\Model\Bonus;
 use Troulite\PathfinderBundle\Model\Bonuses;
+use Troulite\PathfinderBundle\Model\SpellSlotBonuses;
 
 /**
  * Class CharacterBonuses
@@ -681,6 +682,13 @@ class CharacterBonuses
                     break;
                 case 'speed':
                     $character->getSpeedBonuses()->add($bonus);
+                    break;
+                case 'extra-spell-slot':
+                    /** @var SpellSlotBonuses $bonuses */
+                    $bonuses = $character->getSpellSlotBonuses();
+                    foreach ($bonus->getValue() as $level => $value) {
+                        $bonuses->addSlots($level, $value);
+                    }
                     break;
             }
         }
