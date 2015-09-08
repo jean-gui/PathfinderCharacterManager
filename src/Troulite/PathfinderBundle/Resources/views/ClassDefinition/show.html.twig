@@ -47,7 +47,7 @@
             {% endif %}
             </thead>
             <tbody>
-            {% for level in 0..19 %}
+            {% for level in 0..(entity.bab|length - 1) %}
                 <tr>
                     <td>{{ level + 1 }}</td>
                     <td>{{ entity.bab[level] }}</td>
@@ -83,6 +83,23 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <h2>Powers</h2>
+
+        {% for power in entity.powers %}
+            <h3>{{ power }}</h3>
+
+            {% if power.shortDescription %}<p>{{ power.shortDescription|raw }}</p>{% endif %}
+            {% if power.longDescription %}<p>{{ power.longDescription|raw }}</p>{% endif %}
+
+            {% if power.children and power.children|length > 0 %}
+                {% for child in power.children %}
+                    <h4>{{ child }}</h4>
+                    {% if child.shortDescription %}<p>{{ child.shortDescription|raw }}</p>{% endif %}
+                    {% if child.longDescription %}<p>{{ child.longDescription|raw }}</p>{% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
 
         {% if entity.spells is defined and entity.spells|length > 0%}
         <h2>Spells</h2>
