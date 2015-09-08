@@ -201,19 +201,30 @@ class LevelUpFeatsType extends AbstractType
     ) {
         $prerequisities = $power->getPrerequisities();
 
-        if (array_key_exists('class-power', $prerequisities)) {
-            foreach ($character->getClassPowers() as $classPower) {
+        foreach ($prerequisities as $key => $prereq) {
+            if ($key === 'class-power') {
+                foreach ($character->getClassPowers() as $classPower) {
+                    $ok = $expressionLanguage->evaluate(
+                        $prereq,
+                        array("classPower" => $classPower)
+                    );
+
+                    if ($ok) {
+                        return true;
+                    }
+                }
+
+                return false;
+            } else {
                 $ok = $expressionLanguage->evaluate(
-                    $prerequisities['class-power'],
-                    array("classPower" => $classPower)
+                    $prereq,
+                    array("c" => $character)
                 );
 
                 if ($ok) {
                     return true;
                 }
             }
-
-            return false;
         }
 
         return true;
