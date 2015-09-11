@@ -165,13 +165,13 @@ class CharacterController extends Controller
         $needActivationFeats = array();
         $passiveFeats = array();
         $otherFeats = array();
-        foreach ($character->getFeats() as $spellEffect) {
-            if (!$spellEffect->getFeat()->hasEffects()) {
-                $otherFeats[] = $spellEffect;
-            } elseif (!$spellEffect->getFeat()->isPassive() || $spellEffect->getFeat()->hasExternalConditions()) {
-                $needActivationFeats[] = $spellEffect;
+        foreach ($character->getFeats() as $characterFeat) {
+            if (!$characterFeat->getFeat()->hasEffects()) {
+                $otherFeats[] = $characterFeat;
+            } elseif (!$characterFeat->getFeat()->isPassive() || $characterFeat->getFeat()->hasExternalConditions()) {
+                $needActivationFeats[] = $characterFeat;
             } else {
-                $passiveFeats[] = $spellEffect;
+                $passiveFeats[] = $characterFeat;
             }
         }
 
