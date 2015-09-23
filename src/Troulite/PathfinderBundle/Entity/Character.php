@@ -1588,6 +1588,22 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @param ClassDefinition|null $class
+     *
+     * @return array
+     */
+    public function getSubClassesFor(ClassDefinition $class)
+    {
+        $res = array();
+        foreach ($this->getLevels() as $l) {
+            if ($l->getSubClasses()->count() > 0 && $l->getClassDefinition() === $class) {
+                $res = array_merge($res, $l->getSubClasses()->toArray());
+            }
+        }
+        return $res;
+    }
+
+    /**
      * @return InventoryItem[]|Collection
      */
     public function getUnequippedInventory()

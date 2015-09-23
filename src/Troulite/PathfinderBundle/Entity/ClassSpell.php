@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troulite\PathfinderBundle\Repository\ClassSpellRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class ClassSpell
 {
@@ -178,5 +179,27 @@ class ClassSpell
     public function __toString()
     {
         return $this->getSpell()->__toString();
+    }
+
+    /**
+     * If this spell belongs to a subclass, assign it to its parent class as well
+     * @ORM\PostLoad()
+     */
+    public function postLoad()
+    {
+        if ($this->getSubClass()) {
+            $this->setClass($this->getSubClass()->getParent());
+        }
+    }
+
+    /**
+     * If this spell belongs to a subclass, remove its parent class (that was set in postLoad)
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        if ($this->getSubClass()) {
+            $this->setClass();
+        }
     }
 }

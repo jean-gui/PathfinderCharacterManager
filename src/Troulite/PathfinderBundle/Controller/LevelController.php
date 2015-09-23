@@ -162,7 +162,10 @@ class LevelController extends Controller
                         /** @var ClassSpellRepository $csRepo */
                         $csRepo = $em->getRepository('TroulitePathfinderBundle:ClassSpell');
                         /** @var ClassSpell $classSpell */
-                        $classSpell = $csRepo->findByNameAndClass($effects['spell']['value'], $level->getClassDefinition());
+                        $classSpell = $csRepo->findByNameAndClass(
+                            $effects['spell']['value'],
+                            $level->getClassDefinition(),
+                            $character->getSubClassesFor($level->getClassDefinition()));
                         if ($classSpell && !$character->getLearnedSpell($classSpell->getSpell(), $level->getClassDefinition())) {
                             $level->addLearnedSpell($classSpell);
                         }
