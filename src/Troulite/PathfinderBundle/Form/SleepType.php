@@ -245,34 +245,54 @@ class SleepType extends AbstractType
                                         }
                                     }
 
-                                    foreach ($subClassesClassSpells as $cs) {
-                                        $subClassSpells['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
-                                    }
+                                    $hasSpells = count($subClassesClassSpells) > 0;
 
-                                    if (count($subClassesClassSpells) > 0) {
-                                        $choices[$spellLevel][] = $subClassSpells;
+                                    if ($hasSpells) {
+                                        if ($class->getKnownSpellsPerLevel()) {
+                                            $subClassesClassSpells = array_filter(
+                                                $subClassesClassSpells,
+                                                function (ClassSpell $cs) use ($character) {
+                                                    foreach ($character->getLearnedSpells() as $spell) {
+                                                        if ($spell->getSpellLevel() === 0 || $spell->getSpell() === $cs->getSpell()) {
+                                                            return true;
+                                                        }
+                                                    }
+                                                    return false;
+                                                }
+                                            );
+                                            $hasSpells = count($subClassesClassSpells) > 0;
+                                        }
+                                        if ($hasSpells) {
+                                            foreach ($subClassesClassSpells as $cs) {
+                                                $subClassSpells['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                            }
+                                            krsort($subClassSpells);
+                                            $choices[$spellLevel][] = $subClassSpells;
+                                        }
                                     } else {
                                         $choices[$spellLevel][] = $spellsForClassForSpellLevel;
                                     }
 
-                                    $spell = null;
-                                    // Try to find the most likely spell to place in a subclass spell slot
-                                    if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
-                                        // Should most likely be the last prepared spell, hence array_reverse
-                                        $reverse = array_reverse($previouslyPreparedSpellsByLevel[$spellLevel]);
-                                        while ($pps = array_shift($reverse)) {
-                                            foreach ($choices[$spellLevel][count($choices[$spellLevel]) - 1] as $s) {
-                                                if (in_array($pps->getSpell(), $s)) {
-                                                    $spell = $pps->getSpell();
-                                                    break 2;
+                                    if ($hasSpells) {
+                                        $spell = null;
+                                        // Try to find the most likely spell to place in a subclass spell slot
+                                        if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
+                                            // Should most likely be the last prepared spell, hence array_reverse
+                                            $reverse = array_reverse($previouslyPreparedSpellsByLevel[$spellLevel]);
+                                            while ($pps = array_shift($reverse)) {
+                                                foreach ($choices[$spellLevel][count($choices[$spellLevel]) - 1] as $s) {
+                                                    if (in_array($pps->getSpell(), $s)) {
+                                                        $spell = $pps->getSpell();
+                                                        break 2;
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    $character->addPreparedSpell(
-                                        new PreparedSpell($character, $spell, $class)
-                                    );
+                                        $character->addPreparedSpell(
+                                            new PreparedSpell($character, $spell, $class)
+                                        );
+                                    }
                                 }
                             }
 
