@@ -91,6 +91,10 @@ class LevelController extends Controller
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
 
+            if ($level->getClassDefinition()->isPrestige()) {
+                $level->setParentClass($character->getFavoredClass());
+            }
+
             // Add powers coming from subclasses
             foreach ($character->getLevels() as $lowerLevel) {
                 if (

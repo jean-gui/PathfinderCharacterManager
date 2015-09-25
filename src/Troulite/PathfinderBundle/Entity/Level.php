@@ -50,13 +50,21 @@ class Level
     private $character;
 
     /**
-     * @var Character
+     * @var ClassDefinition
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="class", referencedColumnName="id")
      * @Assert\NotBlank()
      */
     private $classDefinition;
+
+    /**
+     * @var ClassDefinition parent class for prestige classes
+     *
+     * @ORM\ManyToOne(targetEntity="ClassDefinition")
+     * @ORM\JoinColumn(name="parent_class", referencedColumnName="id")
+     */
+    private $parentClass;
 
     /**
      * @var Collection|SubClass[]
@@ -199,6 +207,26 @@ class Level
     public function getClassDefinition()
     {
         return $this->classDefinition;
+    }
+
+    /**
+     * @return ClassDefinition
+     */
+    public function getParentClass()
+    {
+        return $this->parentClass;
+    }
+
+    /**
+     * @param ClassDefinition $parentClass
+     *
+     * @return $this
+     */
+    public function setParentClass($parentClass)
+    {
+        $this->parentClass = $parentClass;
+
+        return $this;
     }
 
     /**
