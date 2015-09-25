@@ -179,13 +179,14 @@ class SleepType extends AbstractType
                                             $spellsForClassForSpellLevel['Level ' . $k . ' spells'] = $v;
                                         }
                                     }
+                                    $spellsForClassForSpellLevel = array_reverse($spellsForClassForSpellLevel);
                                 } else { // this class knows all spells (divine magic)
                                     $qb = $em->createQueryBuilder()->select('cs')
                                         ->from('TroulitePathfinderBundle:ClassSpell', 'cs')
                                         ->join('TroulitePathfinderBundle:Spell', 'sp', Join::WITH, 'sp = cs.spell')
                                         ->andWhere('cs.class = ?1')
                                         ->andWhere('cs.spellLevel <= ?2')
-                                        ->addOrderBy('cs.spellLevel', 'ASC')
+                                        ->addOrderBy('cs.spellLevel', 'DESC')
                                         ->addOrderBy('sp.name', 'ASC');
                                     $qb->setParameter(1, $class)
                                         ->setParameter(2, $spellLevel);
