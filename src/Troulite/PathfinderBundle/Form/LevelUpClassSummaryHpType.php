@@ -76,8 +76,10 @@ class LevelUpClassSummaryHpType extends AbstractType
                     }
                     if (
                         !$alreadyThere &&
-                        count($power->getEffects()) > 0 &&
-                        array_key_exists('choice', $power->getEffects())
+                        (
+                            (count($power->getEffects()) > 0 && array_key_exists('choice', $power->getEffects())) ||
+                            ($power->getChildren()->count() > 0)
+                        )
                     ) {
                         $level->addClassPower((new CharacterClassPower())->setClassPower($power));
                     }
