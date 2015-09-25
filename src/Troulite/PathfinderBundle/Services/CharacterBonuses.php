@@ -653,6 +653,11 @@ class CharacterBonuses
                 case 'bluff':
                 case 'climb':
                 case 'craft':
+                case 'craft-armors':
+                case 'craft-weapons':
+                case 'craft-bows':
+                case 'craft-traps':
+                case 'craft-alchemy':
                 case 'diplomacy':
                 case 'disable-device':
                 case 'disguise':
