@@ -67,19 +67,41 @@ class SleepType extends AbstractType
                 $choices = array();
                 $slots = 0;
 
+                /** @var array $previouslyPreparedSpellsByLevel */
+                $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
+                foreach ($character->getPreparedSpells() as $ps) {
+                    $character->removePreparedSpell($ps);
+                }
+                $character->setPreparedSpells(new ArrayCollection());
+
+                $levelPerClass = array();
+                foreach ($character->getLevels() as $level) {
+                    if ($level->getClassDefinition()->isPrestige()) {
+                        $id = $level->getParentClass()->getId();
+                    } else {
+                        $id = $level->getClassDefinition()->getId();
+                    }
+
+                    if (array_key_exists($id, $levelPerClass)) {
+                        $levelPerClass[$id]++;
+                    } else {
+                        $levelPerClass[$id] = 1;
+                    }
+                }
+
                 foreach ($character->getLevelPerClass() as $classLevel) {
                     /** @var EntityManager $em */
                     $em = $options['em'];
                     /** @var $class ClassDefinition */
                     $class = $classLevel['class'];
-                    /** @var $level int */
-                    $level = $classLevel['level'];
-                    /** @var array $previouslyPreparedSpellsByLevel */
-                    $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
-                    foreach ($character->getPreparedSpells() as $ps) {
-                        $character->removePreparedSpell($ps);
+
+                    // Prestige classes rely on parent class for casting spells
+                    if ($class->isPrestige()) {
+                        continue;
                     }
-                    $character->setPreparedSpells(new ArrayCollection());
+
+                    /** @var $level int */
+                    $level = $levelPerClass[$class->getId()];
 
                     if ($class->isPreparationNeeded()) {
                         // Get all sublcasses of this class adding extra slots
@@ -253,6 +275,7 @@ class SleepType extends AbstractType
                                             }
                                         }
                                     }
+
                                     $character->addPreparedSpell(
                                         new PreparedSpell($character, $spell, $class)
                                     );
