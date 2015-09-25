@@ -129,20 +129,56 @@ class SleepType extends AbstractType
                                 }
 
                                 // this class learns spells at every level (profane magic)
-                                if ($class->getKnownSpellsPerLevel()) {
-                                    $knownSpellsBySpellLevel = $character->getLearnedSpellsBySpellLevel();
-                                    $spellsForClassForSpellLevel = $knownSpellsBySpellLevel[$spellLevel];
-                                    $spellsForClassForSpellLevel = array_filter(
-                                        $spellsForClassForSpellLevel,
-                                        function ($l) use ($spellLevel) {
-                                            return $l <= $spellLevel;
-                                        },
-                                        ARRAY_FILTER_USE_KEY
-                                    );
-                                    $spellsForClassForSpellLevel = array_map(
-                                        function (ClassSpell $cs) { return $cs->getSpell(); },
-                                        $spellsForClassForSpellLevel
-                                    );
+                                $knownSpellsBySpellLevel = $character->getLearnedSpellsBySpellLevel();
+                                if ($class->getKnownSpellsPerLevel() && array_key_exists($spellLevel, $knownSpellsBySpellLevel)) {
+                                    if (array_key_exists($spellLevel, $knownSpellsBySpellLevel)) {
+                                        $r = array_filter(
+                                            $knownSpellsBySpellLevel,
+                                            function ($l) use ($spellLevel) {
+                                                return $l <= $spellLevel;
+                                            },
+                                            ARRAY_FILTER_USE_KEY
+                                        );
+
+                                        $r = array_map(
+                                            function ($arr) {
+                                                $res = array_map(
+                                                    function (ClassSpell $cs)
+                                                    {
+                                                        return $cs->getSpell();
+                                                    },
+                                                    $arr
+                                                );
+                                                return $res;
+                                            },
+                                            $r
+                                        );
+
+                                        // We manually need to add level 0 spells
+                                        if (!array_key_exists(0, $knownSpellsBySpellLevel)) {
+                                            $qb = $em->createQueryBuilder()->select('cs')
+                                                ->from('TroulitePathfinderBundle:ClassSpell', 'cs')
+                                                ->join('TroulitePathfinderBundle:Spell', 'sp', Join::WITH,
+                                                    'sp = cs.spell')
+                                                ->andWhere('cs.class = ?1')
+                                                ->andWhere('cs.spellLevel <= 0')
+                                                ->addOrderBy('cs.spellLevel', 'ASC')
+                                                ->addOrderBy('sp.name', 'ASC');
+                                            $qb->setParameter(1, $class);
+
+                                            /** @var ClassSpell[] $spells */
+                                            $spells = $qb->getQuery()->execute();
+                                            if ($spells) {
+                                                foreach ($spells as $cs) {
+                                                    $spellsForClassForSpellLevel['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                                }
+                                            }
+                                        }
+
+                                        foreach ($r as $k => $v) {
+                                            $spellsForClassForSpellLevel['Level ' . $k . ' spells'] = $v;
+                                        }
+                                    }
                                 } else { // this class knows all spells (divine magic)
                                     $qb = $em->createQueryBuilder()->select('cs')
                                         ->from('TroulitePathfinderBundle:ClassSpell', 'cs')
