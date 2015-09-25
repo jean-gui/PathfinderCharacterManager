@@ -65,7 +65,6 @@ class SleepType extends AbstractType
                 $form      = $event->getForm();
 
                 $choices = array();
-                $slots = 0;
 
                 /** @var array $previouslyPreparedSpellsByLevel */
                 $previouslyPreparedSpellsByLevel = $character->getPreparedSpellsByLevel();
@@ -131,10 +130,7 @@ class SleepType extends AbstractType
                                 // A character has $levels[$level - 1] spells + some more if he has a high ability score
                                 $abMod = $character->getModifierByAbility($class->getCastingAbility());
                                 $extraSpellsCount = $this->extra_spells[$abMod][$spellLevel];
-                                $totalSpells = $spellsPerDayForLevel + $extraSpellsCount;
-                                $slots += $totalSpells;
-
-                                $slots += $character->getSpellSlotBonuses()->get($spellLevel);
+                                $totalSpells = $spellsPerDayForLevel + $extraSpellsCount + $character->getSpellSlotBonuses()->get($spellLevel);
 
                                 for ($i = 0; $i < $totalSpells; $i++) {
                                     if (array_key_exists($spellLevel, $previouslyPreparedSpellsByLevel)) {
@@ -255,10 +251,8 @@ class SleepType extends AbstractType
 
                                     if (count($subClassesClassSpells) > 0) {
                                         $choices[$spellLevel][] = $subClassSpells;
-                                        $slots++;
                                     } else {
                                         $choices[$spellLevel][] = $spellsForClassForSpellLevel;
-                                        $slots++;
                                     }
 
                                     $spell = null;

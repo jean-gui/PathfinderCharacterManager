@@ -67,7 +67,7 @@ class Bonus
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getValue()
     {

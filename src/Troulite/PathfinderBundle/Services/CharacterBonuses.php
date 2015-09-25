@@ -496,10 +496,14 @@ class CharacterBonuses
                 // Don't process effects that apply when leveling up
                 continue;
             }
-            $value = (int)$this->expressionLanguage->evaluate(
-                $effect['value'],
-                array("c" => $character)
-            );
+            if (is_string($effect['value'])) {
+                $value = (int)$this->expressionLanguage->evaluate(
+                    $effect['value'],
+                    array("c" => $character)
+                );
+            } else {
+                $value = $effect['value'];
+            }
 
             // No need to add empty bonuses
             if ($value == 0) {
