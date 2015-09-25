@@ -87,14 +87,13 @@ class LevelController extends Controller
         $flow = $this->get('troulite_pathfinder.form.flow.levelup');
         $flow->bind($level);
 
+        if ($level->getClassDefinition()->isPrestige()) {
+            $level->setParentClass($character->getFavoredClass());
+        }
+
         // form of the current step
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
-
-            if ($level->getClassDefinition()->isPrestige()) {
-                $level->setParentClass($character->getFavoredClass());
-            }
-
             // Add powers coming from subclasses
             foreach ($character->getLevels() as $lowerLevel) {
                 if (

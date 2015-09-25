@@ -70,7 +70,7 @@ class LevelUpSpellsType extends AbstractType
                  * spells per day, spells known (if he is a spontaneous spellcaster), and an increased effective level
                  * of spellcasting."
                  */
-                if ($class->isPrestige() && !$level->getParentClass()->isPreparationNeeded()) {
+                if ($class->isPrestige() && $level->getParentClass() && !$level->getParentClass()->isPreparationNeeded()) {
                     $class = $level->getParentClass();
                     $classLevel += $character->getLevel($level->getParentClass());
                 }
