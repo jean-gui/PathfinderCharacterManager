@@ -63,6 +63,17 @@ class LevelUpSpellsType extends AbstractType
                 $character = $level->getCharacter();
                 $class = $level->getClassDefinition();
                 $classLevel = $character->getLevel($class);
+                /*
+                 * "When a new loremaster level is gained, the character gains new spells per day as if he had also
+                 * gained a level in a spellcasting class he belonged to before adding the prestige class. He does not,
+                 * however, gain other benefits a character of that class would have gained, except for additional
+                 * spells per day, spells known (if he is a spontaneous spellcaster), and an increased effective level
+                 * of spellcasting."
+                 */
+                if ($class->isPrestige() && !$level->getParentClass()->isPreparationNeeded()) {
+                    $class = $level->getParentClass();
+                    $classLevel += $character->getLevel($level->getParentClass());
+                }
                 $form  = $event->getForm();
 
                 if ($class && $class->getKnownSpellsPerLevel()) {
