@@ -474,6 +474,18 @@
         <source>haste</source>
         <target>rapidité</target>
       </trans-unit>
+      <trans-unit id="1871dbe4ffdad6ba92dba845efaa6fa7" resname="ROLE_USER">
+        <source>ROLE_USER</source>
+        <target>Utilisateur</target>
+      </trans-unit>
+      <trans-unit id="9fdd4a72bdfe15c619db8e526968da25" resname="ROLE_SUPER_ADMIN">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target>Super Administrateur</target>
+      </trans-unit>
+      <trans-unit id="4ae33445313a0cef2a17b57ea1d45cb6" resname="ROLE_ADMIN">
+        <source>ROLE_ADMIN</source>
+        <target>Administrateur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
