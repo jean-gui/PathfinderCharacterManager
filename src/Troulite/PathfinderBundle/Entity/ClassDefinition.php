@@ -30,7 +30,7 @@ use Troulite\PathfinderBundle\Entity\Traits\Describable;
  * ClassDefinition
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="ClassDefinitionRepository")
+ * @ORM\Entity()
  * @ORM\Cache()
  */
 class ClassDefinition
