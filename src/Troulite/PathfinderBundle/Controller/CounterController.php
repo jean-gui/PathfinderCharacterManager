@@ -21,13 +21,12 @@ namespace Troulite\PathfinderBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Character;
 use Troulite\PathfinderBundle\Entity\Counter;
-use Troulite\PathfinderBundle\Form\CounterIncreaseType;
 use Troulite\PathfinderBundle\Form\CountersIncreaseType;
 use Troulite\PathfinderBundle\Form\CounterType;
 
@@ -42,6 +41,7 @@ class CounterController extends Controller
      * @Route("/{character}/counters", name="counter_show")
      * @Method({"GET", "PUT"})
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -107,6 +107,7 @@ class CounterController extends Controller
      * @Route("/{character}/counters/new", name="counter_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Security("is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request

@@ -22,6 +22,7 @@ use Doctrine\ORM\EntityManager;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -151,6 +152,7 @@ class CharacterController extends Controller
      *
      * @Route("/{id}", name="characters_show")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -324,6 +326,7 @@ class CharacterController extends Controller
      *
      * @Route("/{id}/inventory/edit", name="character_inventory_edit")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -354,6 +357,7 @@ class CharacterController extends Controller
      *
      * @Route("/{id}/inventory", name="character_inventory")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -434,6 +438,7 @@ class CharacterController extends Controller
      *
      * @Route("/{id}/spells", name="character_spells")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -539,6 +544,7 @@ class CharacterController extends Controller
      * @Route("/{id}/edit", name="characters_edit")
      * @Method("GET")
      * @Template()
+     * @Security("is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      *
@@ -585,6 +591,7 @@ class CharacterController extends Controller
      * @Route("/{id}/update", name="characters_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:Character:edit.html.twig")
+     * @Security("is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Character $character
@@ -619,9 +626,11 @@ class CharacterController extends Controller
      *
      * @Route("/{id}", name="characters_delete")
      * @Method("DELETE")
+     * @Security("is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Character $character
+     *
      * @return RedirectResponse
      */
     public function deleteAction(Request $request, Character $character)
@@ -666,6 +675,7 @@ class CharacterController extends Controller
      * @Route("/{id}/sleep", name="characters_sleep")
      * @Method("GET|POST")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -710,6 +720,7 @@ class CharacterController extends Controller
      * @Route("/{id}/hitpoints", name="characters_hitpoints")
      * @Method("GET|PUT")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request
@@ -749,6 +760,7 @@ class CharacterController extends Controller
      * )
      * @Method("GET|PUT")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param $type
@@ -800,6 +812,7 @@ class CharacterController extends Controller
      * )
      * @Method("GET|PUT")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      * @param Request $request

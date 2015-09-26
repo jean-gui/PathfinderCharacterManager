@@ -21,6 +21,7 @@ namespace Troulite\PathfinderBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,6 +48,7 @@ class LevelController extends Controller
      *
      * @Route("/{id}/levelup", name="characters_levelup")
      * @Template()
+     * @Security("is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Character $character
      *
@@ -200,6 +202,7 @@ class LevelController extends Controller
      * @Route("/{character}/levels/{level}/edit", name="characters_levels_edit")
      * @ParamConverter("level", options={"mapping": {"character" = "character", "level" = "value"}})
      * @Template()
+     * @Security("request.isMethodSafee() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Level $level
      * @param Request $request
