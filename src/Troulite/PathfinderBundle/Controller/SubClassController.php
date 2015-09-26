@@ -2,6 +2,7 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -41,6 +42,7 @@ class SubClassController extends Controller
      * @Route("/", name="subclasses_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:SubClass:new.html.twig")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function createAction(Request $request)
     {
@@ -87,6 +89,7 @@ class SubClassController extends Controller
      * @Route("/new", name="subclasses_new")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function newAction()
     {
@@ -130,6 +133,7 @@ class SubClassController extends Controller
      * @Route("/{id}/edit", name="subclasses_edit")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function editAction($id)
     {
@@ -175,6 +179,7 @@ class SubClassController extends Controller
      * @Route("/{id}", name="subclasses_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:SubClass:edit.html.twig")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function updateAction(Request $request, $id)
     {
@@ -207,6 +212,7 @@ class SubClassController extends Controller
      *
      * @Route("/{id}", name="subclasses_delete")
      * @Method("DELETE")
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function deleteAction(Request $request, $id)
     {

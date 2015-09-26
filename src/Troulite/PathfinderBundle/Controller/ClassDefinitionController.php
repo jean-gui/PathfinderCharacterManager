@@ -19,6 +19,7 @@
 namespace Troulite\PathfinderBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -56,6 +57,7 @@ class ClassDefinitionController extends Controller
      * @Route("/new", name="classes_new")
      * @Method({"GET", "POST"})
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      *
      * @return array
      */
@@ -71,6 +73,7 @@ class ClassDefinitionController extends Controller
      * @Route("/{id}/edit", name="classes_edit")
      * @Method({"GET", "PUT", "POST"})
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      *
      * @param ClassDefinition $classDefinition
      *

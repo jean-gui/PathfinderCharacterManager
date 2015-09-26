@@ -18,6 +18,7 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -89,6 +90,7 @@ class ItemsController extends Controller
      * )
      * @Method({"GET", "POST"})
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      *
      * @param string $type
      * @param Request $request
@@ -137,6 +139,7 @@ class ItemsController extends Controller
      * @Route("/{id}/edit", name="items_edit", requirements={"id"="\d+"})
      * @Method({"GET", "PUT"})
      * @Template()
+     * @Secure(roles="ROLE_ADMIN")
      *
      * @param Item $item
      * @param Request $request
