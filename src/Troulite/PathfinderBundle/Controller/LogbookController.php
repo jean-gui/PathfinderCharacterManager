@@ -21,6 +21,7 @@ namespace Troulite\PathfinderBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +56,8 @@ class LogbookController extends Controller
      * @Route("/{id}/logbook/edit", name="logbook_edit")
      * @Method({"GET", "PUT"})
      * @Template()
+     * @Security("is_granted('PARTY_EDIT', party) or has_role('ROLE_ADMIN')")
+     *
      * @param Party $party
      *
      * @param Request $request

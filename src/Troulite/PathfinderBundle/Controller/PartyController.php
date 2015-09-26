@@ -18,8 +18,10 @@
 
 namespace Troulite\PathfinderBundle\Controller;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -60,6 +62,7 @@ class PartyController extends Controller
      * @Route("/", name="parties_create")
      * @Method("POST")
      * @Template("TroulitePathfinderBundle:Party:new.html.twig")
+     * @Secure(roles="ROLE_USER")
      *
      * @param Request $request
      *
@@ -114,6 +117,7 @@ class PartyController extends Controller
      * @Route("/new", name="parties_new")
      * @Method("GET")
      * @Template()
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -132,6 +136,7 @@ class PartyController extends Controller
      * @Route("/{id}", name="parties_show")
      * @Method("GET")
      * @Template()
+     * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party) or has_role('ROLE_ADMIN')")
      *
      * @param Party $party
      *
@@ -153,6 +158,7 @@ class PartyController extends Controller
      * @Route("/{id}/edit", name="parties_edit")
      * @Method("GET")
      * @Template()
+     * @Security("is_granted('PARTY_EDIT', party) or has_role('ROLE_ADMIN')")
      *
      * @param Party $party
      *
@@ -199,6 +205,7 @@ class PartyController extends Controller
      * @Route("/{id}", name="parties_update")
      * @Method("PUT")
      * @Template("TroulitePathfinderBundle:Party:edit.html.twig")
+     * @Security("is_granted('PARTY_EDIT', party) or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Party $party
@@ -231,6 +238,7 @@ class PartyController extends Controller
      *
      * @Route("/{id}", name="parties_delete")
      * @Method("DELETE")
+     * @Security("is_granted('PARTY_EDIT', party) or has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param Party $party
@@ -274,6 +282,7 @@ class PartyController extends Controller
      * @Route("/{id}/dm", name="party_dm")
      * @Template()
      * @Method("GET")
+     * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party.getDungeonMaster()) or has_role('ROLE_ADMIN')")
      *
      * @return array
      */

@@ -54,5 +54,9 @@
                  class="Troulite\PathfinderBundle\Security\Authorization\Voter\CharacterVoter">
             <tag name="security.voter"/>
         </service>
+        <service id="security.access.party_voter"
+                 class="Troulite\PathfinderBundle\Security\Authorization\Voter\PartyVoter">
+            <tag name="security.voter"/>
+        </service>
     </services>
 </container>
