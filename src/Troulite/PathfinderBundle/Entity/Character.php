@@ -561,7 +561,7 @@ class Character extends BaseCharacter
         $weapon = $this->getEquipment()->getOffhandWeapon();
 
         if (!$weapon || $weapon->getRange() == 0) {
-            $mod = $this->getModifierByAbility('strength');
+            $mod = (int) $this->getModifierByAbility('strength') / 2;
         } else {
             $mod = 0;
         }
