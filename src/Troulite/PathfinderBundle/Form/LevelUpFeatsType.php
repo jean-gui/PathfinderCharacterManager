@@ -100,12 +100,10 @@ class LevelUpFeatsType extends AbstractType
 
                 // Class bonus feats
                 if ($class) {
-                    foreach($class->getPowers() as $power) {
+                    foreach ($level->getClassPowers() as $classPower) {
+                        $power = $classPower->getClassPower();
                         $effects = $power->getEffects();
-                        if (
-                            $power->getLevel() === $character->getLevel($class) &&
-                            $power->hasEffects()
-                        ) {
+                        if ($power->hasEffects()) {
                             $ok = LevelUpFeatsType::checkPrerequisities($power, $character, $expressionLanguage);
 
                             if (!$ok) {
