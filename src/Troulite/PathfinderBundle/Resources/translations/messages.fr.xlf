@@ -486,6 +486,18 @@
         <source>ROLE_ADMIN</source>
         <target>Administrateur</target>
       </trans-unit>
+      <trans-unit id="fb073df12096275ce1a351174a58cc2e" resname="error.404">
+        <source>error.404</source>
+        <target>
+          Oh non ! Un mimic a dérobé la page que vous cherchiez !
+        </target>
+      </trans-unit>
+      <trans-unit id="bbd48cb99ec51fbae10d66b2afc18b60" resname="error.403">
+        <source>error.403</source>
+        <target>
+          Vous ne disposez pas des permissions nécessaires pour accéder à cette page.
+        </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

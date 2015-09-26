@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block subtitle %}{{ status_text|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="text-center text-danger">{{ status_text|trans }}</h1>
+
+    <p class="text-center text-danger">
+        {% block error_short_explanation %}{{ ('error.' ~ status_code)|trans }}{% endblock %}
+    </p>
+    <p class="text-center">{% block error_explanation %}{% endblock %}</p>
+{% endblock %}

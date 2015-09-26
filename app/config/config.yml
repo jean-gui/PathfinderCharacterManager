@@ -50,6 +50,7 @@ assetic:
             apply_to: "\.less$"
     bundles:
         - MopaBootstrapBundle
+        - TwigBundle
 
 # Doctrine Configuration
 doctrine:
