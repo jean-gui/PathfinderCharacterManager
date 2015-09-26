@@ -22,3 +22,7 @@ a.mypopover {
 .popover {
     max-width: 600px !important;
 }
+
+form div.checkbox input[type="checkbox"] {
+    margin-top: 0;
+}
