@@ -511,7 +511,11 @@ class Character extends BaseCharacter
 
         /** @noinspection PhpExpressionResultUnusedInspection */
         for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
-            $ars[] = $ar;
+            $ars[] = $ar - 5;
+            // Off-hand bonus attacks get the -5/-10 for secondary/tertiary attacks
+            // That is actually wrong, because this is only the case with two-weapon fighting feats
+            // but I think that's the only way to get more off-hand attacks, so that's good enough
+            $ar -=5;
         }
 
         return $ars;
