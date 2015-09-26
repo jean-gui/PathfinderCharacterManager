@@ -65,11 +65,11 @@ powers_activation_form.item_power_effects|length > 0 %}
         {% for powerEffect in powers_activation_form.item_power_effects %}
             <tr>
                 {% if loop.index == 1 %}
-                    <th rowspan="{{ loop.length }}">{{ 'item_powers'|trans }}</th>
+                    <th rowspan="{{ loop.length }}">{{ 'item_powers'|trans|capitalize }}</th>
                 {% endif %}
                 <td>
                     {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
-                    {{ form_label(powerEffect.active, powerEffect.vars.value.power.name) }}
+                    {{ form_label(powerEffect.active, powerEffect.vars.value.power.name|trans|capitalize) }}
                 </td>
                 <td>{{ form_widget(powerEffect.active) }}</td>
             </tr>

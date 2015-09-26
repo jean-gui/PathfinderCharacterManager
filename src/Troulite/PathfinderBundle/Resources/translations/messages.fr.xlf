@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="eda84cf0cbd6add53817eec8f948cff8" resname="class.powers">
         <source>class.powers</source>
-        <target>Pouvoirs de classe</target>
+        <target>Classe</target>
       </trans-unit>
       <trans-unit id="e0bda8197e58839fe38b56adbfec55ff" resname="classes">
         <source>classes</source>
@@ -260,7 +260,11 @@
       </trans-unit>
       <trans-unit id="691d502cfd0e0626cd3b058e5682ad1c" resname="items">
         <source>items</source>
-        <target>items</target>
+        <target>objets</target>
+      </trans-unit>
+      <trans-unit id="bb8b02d2bd2f4fe4ebead139c3e5b50a" resname="item_powers">
+        <source>item_powers</source>
+        <target>objets</target>
       </trans-unit>
       <trans-unit id="470c92ab9336c3e64691ead0432d3d5b" resname="known.spells">
         <source>known.spells</source>
@@ -302,7 +306,7 @@
         <source>main.attack.rolls</source>
         <target>Attaque main principale</target>
       </trans-unit>
-      <trans-unit id="ad514f84c3d1738a83239c075cc230f6" resname="main.damage.bonus">
+      <trans-unit id="de7f8c9b3f62a85f0e7315b364fe16fe" resname="main.damage.bonus">
         <source>main.damage.bonus</source>
         <target>Bonus aux dégats main principale</target>
       </trans-unit>
@@ -457,6 +461,18 @@
       <trans-unit id="76c62c912f24cf0168daa9c0a2a06255" resname="spell.level">
         <source>spell.level</source>
         <target>Niveau de sort</target>
+      </trans-unit>
+      <trans-unit id="4358b5009c67d0e31d7fbf1663fcd3bf" resname="notes">
+        <source>notes</source>
+        <target>notes</target>
+      </trans-unit>
+      <trans-unit id="ce4ef3ec98443ed10da505114b58f153" resname="speed">
+        <source>speed</source>
+        <target>vitesse</target>
+      </trans-unit>
+      <trans-unit id="181d535b3f6a6de1a63e86f629a01788" resname="haste">
+        <source>haste</source>
+        <target>rapidité</target>
       </trans-unit>
     </body>
   </file>
