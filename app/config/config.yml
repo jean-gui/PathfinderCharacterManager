@@ -69,6 +69,10 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         entity_managers:
             default:
+                result_cache_driver: apc
+                second_level_cache:
+                    region_cache_driver:
+                        type: apc
                 auto_mapping: true
                 mappings:
                     gedmo_translatable:

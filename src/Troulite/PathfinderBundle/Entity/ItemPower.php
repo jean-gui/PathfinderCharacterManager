@@ -24,8 +24,8 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Troulite\PathfinderBundle\Entity\Traits\Power;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Troulite\PathfinderBundle\Entity\Traits\Power;
 
 
 /**
@@ -35,6 +35,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\InheritanceType(value="SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type")
  * @ORM\DiscriminatorMap(value={"item": "ItemPower", "equipment": "EquipmentPower"})
+ * @ORM\Cache()
  *
  * @package Troulite\PathfinderBundle\Entity
  */

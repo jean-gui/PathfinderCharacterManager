@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troulite\PathfinderBundle\Repository\ClassSpellRepository")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Cache()
  */
 class ClassSpell
 {
@@ -44,6 +45,7 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition", inversedBy="spells")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id")
+     * @ORM\Cache()
      */
     private $class;
 
@@ -52,6 +54,7 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity="SubClass", inversedBy="spells")
      * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id")
+     * @ORM\Cache()
      */
     private $subClass;
 
@@ -60,6 +63,7 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity="Spell", inversedBy="classes")
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id")
+     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     private $spell;

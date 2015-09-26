@@ -52,6 +52,7 @@ class PreparedSpell
      *
      * @ORM\ManyToOne(targetEntity="Spell")
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id")
+     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     private $spell;
@@ -61,6 +62,7 @@ class PreparedSpell
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id")
+     * @ORM\Cache()
      */
     private $class;
 

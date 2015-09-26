@@ -33,6 +33,7 @@ use Troulite\PathfinderBundle\Entity\Traits\Power;
  * Class ClassPower
  *
  * @ORM\Entity()
+ * @ORM\Cache()
  *
  * @package Troulite\PathfinderBundle\Entity
  */
@@ -54,6 +55,7 @@ class ClassPower
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition", inversedBy="powers")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache()
      */
     private $class;
 
@@ -62,6 +64,7 @@ class ClassPower
      *
      * @ORM\ManyToOne(targetEntity="SubClass", inversedBy="powers")
      * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id", nullable=true)
+     * @ORM\Cache()
      */
     private $subClass;
 
@@ -83,6 +86,7 @@ class ClassPower
      * @var ClassPower[]|Collection
      *
      * @ORM\ManyToMany(targetEntity="ClassPower", mappedBy="parents", cascade={"all"})
+     * @ORM\Cache()
      */
     private $children;
 
@@ -94,6 +98,7 @@ class ClassPower
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id")}
      *      )
+     * @ORM\Cache()
      */
     private $parents;
 

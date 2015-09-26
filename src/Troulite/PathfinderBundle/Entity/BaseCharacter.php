@@ -61,6 +61,7 @@ class BaseCharacter
      *
      * @ORM\ManyToOne(targetEntity="Race")
      * @ORM\JoinColumn(name="race_id", referencedColumnName="id")
+     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     private $race;
@@ -70,6 +71,7 @@ class BaseCharacter
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="favoredClass", referencedColumnName="id", nullable=false)
+     * @ORM\Cache()
      */
     private $favoredClass;
 

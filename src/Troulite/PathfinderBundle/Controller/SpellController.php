@@ -61,6 +61,11 @@ ___DQL;
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );
 
+        $query->useResultCache(
+            true,
+            3600
+        );
+
         $entities = $query->getResult();
 
         return array(

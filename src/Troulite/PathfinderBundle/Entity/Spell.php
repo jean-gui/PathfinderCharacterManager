@@ -26,15 +26,16 @@ namespace Troulite\PathfinderBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Spell
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Cache()
  */
 class Spell
 {
@@ -106,6 +107,7 @@ class Spell
      * @var Collection|ClassSpell[]
      *
      * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="spell")
+     * @ORM\Cache()
      */
     private $classes;
 

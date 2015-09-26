@@ -24,9 +24,9 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -34,6 +34,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Cache()
  */
 class PowerEffect
 {
@@ -81,6 +82,7 @@ class PowerEffect
      *
      * @ORM\ManyToOne(targetEntity="ClassPower")
      * @ORM\JoinColumn(name="power_id", referencedColumnName="id", nullable=false)
+     * @ORM\Cache()
      */
     protected $power;
 

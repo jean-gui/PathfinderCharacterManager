@@ -31,6 +31,7 @@ use Troulite\PathfinderBundle\Entity\Traits\Describable;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="ClassDefinitionRepository")
+ * @ORM\Cache()
  */
 class ClassDefinition
 {
@@ -57,6 +58,7 @@ class ClassDefinition
      * @var Collection|SubClass[]
      *
      * @ORM\OneToMany(targetEntity="SubClass", mappedBy="parent", cascade={"all"})
+     * @ORM\Cache()
      */
     private $subClasses;
 
@@ -124,6 +126,7 @@ class ClassDefinition
      *      joinColumns={@ORM\JoinColumn(name="class_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
      *      )
+     * @ORM\Cache()
      */
     private $classSkills;
 
@@ -131,6 +134,7 @@ class ClassDefinition
      * @var Collection|ClassPower[]
      *
      * @ORM\OneToMany(targetEntity="ClassPower", mappedBy="class", cascade={"all"})
+     * @ORM\Cache()
      */
     private $powers;
 
@@ -160,6 +164,7 @@ class ClassDefinition
      * @var Collection|ClassSpell[]
      *
      * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class", orphanRemoval=true, cascade={"all"})
+     * @ORM\Cache()
      */
     private $spells;
 

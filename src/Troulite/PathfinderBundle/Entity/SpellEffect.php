@@ -24,9 +24,9 @@
 namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Power;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 
 /**
@@ -81,6 +81,7 @@ class SpellEffect
      *
      * @ORM\ManyToOne(targetEntity="Spell")
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=false)
+     * @ORM\Cache()
      */
     protected $spell;
 

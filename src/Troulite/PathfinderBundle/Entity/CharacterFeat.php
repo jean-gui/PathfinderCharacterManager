@@ -52,6 +52,7 @@ class CharacterFeat
      *
      * @ORM\ManyToOne(targetEntity="Feat")
      * @ORM\JoinColumn(name="feat", referencedColumnName="id")
+     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     private $feat;

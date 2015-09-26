@@ -55,6 +55,7 @@ class Level
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="class", referencedColumnName="id")
      * @Assert\NotBlank()
+     * @ORM\Cache()
      */
     private $classDefinition;
 
@@ -63,6 +64,7 @@ class Level
      *
      * @ORM\ManyToOne(targetEntity="ClassDefinition")
      * @ORM\JoinColumn(name="parent_class", referencedColumnName="id")
+     * @ORM\Cache()
      */
     private $parentClass;
 
@@ -74,6 +76,7 @@ class Level
      *      joinColumns={@ORM\JoinColumn(name="level_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="subclass_id", referencedColumnName="id")}
      *      )
+     * @ORM\Cache()
      */
     private $subClasses;
 

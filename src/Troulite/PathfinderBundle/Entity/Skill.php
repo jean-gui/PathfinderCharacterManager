@@ -28,6 +28,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Cache()
  */
 class Skill
 {
@@ -80,6 +81,7 @@ class Skill
      * @var Collection|ClassDefinition[]
      *
      * @ORM\ManyToMany(targetEntity="ClassDefinition", mappedBy="classSkills")
+     * @ORM\Cache()
      */
     private $classes;
 

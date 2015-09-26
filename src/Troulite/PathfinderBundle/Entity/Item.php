@@ -20,8 +20,8 @@ namespace Troulite\PathfinderBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Troulite\PathfinderBundle\Entity\Traits\Describable;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Troulite\PathfinderBundle\Entity\Traits\Describable;
 
 /**
  * Item
@@ -35,6 +35,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     "neck" = "Neck", "belt" = "Belt", "wrists" = "Wrists", "feet" = "Feet", "hands" = "Hands", "eyes" = "Eyes",
  *     "head" = "Head", "headband" = "Headband", "body" = "Body", "chest" = "Chest", "item" = "Item"
  * })
+ * @ORM\Cache()
  */
 class Item
 {
@@ -79,6 +80,7 @@ class Item
      *     joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="power_id", referencedColumnName="id")}
      * )
+     * @ORM\Cache()
      */
     private $powers;
 
