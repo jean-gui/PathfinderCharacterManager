@@ -48,6 +48,7 @@ class Condition {
      *
      * @ORM\Column(name="name", type="string", nullable=false)
      * @Assert\NotBlank()
+     * @Gedmo\Translatable()
      */
     private $name;
 
