@@ -84,7 +84,10 @@ class CharacterVoter extends AbstractVoter
             case self::EDIT:
                 return
                     $user->getId() === $character->getUser()->getId() ||
-                    $user->getId() === $character->getParty()->getDungeonMaster()->getId()
+                    (
+                        $character->getParty()->getDungeonMaster() &&
+                        $user->getId() === $character->getParty()->getDungeonMaster()->getId()
+                    )
                 ;
         }
 
