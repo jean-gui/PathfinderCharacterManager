@@ -21,7 +21,6 @@ namespace Troulite\PathfinderBundle\Form\Classes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Abilities;
 use Troulite\PathfinderBundle\Form\DataTransformer\ArrayToJsonTransformer;
 
 /**
