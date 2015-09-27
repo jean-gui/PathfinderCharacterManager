@@ -41,7 +41,7 @@ class DungeonMasterController extends Controller
      * @Route("/{id}/dm", name="party_dm")
      * @Template()
      * @Method({"GET", "PUT"})
-     * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party.getDungeonMaster()) or has_role('ROLE_ADMIN')")
+     * @Security("request.isMethodSafe() or is_granted('DM_EDIT', party) or has_role('ROLE_ADMIN')")
      *
      */
     public function dungeonMasterAction(Party $party, Request $request)

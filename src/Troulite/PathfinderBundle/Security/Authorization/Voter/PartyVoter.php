@@ -34,6 +34,8 @@ class PartyVoter extends AbstractVoter
      */
     const EDIT = 'PARTY_EDIT';
 
+    const DM_EDIT = 'DM_EDIT';
+
     /**
      * Return an array of supported attributes. This will be called by supportsAttribute
      *
@@ -41,7 +43,7 @@ class PartyVoter extends AbstractVoter
      */
     protected function getSupportedAttributes()
     {
-        return array(self::EDIT);
+        return array(self::EDIT, self::DM_EDIT);
     }
 
     /**
@@ -91,6 +93,8 @@ class PartyVoter extends AbstractVoter
                 }
 
                 return in_array($user->getId(), $userIds);
+            case self::DM_EDIT:
+                return $party->getDungeonMaster() && ($user->getId() === $party->getDungeonMaster()->getId());
         }
 
         return false;
