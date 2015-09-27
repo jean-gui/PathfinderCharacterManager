@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Troulite\PathfinderBundle\Repository\ClassSpellRepository")
  * @ORM\HasLifecycleCallbacks
- * @ORM\Cache()
+ * @ORM\Cache(usage="NONSTRICT_READ_WRITE")
  */
 class ClassSpell
 {
@@ -187,6 +187,7 @@ class ClassSpell
 
     /**
      * If this spell belongs to a subclass, assign it to its parent class as well
+     * @todo This prevents using read-only second level cache
      * @ORM\PostLoad()
      */
     public function postLoad()
@@ -202,7 +203,7 @@ class ClassSpell
      */
     public function preUpdate()
     {
-        if ($this->getSubClass()) {
+        if ($this->getSubClass() && $this->getClass()) {
             $this->setClass();
         }
     }
