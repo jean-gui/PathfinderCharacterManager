@@ -4,7 +4,7 @@
     <h1>{{ entity.name }}</h1>
 
     {% if entity.shortDescription %}
-        <p><em>{{ entity.shortDescription }}</em></p>
+        <p><em>{{ entity.shortDescription|raw }}</em></p>
     {% endif %}
 
     {% if entity.longDescription %}
