@@ -67,6 +67,7 @@ class CharacterController extends Controller
      * @Route("/", name="characters")
      * @Method("GET")
      * @Template()
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction()
     {
