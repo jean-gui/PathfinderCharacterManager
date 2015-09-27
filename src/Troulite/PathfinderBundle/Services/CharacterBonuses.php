@@ -104,6 +104,7 @@ class CharacterBonuses
         self::$applying[] = $character->getId();
 
         $this->applyRace($character);
+        $this->applyConditions($character);
         $this->applyItem($character, $character->getEquipment()->getHeadband());
         $this->applyItem($character, $character->getEquipment()->getHead());
         $this->applyItem($character, $character->getEquipment()->getHands());
@@ -143,7 +144,6 @@ class CharacterBonuses
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
         $this->applyItemPowerEffects($character);
-        $this->applyConditions($character);
 
         self::$alreadyApplied[] = $character->getId();
         foreach (self::$applying as $key => $id) {
