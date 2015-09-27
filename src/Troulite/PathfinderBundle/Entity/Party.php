@@ -54,7 +54,7 @@ class Party
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="partiesAsDm")
      * @ORM\JoinColumn(name="dm_id", referencedColumnName="id")
      */
     private $dungeonMaster;
