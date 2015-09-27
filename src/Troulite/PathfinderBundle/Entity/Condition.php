@@ -27,7 +27,7 @@ use Troulite\PathfinderBundle\Entity\Traits\Describable;
  * Class Condition
  *
  * @ORM\Entity()
- * @ ORM\Cache()
+ * @ORM\Cache()
  *
  * @package Troulite\PathfinderBundle\Entity
  */
