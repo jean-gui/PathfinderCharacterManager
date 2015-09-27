@@ -57,3 +57,19 @@
     </tr>
 </table>
 {{ render_esi(controller('TroulitePathfinderBundle:Character:hitPoints', { 'id': entity.id })) }}
+
+{% if entity.conditions|length > 0 %}
+    <h2>{{ 'conditions'|trans }}</h2>
+    <table class="table table-hover table-condensed table-responsive">
+        <tbody>
+        {% for condition in entity.conditions %}
+            <tr>
+                <td>
+                    {{ popovers.description(condition.name, condition) }}
+                    {{ condition }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
