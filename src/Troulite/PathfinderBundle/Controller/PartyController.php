@@ -223,7 +223,7 @@ class PartyController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('parties_edit', array('id' => $party)));
+            return $this->redirect($this->generateUrl('parties_edit', array('id' => $party->getId())));
         }
 
         return array(
