@@ -26,8 +26,8 @@ namespace Troulite\PathfinderBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\GroupInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
@@ -56,6 +56,13 @@ class User extends BaseUser
     private $characters;
 
     /**
+     * @var Collection|Party[]
+     *
+     * @ORM\OneToMany(targetEntity="Party", mappedBy="dungeonMaster")
+     */
+    private $partiesAsDm;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -63,6 +70,7 @@ class User extends BaseUser
         parent::__construct();
 
         $this->groups = new ArrayCollection();
+        $this->partiesAsDm = new ArrayCollection();
     }
 
     /**
@@ -154,9 +162,19 @@ class User extends BaseUser
     }
 
     /**
-     * Get parties
+     * Get parties as DM
      *
      * @return Collection|Party[]
+     */
+    public function getPartiesAsDm()
+    {
+        return $this->partiesAsDm;
+    }
+
+    /**
+     * Get parties
+     *
+     * @return Party[]
      */
     public function getParties()
     {
@@ -166,7 +184,8 @@ class User extends BaseUser
                 $parties->add($character->getParty());
             }
         }
+        $parties = array_merge((array) $parties->toArray(), (array) $this->getPartiesAsDm()->toArray());
 
-        return $parties;
+        return array_unique($parties, SORT_REGULAR);
     }
 }
