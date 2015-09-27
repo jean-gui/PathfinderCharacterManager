@@ -76,6 +76,29 @@ class LevelController extends Controller
                     $level->addClassPower((new CharacterClassPower())->setClassPower($power));
                 }
             }
+
+            foreach ($character->getLevels() as $lowerLevel) {
+                if (
+                    $lowerLevel->getClassDefinition() === $level->getClassDefinition()
+                    && $lowerLevel->getSubClasses()->count() > 0
+                ) {
+                    $levelValue = $character->getLevel($level->getClassDefinition());
+                    foreach ($lowerLevel->getSubClasses() as $subClass) {
+                        $alreadyAdded = false;
+                        foreach ($subClass->getPowers($levelValue) as $power) {
+                            foreach ($level->getClassPowers() as $classPower) {
+                                if ($classPower->getClassPower() === $power) {
+                                    $alreadyAdded = true;
+                                    break;
+                                }
+                            }
+                            if (!$alreadyAdded) {
+                                $level->addClassPower((new CharacterClassPower())->setClassPower($power));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // Cleanup empty feats that may have been added by the form
