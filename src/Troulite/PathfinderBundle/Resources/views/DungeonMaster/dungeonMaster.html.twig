@@ -5,6 +5,7 @@
 {% block content %}
     {% include('@TroulitePathfinder/Party/_party_h1.html.twig') %}
 
+    {{ form_start(form, {'attr': {'class': null }}) }}
     <div class="row">
         {% for character in entity.characters %}
             {% set currentHp = character.maxHp - character.lostHP %}
@@ -27,10 +28,19 @@
                     </div>
                     <div class="panel-body">
                         {{ 'hit.points'|trans }}: {{ currentHp }} / {{ character.maxHp }}
+                        {% for characterForm in form.characters %}
+                            {% if characterForm.vars.data.id == character.id %}
+                                {{ form_widget(characterForm) }}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+            {% if loop.index % 4 == 0 %}
+                <div class="clearfix visible-lg-block visible-md-block"></div>
+            {% endif %}
         {% endfor %}
     </div>
+    {{ form_end(form) }}
 {% endblock %}
 

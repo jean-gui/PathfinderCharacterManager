@@ -143,6 +143,7 @@ class CharacterBonuses
         $this->applySpellEffects($character);
         $this->applyPowerEffects($character);
         $this->applyItemPowerEffects($character);
+        $this->applyConditions($character);
 
         self::$alreadyApplied[] = $character->getId();
         foreach (self::$applying as $key => $id) {
@@ -712,5 +713,12 @@ class CharacterBonuses
         }
 
         return $character;
+    }
+
+    private function applyConditions(Character $character)
+    {
+        foreach ($character->getConditions() as $condition) {
+            $this->applyEffects($character, $condition->getEffects(), $condition);
+        }
     }
 } 

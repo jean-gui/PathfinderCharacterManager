@@ -22,7 +22,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Troulite\PathfinderBundle\Entity\Party;
+use Troulite\PathfinderBundle\Form\Conditions\PartyConditionsType;
 
 /**
  * Character controller.
@@ -33,16 +35,36 @@ class DungeonMasterController extends Controller
 {
     /**
      * @param Party $party
-     *
-     * @Route("/{id}/dm", name="party_dm")
-     * @Template()
-     * @Method("GET")
-     * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party.getDungeonMaster()) or has_role('ROLE_ADMIN')")
+     * @param Request $request
      *
      * @return array
+     * @Route("/{id}/dm", name="party_dm")
+     * @Template()
+     * @Method({"GET", "PUT"})
+     * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party.getDungeonMaster()) or has_role('ROLE_ADMIN')")
+     *
      */
-    public function dungeonMasterAction(Party $party)
+    public function dungeonMasterAction(Party $party, Request $request)
     {
-        return array('entity' => $party);
+        $form = $this->createForm(
+            new PartyConditionsType(),
+            $party,
+            array(
+                'action' => $this->generateUrl('party_dm', array('id' => $party->getId())),
+                'method' => 'PUT',
+            )
+        );
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'character_conditions.updated');
+
+            return $this->redirectToRoute('party_dm', array('id' => $party->getId()));
+        }
+
+        return array('entity' => $party, 'form' => $form->createView());
     }
 }

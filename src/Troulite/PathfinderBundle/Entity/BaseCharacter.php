@@ -140,9 +140,20 @@ class BaseCharacter
      * @ORM\JoinTable(name="character_spells",
      *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="classspell_id", referencedColumnName="id")}
-     *      )
+     * )
      */
     private $extraSpells;
+
+    /**
+     * @var Collection|Condition[]
+     *
+     * @ORM\ManyToMany(targetEntity="Condition")
+     * @ORM\JoinTable(name="character_conditions",
+     *      joinColumns={@ORM\JoinColumn(name="character_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="condition_id", referencedColumnName="id")}
+     * )
+     */
+    private $conditions;
 
     /**
      * Constructor
@@ -152,6 +163,7 @@ class BaseCharacter
         $this->abilities = new Abilities();
         $this->equipment = new CharacterEquipment();
         $this->extraSpells = new ArrayCollection();
+        $this->conditions = new ArrayCollection();
     }
 
     /**
@@ -486,6 +498,50 @@ class BaseCharacter
     public function setExtraSpells(Collection $extraSpells)
     {
         $this->extraSpells = $extraSpells;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Condition[]
+     */
+    public function getConditions()
+    {
+        return $this->conditions;
+    }
+
+    /**
+     * @param Collection|Condition[] $conditions
+     *
+     * @return $this
+     */
+    public function setConditions($conditions)
+    {
+        $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    /**
+     * @param Condition $condition
+     *
+     * @return $this
+     */
+    public function addCondition(Condition $condition)
+    {
+        $this->conditions[] = $condition;
+
+        return $this;
+    }
+
+    /**
+     * @param Condition $condition
+     *
+     * @return $this
+     */
+    public function removeCondition(Condition $condition)
+    {
+        $this->conditions->removeElement($condition);
 
         return $this;
     }
