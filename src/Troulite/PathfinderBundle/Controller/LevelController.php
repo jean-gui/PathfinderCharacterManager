@@ -61,9 +61,17 @@ class LevelController extends Controller
         $level->setClassDefinition($character->getFavoredClass());
         $character->addLevel($level);
 
+        /** @var $flow LevelUpFlow */
+        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
+        $flow->bind($level);
 
-        // Add class powers if they were not already added through a form
-        if ($level->getClassDefinition()) {
+        if ($level->getClassDefinition() && $level->getClassDefinition()->isPrestige()) {
+            $level->setParentClass($character->getFavoredClass());
+        }
+
+        // form of the current step
+        $form = $flow->createForm();
+        if ($flow->isValid($form)) {
             foreach ($level->getClassDefinition()->getPowers($character->getLevel($level->getClassDefinition())) as $power) {
                 $alreadyAdded = false;
                 foreach ($level->getClassPowers() as $classPower) {
@@ -77,48 +85,6 @@ class LevelController extends Controller
                 }
             }
 
-            foreach ($character->getLevels() as $lowerLevel) {
-                if (
-                    $lowerLevel->getClassDefinition() === $level->getClassDefinition()
-                    && $lowerLevel->getSubClasses()->count() > 0
-                ) {
-                    $levelValue = $character->getLevel($level->getClassDefinition());
-                    foreach ($lowerLevel->getSubClasses() as $subClass) {
-                        $alreadyAdded = false;
-                        foreach ($subClass->getPowers($levelValue) as $power) {
-                            foreach ($level->getClassPowers() as $classPower) {
-                                if ($classPower->getClassPower() === $power) {
-                                    $alreadyAdded = true;
-                                    break;
-                                }
-                            }
-                            if (!$alreadyAdded) {
-                                $level->addClassPower((new CharacterClassPower())->setClassPower($power));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Cleanup empty feats that may have been added by the form
-        foreach ($level->getFeats() as $feat) {
-            if ($feat === null || $feat->getFeat() === null) {
-                $level->removeFeat($feat);
-            }
-        }
-
-        /** @var $flow LevelUpFlow */
-        $flow = $this->get('troulite_pathfinder.form.flow.levelup');
-        $flow->bind($level);
-
-        if ($level->getClassDefinition()->isPrestige()) {
-            $level->setParentClass($character->getFavoredClass());
-        }
-
-        // form of the current step
-        $form = $flow->createForm();
-        if ($flow->isValid($form)) {
             // Add powers coming from subclasses
             foreach ($character->getLevels() as $lowerLevel) {
                 if (

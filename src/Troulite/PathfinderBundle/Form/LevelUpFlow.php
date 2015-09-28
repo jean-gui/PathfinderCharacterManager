@@ -80,7 +80,7 @@ class LevelUpFlow extends FormFlow
                 'skip'  => function ($estimatedCurrentStepNumber, FormFlowInterface $flow) {
                     /** @var Level $level */
                     $level = $this->getFormData();
-                    return !$level->getClassDefinition()->getSubClasses()
+                    return !$level->getClassDefinition() || !$level->getClassDefinition()->getSubClasses()
                         || $level->getClassDefinition()->getSubClasses()->count() === 0
                         || $level->getValue() !== 1;
                 }
