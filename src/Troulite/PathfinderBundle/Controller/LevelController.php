@@ -225,7 +225,7 @@ class LevelController extends Controller
      * @Route("/{character}/levels/{level}/edit", name="characters_levels_edit")
      * @ParamConverter("level", options={"mapping": {"character" = "character", "level" = "value"}})
      * @Template()
-     * @Security("request.isMethodSafee() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or has_role('ROLE_ADMIN')")
      *
      * @param Level $level
      * @param Request $request
