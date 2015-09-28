@@ -1174,7 +1174,7 @@ class Character extends BaseCharacter
             $levelPoints = $level->getClassDefinition()->getSkillPoints();
 
             // Add Intelligence mod. Available points can't be < 1 after applying intelligence
-            $levelPoints += $this->getModifierByAbility('intelligence');
+            $levelPoints += $this->getAbilityModifier($intelligence);
 
             if ($levelPoints < 1) {
                 $levelPoints = 1;
