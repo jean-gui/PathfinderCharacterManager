@@ -58,5 +58,690 @@
                  class="Troulite\PathfinderBundle\Security\Authorization\Voter\PartyVoter">
             <tag name="security.voter"/>
         </service>
+
+        <!-- API -->
+        <!--  restrictions -->
+        <service id="resource.feats.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.feats"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.feats.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.feats"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.skills.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.skills"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.skills.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.skills"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.classes.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.classes"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.classes.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.classes"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.class_powers.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_powers"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.class_powers.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_powers"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.class_spells.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.class_spells.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.conditions.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.conditions"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.conditions.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.conditions"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.races.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.races"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.races.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.races"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.spells.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.spells.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.subclasses.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.subclasses"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.subclasses.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.subclasses"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.class_spells.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.class_spells.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.class_spells"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.weapons.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.weapons"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.weapons.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.weapons"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.armors.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.armors"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.armors.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.armors"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.shields.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.shields"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.shields.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.shields"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.shoulders.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.shoulders"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.shoulders.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.shoulders"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.rings.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.rings"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.rings.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.rings"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.necks.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.necks"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.necks.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.necks"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.wrists.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.wrists"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.wrists.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.wrists"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.feet.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.feet"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.feet.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.feet"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.hands.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.hands"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.hands.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.hands"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.eyes.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.eyes"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.eyes.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.eyes"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.heads.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.heads"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.heads.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.heads"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.headbands.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.headbands"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.headbands.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.headbands"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.bodies.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.bodies"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.bodies.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.bodies"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.chests.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.chests"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.chests.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.chests"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.belts.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.belts"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.belts.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.belts"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <service id="resource.item_powers.collection_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.item_powers"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createCollectionOperation"/>
+        </service>
+        <service id="resource.item_powers.item_operation.get" class="Dunglas\ApiBundle\Api\Operation\Operation"
+                 public="false">
+            <argument type="service" id="resource.item_powers"/>
+            <argument>GET</argument>
+            <factory service="api.operation_factory" method="createItemOperation"/>
+        </service>
+
+        <!-- Main API -->
+        <service id="resource.feats" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Feat</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.feats.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.feats.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.spells" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Spell</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.spells.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.spells.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.classes" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\ClassDefinition</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.classes.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.classes.item_operation.get"/>
+                </argument>
+            </call>
+            <call method="initNormalizationContext">
+                <argument type="collection">
+                    <argument key="groups" type="collection">
+                        <argument>class-definition</argument>
+                    </argument>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.subclasses" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\SubClass</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.subclasses.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.subclasses.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.item_powers" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\ItemPower</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.item_powers.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.item_powers.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.belts" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Belt</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.belts.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.belts.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.weapons" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Weapon</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.weapons.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.weapons.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.armors" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Armor</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.armors.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.armors.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.shields" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Shield</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.shields.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.shields.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.shoulders" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Shoulders</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.shoulders.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.shoulders.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.rings" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Ring</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.rings.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.rings.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.necks" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Neck</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.necks.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.necks.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.wrists" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Wrists</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.wrists.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.wrists.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.feet" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Feet</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.feet.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.feet.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.chests" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Chest</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.chests.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.chests.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.hands" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Hands</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.hands.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.hands.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.eyes" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Eyes</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.eyes.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.eyes.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.bodies" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Body</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.bodies.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.bodies.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.headbands" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Headband</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.headbands.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.headbands.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.conditions" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Condition</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.conditions.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.conditions.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.races" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Race</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.races.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.races.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.skills" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\Skill</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.skills.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.skills.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.class_powers" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\ClassPower</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.class_powers.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.class_powers.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
+        <service id="resource.class_spells" parent="api.resource">
+            <argument>Troulite\PathfinderBundle\Entity\ClassSpell</argument>
+            <call method="initCollectionOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.class_spells.collection_operation.get"/>
+                </argument>
+            </call>
+            <call method="initItemOperations">
+                <argument type="collection">
+                    <argument type="service" id="resource.class_spells.item_operation.get"/>
+                </argument>
+            </call>
+            <tag name="api.resource"/>
+        </service>
     </services>
 </container>

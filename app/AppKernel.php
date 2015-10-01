@@ -32,7 +32,9 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Ivory\OrderedFormBundle\IvoryOrderedFormBundle(),
-            new Pinano\Select2Bundle\PinanoSelect2Bundle()
+            new Pinano\Select2Bundle\PinanoSelect2Bundle(),
+            new Dunglas\ApiBundle\DunglasApiBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

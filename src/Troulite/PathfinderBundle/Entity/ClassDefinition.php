@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Troulite\PathfinderBundle\Entity\Traits\Describable;
 
@@ -43,6 +44,7 @@ class ClassDefinition
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"class-definition"})
      */
     private $id;
 
@@ -51,6 +53,7 @@ class ClassDefinition
      *
      * @ORM\Column(type="string", length=255)
      * @Gedmo\Translatable()
+     * @Groups({"class-definition"})
      */
     private $name;
 
@@ -59,6 +62,7 @@ class ClassDefinition
      *
      * @ORM\OneToMany(targetEntity="SubClass", mappedBy="parent", cascade={"all"})
      * @ORM\Cache()
+     * @Groups({"class-definition"})
      */
     private $subClasses;
 
@@ -66,6 +70,7 @@ class ClassDefinition
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"class-definition"})
      */
     private $subClassesNumber;
 
@@ -73,6 +78,7 @@ class ClassDefinition
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"class-definition"})
      */
     private $hpDice;
 
@@ -80,6 +86,7 @@ class ClassDefinition
      * @var integer
      *
      * @ORM\Column(type="integer")
+     * @Groups({"class-definition"})
      */
     private $skillPoints;
 
@@ -87,6 +94,7 @@ class ClassDefinition
      * @var integer[]
      *
      * @ORM\Column(type="json_array")
+     * @Groups({"class-definition"})
      */
     private $bab;
 
@@ -94,6 +102,7 @@ class ClassDefinition
      * @var integer[]
      *
      * @ORM\Column(type="json_array")
+     * @Groups({"class-definition"})
      */
     private $reflexes;
 
@@ -101,6 +110,7 @@ class ClassDefinition
      * @var integer[]
      *
      * @ORM\Column(type="json_array")
+     * @Groups({"class-definition"})
      */
     private $fortitude;
 
@@ -108,6 +118,7 @@ class ClassDefinition
      * @var integer[]
      *
      * @ORM\Column(type="json_array")
+     * @Groups({"class-definition"})
      */
     private $will;
 
@@ -115,6 +126,7 @@ class ClassDefinition
      * @var integer[]
      *
      * @ORM\Column(type="json_array", nullable=true)
+     * @Groups({"class-definition"})
      */
     private $spellsPerDay;
 
@@ -127,6 +139,7 @@ class ClassDefinition
      *      inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
      *      )
      * @ORM\Cache()
+     * @Groups({"class-definition"})
      */
     private $classSkills;
 
@@ -135,6 +148,7 @@ class ClassDefinition
      *
      * @ORM\OneToMany(targetEntity="ClassPower", mappedBy="class", cascade={"all"})
      * @ORM\Cache()
+     * @Groups({"class-definition"})
      */
     private $powers;
 
@@ -143,6 +157,7 @@ class ClassDefinition
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Choice(choices={"intelligence", "wisdom", "charisma"})
+     * @Groups({"class-definition"})
      */
     private $castingAbility;
 
@@ -150,6 +165,7 @@ class ClassDefinition
      * @var bool true if this class' spells need to be prepared before being cast
      *
      * @ORM\Column(type="boolean", nullable=false)
+     * @Groups({"class-definition"})
      */
     private $preparationNeeded = true;
 
@@ -157,6 +173,7 @@ class ClassDefinition
      * @var array Number of spells a character of this class knows per level
      *
      * @ORM\Column(type="json_array", nullable=true)
+     * @Groups({"class-definition"})
      */
     private $knownSpellsPerLevel;
 
@@ -165,6 +182,7 @@ class ClassDefinition
      *
      * @ORM\OneToMany(targetEntity="ClassSpell", mappedBy="class", orphanRemoval=true, cascade={"all"})
      * @ORM\Cache()
+     * @Groups({"class-definition"})
      */
     private $spells;
 
@@ -172,6 +190,7 @@ class ClassDefinition
      * @var bool true if this class can learn lower level spells in higher level slots
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     * @Groups({"class-definition"})
      */
     private $ableToLearnLowerLevelSpells = false;
 
@@ -179,6 +198,7 @@ class ClassDefinition
      * @var bool true if this class can learn new spells from spellbooks
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     * @Groups({"class-definition"})
      */
     private $ableToLearnNewSpells = false;
 
@@ -186,6 +206,7 @@ class ClassDefinition
      * @var bool true if this is a prestige class
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default" = false})
+     * @Groups({"class-definition"})
      */
     private $prestige = false;
 

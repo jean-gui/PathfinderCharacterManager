@@ -23,6 +23,8 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    serializer:
+        enable_annotations: true
 
 # Twig Configuration
 twig:
@@ -141,3 +143,18 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - name: twig.extension
+
+dunglas_api:
+    title:       "Pathfinder Character Manager API"
+    description: "API associated to Pathfinder Character Manager Web Application"
+    enable_fos_user: false
+
+nelmio_api_doc:
+    sandbox:
+        accept_type:        "application/json"
+        body_format:
+            formats:        [ "json" ]
+            default_format: "json"
+        request_format:
+            formats:
+                json:       "application/json"

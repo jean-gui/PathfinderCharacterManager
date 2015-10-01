@@ -40,15 +40,16 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/security-extra-bundle": "~1.2",
         "craue/formflow-bundle": "~2.0",
-        "gedmo/doctrine-extensions": "2.4.4 as 2.3.9-dev",
-        "stof/doctrine-extensions-bundle": "~1.1",
+        "stof/doctrine-extensions-bundle": "~1.2",
         "jms/i18n-routing-bundle": "~1.0",
         "symfony/intl": "v2.6.4",
         "mopa/bootstrap-bundle": "~3.0@dev",
-        "jms/translation-bundle": "~1.0",
+        "jms/translation-bundle": "dev-master",
         "jms/command-bundle": "dev-master",
         "egeloen/ordered-form-bundle": "~1.0",
-        "pinano/select2-bundle": "~4.0"
+        "pinano/select2-bundle": "~4.0",
+        "dunglas/api-bundle": "~1.0",
+        "nelmio/api-doc-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
