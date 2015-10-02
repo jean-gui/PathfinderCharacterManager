@@ -170,7 +170,7 @@ fos_http_cache:
         rules:
             -
                 match:
-                    path: ^/api
+                    path: ^(/fr)?/api
                 headers:
                     cache_control:
                         public: true
@@ -189,7 +189,7 @@ nelmio_cors:
         hosts: []
         origin_regex: false
     paths:
-        '^/api/':
+        '^(/fr)?/api':
             allow_origin: ['*']
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
