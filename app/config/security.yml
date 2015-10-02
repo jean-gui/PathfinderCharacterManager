@@ -7,6 +7,11 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
+        api:
+            pattern: ^/api
+            security: false
+            stateless: true
+            anonymous: ~
         main:
             pattern: ^/
             form_login:
