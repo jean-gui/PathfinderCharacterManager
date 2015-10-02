@@ -399,6 +399,14 @@
             <factory service="api.operation_factory" method="createItemOperation"/>
         </service>
 
+        <!-- filters -->
+        <service id="resource.feats.search_filter" parent="api.doctrine.orm.search_filter">
+            <argument type="collection">
+                <argument key="id">exact</argument>
+                <argument key="name">partial</argument>
+            </argument>
+        </service>
+
         <!-- Main API -->
         <service id="resource.feats" parent="api.resource">
             <argument>Troulite\PathfinderBundle\Entity\Feat</argument>
@@ -410,6 +418,11 @@
             <call method="initItemOperations">
                 <argument type="collection">
                     <argument type="service" id="resource.feats.item_operation.get"/>
+                </argument>
+            </call>
+            <call method="initFilters">
+                <argument type="collection">
+                    <argument type="service" id="resource.feats.search_filter"/>
                 </argument>
             </call>
             <tag name="api.resource"/>
