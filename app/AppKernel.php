@@ -35,6 +35,8 @@ class AppKernel extends Kernel
             new Pinano\Select2Bundle\PinanoSelect2Bundle(),
             new Dunglas\ApiBundle\DunglasApiBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

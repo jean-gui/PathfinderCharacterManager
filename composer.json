@@ -49,7 +49,9 @@
         "egeloen/ordered-form-bundle": "~1.0",
         "pinano/select2-bundle": "~4.0",
         "dunglas/api-bundle": "~1.0",
-        "nelmio/api-doc-bundle": "dev-master"
+        "nelmio/api-doc-bundle": "dev-master",
+        "friendsofsymfony/http-cache-bundle": "~1.3",
+        "nelmio/cors-bundle": "~1.4.0"
     },
     "scripts": {
         "post-install-cmd": [
