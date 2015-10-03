@@ -3,21 +3,37 @@
 {% block content -%}
     <h1>Feats</h1>
 
-    <table class="table table-hover table-striped table-condensed table-responsive">
+    <table data-detail-view="true" data-detail-formatter="detailFormatter" data-toggle="table" data-search="true"
+           class="table table-hover table-striped table-condensed table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
+                <th data-field="name" data-sorter="mysorter" data-searchable="true" data-sortable="true">Name</th>
+                <th data-field="description" data-searchable="true" data-sortable="true">Description</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('feats_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                <td>{{ entity.shortDescription }}</td>
+                <td>
+                    {{ entity.shortDescription|raw }}
+                    <script type="text/html">
+                        {{ entity.longDescription|raw }}
+                    </script>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
     <a href="{{ path('feats_new') }}">New Feat</a>
+    <script>
+        function mysorter(a, b) {
+            a = $(a).text();
+            b = $(b).text();
+            return a.localeCompare(b);
+        }
+        function detailFormatter(index, row) {
+            return $("script", $("<div>" + row["description"] + "</div>")).html();
+        }
+    </script>
 {% endblock %}

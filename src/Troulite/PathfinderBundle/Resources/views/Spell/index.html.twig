@@ -3,19 +3,70 @@
 {% block content -%}
     <h1>Spell list</h1>
 
-    <table class="table table-condensed table-striped table-hover table-responsive">
+    <table data-detail-view="true" data-detail-formatter="detailFormatter" data-toggle="table" data-search="true"
+           class="table table-condensed table-striped table-hover table-responsive">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Classes</th>
+                <th data-field="name" data-sorter="mysorter" data-sortable="true">Name</th>
+                <th data-field="description" data-sortable="true">Description</th>
+                <th data-field="classes">Classes</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('spells_show', {'id': entity.id}) }}">{{ entity.name }}</a></td>
-                <td>{{ entity.shortDescription }}</td>
+                <td>
+                    {{ entity.shortDescription|raw }}
+                    <script type="text/html">
+                        <dl class="dl-horizontal">
+                            <dt>Casting Time</dt>
+                            <dd>{{ entity.castingTime }}</dd>
+
+                            <dt>Components</dt>
+                            <dd>{{ entity.components }}</dd>
+
+                            <dt>Range</dt>
+                            <dd>{{ entity.range }}</dd>
+
+                            <dt>Duration</dt>
+                            <dd>{{ entity.duration }}</dd>
+
+                            <dt>Saving throw</dt>
+                            <dd>{{ entity.savingThrow|default('None') }}</dd>
+
+                            <dt>Spell Resistance</dt>
+                            <dd>{{ entity.spellResistance ? 'Yes' : 'No' }}</dd>
+
+                            {% if entity.targets %}
+                                <dt>Targets</dt>
+                                <dd>{{ entity.targets }}</dd>
+                            {% endif %}
+
+                            {% if entity.effects %}
+                                <dt>Effects</dt>
+                                {% for key, effect in entity.effects %}
+                                    <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if entity.conditions %}
+                                <dt>Conditions</dt>
+                                {% for key, condition in entity.condition %}
+                                    <dd>{{ key }}: {{ condition }}</dd>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if entity.externalConditions %}
+                                <dt>Externalconditions</dt>
+                                {% for key, conditions in entity.externalConditions %}
+                                    <dd>{{ key }}: {{ condition }}</dd>
+                                {% endfor %}
+                            {% endif %}
+                        </dl>
+                        {{ entity.longDescription|raw }}
+                    </script>
+                </td>
                 <td>
                     {% for spellClass in entity.classes %}
                         {{ spellClass.class }} {{ spellClass.spellLevel }}
@@ -26,4 +77,14 @@
         {% endfor %}
         </tbody>
     </table>
+    <script>
+        function mysorter(a, b) {
+            a = $(a).text();
+            b = $(b).text();
+            return a.localeCompare(b);
+        }
+        function detailFormatter(index, row) {
+            return $("script", $("<div>" + row["description"] + "</div>")).html();
+        }
+    </script>
 {% endblock %}
