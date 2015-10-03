@@ -42,17 +42,22 @@ use Troulite\PathfinderBundle\Form\Item\WeaponType;
 class ItemsController extends Controller
 {
     /**
-     * @Route("/", name="list_items")
+     * @Route(
+     *      "/{slot}",
+     *      name="list_items",
+     *      requirements={"slot": "item|belt|eyes|chest|armor|body|headband|weapon|feet|hands|wrists|ring|shield|shoulders|neck"},
+     *      defaults={"slot": "item"})
      * @Method("GET")
      * @Template()
      *
      * @return array
      */
-    public function indexAction()
+    public function indexAction($slot = 'item')
     {
         $em = $this->getDoctrine()->getManager();
 
-        $items = $em->getRepository('TroulitePathfinderBundle:Item')->findAll();
+        $class = ucfirst($slot);
+        $items = $em->getRepository('TroulitePathfinderBundle:' . $class)->findAll();
 
         return array('entities' => $items);
     }
