@@ -46,7 +46,7 @@
         "mopa/bootstrap-bundle": "~3.0@dev",
         "jms/translation-bundle": "dev-master",
         "jms/command-bundle": "dev-master",
-        "egeloen/ordered-form-bundle": "~1.0",
+        "egeloen/ordered-form-bundle": "~2.0",
         "pinano/select2-bundle": "~4.0",
         "dunglas/api-bundle": "~1.0",
         "nelmio/api-doc-bundle": "dev-master",

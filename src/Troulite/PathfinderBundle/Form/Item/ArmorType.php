@@ -19,7 +19,7 @@
 namespace Troulite\PathfinderBundle\Form\Item;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ArmorType
@@ -46,9 +46,9 @@ class ArmorType extends ItemType
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Troulite\PathfinderBundle\Entity\Armor'

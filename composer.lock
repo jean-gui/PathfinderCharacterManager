@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4910a7a55cd0ac2abd5c4573c9438c89",
-    "content-hash": "cce0cab96d4da68154fc2b0b79842774",
+    "hash": "d191e53a79c997097a862b5f200d3968",
+    "content-hash": "6aed3971801235bda9a482bd76ec7f6e",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1108,16 +1108,16 @@
         },
         {
             "name": "egeloen/ordered-form",
-            "version": "1.1.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egeloen/ivory-ordered-form.git",
-                "reference": "575b426045cc6a336db8263f98319a33ed2dc4f0"
+                "reference": "8773860b1b4f37ebc55a4cf7d04a013acfca56fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/ivory-ordered-form/zipball/575b426045cc6a336db8263f98319a33ed2dc4f0",
-                "reference": "575b426045cc6a336db8263f98319a33ed2dc4f0",
+                "url": "https://api.github.com/repos/egeloen/ivory-ordered-form/zipball/8773860b1b4f37ebc55a4cf7d04a013acfca56fc",
+                "reference": "8773860b1b4f37ebc55a4cf7d04a013acfca56fc",
                 "shasum": ""
             },
             "require": {
@@ -1131,7 +1131,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1155,24 +1155,24 @@
                 "form",
                 "order"
             ],
-            "time": "2014-11-08 14:22:42"
+            "time": "2014-12-29 21:17:02"
         },
         {
             "name": "egeloen/ordered-form-bundle",
-            "version": "1.1.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egeloen/IvoryOrderedFormBundle.git",
-                "reference": "7687882f076b75e8460db4caf739eb340cabec95"
+                "reference": "7634b7d02949078914ed091d90d9a2562d2c5854"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egeloen/IvoryOrderedFormBundle/zipball/7687882f076b75e8460db4caf739eb340cabec95",
-                "reference": "7687882f076b75e8460db4caf739eb340cabec95",
+                "url": "https://api.github.com/repos/egeloen/IvoryOrderedFormBundle/zipball/7634b7d02949078914ed091d90d9a2562d2c5854",
+                "reference": "7634b7d02949078914ed091d90d9a2562d2c5854",
                 "shasum": ""
             },
             "require": {
-                "egeloen/ordered-form": "~1.1.0",
+                "egeloen/ordered-form": "~2.0",
                 "php": ">=5.3.3",
                 "symfony/framework-bundle": "~2.3"
             },
@@ -1183,7 +1183,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
@@ -1206,7 +1206,7 @@
                 "form",
                 "order"
             ],
-            "time": "2014-11-08 14:55:21"
+            "time": "2014-12-29 21:28:57"
         },
         {
             "name": "friendsofsymfony/http-cache",
@@ -3423,16 +3423,16 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v2.8.0",
+            "version": "2.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/monolog-bundle.git",
-                "reference": "78883d8c1cfa523ac3a28a482b7793036b243f7d"
+                "reference": "7117b9a145722e3c5768db4585f6ad0643ed5c4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/78883d8c1cfa523ac3a28a482b7793036b243f7d",
-                "reference": "78883d8c1cfa523ac3a28a482b7793036b243f7d",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/7117b9a145722e3c5768db4585f6ad0643ed5c4a",
+                "reference": "7117b9a145722e3c5768db4585f6ad0643ed5c4a",
                 "shasum": ""
             },
             "require": {
@@ -3478,7 +3478,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2015-09-29 17:13:11"
+            "time": "2015-10-02 11:51:59"
         },
         {
             "name": "symfony/swiftmailer-bundle",

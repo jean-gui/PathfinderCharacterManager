@@ -23,7 +23,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class NotesType
@@ -51,15 +50,15 @@ class NotesType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'Troulite\PathfinderBundle\Entity\Character',
             'type'       => 'general'
         ));
-        $resolver->setAllowedValues(array('type' => array('general', 'power', 'inventory', 'spell')));
+        $resolver->setAllowedValues('type', array('general', 'power', 'inventory', 'spell'));
     }
 
     /**

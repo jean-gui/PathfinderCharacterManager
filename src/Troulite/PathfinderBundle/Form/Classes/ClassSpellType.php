@@ -20,8 +20,7 @@ namespace Troulite\PathfinderBundle\Form\Classes;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Troulite\PathfinderBundle\Entity\Abilities;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ClassSpellType
@@ -46,9 +45,9 @@ class ClassSpellType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
