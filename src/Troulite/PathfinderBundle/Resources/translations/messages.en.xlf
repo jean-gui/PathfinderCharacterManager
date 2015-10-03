@@ -1,519 +1,593 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
-        <body>
-            <trans-unit id="1da916d1b03b3d3612ba1556986f6524" resname="(De)Activate Powers">
-                <source>(De)Activate Powers</source>
-                <target>(De)Activate Powers</target>
-            </trans-unit>
-            <trans-unit id="095a1b43effec73955e31e790438de49" resname="Base">
-                <source>Base</source>
-                <target>Base</target>
-            </trans-unit>
-            <trans-unit id="e782b3d3f0022b383b3d2f6b9543bbba" resname="Class Summary">
-                <source>Class Summary</source>
-                <target>Class Summary</target>
-            </trans-unit>
-            <trans-unit id="f4d1ea475eaa85102e2b4e6d95da84bd" resname="Confirmation">
-                <source>Confirmation</source>
-                <target>Confirmation</target>
-            </trans-unit>
-            <trans-unit id="686e697538050e4664636337cc3b834f" resname="Create">
-                <source>Create</source>
-                <target>Create</target>
-            </trans-unit>
-            <trans-unit id="f2a6c498fb90ee345d997f888fce3b18" resname="Delete">
-                <source>Delete</source>
-                <target>Delete</target>
-            </trans-unit>
-            <trans-unit id="b6d0e81e352df03ed6573075bb03bb12" resname="Feats">
-                <source>Feats</source>
-                <target>Feats</target>
-            </trans-unit>
-            <trans-unit id="d5063f36ba31ef75b45ad1e977a64e82" resname="Hit Point">
-                <source>Hit Point</source>
-                <target>Hit Point</target>
-            </trans-unit>
-            <trans-unit id="79e6a2386a05a47be8ff42216d39f4a0" resname="Prepare Spells">
-                <source>Prepare Spells</source>
-                <target>Prepare Spells</target>
-            </trans-unit>
-            <trans-unit id="88bb766f0cc321759ed2eeb0bc06be5d" resname="Skill">
-                <source>Skill</source>
-                <target>Skill</target>
-            </trans-unit>
-            <trans-unit id="aa79c5d1cbe3d96218a92481bcfaa39c" resname="Skills">
-                <source>Skills</source>
-                <target>Skills</target>
-            </trans-unit>
-            <trans-unit id="1949e5a9d84826e23a5b759ae91c493a" resname="Spells">
-                <source>Spells</source>
-                <target>Spells</target>
-            </trans-unit>
-            <trans-unit id="c41a31890959544c6523af684561abe5" resname="Target">
-                <source>Target</source>
-                <target>Target</target>
-            </trans-unit>
-            <trans-unit id="06933067aafd48425d67bcb01bba5cb6" resname="Update">
-                <source>Update</source>
-                <target>Update</target>
-            </trans-unit>
-            <trans-unit id="424dbe533d5a5b0904ee6f79262caa5c" resname="ability">
-                <source>ability</source>
-                <target>Ability</target>
-            </trans-unit>
-            <trans-unit id="a4403b68e4877f5e40705bd4f3e21cd3" resname="ability.modifier.short">
-                <source>ability.modifier.short</source>
-                <target>Ability Mod.</target>
-            </trans-unit>
-            <trans-unit id="6d0c90544ce861206fee9ada78025f1c" resname="ability.point">
-                <source>ability.point</source>
-                <target>Ability Point</target>
-            </trans-unit>
-            <trans-unit id="ab2d2e6f78097da8d5a76436b303375d" resname="ability.score.cost">
-                <source>ability.score.cost</source>
-                <target>Ability Score Cost</target>
-            </trans-unit>
-            <trans-unit id="e2075474294983e013ee4dd2201c7a73" resname="ac">
-                <source>ac</source>
-                <target>AC</target>
-            </trans-unit>
-            <trans-unit id="6b5a423ba19d8f7f56052778d138cfe1" resname="add.item">
-                <source>add.item</source>
-                <target>Add</target>
-            </trans-unit>
-            <trans-unit id="1a5c1f880f2b371fe7f59c6394a78f89" resname="advancement">
-                <source>advancement</source>
-                <target>Advancement</target>
-            </trans-unit>
-            <trans-unit id="45d69ebd80624e659db1d0e5ba928504" resname="applied.bonuses">
-                <source>applied.bonuses</source>
-                <target>Applied Bonuses</target>
-            </trans-unit>
-            <trans-unit id="3ee45b1ff632881c66b6b92f45a47fd7" resname="armor">
-                <source>armor</source>
-                <target>Armor</target>
-            </trans-unit>
-            <trans-unit id="d9d7dbddc29177b121a6aa1bb09d15fd" resname="bab">
-                <source>bab</source>
-                <target>BAB</target>
-            </trans-unit>
-            <trans-unit id="960dc476150dbdbee160fe289705baf3" resname="belt">
-                <source>belt</source>
-                <target>Belt</target>
-            </trans-unit>
-            <trans-unit id="841a2d689ad86bd1611447453c22c6fc" resname="body">
-                <source>body</source>
-                <target>Body</target>
-            </trans-unit>
-            <trans-unit id="8b974d3033b149bc07a55d246ec550f8" resname="campain.type">
-                <source>campain.type</source>
-                <target>Campain Type</target>
-            </trans-unit>
-            <trans-unit id="54c280558263a67e0a84ba34f625c464" resname="cast">
-                <source>cast</source>
-                <target>Cast</target>
-            </trans-unit>
-            <trans-unit id="a5c8ddb0dc1e52a6a6b26e9309a803f1" resname="cast.spells">
-                <source>cast.spells</source>
-                <target>Cast Spells</target>
-            </trans-unit>
-            <trans-unit id="f7c32acaab92de9ae346d2527c86b048" resname="charisma">
-                <source>charisma</source>
-                <target>Charisma</target>
-            </trans-unit>
-            <trans-unit id="14952ea782ad87d7e30059fa3cc516f1" resname="chest">
-                <source>chest</source>
-                <target>Chest</target>
-            </trans-unit>
-            <trans-unit id="282aa351a2bd30655fbc060bd4f33766" resname="weapon">
-                <source>weapon</source>
-                <target>Arme</target>
-            </trans-unit>
-            <trans-unit id="1a5df958e0f29d35594c7cf057fe4bd1" resname="ring">
-                <source>ring</source>
-                <target>Ring</target>
-            </trans-unit>
-            <trans-unit id="28c69b4cba5681d565d3bd901684dd77" resname="shield">
-                <source>shield</source>
-                <target>Shield</target>
-            </trans-unit>
-            <trans-unit id="bfcc7a7a480ee69b93bce8b083bfab14" resname="all_items">
-                <source>all_items</source>
-                <target>All items</target>
-            </trans-unit>
-            <trans-unit id="a2f2ed4f8ebc2cbb4c21a29dc40ab61d" resname="class">
-                <source>class</source>
-                <target>Class</target>
-            </trans-unit>
-            <trans-unit id="eda84cf0cbd6add53817eec8f948cff8" resname="class.powers">
-                <source>class.powers</source>
-                <target>Class</target>
-            </trans-unit>
-            <trans-unit id="e0bda8197e58839fe38b56adbfec55ff" resname="classes">
-                <source>classes</source>
-                <target>Classes</target>
-            </trans-unit>
-            <trans-unit id="c222ae0d4e9c59bd254b72521b9e74ed" resname="combat">
-                <source>combat</source>
-                <target>Combat</target>
-            </trans-unit>
-            <trans-unit id="b5b399ec1fcfe753f58dbafa197efdc1" resname="conditions">
-                <source>conditions</source>
-                <target>Conditions</target>
-            </trans-unit>
-            <trans-unit id="448b62646e4daf34e38cfced0eaa1a0f" resname="constitution">
-                <source>constitution</source>
-                <target>Constitution</target>
-            </trans-unit>
-            <trans-unit id="4e1566f0798fb3d6f350720cacd74446" resname="cost">
-                <source>cost</source>
-                <target>Cost</target>
-            </trans-unit>
-            <trans-unit id="3212f5f463edb370ff55d3c3a7a15c8f" resname="dc">
-                <source>dc</source>
-                <target>DC</target>
-            </trans-unit>
-            <trans-unit id="67daf92c833c41c95db874e18fcb2786" resname="description">
-                <source>description</source>
-                <target>Description</target>
-            </trans-unit>
-            <trans-unit id="3fab1c70aa9068f9d4a7781764b226a1" resname="dexterity">
-                <source>dexterity</source>
-                <target>Dexterity</target>
-            </trans-unit>
-            <trans-unit id="6e9d25362c485bc3c90c818dfac5dc49" resname="drop">
-                <source>drop</source>
-                <target>Drop</target>
-            </trans-unit>
-            <trans-unit id="10e9c346af6d4c1b1f03b67243a649d5" resname="edit.level">
-                <source>edit.level</source>
-                <target>Edit Level</target>
-            </trans-unit>
-            <trans-unit id="10c85825cecea6aed14e84851f658cf8" resname="edit.levels">
-                <source>edit.levels</source>
-                <target>Edit Levels</target>
-            </trans-unit>
-            <trans-unit id="9046c60fefe66f31f80c61379c92843c" resname="equip">
-                <source>equip</source>
-                <target>Equip</target>
-            </trans-unit>
-            <trans-unit id="d334616758f1c1099a0ae6c443872c8b" resname="equipment">
-                <source>equipment</source>
-                <target>Equipment</target>
-            </trans-unit>
-            <trans-unit id="a310e7658420302aad683d72f7ecf4c6" resname="eyes">
-                <source>eyes</source>
-                <target>Eyes</target>
-            </trans-unit>
-            <trans-unit id="7a1c07ff60f9c07ffe8da34ecbf4edc2" resname="fantasy">
-                <source>fantasy</source>
-                <target>Fantasy</target>
-            </trans-unit>
-            <trans-unit id="4a19a5c7cc18b7d7b73c0b7e91e6bd15" resname="favored.extra.point">
-                <source>favored.extra.point</source>
-                <target>Extra point</target>
-            </trans-unit>
-            <trans-unit id="108c795ab5a794f5bca78e121adac6a3" resname="feat_number">
-                <source>feat_number</source>
-                <target>Feat #%number%</target>
-            </trans-unit>
-            <trans-unit id="8b538e09d25672d5e6ed5058f2318d51" resname="feats">
-                <source>feats</source>
-                <target>Feats</target>
-            </trans-unit>
-            <trans-unit id="e03f9063484fb1967d1675c86a6094d7" resname="feet">
-                <source>feet</source>
-                <target>Feet</target>
-            </trans-unit>
-            <trans-unit id="10412ca4dee7af3ca8e03520297f822d" resname="flat.footed.ac">
-                <source>flat.footed.ac</source>
-                <target>Flat-Footed AC</target>
-            </trans-unit>
-            <trans-unit id="935f3c321e2a0baf5d272819acd699ef" resname="fortitude">
-                <source>fortitude</source>
-                <target>Fortitude</target>
-            </trans-unit>
-            <trans-unit id="6c8d61508321ac444175370124200350" resname="hands">
-                <source>hands</source>
-                <target>Hands</target>
-            </trans-unit>
-            <trans-unit id="96e89a298e0a9f469b9ae458d6afae9f" resname="head">
-                <source>head</source>
-                <target>Head</target>
-            </trans-unit>
-            <trans-unit id="fc9cc7ee8e9c2943fe6d8dd02d0ccd5f" resname="headband">
-                <source>headband</source>
-                <target>Headband</target>
-            </trans-unit>
-            <trans-unit id="f6936be1b3ce4a9698658e4e193af7fe" resname="heal.harm">
-                <source>heal.harm</source>
-                <target>Heal/Harm</target>
-            </trans-unit>
-            <trans-unit id="8522568b47dda4bfd93a029a7bc0d9c7" resname="hit.points">
-                <source>hit.points</source>
-                <target>Hit Points</target>
-            </trans-unit>
-            <trans-unit id="85bda1d9f004beeac66345b3e83b87a5" resname="hp.roll">
-                <source>hp.roll</source>
-                <target>HP roll</target>
-            </trans-unit>
-            <trans-unit id="fef418a4cdacbfc5397b9ee51c0c2765" resname="initiative">
-                <source>initiative</source>
-                <target>Initiative</target>
-            </trans-unit>
-            <trans-unit id="90b884933d23c4d57ca01dbe2898d405" resname="intelligence">
-                <source>intelligence</source>
-                <target>Intelligence</target>
-            </trans-unit>
-            <trans-unit id="7a1eabc3deb7fd02ceb1e16eafc41073" resname="inventory">
-                <source>inventory</source>
-                <target>Inventory</target>
-            </trans-unit>
-            <trans-unit id="d60a86efc8acc6e5868a36fe9074d0c1" resname="inventory.edit">
-                <source>inventory.edit</source>
-                <target>Edit Inventory</target>
-            </trans-unit>
-            <trans-unit id="691d502cfd0e0626cd3b058e5682ad1c" resname="items">
-                <source>items</source>
-                <target>Items</target>
-            </trans-unit>
-            <trans-unit id="bb8b02d2bd2f4fe4ebead139c3e5b50a" resname="item_powers">
-                <source>item_powers</source>
-                <target>Items</target>
-            </trans-unit>
-            <trans-unit id="470c92ab9336c3e64691ead0432d3d5b" resname="known.spells">
-                <source>known.spells</source>
-                <target>Knownw Spells</target>
-            </trans-unit>
-            <trans-unit id="8512ae7d57b1396273f76fe6ed341a23" resname="language">
-                <source>language</source>
-                <target>Language</target>
-            </trans-unit>
-            <trans-unit id="e7ff26579110697674b999f95581937d" resname="learned.spells">
-                <source>learned.spells</source>
-                <target>Learned spells</target>
-            </trans-unit>
-            <trans-unit id="ea3069ab59337c3f978399b60e440a76" resname="left.finger">
-                <source>left.finger</source>
-                <target>Left Finger</target>
-            </trans-unit>
-            <trans-unit id="c9e9a848920877e76685b2e4e76de38d" resname="level">
-                <source>level</source>
-                <target>Level %level%</target>
-            </trans-unit>
-            <trans-unit id="ee44bb084840dc4bc1f5e0a4ecb7c8f0" resname="level.up">
-                <source>level.up</source>
-                <target>Level Up</target>
-            </trans-unit>
-            <trans-unit id="58d05733dbe0fbc99d8edded4b9bf708" resname="level_value">
-                <source>level_value</source>
-                <target>Level %level%</target>
-            </trans-unit>
-            <trans-unit id="5e5c691630695ec8ed341b5465768094" resname="main.profile">
-                <source>main.profile</source>
-                <target>Main Profile</target>
-            </trans-unit>
-            <trans-unit id="db2f8c872ff767aa6fc30969c46f91b5" resname="main.weapon">
-                <source>main.weapon</source>
-                <target>Main Weapon</target>
-            </trans-unit>
-            <trans-unit id="9f811ba7d83e9d0e0ba035517ec2e3d6" resname="main.attack.rolls">
-                <source>main.attack.rolls</source>
-                <target>Main Attack Rolls</target>
-            </trans-unit>
-            <trans-unit id="de7f8c9b3f62a85f0e7315b364fe16fe" resname="main.damage.bonus">
-                <source>main.damage.bonus</source>
-                <target>Main Damage Bonus</target>
-            </trans-unit>
-            <trans-unit id="1fc8ff27ea603f816505dbc08e5db60b" resname="misc.modifiers">
-                <source>misc.modifiers</source>
-                <target>Misc Mod.</target>
-            </trans-unit>
-            <trans-unit id="45fe7e5529d283851d93b74536e095a0" resname="neck">
-                <source>neck</source>
-                <target>Neck</target>
-            </trans-unit>
-            <trans-unit id="032cf35e680628d270debd9ceb53c132" resname="offhand.weapon">
-                <source>offhand.weapon</source>
-                <target>Offhand Weapon</target>
-            </trans-unit>
-            <trans-unit id="ebc93f38b87aebe972ba895d6baa5185" resname="other.bonuses">
-                <source>other.bonuses</source>
-                <target>Other Bonuses</target>
-            </trans-unit>
-            <trans-unit id="bd98581ae6ca40ecda16531e747c4013" resname="passive.powers">
-                <source>passive.powers</source>
-                <target>Passive Powers</target>
-            </trans-unit>
-            <trans-unit id="0aab81de5c4c87021772015efc184d67" resname="points">
-                <source>points</source>
-                <target>Points</target>
-            </trans-unit>
-            <trans-unit id="2ecf6e984ff5cd8614e10440b916f2c0" resname="powers">
-                <source>powers</source>
-                <target>Powers</target>
-            </trans-unit>
-            <trans-unit id="67a968aae7e6b5d9e00ac9ff5c7507ab" resname="prerequisities">
-                <source>prerequisities</source>
-                <target>Prerequisities</target>
-            </trans-unit>
-            <trans-unit id="b065afb8456dd9de53cba425677a47cf" resname="races">
-                <source>races</source>
-                <target>Races</target>
-            </trans-unit>
-            <trans-unit id="edb8e99774d883374f8832f9efbe92f4" resname="offhand.attack.rolls">
-                <source>offhand.attack.rolls</source>
-                <target>Offhand Attack Rolls</target>
-            </trans-unit>
-            <trans-unit id="6431a4a4492d65be3092b91a8414aeed" resname="offhand.damage.bonus">
-                <source>offhand.damage.bonus</source>
-                <target>Offhand Damage Bonus</target>
-            </trans-unit>
-            <trans-unit id="87b731afb7a12a9872120e5e5f95e1fe" resname="ranks">
-                <source>ranks</source>
-                <target>Ranks</target>
-            </trans-unit>
-            <trans-unit id="4c294d5f210818804d3749a2826a7c25" resname="reflexes">
-                <source>reflexes</source>
-                <target>Reflexes</target>
-            </trans-unit>
-            <trans-unit id="06a170a13865c17513fa8aa54c615752" resname="remove.item">
-                <source>remove.item</source>
-                <target>Delete</target>
-            </trans-unit>
-            <trans-unit id="f4228a63886a45764fedca104bf9eede" resname="right.finger">
-                <source>right.finger</source>
-                <target>Right Finger</target>
-            </trans-unit>
-            <trans-unit id="ca1cd3c3055991bf20499ee86739f7e2" resname="score">
-                <source>score</source>
-                <target>Score</target>
-            </trans-unit>
-            <trans-unit id="d72fc3039406b2d9f735d3a0aeb0c546" resname="shoulders">
-                <source>shoulders</source>
-                <target>Shoulders</target>
-            </trans-unit>
-            <trans-unit id="713dd4d0b2e842c08da62ddeec872331" resname="skill">
-                <source>skill</source>
-                <target>Skill</target>
-            </trans-unit>
-            <trans-unit id="a658279f9b983958149f31e4d8487673" resname="skills">
-                <source>skills</source>
-                <target>Skills</target>
-            </trans-unit>
-            <trans-unit id="c9fab33e9458412c527c3fe8a13ee37d" resname="sleep">
-                <source>sleep</source>
-                <target>Sleep</target>
-            </trans-unit>
-            <trans-unit id="649921b34e2f68becf1e7488379c7e6d" resname="spells">
-                <source>spells</source>
-                <target>Spells</target>
-            </trans-unit>
-            <trans-unit id="5177790ad6df0ea98db41b37b602367c" resname="strength">
-                <source>strength</source>
-                <target>Strength</target>
-            </trans-unit>
-            <trans-unit id="9ab2ec7ea4a2041306f7bdf150fcd453" resname="tables">
-                <source>tables</source>
-                <target>Tables</target>
-            </trans-unit>
-            <trans-unit id="2c47b269fffc81d6c07b641635a7bc26" resname="total.bonus">
-                <source>total.bonus</source>
-                <target>Total Bonus</target>
-            </trans-unit>
-            <trans-unit id="918e8676fdcd3d81c2c55443b679687f" resname="touch.ac">
-                <source>touch.ac</source>
-                <target>Touch AC</target>
-            </trans-unit>
-            <trans-unit id="7d077defba958d4553d0b68ac7f9fb3b" resname="uncast">
-                <source>uncast</source>
-                <target>Uncast</target>
-            </trans-unit>
-            <trans-unit id="9bf3932427146bfbc1f8e0dc948f0257" resname="uncast.spells">
-                <source>uncast.spells</source>
-                <target>Cancel Spells</target>
-            </trans-unit>
-            <trans-unit id="fd5ec0a18b736f92634353c418dc2bb9" resname="unequip">
-                <source>unequip</source>
-                <target>Unequip</target>
-            </trans-unit>
-            <trans-unit id="d15728dca7481a9f530f085cfec35774" resname="unmanaged.powers">
-                <source>unmanaged.powers</source>
-                <target>Unmanaged Powers</target>
-            </trans-unit>
-            <trans-unit id="2063c1608d6e0baf80249c42e2be5804" resname="value">
-                <source>value</source>
-                <target>Value</target>
-            </trans-unit>
-            <trans-unit id="18218139eec55d83cf82679934e5cd75" resname="will">
-                <source>will</source>
-                <target>Will</target>
-            </trans-unit>
-            <trans-unit id="a541714a17804ac281e6ddda5b707952" resname="wisdom">
-                <source>wisdom</source>
-                <target>Wisdom</target>
-            </trans-unit>
-            <trans-unit id="ec7b4b04dc075abf58e663ef8c15e929" resname="wrists">
-                <source>wrists</source>
-                <target>Wrists</target>
-            </trans-unit>
-            <trans-unit id="709dfaae4a5e40b424d7349776f94288" resname="page.new">
-                <source>page.new</source>
-                <target>New page</target>
-            </trans-unit>
-            <trans-unit id="9db927cf8e2d2e728ecdf4e28940c1ef" resname="subpage.new">
-                <source>subpage.new</source>
-                <target>New subpage</target>
-            </trans-unit>
-            <trans-unit id="4011bdcc6234556f62a4c339b7e028c6" resname="granted.powers">
-                <source>granted.powers</source>
-                <target>Granted Powers</target>
-            </trans-unit>
-            <trans-unit id="b068931cc450442b63f5b3d276ea4297" resname="name">
-                <source>name</source>
-                <target>Name</target>
-            </trans-unit>
-            <trans-unit id="76c62c912f24cf0168daa9c0a2a06255" resname="spell.level">
-                <source>spell.level</source>
-                <target>Spell Level</target>
-            </trans-unit>
-            <trans-unit id="4358b5009c67d0e31d7fbf1663fcd3bf" resname="notes">
-                <source>notes</source>
-                <target>notes</target>
-            </trans-unit>
-            <trans-unit id="ce4ef3ec98443ed10da505114b58f153" resname="speed">
-                <source>speed</source>
-                <target>speed</target>
-            </trans-unit>
-            <trans-unit id="181d535b3f6a6de1a63e86f629a01788" resname="haste">
-                <source>haste</source>
-                <target>haste</target>
-            </trans-unit>
-            <trans-unit id="1871dbe4ffdad6ba92dba845efaa6fa7" resname="ROLE_USER">
-                <source>ROLE_USER</source>
-                <target>User</target>
-            </trans-unit>
-            <trans-unit id="9fdd4a72bdfe15c619db8e526968da25" resname="ROLE_SUPER_ADMIN">
-                <source>ROLE_SUPER_ADMIN</source>
-                <target>Super Administrator</target>
-            </trans-unit>
-            <trans-unit id="4ae33445313a0cef2a17b57ea1d45cb6" resname="ROLE_ADMIN">
-                <source>ROLE_ADMIN</source>
-                <target>Administrator</target>
-            </trans-unit>
-            <trans-unit id="fb073df12096275ce1a351174a58cc2e" resname="error.404">
-                <source>error.404</source>
-                <target>
-                    Oh no! A mimic stole the page you are looking for!
+  <file date="2015-10-03T19:43:11Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="86eeb63491eb42a4535513abe710a7ce94cf1a9a" resname="(De)Activate Powers">
+        <source>(De)Activate Powers</source>
+        <target>(De)Activate Powers</target>
+      </trans-unit>
+      <trans-unit id="077fe9c54ed5ed26fa547f4ded3ef9a9bb066d65" resname="Base">
+        <source>Base</source>
+        <target>Base</target>
+      </trans-unit>
+      <trans-unit id="91c581ba0cadd4d67049b8fc1746fb9af155b2b5" resname="Class Summary">
+        <source>Class Summary</source>
+        <target>Class Summary</target>
+      </trans-unit>
+      <trans-unit id="3424edc2354c7c55f6eb740b673d349b02d27c8d" resname="Confirmation">
+        <source>Confirmation</source>
+        <target>Confirmation</target>
+      </trans-unit>
+      <trans-unit id="6e157c5da4410b7e9de85f5c93026b9176e69064" resname="Create">
+        <source>Create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="f6fdbe48dc54dd86f63097a03bd24094dedd713a" resname="Delete">
+        <source>Delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="4594fada5272ae0d8f96b7a44c40d03bcb5683e2" resname="Feats">
+        <source>Feats</source>
+        <target>Feats</target>
+      </trans-unit>
+      <trans-unit id="ad9fece6ce1699f195983f1ce4c9058210949748" resname="Hit Point">
+        <source>Hit Point</source>
+        <target>Hit Point</target>
+      </trans-unit>
+      <trans-unit id="0ae4a70c20116ee80e9ac6dd767145d2aff7d028" resname="Prepare Spells">
+        <source>Prepare Spells</source>
+        <target>Prepare Spells</target>
+      </trans-unit>
+      <trans-unit id="bf042ca5f46f0971aae8be608d4b82ebdd853815" resname="ROLE_ADMIN">
+        <source>ROLE_ADMIN</source>
+        <target>Administrator</target>
+      </trans-unit>
+      <trans-unit id="7afdd26fa85188312fda15c64a14c067ef7c723e" resname="ROLE_SUPER_ADMIN">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target>Super Administrator</target>
+      </trans-unit>
+      <trans-unit id="e27b50b3892a74645142533ce208f70b7cb34eb6" resname="ROLE_USER">
+        <source>ROLE_USER</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="ec9f630c8693bdec93ff52a93e822ac67ff55503" resname="Skill">
+        <source>Skill</source>
+        <target>Skill</target>
+      </trans-unit>
+      <trans-unit id="e09212c7d3eaa769fbcf66f82a6263794e715931" resname="Skills">
+        <source>Skills</source>
+        <target>Skills</target>
+      </trans-unit>
+      <trans-unit id="6b99d4032e86559be5b9dfdc99df69c0042437d1" resname="Spells">
+        <source>Spells</source>
+        <target>Spells</target>
+      </trans-unit>
+      <trans-unit id="61ad50a9b9189cc3cf1874568e35e7901ff4c982" resname="Target">
+        <source>Target</source>
+        <target>Target</target>
+      </trans-unit>
+      <trans-unit id="fb91e24fa52d8d2b32937bf04d843f730319a902" resname="Update">
+        <source>Update</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="083dbabef569d46bf2ed5937e359fb78e42fbb0d" resname="ability">
+        <source>ability</source>
+        <target>Ability</target>
+      </trans-unit>
+      <trans-unit id="efcbc672337ae2d3de541b08566b20f585677fcc" resname="ability.modifier.short">
+        <source>ability.modifier.short</source>
+        <target>Ability Mod.</target>
+      </trans-unit>
+      <trans-unit id="14e571769066718bd06fa42a11eb53ed487371ee" resname="ability.point">
+        <source>ability.point</source>
+        <target>Ability Point</target>
+      </trans-unit>
+      <trans-unit id="672bfd42572f0e406382d07cebd4618ac77e8195" resname="ability.score.cost">
+        <source>ability.score.cost</source>
+        <target>Ability Score Cost</target>
+      </trans-unit>
+      <trans-unit id="0c11d463c749db5838e2c0e489bf869d531e5403" resname="ac">
+        <source>ac</source>
+        <target>AC</target>
+      </trans-unit>
+      <trans-unit id="93b61089bca216ea6b0c889638526a8b8a8a04cf" resname="add.item">
+        <source>add.item</source>
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="8dca88b0f86c29bc05fb0f4ae36af26b0cf6f4a0" resname="advancement">
+        <source>advancement</source>
+        <target>Advancement</target>
+      </trans-unit>
+      <trans-unit id="2d554a712f00985c3d2155f3022124469cdb0d48" resname="all_items">
+        <source>all_items</source>
+        <target>All items</target>
+      </trans-unit>
+      <trans-unit id="42c055ee8dbffb6b8b8f3b8edebfe4ac4d984059" resname="applied.bonuses">
+        <source>applied.bonuses</source>
+        <target>Applied Bonuses</target>
+      </trans-unit>
+      <trans-unit id="5bd89b72f8993206c9afd4094964b13e9db00b57" resname="arcane_spell_failure">
+        <source>arcane_spell_failure</source>
+        <target>Arcane Spell Failure</target>
+      </trans-unit>
+      <trans-unit id="e3aa3ff7e2c628603615384ae5e7bce199734aa1" resname="armor">
+        <source>armor</source>
+        <target>Armor</target>
+      </trans-unit>
+      <trans-unit id="8b4150cc98fccb3cdcdaee350bd74f26d73b00b6" resname="armor_check_penalty">
+        <source>armor_check_penalty</source>
+        <target>Armor Check Penalty</target>
+      </trans-unit>
+      <trans-unit id="877c87cc9c2518f8f74964a9454d73f8bb86ffd6" resname="bab">
+        <source>bab</source>
+        <target>BAB</target>
+      </trans-unit>
+      <trans-unit id="aec3c10f5159ed77dad06f3fb53ae0eba6358a4a" resname="belt">
+        <source>belt</source>
+        <target>Belt</target>
+      </trans-unit>
+      <trans-unit id="02083f4579e08a612425c0c1a17ee47add783b94" resname="body">
+        <source>body</source>
+        <target>Body</target>
+      </trans-unit>
+      <trans-unit id="81cadc089845d36f5070e50e472bc1f342fac8b4" resname="campain.type">
+        <source>campain.type</source>
+        <target>Campain Type</target>
+      </trans-unit>
+      <trans-unit id="39aa12e6d633fbb40d65f75a3c76898807ac424e" resname="cast">
+        <source>cast</source>
+        <target>Cast</target>
+      </trans-unit>
+      <trans-unit id="d4cca26f81f2a7a7e98e432e8686d8cf3ef23f8c" resname="cast.spells">
+        <source>cast.spells</source>
+        <target>Cast Spells</target>
+      </trans-unit>
+      <trans-unit id="5ccbf9c9c5fc1bc34df8238a97094968f38f5165" resname="category">
+        <source>category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="f9f9703d4e88d0b359b17955b0faa979d7ec7fe9" resname="charisma">
+        <source>charisma</source>
+        <target>Charisma</target>
+      </trans-unit>
+      <trans-unit id="be3ee18195b6baa66ecfeb1e4aa2e31a6cdde4ca" resname="chest">
+        <source>chest</source>
+        <target>Chest</target>
+      </trans-unit>
+      <trans-unit id="8d767bf5b72373d12f0efd4406677e9ed076f592" resname="class">
+        <source>class</source>
+        <target>Class</target>
+      </trans-unit>
+      <trans-unit id="66cad1ab6efc24328067c47517813463821d5a43" resname="class.powers">
+        <source>class.powers</source>
+        <target>Class</target>
+      </trans-unit>
+      <trans-unit id="1adaa84dc07a16d34ede5b9a70713ff832a0f853" resname="classes">
+        <source>classes</source>
+        <target>Classes</target>
+      </trans-unit>
+      <trans-unit id="9f8809a143846d59b573d67aa5f514169e77a633" resname="combat">
+        <source>combat</source>
+        <target>Combat</target>
+      </trans-unit>
+      <trans-unit id="f8eb525d26e1bfccf25865e02eef17703b609c66" resname="conditions">
+        <source>conditions</source>
+        <target>Conditions</target>
+      </trans-unit>
+      <trans-unit id="ef7573952f0b62223fd4ffa6f9aeef8fb9101226" resname="constitution">
+        <source>constitution</source>
+        <target>Constitution</target>
+      </trans-unit>
+      <trans-unit id="885dc4a9b362094fb138a3d17c4933bf3e8b9d85" resname="cost">
+        <source>cost</source>
+        <target>Cost</target>
+      </trans-unit>
+      <trans-unit id="dd0459ae920fc13611c34670d2af988bbfc280f8" resname="counter.new">
+        <source>counter.new</source>
+        <target>New Counter</target>
+      </trans-unit>
+      <trans-unit id="9ef65378b90a121f4afd568ccf6ba8211b70ec73" resname="counters">
+        <source>counters</source>
+        <target>Counters</target>
+      </trans-unit>
+      <trans-unit id="1210cdffc1810f2947084bec43397aa36018c6bf" resname="critical">
+        <source>critical</source>
+        <target>Critical</target>
+      </trans-unit>
+      <trans-unit id="e97bbc300bead09d2d6d492ccd9a5b8a0b6b9bcf" resname="damages">
+        <source>damages</source>
+        <target>Damages</target>
+      </trans-unit>
+      <trans-unit id="13211ef68928d927b98c56e3497bfbc0a93a377a" resname="dc">
+        <source>dc</source>
+        <target>DC</target>
+      </trans-unit>
+      <trans-unit id="cb329146a0dd0d566b0628744d67936558741ffa" resname="description">
+        <source>description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="f77b4be0814bb164b96db1ae6dbc905b91aff0ca" resname="dexterity">
+        <source>dexterity</source>
+        <target>Dexterity</target>
+      </trans-unit>
+      <trans-unit id="aa20c3bf5eca16e978a39965710b45ac9b9b5949" resname="drop">
+        <source>drop</source>
+        <target>Drop</target>
+      </trans-unit>
+      <trans-unit id="87d6a15a11cb8dd706e451feac98bcaac4c40902" resname="edit.level">
+        <source>edit.level</source>
+        <target>Edit Level</target>
+      </trans-unit>
+      <trans-unit id="d73184196e0c6fd883dc9eb894045a6023e64f3d" resname="edit.levels">
+        <source>edit.levels</source>
+        <target>Edit Levels</target>
+      </trans-unit>
+      <trans-unit id="b827d9a7af8a6c6ea7bd1e82e70f432331630641" resname="equip">
+        <source>equip</source>
+        <target>Equip</target>
+      </trans-unit>
+      <trans-unit id="bedcc40ee5df32a892ba203376f7a1fa79617ec8" resname="equipment">
+        <source>equipment</source>
+        <target>Equipment</target>
+      </trans-unit>
+      <trans-unit id="50e9c9413f7384e7b8af475a8abdc79a04299180" resname="error.403">
+        <source>error.403</source>
+        <target>You don't have the proper permissions to access this page.
                 </target>
-            </trans-unit>
-            <trans-unit id="bbd48cb99ec51fbae10d66b2afc18b60" resname="error.403">
-                <source>error.403</source>
-                <target>
-                    You don't have the proper permissions to access this page.
+      </trans-unit>
+      <trans-unit id="7548d1a0e1f24786f00653c38e775478629c7d19" resname="error.404">
+        <source>error.404</source>
+        <target>Oh no! A mimic stole the page you are looking for!
                 </target>
-            </trans-unit>
-        </body>
-    </file>
+      </trans-unit>
+      <trans-unit id="577edc67ce8a594bf0d56a00096c827c29c828ac" resname="eyes">
+        <source>eyes</source>
+        <target>Eyes</target>
+      </trans-unit>
+      <trans-unit id="ec1e111db30c9cca1cca2958af3711a899cee873" resname="fantasy">
+        <source>fantasy</source>
+        <target>Fantasy</target>
+      </trans-unit>
+      <trans-unit id="e3cf6bb7da0c64ad78c5d3448d77cf8f82279b55" resname="favored.extra.point">
+        <source>favored.extra.point</source>
+        <target>Extra point</target>
+      </trans-unit>
+      <trans-unit id="5a84916150ed8117e3931d8d444d96fc94df828a" resname="feat_number">
+        <source>feat_number</source>
+        <target>Feat #%number%</target>
+      </trans-unit>
+      <trans-unit id="c309e886a0aadab1bc26d91f691ff8114b90d1e4" resname="feats">
+        <source>feats</source>
+        <target>Feats</target>
+      </trans-unit>
+      <trans-unit id="3a3fb5682104e16098c063d203d49e58b8c5763e" resname="feats.edit">
+        <source>feats.edit</source>
+        <target>Edit Feat</target>
+      </trans-unit>
+      <trans-unit id="271144d1c05e6f40d3a5ae875620cc8deca90cad" resname="feats.new">
+        <source>feats.new</source>
+        <target>New Feat</target>
+      </trans-unit>
+      <trans-unit id="67c0fccad5fdffa12f26a93ecf0c40696031f775" resname="feet">
+        <source>feet</source>
+        <target>Feet</target>
+      </trans-unit>
+      <trans-unit id="6d0512b628b1b61a1e4e73818c2fafc619958d33" resname="flat.footed.ac">
+        <source>flat.footed.ac</source>
+        <target>Flat-Footed AC</target>
+      </trans-unit>
+      <trans-unit id="f5565af6d968b3b53fb1618816db8bf6b1784112" resname="fortitude">
+        <source>fortitude</source>
+        <target>Fortitude</target>
+      </trans-unit>
+      <trans-unit id="fd49d98a6246a4b99ad3359e7f6cd5b19ffcc60b" resname="granted.powers">
+        <source>granted.powers</source>
+        <target>Granted Powers</target>
+      </trans-unit>
+      <trans-unit id="75fbb387660e0a60e805618f868ec66a3e855093" resname="hands">
+        <source>hands</source>
+        <target>Hands</target>
+      </trans-unit>
+      <trans-unit id="08a06a9f70653c9378a315718b56761d6030e433" resname="haste">
+        <source>haste</source>
+        <target>haste</target>
+      </trans-unit>
+      <trans-unit id="1a954628a960aaef81d7b2d4521929579f3541e6" resname="head">
+        <source>head</source>
+        <target>Head</target>
+      </trans-unit>
+      <trans-unit id="b82116e598dc9cccd074d987fb9b24390a4747fc" resname="headband">
+        <source>headband</source>
+        <target>Headband</target>
+      </trans-unit>
+      <trans-unit id="f380a11dca428fd356baf52ab5ba727b410aac4a" resname="heal.harm">
+        <source>heal.harm</source>
+        <target>Heal/Harm</target>
+      </trans-unit>
+      <trans-unit id="26ea463486d4f9e5608c27d85986bbe9e7da8a71" resname="hit.points">
+        <source>hit.points</source>
+        <target>Hit Points</target>
+      </trans-unit>
+      <trans-unit id="a9781aa5598193b5ffd3a55a0ea497fc6aa55973" resname="hp.roll">
+        <source>hp.roll</source>
+        <target>HP roll</target>
+      </trans-unit>
+      <trans-unit id="700d1460e3430ec8a1252d4a88e39e5079c949c4" resname="initiative">
+        <source>initiative</source>
+        <target>Initiative</target>
+      </trans-unit>
+      <trans-unit id="482e7bdd5b5d53239c8c2a1f404f6e66d9e7a577" resname="intelligence">
+        <source>intelligence</source>
+        <target>Intelligence</target>
+      </trans-unit>
+      <trans-unit id="ec99b813fa064f7f7cfa1d35bc7cc3d743c61fd1" resname="inventory">
+        <source>inventory</source>
+        <target>Inventory</target>
+      </trans-unit>
+      <trans-unit id="ae5cdc79deda66524041227760bf820a01b143c5" resname="inventory.edit">
+        <source>inventory.edit</source>
+        <target>Edit Inventory</target>
+      </trans-unit>
+      <trans-unit id="c2405bb9841e5ef7bc6985f27cc6cb3319404e94" resname="item_powers">
+        <source>item_powers</source>
+        <target>Items</target>
+      </trans-unit>
+      <trans-unit id="7316c8b2e74870d9d7e9d30bbc28ecf4cdf945ee" resname="items">
+        <source>items</source>
+        <target>Items</target>
+      </trans-unit>
+      <trans-unit id="21aa44ae9a15f284e608be2eef8269b2af103299" resname="known.spells">
+        <source>known.spells</source>
+        <target>Knownw Spells</target>
+      </trans-unit>
+      <trans-unit id="e11523c5ff23fc1600aca2d8ee5adb542c5ce4b3" resname="language">
+        <source>language</source>
+        <target>Language</target>
+      </trans-unit>
+      <trans-unit id="e60ff11082f2ae9fc60db8f46d5930ae8ce2e5a4" resname="learn_spell">
+        <source>learn_spell</source>
+        <target>Learn Spell</target>
+      </trans-unit>
+      <trans-unit id="fa701161308b620762afc83b6af82b3982e26065" resname="learned.spells">
+        <source>learned.spells</source>
+        <target>Learned spells</target>
+      </trans-unit>
+      <trans-unit id="83f3dfdc3912e57c1cc2592750787d163545d2f2" resname="left.finger">
+        <source>left.finger</source>
+        <target>Left Finger</target>
+      </trans-unit>
+      <trans-unit id="ad60c535ff88e85bf0254452fe3934f24e9668d5" resname="level">
+        <source>level</source>
+        <target>Level %level%</target>
+      </trans-unit>
+      <trans-unit id="cf3eab168c9823291963933a7e1e06d6bc17a76c" resname="level.up">
+        <source>level.up</source>
+        <target>Level Up</target>
+      </trans-unit>
+      <trans-unit id="afcdad52267222f3a46cbb0ac4105b3b56a7ecc0" resname="level_value">
+        <source>level_value</source>
+        <target>Level %level%</target>
+      </trans-unit>
+      <trans-unit id="2b925d7e32f4c4ef4f0daf388dc20b9fa868e049" resname="main.attack.rolls">
+        <source>main.attack.rolls</source>
+        <target>Main Attack Rolls</target>
+      </trans-unit>
+      <trans-unit id="be609ae3d5d82e6410363642d3b12acf8b3ffb37" resname="main.damage.bonus">
+        <source>main.damage.bonus</source>
+        <target>Main Damage Bonus</target>
+      </trans-unit>
+      <trans-unit id="1259261cb22a5133aec5198fc7e25a3b31eaf3ac" resname="main.profile">
+        <source>main.profile</source>
+        <target>Main Profile</target>
+      </trans-unit>
+      <trans-unit id="cb312dc0e81f6be495a2ec146ffbfab5b0b6ef99" resname="main.weapon">
+        <source>main.weapon</source>
+        <target>Main Weapon</target>
+      </trans-unit>
+      <trans-unit id="aa29c88b55ba623c1d2287d04a96b46fcffb349a" resname="maximum_dexterity_bonus">
+        <source>maximum_dexterity_bonus</source>
+        <target>Maximum Dexterity Bonus</target>
+      </trans-unit>
+      <trans-unit id="27329eba039c93516d6e34e25ca04709a6b6d89c" resname="misc.modifiers">
+        <source>misc.modifiers</source>
+        <target>Misc Mod.</target>
+      </trans-unit>
+      <trans-unit id="6ae999552a0d2dca14d62e2bc8b764d377b1dd6c" resname="name">
+        <source>name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="bb4a91749fe02cfaa8478886c95a69d9e2017356" resname="neck">
+        <source>neck</source>
+        <target>Neck</target>
+      </trans-unit>
+      <trans-unit id="3add7b9612102f2a7dbe4ed4fe886e07e847c24d" resname="notes">
+        <source>notes</source>
+        <target>notes</target>
+      </trans-unit>
+      <trans-unit id="a66adc8b9a72a3515bbc3a90122f74d28db63bf0" resname="offhand.attack.rolls">
+        <source>offhand.attack.rolls</source>
+        <target>Offhand Attack Rolls</target>
+      </trans-unit>
+      <trans-unit id="971a4e646424d2e52a075aa58c269bc46332b445" resname="offhand.damage.bonus">
+        <source>offhand.damage.bonus</source>
+        <target>Offhand Damage Bonus</target>
+      </trans-unit>
+      <trans-unit id="b7aed07526d260d2707f935bee9d65d3cc83a6ac" resname="offhand.weapon">
+        <source>offhand.weapon</source>
+        <target>Offhand Weapon</target>
+      </trans-unit>
+      <trans-unit id="30021ec16613a3913c994418e093545adfd25a8a" resname="other.bonuses">
+        <source>other.bonuses</source>
+        <target>Other Bonuses</target>
+      </trans-unit>
+      <trans-unit id="6de43644e0979fec2af1ceaa219286cc476b4fd5" resname="page.new">
+        <source>page.new</source>
+        <target>New page</target>
+      </trans-unit>
+      <trans-unit id="0b054f3bcc946f068b340379ab28858ee8299daa" resname="passive.powers">
+        <source>passive.powers</source>
+        <target>Passive Powers</target>
+      </trans-unit>
+      <trans-unit id="819f41f058379eb51168ff0ad732be993fa49610" resname="points">
+        <source>points</source>
+        <target>Points</target>
+      </trans-unit>
+      <trans-unit id="1562cff31252353452d59153a2dde1406f710e82" resname="powers">
+        <source>powers</source>
+        <target>Powers</target>
+      </trans-unit>
+      <trans-unit id="4f5fe30a5499230f451988d7d9e94e966ee75976" resname="prerequisities">
+        <source>prerequisities</source>
+        <target>Prerequisities</target>
+      </trans-unit>
+      <trans-unit id="f996debd15ad2a0261a118535a6c454bddba7401" resname="races">
+        <source>races</source>
+        <target>Races</target>
+      </trans-unit>
+      <trans-unit id="4d55af37dbbb6a42088d917caa1ca25428ec42c9" resname="range">
+        <source>range</source>
+        <target>Range</target>
+      </trans-unit>
+      <trans-unit id="210477a750ecb87ac6868ba6bcb3a21acd284b2b" resname="ranks">
+        <source>ranks</source>
+        <target>Ranks</target>
+      </trans-unit>
+      <trans-unit id="6bc8761351e00494bcef9515f2f82492cda4a277" resname="reflexes">
+        <source>reflexes</source>
+        <target>Reflexes</target>
+      </trans-unit>
+      <trans-unit id="a794978c8a73ee98bb2b7499d370b4c057dd6da8" resname="remove.item">
+        <source>remove.item</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="4b4596ab3d1b3216e4c7a221647f2dd3209d2cb7" resname="right.finger">
+        <source>right.finger</source>
+        <target>Right Finger</target>
+      </trans-unit>
+      <trans-unit id="5c7d283db5846bba7f892a55ece205a74d7cfd98" resname="ring">
+        <source>ring</source>
+        <target>Ring</target>
+      </trans-unit>
+      <trans-unit id="75ebcb361c656225206bb0191df63cb1d38cbbab" resname="score">
+        <source>score</source>
+        <target>Score</target>
+      </trans-unit>
+      <trans-unit id="733aa03fdd44bf8e5018a0a892dffe981207827f" resname="shield">
+        <source>shield</source>
+        <target>Shield</target>
+      </trans-unit>
+      <trans-unit id="b2f96fd9e62f56f8fa860fc902872524e1eed74a" resname="shoulders">
+        <source>shoulders</source>
+        <target>Shoulders</target>
+      </trans-unit>
+      <trans-unit id="34b33e00b199d35ff4cda21df27122784573256b" resname="skill">
+        <source>skill</source>
+        <target>Skill</target>
+      </trans-unit>
+      <trans-unit id="816f2b87d3d3be351dee9d599849e5804aacc967" resname="skills">
+        <source>skills</source>
+        <target>Skills</target>
+      </trans-unit>
+      <trans-unit id="c3ca5f787365eae0dea86250e27d476406956478" resname="sleep">
+        <source>sleep</source>
+        <target>Sleep</target>
+      </trans-unit>
+      <trans-unit id="92b6320812d86abe48e76fbfbbe8bde7170bf036" resname="speed">
+        <source>speed</source>
+        <target>speed</target>
+      </trans-unit>
+      <trans-unit id="07beccc3f3347f21712d5c367bfd9196fe430a8d" resname="spell.level">
+        <source>spell.level</source>
+        <target>Spell Level</target>
+      </trans-unit>
+      <trans-unit id="ba6fbe9942f509d6c640ed61a254487b5453fc4f" resname="spells">
+        <source>spells</source>
+        <target>Spells</target>
+      </trans-unit>
+      <trans-unit id="57a4e7ca7f6cbd2eaf2a37fa426511c4055c84e7" resname="strength">
+        <source>strength</source>
+        <target>Strength</target>
+      </trans-unit>
+      <trans-unit id="440526c353e920f073b8e0295bf9cdc1982fc092" resname="subpage.new">
+        <source>subpage.new</source>
+        <target>New subpage</target>
+      </trans-unit>
+      <trans-unit id="3915396b5fe58dce8505b3e62c31b4f79b3ccc2c" resname="tables">
+        <source>tables</source>
+        <target>Tables</target>
+      </trans-unit>
+      <trans-unit id="67e33f37692d15b585d184c4e4379bbe4da2a540" resname="total.bonus">
+        <source>total.bonus</source>
+        <target>Total Bonus</target>
+      </trans-unit>
+      <trans-unit id="3126e9a671e4c56e4de39d793f67efd3f8e43e26" resname="touch.ac">
+        <source>touch.ac</source>
+        <target>Touch AC</target>
+      </trans-unit>
+      <trans-unit id="90ad389228808927cdbf2d1e305dab6649072e6c" resname="two_handed">
+        <source>two_handed</source>
+        <target>Two-handed</target>
+      </trans-unit>
+      <trans-unit id="d0a3e7f81a9885e99049d1cae0336d269d5e47a9" resname="type">
+        <source>type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="cd3705b919e99223eabfdc83951f3af11c9b6e4e" resname="uncast">
+        <source>uncast</source>
+        <target>Uncast</target>
+      </trans-unit>
+      <trans-unit id="7565c256aacdb14e7d63a6799f339e2ea36dc215" resname="uncast.spells">
+        <source>uncast.spells</source>
+        <target>Cancel Spells</target>
+      </trans-unit>
+      <trans-unit id="d229177ad9b4ba8b3f92f6a49eb7df6e2a210924" resname="unequip">
+        <source>unequip</source>
+        <target>Unequip</target>
+      </trans-unit>
+      <trans-unit id="1923f1d69eac7d91b3c4eefdddb894e733d57c39" resname="unmanaged.powers">
+        <source>unmanaged.powers</source>
+        <target>Unmanaged Powers</target>
+      </trans-unit>
+      <trans-unit id="f32b67c7e26342af42efabc674d441dca0a281c5" resname="value">
+        <source>value</source>
+        <target>Value</target>
+      </trans-unit>
+      <trans-unit id="395d3b4c7bb341ea56a46a588ce791050441a2b1" resname="weapon">
+        <source>weapon</source>
+        <target>Arme</target>
+      </trans-unit>
+      <trans-unit id="afe0444198ad67c415c63ad23456fcbf739b9bf7" resname="weight">
+        <source>weight</source>
+        <target>Weight</target>
+      </trans-unit>
+      <trans-unit id="37d41699bdee4fcb969ca499eb0f8b82c60d59cc" resname="will">
+        <source>will</source>
+        <target>Will</target>
+      </trans-unit>
+      <trans-unit id="d788956320b23c44b20204cc8ec5a505fc27a1a2" resname="wisdom">
+        <source>wisdom</source>
+        <target>Wisdom</target>
+      </trans-unit>
+      <trans-unit id="d90b783be7042a9076d8c29d4fbd27d15764d219" resname="wrists">
+        <source>wrists</source>
+        <target>Wrists</target>
+      </trans-unit>
+      <trans-unit id="aaf901df63768a8c378745f5e9409d385f91de61" resname="your_characters">
+        <source>your_characters</source>
+        <target>Your Characters</target>
+      </trans-unit>
+      <trans-unit id="dfff28d916d54b8f67edceef56748534e28f0887" resname="your_groups">
+        <source>your_groups</source>
+        <target>Your Groups</target>
+      </trans-unit>
+      <trans-unit id="0cc3b96ec8f1228e2e504d0478d5aae3edbffa0c" resname="your_parties">
+        <source>your_parties</source>
+        <target>Your Parties</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

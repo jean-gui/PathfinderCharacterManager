@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h2>Your Characters</h2>
+                <h2>{{ 'your_characters'|trans }}</h2>
                 <ul class="list-group">
                     {% for character in user.characters %}
                         <li class="list-group-item">
@@ -20,7 +20,7 @@
                 <p><a href="{{ path('characters_new') }}" class="btn btn-primary active">New Character</a></p>
             </div>
             <div class="col-md-4">
-                <h2>Your Parties</h2>
+                <h2>{{ 'your_parties'|trans }}</h2>
                 <ul class="list-group">
                     {% for party in user.parties %}
                         <li class="list-group-item">
@@ -34,7 +34,7 @@
                 <p><a href="{{ path('parties_new') }}" class="btn btn-primary active">New Party</a></p>
             </div>
             <div class="col-md-4">
-                <h2>Your Groups</h2>
+                <h2>{{ 'your_groups'|trans }}</h2>
                 <ul class="list-group">
                     {% for group in user.groups %}
                         <li class="list-group-item">
