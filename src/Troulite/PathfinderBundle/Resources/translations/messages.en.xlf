@@ -126,6 +126,22 @@
                 <source>chest</source>
                 <target>Chest</target>
             </trans-unit>
+            <trans-unit id="282aa351a2bd30655fbc060bd4f33766" resname="weapon">
+                <source>weapon</source>
+                <target>Arme</target>
+            </trans-unit>
+            <trans-unit id="1a5df958e0f29d35594c7cf057fe4bd1" resname="ring">
+                <source>ring</source>
+                <target>Ring</target>
+            </trans-unit>
+            <trans-unit id="28c69b4cba5681d565d3bd901684dd77" resname="shield">
+                <source>shield</source>
+                <target>Shield</target>
+            </trans-unit>
+            <trans-unit id="bfcc7a7a480ee69b93bce8b083bfab14" resname="all_items">
+                <source>all_items</source>
+                <target>All items</target>
+            </trans-unit>
             <trans-unit id="a2f2ed4f8ebc2cbb4c21a29dc40ab61d" resname="class">
                 <source>class</source>
                 <target>Class</target>
@@ -260,11 +276,11 @@
             </trans-unit>
             <trans-unit id="691d502cfd0e0626cd3b058e5682ad1c" resname="items">
                 <source>items</source>
-                <target>items</target>
+                <target>Items</target>
             </trans-unit>
             <trans-unit id="bb8b02d2bd2f4fe4ebead139c3e5b50a" resname="item_powers">
                 <source>item_powers</source>
-                <target>items</target>
+                <target>Items</target>
             </trans-unit>
             <trans-unit id="470c92ab9336c3e64691ead0432d3d5b" resname="known.spells">
                 <source>known.spells</source>
