@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ path('index') }}">
+        Pathfinder Character Manager
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% set route = '' %}
+        {% if route in ['characters_show', 'character_inventory', 'character_inventory_edit', 'character_spells'] %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item{% if route == 'characters_show' %} active{% endif %}">
+                    <a href="{{ path('characters_show', routeParams) }}">{{ 'main.profile'|trans }}</a>
+                </li>
+                <li class="nav-item{% if route in ['character_inventory', 'character_inventory_edit'] %} active{% endif %}">
+                    <a href="{{ path('character_inventory', routeParams) }}">{{ 'inventory'|trans }}</a>
+                </li>
+                <li class="nav-item{% if route == 'character_spells' %} active{% endif %}">
+                    <a href="{{ path('character_spells', routeParams) }}">{{ 'spells'|trans }}</a>
+                </li>
+            </ul>
+        {% else %}
+            <div class="navbar-nav mr-auto"></div>
+        {% endif %}
+        <div class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="bg-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {% trans %}tables{% endtrans %} <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="">{{ 'races'|trans }}</a>
+                    <a class="dropdown-item" href="">{% trans %}classes{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}skills{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}feats{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}spells{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}advancement{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}items{% endtrans %}</a>
+                    <a class="dropdown-item" href="">{% trans %}conditions{% endtrans %}</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <span class="navbar-text">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                Logged in as {{ app.user.name }}
+                            </span>
+                {% else %}
+                    <span class="navbar-text py-0">
+                                <a class="btn btn-danger"
+                                   href="{{ path('app_login', {'redirect_url': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}) }}">
+                                    Login
+                                </a>
+                            </span>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>
+<main class="container">
+    {% block body %}{% endblock %}
+</main>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>
