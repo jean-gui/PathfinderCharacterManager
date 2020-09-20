@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+    <h1>{{ 'spells'|trans }}</h1>
+
+    <table data-detail-view="true" data-detail-formatter="detailFormatter" data-toggle="table" data-search="true"
+           class="table table-sm table-striped table-hover table-responsive">
+        <thead>
+            <tr>
+                <th data-field="name" data-sorter="mysorter" data-sortable="true">Name</th>
+                <th data-field="description" data-sortable="true">Description</th>
+                <th data-field="classes">Classes</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('spells_show', {'id': entity.id}) }}">{{ entity.name }}</a></td>
+                <td>
+                    {{ entity.shortDescription|raw }}
+                    <script type="text/html">
+                        <dl class="dl-horizontal">
+                            <dt>{{ 'casting_time'|trans }}</dt>
+                            <dd>{{ entity.castingTime }}</dd>
+
+                            <dt>{{ 'components'|trans }}</dt>
+                            <dd>{{ entity.components }}</dd>
+
+                            <dt>{{ 'range'|trans }}</dt>
+                            <dd>{{ entity.range }}</dd>
+
+                            <dt>{{ 'duration'|trans }}</dt>
+                            <dd>{{ entity.duration }}</dd>
+
+                            <dt>{{ 'savieng_throw'|trans }}</dt>
+                            <dd>{{ entity.savingThrow|default('none')|trans }}</dd>
+
+                            <dt>{{ 'spell_resistance'|trans }}</dt>
+                            <dd>{{ entity.spellResistance ? 'yes'|trans : 'no'|trans }}</dd>
+
+                            {% if entity.targets %}
+                                <dt>{{ 'targets'|trans }}</dt>
+                                <dd>{{ entity.targets }}</dd>
+                            {% endif %}
+
+                            {% if entity.effects %}
+                                <dt>{{ 'effects'|trans }}</dt>
+                                {% for key, effect in entity.effects %}
+                                    <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if entity.conditions %}
+                                <dt>{{ 'conditions'|trans }}</dt>
+                                {% for key, condition in entity.condition %}
+                                    <dd>{{ key }}: {{ condition }}</dd>
+                                {% endfor %}
+                            {% endif %}
+
+                            {% if entity.externalConditions %}
+                                <dt>{{ 'external_conditions'|trans }}</dt>
+                                {% for key, conditions in entity.externalConditions %}
+                                    <dd>{{ key }}: {{ condition }}</dd>
+                                {% endfor %}
+                            {% endif %}
+                        </dl>
+                        {{ entity.longDescription|raw }}
+                    </script>
+                </td>
+                <td>
+                    {% for spellClass in entity.classes %}
+                        {{ spellClass.class }} {{ spellClass.spellLevel }}
+                        {% if loop.index != loop.length %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        function mysorter(a, b) {
+            a = $(a).text();
+            b = $(b).text();
+            return a.localeCompare(b);
+        }
+        function detailFormatter(index, row) {
+            return $("script", $("<div>" + row["description"] + "</div>")).html();
+        }
+    </script>
+{% endblock %}

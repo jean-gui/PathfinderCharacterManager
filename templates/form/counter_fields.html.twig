@@ -1,0 +1,68 @@
+{% block _counters_increase_increase_all_widget %}
+    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0"
+            style="font-size: inherit">
+        <i class="fas fa-arrow-up"></i>
+        <span class="sr-only">{{ 'increase_all'|trans }}</span>
+    </button>
+{% endblock %}
+
+{% block _counters_increase_counters_row %}
+    <div style="margin-left: -15px; margin-right: -15px" class="row">
+        {% for child in form %}
+            {% set form = child %}
+            {{ block('_counters_increase_counters_entry_row') }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block counters_delete %}
+    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0 float-right"
+            style="font-size: inherit">
+        <i class="fas fa-trash"></i>
+        <span class="sr-only">{{ 'delete'|trans }}</span>
+    </button>
+{% endblock %}
+
+{% block counters_increase %}
+    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0 float-right"
+            style="font-size: inherit">
+        <i class="fas fa-arrow-up"></i>
+        <span class="sr-only">{{ 'increase'|trans }}</span>
+    </button>
+{% endblock %}
+
+{% block _counters_increase_counters_entry_row %}
+    {% set counter = form.vars.data %}
+    {% set maxReached = counter.current >= counter.max %}
+    {% if maxReached %}
+        {% set class = 'danger' %}
+    {% elseif counter.current == counter.max - 1 %}
+        {% set class = 'warning' %}
+    {% else %}
+        {% set class = 'success' %}
+    {% endif %}
+    <div class="col-md-3">
+        <div class="card panel-{{ class }}">
+            <div class="card-header">
+                <span class="h5 d-inline-block" class="panel-title">
+                    {{ counter }}
+                </span>
+                {% with {
+                    'form': form.delete
+                } %}
+                    {{ block('counters_delete') }}
+                {% endwith %}
+            </div>
+            <div class="card-body">
+                <span class="d-inline-block">{{ counter.current }} / {{ counter.max }}</span>
+                {% if not maxReached %}
+                    {% with {
+                        'form': form.increase
+                    } %}
+                        {{ block('counters_increase') }}
+                    {% endwith %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme castSpellsForm _self %}
+
+{% block subtitle entity ~ " - " ~ "cast.spells"|trans %}
+
+{% block body -%}
+    {% include('character/character_h1.html.twig') %}
+
+    {% if castSpellsForm.children|length > 1 %}
+        <h2>{{ 'cast.spells'|trans }}</h2>
+        {{ form(castSpellsForm) }}
+    {% endif %}
+
+    {% if uncastSpellsForm.children|length > 1 %}
+        <h2>{{ 'uncast.spells'|trans }}</h2>
+        {{ form(uncastSpellsForm) }}
+    {% endif %}
+
+    {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'spell' })) }}
+
+    {% set known = entity.learnedSpellsBySpellLevel %}
+    {% if known %}
+        <h2>{{ 'known.spells'|trans }}</h2>
+        {% for spellLevel, classSpells in known %}
+            <h3>{{ 'level_value'|trans({'%level%': spellLevel}) }}</h3>
+            <ul>
+                {% for classSpell in classSpells %}
+                    <li>{{ classSpell.spell }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle entity ~ ' - ' ~ 'counter.new'|trans %}
+
+{% block body -%}
+    {% include('character/character_h1.html.twig') %}
+    <h2>{{ 'counter.new'|trans({'character': entity}) }}</h2>
+    {{ form(form) }}
+{% endblock %}

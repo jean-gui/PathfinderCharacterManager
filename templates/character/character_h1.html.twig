@@ -1,0 +1,28 @@
+{% block character_h1 %}
+<h1>
+    {{ entity }}
+    <small>
+        {{ 'level'|trans({'%level%': entity.level}) }}
+        <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
+        <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
+            {%- if entity.favoredClass.subClasses -%}
+                {% for level in entity.levels(entity.favoredClass)|filter(level => level.favoredClass and level.subClasses|length > 0) %}
+                    ({%- for subclass in level.SubClasses -%}
+                    <a href="{{ path('subclasses_show', {'id': subclass.id}) }}">{{ subclass }}</a>
+                    {%- if loop.index <= entity.levels(entity.favoredClass)|length -%}, {% endif %}
+                    {%- endfor -%})
+                {% endfor %}
+            {%- endif -%}
+        <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+                    class="fas fa-edit"></span></a>
+        <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
+                    class="fas fa-plus"></span></a>
+        <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}"><span
+                    class="fas fa-bed"></span></a>
+        {% if entity.canLearnSpells %}
+            <a href="{{ path('characters_learn_spell', {'id': entity.id}) }}" title="{{ 'learn_spell'|trans }}"><span
+                        class="fas fa-book"></span></a>
+        {% endif %}
+    </small>
+</h1>
+{% endblock %}

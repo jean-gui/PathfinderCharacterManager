@@ -5,7 +5,6 @@ namespace App\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 /**
  * Manage bonuses applicable to a specific character value
  *
@@ -16,7 +15,7 @@ class Bonuses {
     /**
      * @var Collection|Bonus[] List of all bonuses
      */
-    private $bonuses;
+    protected $bonuses;
 
     /**
      * Create a new Bonuses instance

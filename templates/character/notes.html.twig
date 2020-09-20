@@ -1,0 +1,6 @@
+{{ form_start(form) }}
+<h2 id="{{ form.vars.htmlid }}"><label for="{{ form.notes.vars.id }}_{{ form.vars.type }}">{{ form.notes.vars.name|trans|capitalize }}</label></h2>
+{{ form_widget(form.notes, {attr: {style: 'height: 10rem'}, id: form.notes.vars.id ~ '_' ~ form.vars.type}) }}
+{{ form_widget(form.submit, {attr: {class: 'btn-block btn-primary mt-2'}}) }}
+{{ form_rest(form) }}
+{{ form_end(form) }}

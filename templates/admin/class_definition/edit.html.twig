@@ -1,0 +1,67 @@
+{% extends '@EasyAdmin/crud/edit.html.twig' %}
+
+{% block main %}
+    {% block edit_form %}
+        {{ form_start(edit_form) }}
+        <ul class="nav nav-tabs nav-fill" id="wizard" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="base-tab" data-toggle="tab" href="#base" aria-controls="base"
+                   aria-selected="true">
+                    Base
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" aria-controls="stats"
+                   aria-selected="false">
+                    Stats
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#magic" data-toggle="tab" aria-controls="magic" aria-selected="false">
+                    Magic
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#spells" data-toggle="tab" aria-controls="spells" aria-selected="false">
+                    Spells
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#powers" data-toggle="tab" aria-controls="powers" aria-selected="false">
+                    Powers
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="base" class="tab-pane active" role="tabpanel" aria-labelledby="base-tab">
+                {{ form_row(edit_form.translations) }}
+                {{ form_row(edit_form.hpDice) }}
+                {{ form_row(edit_form.skillPoints) }}
+                {{ form_row(edit_form.classSkills) }}
+                {{ form_row(edit_form.prestige) }}
+            </div>
+            <div id="stats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
+                {{ form_row(edit_form.bab) }}
+                {{ form_row(edit_form.reflexes) }}
+                {{ form_row(edit_form.will) }}
+                {{ form_row(edit_form.fortitude) }}
+            </div>
+            <div id="magic" class="tab-pane" role="tabpanel" aria-labelledby="magic-tab">
+                {{ form_row(edit_form.castingAbility) }}
+                {{ form_row(edit_form.preparationNeeded) }}
+                {{ form_row(edit_form.ableToLearnLowerLevelSpells) }}
+                {{ form_row(edit_form.ableToLearnNewSpells) }}
+                {{ form_row(edit_form.spellsPerDay) }}
+                {{ form_row(edit_form.knownSpellsPerLevel) }}
+            </div>
+            <div id="spells" class="tab-pane" role="tabpanel" aria-labelledby="spells-tab">
+                {{ form_row(edit_form.spells) }}
+            </div>
+            <div id="powers" class="tab-pane" role="tabpanel" aria-labelledby="powers-tab">
+                {{ form_row(edit_form.powers) }}
+            </div>
+        </div>
+        {{ form_end(edit_form) }}
+    {% endblock edit_form %}
+{% endblock %}

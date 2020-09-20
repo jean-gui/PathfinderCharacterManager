@@ -13,7 +13,7 @@ class SpellSlotBonuses
     /**
      * @var array
      */
-    private $slots;
+    protected $slots;
 
     /**
      * Create a new AbilitiesBonuses instance

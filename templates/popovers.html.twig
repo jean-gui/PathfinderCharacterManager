@@ -1,0 +1,73 @@
+{% macro description(title, object) %}
+    {% if
+    object.longDescription or
+    object.shortDescription or
+    (object.prerequisities is defined and object.prerequisities|length > 0) or
+    (object.conditions is defined and object.conditions|length > 0) or
+    (object.externalConditions is defined and object.externalConditions|length > 0) %}
+        <a class="mypopover" data-toggle="popover"
+           title="{{ title }}"
+           data-content="
+            {% if object.shortDescription %}
+            <p><em>{{ object.shortDescription }}</em></p>
+            {% endif %}
+            {{ object.longDescription }}
+            {% if object.prerequisities is defined and object.prerequisities|length > 0 %}
+            {{ 'prerequisities'|trans }}:
+            <ul>
+                {% for key, value in object.prerequisities %}
+                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if
+           (object.conditions is defined and object.conditions|length > 0) or
+           (object.externalConditions is defined and object.externalConditions|length > 0) %}
+            {{ 'conditions'|trans }}:
+            <ul>
+                {% for key, value in object.conditions %}
+                <li>{{ key|capitalize }}: {{ value|join(', ') }}</li>
+                {% endfor %}
+                {% for key, value in object.externalConditions %}
+                <li>{{ key|capitalize }}: {{ value|capitalize }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+       ">
+            <span class="glyphicon glyphicon-info-sign"></span></a>
+    {% endif %}
+{% endmacro %}
+
+{% macro bonuses(bonuses) %}
+    {% if bonuses.bonuses|length != 0 %}
+        <a class="mypopover" data-toggle="popover"
+           title="Bonuses"
+           data-content="
+                {% set ab = bonuses.applicableBonuses %}
+                {% if ab|length > 0 %}
+                {{ 'applied.bonuses'|trans }}:
+                <ul>
+                    {% for bonus in bonuses.applicableBonuses %}
+                    <li>
+                        {{ bonus.source }}: {{ bonus.value }}
+                        {% if bonus.type %}({{ bonus.type }}){% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% set nab = bonuses.nonApplicableBonuses %}
+                {% if nab|length > 0 %}
+                {{ 'other.bonuses'|trans }}:
+                <ul>
+                    {% for bonus in nab %}
+                    <li>
+                        {{ bonus.source }}: {{ bonus.value }}
+                        {% if bonus.type %}({{ bonus.type }}){% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+           ">
+            <span class="glyphicon glyphicon-info-sign"></span></a>
+    {% endif %}
+{% endmacro bonuses %}

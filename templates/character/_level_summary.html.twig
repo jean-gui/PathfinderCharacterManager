@@ -1,0 +1,40 @@
+<dl class="dl-horizontal">
+    <dt>{{ 'class'|trans }}</dt>
+    <dd>{{ level.classDefinition }}</dd>
+    <dt>{{ 'hp.roll'|trans }}</dt>
+    <dd>{{ level.hpRoll }}</dd>
+    {% if level.extraAbility %}
+        <dt>{{ 'ability.point'|trans }}</dt>
+        <dd>{{ level.extraAbility|trans }}</dd>
+    {% endif %}
+    {% if level.extraPoint %}
+        <dt>{{ 'favored.extra.point'|trans }}</dt>
+        <dd>{{ level.extraPoint|trans }}</dd>
+    {% endif %}
+    {% if level.feats is not empty %}
+        <dt>{{ 'feats'|trans }}</dt>
+        {% for feat in level.feats %}
+            <dd>{{ feat }}</dd>
+        {% endfor %}
+    {% endif %}
+    {% if level.classPowers is not empty %}
+        <dt>{{ 'class.powers'|trans }}</dt>
+        {% for power in level.classPowers %}
+            <dd>{{ power }}</dd>
+        {% endfor %}
+    {% endif %}
+    {% if level.learnedSpells is not empty %}
+        <dt>{{ 'learned.spells'|trans }}</dt>
+        {% for spell in level.learnedSpells %}
+            <dd>{{ spell }} ({{ 'level_value'|trans({'%level%': spell.spellLevel}) }})</dd>
+        {% endfor %}
+    {% endif %}
+    {% if level.skills is not empty %}
+        <dt>{{ 'skills'|trans }}</dt>
+        {% for skill in level.skills %}
+            {% if skill.value > 0 %}
+                <dd>{{ skill }}: {{ skill.value }}</dd>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</dl>

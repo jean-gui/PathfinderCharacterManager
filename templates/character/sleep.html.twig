@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+
+{% block body -%}
+    <div class="container">
+        <h1>Sleep</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.preparedSpells) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

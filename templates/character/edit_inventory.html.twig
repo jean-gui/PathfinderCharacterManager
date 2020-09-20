@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle entity %}
+
+{% block body %}
+    {% include('character/character_h1.html.twig') %}
+
+    <h2>{{ 'inventory'|trans }}</h2>
+    {{ form(inventoryForm) }}
+{% endblock %}
+

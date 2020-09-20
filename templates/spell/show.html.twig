@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+    <h1>
+        {{ entity.name }}
+        {% if entity.classes %}
+        <small>
+            {% for classSpell in entity.classes %}
+                {{ classSpell.class }} {{ classSpell.spellLevel }}
+                {%- if loop.index != loop.length -%},{% endif %}
+            {% endfor %}
+        </small>
+        {% endif %}
+    </h1>
+
+    {% if entity.shortDescription %}
+    <p><em>{{ entity.shortDescription }}</em></p>
+    {% endif %}
+
+    {% if entity.longDescription %}
+        <p>{{ entity.longDescription|raw }}</p>
+    {% endif %}
+
+    <dl class="dl-horizontal">
+        <dt>{{ 'casting_time'|trans }}</dt>
+        <dd>{{ entity.castingTime }}</dd>
+
+        <dt>{{ 'components'|trans }}</dt>
+        <dd>{{ entity.components }}</dd>
+
+        <dt>{{ 'range'|trans }}</dt>
+        <dd>{{ entity.range }}</dd>
+
+        <dt>{{ 'duration'|trans }}</dt>
+        <dd>{{ entity.duration }}</dd>
+
+        <dt>{{ 'savieng_throw'|trans }}</dt>
+        <dd>{{ entity.savingThrow|default('none')|trans }}</dd>
+
+        <dt>{{ 'spell_resistance'|trans }}</dt>
+        <dd>{{ entity.spellResistance ? 'yes'|trans : 'no'|trans }}</dd>
+
+        {% if entity.targets %}
+            <dt>{{ 'targets'|trans }}</dt>
+            <dd>{{ entity.targets }}</dd>
+        {% endif %}
+
+        {% if entity.effects %}
+            <dt>{{ 'effects'|trans }}</dt>
+            {% for key, effect in entity.effects %}
+                <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.conditions %}
+            <dt>{{ 'conditions'|trans }}</dt>
+            {% for key, condition in entity.condition %}
+                <dd>{{ key }}: {{ condition }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.externalConditions %}
+            <dt>{{ 'external_conditions'|trans }}</dt>
+            {% for key, conditions in entity.externalConditions %}
+                <dd>{{ key }}: {{ condition }}</dd>
+            {% endfor %}
+        {% endif %}
+    </dl>
+
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('spells') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

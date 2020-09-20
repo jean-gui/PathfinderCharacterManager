@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Characters\Character;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,22 +29,22 @@ class Party
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
-    private $name;
+    protected $name;
 
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="partiesAsDm")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="partiesAsDm")
      * @ORM\JoinColumn(name="dm_id", referencedColumnName="id")
      */
-    private $dungeonMaster;
+    protected $dungeonMaster;
 
     /**
      * @var Collection|Character[]
      *
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="party")
+     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="party")
      */
-    private $characters;
+    protected $characters;
 
     /**
      * Add characters

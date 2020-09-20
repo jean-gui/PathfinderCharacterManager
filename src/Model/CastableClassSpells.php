@@ -3,8 +3,8 @@
 namespace App\Model;
 
 
-use App\Entity\ClassDefinition;
-use App\Entity\Spell;
+use App\Entity\Rules\ClassDefinition;
+use App\Entity\Rules\Spell;
 
 /**
  * Class CastableClassSpells
@@ -15,12 +15,12 @@ class CastableClassSpells {
     /**
      * @var ClassDefinition
      */
-    private $class;
+    protected $class;
 
     /**
      * @var CastableLevelSpells[]
      */
-    private $spellsByLevel;
+    protected $spellsByLevel;
 
     /**
      *

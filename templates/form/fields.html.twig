@@ -1,0 +1,274 @@
+{# Inventory and equipment #}
+{% block equipment_widget %}
+    <dl {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            {{ form_row(child) }}
+        {% endfor %}
+    </dl>
+{% endblock %}
+
+{% block equippeditem_row %}
+        <dt>{{ form_label(form) }}</dt>
+        {% if form.vars.data %}
+            <dd>
+                {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
+                {% for child in form %}
+                    {{ form_widget(child) }}
+                    {{ form_label(child) }}
+                {% endfor %}
+            </dd>
+        {% endif %}
+{% endblock %}
+
+{% block _inventory_unequipped_inventory_widget %}
+    <ul>
+        {{ form_rest(form) }}
+    </ul>
+{% endblock %}
+
+{% block unequippeditem_row %}
+    <li>
+        {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
+        {% if form.vars.data.quantity > 1 %}
+            ({{ form.vars.data.quantity }})
+        {% endif %}
+        {% if form.equip is defined %}
+            {{ form_widget(form.equip) }}
+        {% endif %}
+        {{ form_widget(form.drop) }}
+    </li>
+{% endblock %}
+
+{# Spells #}
+{% block cast_spells_widget %}
+        {% for child in form.castable_spells_by_class_by_spell_level %}
+            {{ form_row(child) }}
+        {% endfor %}
+{% endblock %}
+
+{% block castable_class_spells_row %}
+    {% if form.parent|length > 1 %}
+        <h3>{{ form.vars.data.class }}</h3>
+    {% endif %}
+    {% set i = 0 %}
+    {% for child in form.spells_by_level %}
+        {% if i % 2 == 0 %}
+            <div class="row">
+        {% endif %}
+        {{ form_row(child) }}
+        {% if i % 2 == 1 %}
+            </div>
+        {% endif %}
+        {% set i = i+1 %}
+    {% endfor %}
+    {% if i % 2 != 0 %}
+        </div>
+    {% endif %}
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block cast_spells_level_row %}
+    <div class="col-xs-12 col-sm-6">
+        <h4>
+            {% set spellLevel = form.vars.data.level %}
+            {% set class = form.parent.parent.vars.data.class %}
+            {% set character = form.parent.parent.parent.parent.vars.data %}
+            {% set classLevel = character.level(class) %}
+            {% set modifier = character.modifierByAbility(class.castingAbility) %}
+            {{ 'level_value'|trans({'%level%': spellLevel}) }}
+            {% if not class.preparationNeeded %}
+                <small>
+                    {% if spellLevel > 0 %}
+                        {% set extraSpells = form.parent.parent.parent.parent.vars.extra_spells[modifier][spellLevel] %}
+                        Already cast:
+                        {{ character.nonPreparedCastSpellsCount[class.id][spellLevel]|default(0) }}
+                        /
+                        {{ character.castablePerDayPerClass[class.id][spellLevel][classLevel-1] + extraSpells }}
+                    {% else %}
+                        &infin;
+                    {% endif %}
+                </small>
+                <small>, </small>
+            {% endif %}
+            <small>
+                {{ 'dc'|trans }}: {{ 10 + spellLevel + modifier }}
+            </small>
+        </h4>
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block cast_spell_label %}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain) }}
+            <a data-toggle="collapse" href="#{{ form.vars.id }}_desc" aria-expanded="false"
+               aria-controls="{{ form.vars.id ~ '_desc' }}">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{{ 'description'|trans }}"></span>
+            </a>
+        </label>
+    {%- endif -%}
+{% endblock %}
+
+{% block cast_spell_row %}
+    <div class="form-group form-inline">
+        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-6 col-sm-5' } }) }}
+        <div class="col-xs-4 col-sm-4">
+            {{ form_widget(form.targets) }}
+        </div>
+            {{ form_widget(form.id) }}
+        <div class="collapse" id="{{ form.vars.id }}_desc" style="margin-top: 3em">
+            <div class="well">
+                {% if form.vars.data.shortDescription %}
+                    <p><em>{{ form.vars.data.shortDescription|raw }}</em></p>
+                {% endif %}
+
+                <dl class="dl-horizontal">
+                    <dt>Casting Time</dt>
+                    <dd>{{ form.vars.data.castingTime }}</dd>
+
+                    <dt>Components</dt>
+                    <dd>{{ form.vars.data.components }}</dd>
+
+                    <dt>Range</dt>
+                    <dd>{{ form.vars.data.range }}</dd>
+
+                    <dt>Duration</dt>
+                    <dd>{{ form.vars.data.duration }}</dd>
+
+                    <dt>Saving throw</dt>
+                    <dd>{{ form.vars.data.savingThrow|default('None') }}</dd>
+
+                    <dt>Spell Resistance</dt>
+                    <dd>{{ form.vars.data.spellResistance ? 'Yes' : 'No' }}</dd>
+
+                    {% if form.vars.data.targets %}
+                        <dt>Targets</dt>
+                        <dd>{{ form.vars.data.targets }}</dd>
+                    {% endif %}
+
+                    {% if form.vars.data.effects %}
+                        <dt>Effects</dt>
+                        {% for key, effect in form.vars.data.effects %}
+                            <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.vars.data.conditions %}
+                        <dt>Conditions</dt>
+                        {% for key, condition in form.vars.data.condition %}
+                            <dd>{{ key }}: {{ condition }}</dd>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.vars.data.externalConditions %}
+                        <dt>Externalconditions</dt>
+                        {% for key, conditions in form.vars.data.externalConditions %}
+                            <dd>{{ key }}: {{ condition }}</dd>
+                        {% endfor %}
+                    {% endif %}
+                </dl>
+
+                {% if form.vars.data.longDescription %}
+                    <p>{{ form.vars.data.longDescription|raw }}</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _targets_label %}
+    {{ form_label(form, { 'attr': { 'class': 'sr-only' } }) }}
+{% endblock %}
+
+{# class definition #}
+{% block _classdefinition_bab_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _classdefinition_reflexes_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _classdefinition_will_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block _classdefinition_fortitude_widget %}
+    {{ block('classdefinition_collection_widget') }}
+{% endblock %}
+
+{% block classdefinition_collection_widget %}
+    {% if prototype is defined %}
+        {% set prototype_markup = form_row(prototype) %}
+        {% set data_prototype_name = form.vars.form.vars.prototype.vars.name|default('__name__') %}
+        {% set data_prototype_label = form.vars.form.vars.prototype.vars.label|default('__name__label__') %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({
+        'data-prototype': prototype_markup,
+        'data-prototype-name': data_prototype_name,
+        'data-prototype-label': data_prototype_label
+        })|merge(attr) %}
+    {% endif %}
+    {# Add row by default use attr.class to change#}
+	{% if 'collection' in form.vars.block_prefixes and attr.class is defined %}
+        {% set widget_form_group_attr = widget_form_group_attr|merge({'class': widget_form_group_attr.class|default('row') ~ ' ' ~ attr.class}) %}
+    {% endif %}
+    {# collection item adds class {form_id}_form-group  too #}
+    {% set widget_form_group_attr = widget_form_group_attr|merge({'id': 'collection' ~ id ~ '_form_group', 'class': widget_form_group_attr.class ~ ' collection-items ' ~ id ~ '_form_group'}) %}
+
+    {# Add initial prototype form #}
+    {% if form.vars.value|length == 0 and prototype is defined %}
+        {% for name in prototype_names %}
+            {{ prototype_markup|replace({'__name__': name})|raw }}
+        {% endfor %}
+    {% endif %}
+    {% for child in form %}
+        {{ form_widget(child, {'attr': {'style': 'padding-left: 0; padding-right: 0; width: 47px; display: inline'}}) }}
+    {% endfor %}
+{% endblock %}
+
+{% block _classdefinition_spellsPerDay_entry_row %}
+    {{ block('classdefinition_collection_spells') }}
+{% endblock %}
+
+{% block _classdefinition_knownSpellsPerLevel_entry_row %}
+    {{ block('classdefinition_collection_spells') }}
+{% endblock %}
+
+{% block classdefinition_collection_spells %}
+    {{ form_label(form) }}
+    <div>
+    {% for child in form %}
+        {{ form_widget(child, {'attr': {'style': 'padding-left: 0; padding-right: 0; width: 40px; display: inline'}}) }}
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block classdefinition_class_spell_type_label %}
+    {{ form_label(form, form.vars.data.spell) }}
+{% endblock %}
+
+{% block classdefinition_class_spell_type_widget %}
+    {% for child in form %}
+        <div class="col-sm-7">
+            {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+{% endblock %}

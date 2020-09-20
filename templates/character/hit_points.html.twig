@@ -1,0 +1,24 @@
+{% import 'popovers.html.twig' as popovers %}
+
+<h2>{{ 'hit.points'|trans }}</h2>
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-3 pr-0 my-auto">
+        {{ character.maxHp - character.lostHP }} / {{ character.maxHp }} {{ popovers.bonuses(character.hpBonuses) }}
+        {% if character.level > 1 %}
+            <small class="align-middle" data-toggle="tooltip" data-placement="bottom" title="First level is ignored">Mean HP per level</small>
+            {% set sumhp = 0 %}
+            {% for level in character.levels|slice(1) %}
+                {% set sumhp = sumhp + level.hpRoll %}
+            {% endfor %}
+            {{ (sumhp / ((character.levels|length)-1))|number_format(1) }}
+        {% endif %}
+    </div>
+    <div class="col-3 px-0">
+        {{ form_widget(form.hp_mod) }}
+    </div>
+    <div class="col-5 pr-0">
+        {{ form_widget(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+</div>

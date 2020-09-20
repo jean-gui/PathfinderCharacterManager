@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/media/perso/PhpstormProjects/PathfinderCharacterManager/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/media/perso/PhpstormProjects/PathfinderCharacterManager/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block body -%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{ 'your_characters'|trans }}</h2>
+                <ul class="list-group">
+                    {% for character in user.characters %}
+                        <li class="list-group-item">
+                            <a href="{{ path('characters_show', { 'id': character.id}) }}">
+                                {{ character }}
+                                <span class="badge pull-right">{{ character.favoredClass }}</span>
+                                <span class="badge pull-right">{{ character.race }}</span>
+                                <span class="badge pull-right">Level {{ character.level }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p><a href="{{ path('characters_new') }}" class="btn btn-primary active">{{ 'new.character'|trans }}</a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h2>{{ 'your_parties'|trans }}</h2>
+                <ul class="list-group">
+                    {% for party in user.parties %}
+                        <li class="list-group-item">
+                            <a href="{{ path('parties_show', {'id': party.id }) }}">{{ party }}</a>
+                            <span class="badge pull-right">
+                                {{ 'party.characters'|transchoice(party.characters|length) }}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <p><a href="{{ path('parties_new') }}" class="btn btn-primary active">{{ 'new.party'|trans }}</a></p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

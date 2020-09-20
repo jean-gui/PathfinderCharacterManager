@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+    <h1>{{ entity.name }}</h1>
+
+    {% if entity.shortDescription %}
+        <p><em>{{ entity.shortDescription }}</em></p>
+    {% endif %}
+
+    {% if entity.longDescription %}
+        <p>{{ entity.longDescription|raw }}</p>
+    {% endif %}
+
+    <dl class="dl-horizontal">
+        {% if entity.prerequisities %}
+            <dt>Prerequisities</dt>
+            {% for key, prereq in entity.prerequisities %}
+                <dd>{{ key }}: {{ prereq }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.effects %}
+            <dt>Effects</dt>
+            {% for key, effect in entity.effects %}
+                <dd>{{ key }}: {{ effect.value }}{% if effect.type %} ({{ effect.type }}){% endif %}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.conditions %}
+            <dt>Conditions</dt>
+            {% for key, condition in entity.conditions %}
+                <dd>{{ key }}: {{ condition|join(", ") }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if entity.externalConditions %}
+            <dt>Externalconditions</dt>
+            {% for key, conditions in entity.externalConditions %}
+                <dd>{{ key }}: {{ condition|join(', ') }}</dd>
+            {% endfor %}
+        {% endif %}
+    </dl>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('feats') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+{% endblock %}

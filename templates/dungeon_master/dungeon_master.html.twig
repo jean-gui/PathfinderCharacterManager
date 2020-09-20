@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+
+{% block subtitle entity ~ ' - Dungeon Master' %}
+
+{% block body %}
+    {% include('party/_party_h1.html.twig') %}
+    {% if entity.characters|length > 2 %}
+        {% set cols = 3 %}
+        {% set colWidth = 4 %}
+    {% else %}
+        {% set cols = entity.characters|length %}
+        {% set colWidth = 12 / cols %}
+    {% endif %}
+    {{ form_start(form) }}
+        {% for character in entity.characters %}
+            {% if loop.index % cols == 1 %}
+                {% if loop.index > 1 %}
+                    </div>
+                {% endif %}
+                <div class="row {{ loop.index > 1 ? 'mt-4' : '' }}">
+            {% endif %}
+
+            {% set currentHp = character.maxHp - character.lostHP %}
+            {% set quarterHp = character.maxHp / 4 %}
+            {% if currentHp > (3 * quarterHp) %}
+                {% set hpClass = 'success' %}
+            {% elseif currentHp > (2 * quarterHp) %}
+                {% set hpClass = 'info' %}
+            {% elseif currentHp > quarterHp %}
+                {% set hpClass = 'warning' %}
+            {% else %}
+                {% set hpClass = 'danger' %}
+            {% endif %}
+            <div class="col-md-{{ colWidth }}">
+                <div class="card border-{{ hpClass }}">
+                    <div class="card-header bg-{{ hpClass }}">
+                        <a class="text-white" href="{{ path('characters_show', { 'id': character.id }) }}">{{ character }}</a>
+                    </div>
+                    <div class="card-body">
+                        {{ 'hit.points'|trans }}: {{ currentHp }} / {{ character.maxHp }}
+                        <div class="form-group row">
+                            {% for characterForm in form.characters %}
+                                {% if characterForm.vars.data.id == character.id %}
+                                    <div class="col-sm-3">
+                                        <label class="col-form-label" for="{{ characterForm.conditions.vars.id }}">
+                                            {{ characterForm.conditions.vars.name|trans }}
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        {{ form_widget(characterForm.conditions) }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <p class="mt-4">
+        {{ form_widget(form.submit, {'attr': {'class': 'btn-lg btn-block btn-primary'}}) }}
+    </p>
+    {{ form_end(form) }}
+{% endblock %}
+

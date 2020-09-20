@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block subtitle %}
+    {{ entity }} - Edit Level
+{% endblock %}
+
+{% block body %}
+    {% include('character/character_h1.html.twig') %}
+    <h2>{{ 'edit.level'|trans({'%level%': level.value}) }}</h2>
+    {{ form(form) }}
+{% endblock %}
+
+{% block _edit_level_skills_widget %}
+    <table class="table table-hover table-striped table-sm">
+        <thead>
+        <tr>
+            <th>Skill</th>
+            <th>Current Value</th>
+            <th>Increment</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ block('skills_collection_rows') }}
+        </tbody>
+    </table>
+    {{ form_rest(form) }}
+{% endblock %}
+
+{% block skills_collection_rows %}
+    {{ form_errors(form) }}
+    {% for child in form %}
+        <tr>
+            <td>{{ child.vars.value.skill }}</td>
+            <td>{{ child.parent.parent.vars.value.character.skillRank(child.vars.value.skill) - child.vars.value.value }}</td>
+            <td>{{ form_row(child, {'attr':{'class':'collection-item' }}) }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

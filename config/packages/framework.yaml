@@ -17,3 +17,8 @@ framework:
         log: true
 
     ide: phpstorm
+    esi: { enabled: true }
+
+    default_locale: en
+    translator:
+        fallbacks: ['en']

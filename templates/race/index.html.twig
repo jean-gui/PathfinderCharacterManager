@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+    <div class="container">
+        <h1>{{ 'races'|trans }}</h1>
+
+        <ul class="list-group">
+            {% for entity in entities %}
+                <li class="list-group-item">
+                    <a href="{{ path('races_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

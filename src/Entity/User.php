@@ -2,12 +2,18 @@
 
 namespace App\Entity;
 
+use App\Entity\Characters\BaseCharacter;
+use App\Entity\Characters\Character;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface
 {
@@ -16,28 +22,53 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    protected $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
+
+    /**
+     * @var Collection|Character[]
+     *
+     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="user")
+     */
+    protected $characters;
+
+    /**
+     * @var Collection|Party[]
+     *
+     * @ORM\OneToMany(targetEntity=Party::class, mappedBy="dungeonMaster")
+     */
+    protected $partiesAsDm;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    public function __construct()
+    {
+        $this->partiesAsDm = new ArrayCollection();
+        $this->characters  = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +156,77 @@ class User implements UserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function addBaseCharacter(BaseCharacter $characters)
+    {
+        $this->characters[] = $characters;
+
+        return $this;
+    }
+
+    public function removeBaseCharacter(BaseCharacter $characters)
+    {
+        $this->characters->removeElement($characters);
+    }
+
+    public function getBaseCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
+     * Get parties as DM
+     *
+     * @return Collection|Party[]
+     */
+    public function getPartiesAsDm()
+    {
+        return $this->partiesAsDm;
+    }
+
+    /**
+     * Get parties
+     *
+     * @return Party[]
+     */
+    public function getParties()
+    {
+        $parties = new ArrayCollection();
+        foreach ($this->getBaseCharacters() as $character) {
+            if ($character->getParty() && !$parties->contains($character->getParty())) {
+                $parties->add($character->getParty());
+            }
+        }
+
+        $mergedParties = array_merge((array)$parties->toArray(), (array)$this->getPartiesAsDm()->toArray());
+
+        return array_unique($mergedParties, SORT_REGULAR);
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

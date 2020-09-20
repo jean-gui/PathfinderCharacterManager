@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}Edit {{ edit_form.vars.data.name }}{% endblock %}
+
+{% block body -%}
+    <div class="container">
+        {% include('character/character_h1.html.twig') %}
+
+        {{ form(edit_form) }}
+
+        <h2>{{ 'edit.levels'|trans }}</h2>
+
+        <div id="levels_accordion" role="tablist" aria-multiselectable="true">
+            {% for level in entity.levels %}
+                <div class="card">
+                    <div class="card-header" role="tab" id="level_{{ level.value }}">
+                        <span class="h5">
+                            <a
+                               data-toggle="collapse" data-target="#collapse_level_{{ level.value }}"
+                               href="#collapse_level_{{ level.value }}"
+                               aria-expanded="false"
+                               aria-controls="collapse_level_{{ level.value }}">
+                                {{ 'level'|trans({'%level%': level.value}) }}
+                            </a>
+                        </span>
+                    </div>
+                    <div id="collapse_level_{{ level.value }}"
+                         class="collapse" role="tabpanel"
+                         aria-labelledby="level_{{ level.value }}"
+                         data-parent="#levels_accordion"
+                    >
+                        <div class="card-body">
+                            {{ include('character/_level_summary.html.twig', {'level': level}) }}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('characters_levels_edit', { 'character': entity.id, 'level': level.value}) }}">
+                            {{ 'edit.level'|trans }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-6 my-auto">
+                <a href="{{ path('characters') }}">
+                    Back to the list
+                </a>
+            </div>
+            <div class="col-6">
+                <div class="float-right">
+                {{ form_start(delete_form) }}
+                {{ form_widget(delete_form.submit) }}
+                {{ form_end(delete_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

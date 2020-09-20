@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Entity\Spell;
+use App\Entity\Rules\Spell;
 
 /**
  * Class CastableLevelSpells
@@ -13,12 +13,12 @@ class CastableLevelSpells {
     /**
      * @var int
      */
-    private $level;
+    protected $level;
 
     /**
      * @var Spell[]
      */
-    private $spells;
+    protected $spells;
 
     /**
      * @return int

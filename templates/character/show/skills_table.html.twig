@@ -1,0 +1,40 @@
+<table class="table table-hover table-striped table-sm">
+    <thead>
+    <tr>
+        <th><a href="{{ path('skills') }}">{{ 'skill'|trans }}</a></th>
+        <th>{{ 'total.bonus'|trans }}</th>
+        <th>{{ 'ability.modifier.short'|trans }}</th>
+        <th>{{ 'ranks'|trans }}</th>
+        <th>{{ 'misc.modifiers'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for skill in skills[start:end] %}
+        {% set value = 0 %}
+        {% set bonus = 0 %}
+        {%- set shortname = skill.shortname -%}
+        {% if attribute(entity.skillsBonuses, shortname) is defined %}
+            {% set bonus = attribute(entity.skillsBonuses, shortname).bonus %}
+        {% endif %}
+        <tr>
+            <td>
+                {% if entity.hasClassBonus(skill) -%}
+                    <span class="glyphicon glyphicon-check"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-unchecked"></span>
+                {% endif %}
+                {{ skill }}{% if not skill.untrained %}*{% endif %}
+            </td>
+            <td>{{ entity.skillValue(skill) }}</td>
+            <td>{{ skill.keyAbility[0:3]|trans|upper }} {{ entity.modifierByAbility(skill.keyAbility) }}</td>
+            <td>{{ entity.skillRank(skill) }}</td>
+            <td>
+                {{ bonus|default(0) }}
+                {% if attribute(entity.skillsBonuses, shortname) is defined %}
+                    {{ popovers.bonuses(entity.skillsBonuses[shortname]) }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

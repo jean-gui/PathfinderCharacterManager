@@ -13,17 +13,17 @@ class Bonus
     /**
      * @var object
      */
-    private $source;
+    protected $source;
 
     /**
      * @var mixed
      */
-    private $value;
+    protected $value;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @param object $source

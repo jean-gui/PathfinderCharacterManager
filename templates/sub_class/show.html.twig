@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+<div class="container">
+    <h1>{{ entity.name }} (<a href="{{ path('classes_show', { 'id': entity.parent.id }) }}">{{ entity.parent }}</a>)</h1>
+
+    <p>{{ entity.shortDescription|raw }}</p>
+    <p>{{ entity.longDescription|raw }}</p>
+
+    <h2>{{ 'granted.powers'|trans }}</h2>
+
+    {% for power in entity.powers %}
+        <h3>{{ power }}</h3>
+        <p>{{ power.shortDescription|raw }}</p>
+        <p>{{ power.longDescription|raw }}</p>
+    {% endfor %}
+
+    {% if entity.spells is defined and entity.spells|length > 0 %}
+        <h2>{{ 'spells'|trans }}</h2>
+        <table class="table table-sm table-striped table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'description'|trans }}</th>
+                <th>{{ 'spell.level'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for spellClass in entity.spells %}
+                <tr>
+                    <td>{{ spellClass.spell }}</td>
+                    <td>{{ spellClass.spell.shortDescription }}</td>
+                    <td>{{ spellClass.spellLevel }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+
+{% block body -%}
+    <div class="container">
+        <h1>Character creation</h1>
+
+        {{ include('partials/ability_scores.html.twig') }}
+
+        {{ form(form) }}
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('characters') }}">
+                    Back to the list
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

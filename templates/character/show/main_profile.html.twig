@@ -1,0 +1,77 @@
+{% import 'popovers.html.twig' as popovers %}
+
+<h2>{{ 'main.profile'|trans }}</h2>
+<table id="abilities" class="table table-sm table-striped table-hover">
+    <thead>
+    <tr>
+        <th>{{ 'ability'|trans }}</th>
+        <th>{{ 'value'|trans }}</th>
+        <th>{{ 'modifier' }}</th>
+    </tr>
+    </thead>
+    <tr>
+        <th>{{ 'strength'|trans }}</th>
+        <td>
+            {{ entity.strength }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.strength) }}
+        </td>
+        <td>{{ entity.modifierByAbility('strength') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'dexterity'|trans }}</th>
+        <td>
+            {{ entity.dexterity }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.dexterity) }}
+        </td>
+        <td>{{ entity.modifierByAbility('dexterity') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'constitution'|trans }}</th>
+        <td>
+            {{ entity.constitution }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.constitution) }}
+        </td>
+        <td>{{ entity.modifierByAbility('constitution') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'intelligence'|trans }}</th>
+        <td>
+            {{ entity.intelligence }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.intelligence) }}
+        </td>
+        <td>{{ entity.modifierByAbility('intelligence') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'wisdom'|trans }}</th>
+        <td>
+            {{ entity.wisdom }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.wisdom) }}
+        </td>
+        <td>{{ entity.modifierByAbility('wisdom') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'charisma'|trans }}</th>
+        <td>
+            {{ entity.charisma }}
+            {{ popovers.bonuses(entity.abilitiesBonuses.charisma) }}
+        </td>
+        <td>{{ entity.modifierByAbility('charisma') }}</td>
+    </tr>
+</table>
+{{ render_esi(controller('App\\Controller\\CharacterController:hitPoints', { 'id': entity.id })) }}
+
+{% if entity.conditions|length > 0 %}
+    <h2>{{ 'conditions'|trans }}</h2>
+    <table class="table table-hover table-sm">
+        <tbody>
+        {% for condition in entity.conditions %}
+            <tr>
+                <td>
+                    {{ popovers.description(condition.name, condition) }}
+                    {{ condition }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

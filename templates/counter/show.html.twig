@@ -1,0 +1,15 @@
+{% form_theme form 'form/counter_fields.html.twig' %}
+{{ form_start(form) }}
+<h2 id="counters">
+    {{ 'counters'|trans }}
+    <small>
+        <a href="{{ path('counter_new', { 'character': entity.id }) }}" title="{{ 'counter.new'|trans }}">
+            <i class="fas fa-plus"></i><span class="sr-only">{{ 'counter.new'|trans }}</span></a>
+    </small>
+    {% if form.increase_all is defined %}
+    <small>
+        {{ form_widget(form.increase_all) }}
+    </small>
+    {% endif %}
+</h2>
+{{ form_end(form) }}

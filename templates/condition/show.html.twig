@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body -%}
+    <h1>{{ entity.name }}</h1>
+
+    {% if entity.shortDescription %}
+        <p><em>{{ entity.shortDescription|raw }}</em></p>
+    {% endif %}
+
+    {% if entity.longDescription %}
+        <p>{{ entity.longDescription|raw }}</p>
+    {% endif %}
+
+    <ul class="record_actions">
+    <li>
+        <a href="{{ path('conditions') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

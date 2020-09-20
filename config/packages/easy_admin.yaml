@@ -1,0 +1,7 @@
+easy_admin:
+    entities:
+        - App\Entity\User
+    design:
+        form_theme:
+            - '@EasyAdmin/form/bootstrap_4.html.twig'
+            - '@A2lixTranslationForm/bootstrap_4_layout.html.twig'

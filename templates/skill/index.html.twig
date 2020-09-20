@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle "Skills" %}
+
+    {% block body -%}
+        <div class="container">
+            <h1>{{ 'skills'|trans }}</h1>
+            <table id="abilities" class="table table-striped table-hover table-responsive">
+                <thead>
+                <th>{{ 'skill'|trans }}</th>
+                {% for class in classes %}
+                    <th>{{ class }}</th>
+                {% endfor %}
+                <th>{{ 'untrained'|trans }}</th>
+                <th>{{ 'armor_check_penalty'|trans }}</th>
+                <th>{{ 'ability'|trans }}</th>
+                </thead>
+                <tbody>
+                {% for skill in skills %}
+                    <tr>
+                        <td>{{ skill.name }}</td>
+                        {% for class in classes %}
+                            <td>{% if class.classSkills.contains(skill) %}C{% endif %}</td>
+                        {% endfor %}
+                        <td>{% if skill.untrained %}{{ 'yes'|trans }}{% else %}{{ 'no'|trans }}{% endif %}</td>
+                        <td>{% if skill.armorCheckPenalty %}{{ 'yes'|trans }}{% else %}{{ 'no'|trans }}{% endif %}</td>
+                        <td>{{ skill.keyAbility|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}

@@ -1,0 +1,6 @@
+a2lix_translation_form:
+    locale_provider: default
+    locales: [ en, fr ]
+    default_locale: en
+    #required_locales: [ fr ]
+    templating: "@A2lixTranslationForm/bootstrap_4_layout.html.twig"

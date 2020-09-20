@@ -1,0 +1,12 @@
+{% extends 'items/show.html.twig' %}
+
+{% block beforeWeight %}
+    <dt>{{ 'ac'|trans }}</dt>
+    <dd>{{ entity.ac }}</dd>
+    <dt>{{ 'maximum_dexterity_bonus'|trans }}</dt>
+    <dd>{{ entity.maximumDexterityBonus }}</dd>
+    <dt>{{ 'armor_check_penalty'|trans }}</dt>
+    <dd>{{ entity.armorCheckPenalty }}</dd>
+    <dt>{{ 'arcane_spell_failure'|trans }}</dt>
+    <dd>{{ entity.arcaneSpellFailure }}</dd>
+{% endblock %}

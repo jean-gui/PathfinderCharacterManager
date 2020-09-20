@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% import 'popovers.html.twig' as popovers %}
+
+{% block subtitle entity %}
+
+{% block body -%}
+    {% include('character/character_h1.html.twig') %}
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            {{ include('character/show/main_profile.html.twig') }}
+        </div>
+        <div class="col-lg-4 col-md-4">
+            {{ include('character/show/combat.html.twig') }}
+        </div>
+        <div class="col-lg-4 col-md-4">
+            {{ include('character/show/powers.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ render_esi(controller('App\\Controller\\CounterController:show', { 'character': entity.id })) }}
+        </div>
+    </div>
+    <div class="row">
+        <div id="skills" class="col-12">
+            {{ include('character/show/skills.html.twig') }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            {{ include('character/show/unmanaged_powers.html.twig') }}
+        </div>
+        <div class="col-lg-4 col-md-4">
+            {{ include('character/show/passive_powers.html.twig') }}
+        </div>
+    </div>
+    <div>
+        {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'general' })) }}
+    </div>
+{% endblock %}

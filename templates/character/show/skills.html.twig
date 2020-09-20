@@ -1,0 +1,15 @@
+<h2>{{ 'skills'|trans }}</h2>
+{% set l = skills|length %}
+{% set third = (l/3)|round(0, 'ceil') %}
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        {{ include('character/show/skills_table.html.twig', {'start': 0, 'end': third}) }}
+    </div>
+    <div class="col-sm-12 col-md-4">
+        {{ include('character/show/skills_table.html.twig', {'start': third, 'end': third}) }}
+    </div>
+    <div class="col-sm-12 col-md-4">
+        {{ include('character/show/skills_table.html.twig', {'start': 2*third, 'end': third}) }}
+        <div>* Training required</div>
+    </div>
+</div>
