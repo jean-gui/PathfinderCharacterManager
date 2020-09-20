@@ -5,8 +5,25 @@
     <div class="container">
         <h1>Sleep</h1>
         {{ form_start(form) }}
-        {{ form_row(form.preparedSpells) }}
-        {{ form_rest(form) }}
+        {% set class = -1 %}
+        {% for ps in form.preparedSpells %}
+            {% if not (class is same as(ps.vars.data.class)) %}
+                {% set class = ps.vars.data.class %}
+                {% set level = -1 %}
+                <h2>{{ class }}</h2>
+            {% endif %}
+
+            {% if level != ps.vars.level %}
+                {% set level = ps.vars.level %}
+                <h3>{% trans with {'%level%': level} %}sleep.spell.slots{% endtrans %}</h3>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form_widget(ps.spell) }}
+            </div>
+        {% endfor %}
+
+        {{ form_widget(form.Sleep, {attr: {class: 'btn-block btn btn-primary'}}) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

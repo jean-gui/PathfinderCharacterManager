@@ -89,7 +89,7 @@
         <source>Subclass</source>
         <target>Sous-classe</target>
       </trans-unit>
-      <trans-unit id="5gpUjyB" resname="subclasses">
+      <trans-unit id="muBgZCf" resname="subclasses">
         <source>subclasses</source>
         <target>Sous-classes</target>
       </trans-unit>
@@ -509,7 +509,7 @@
         <source>ring</source>
         <target>Anneaux</target>
       </trans-unit>
-      <trans-unit id="Z.j9YBO" resname="saving_throw">
+      <trans-unit id="Mt.8xcG" resname="saving_throw">
         <source>saving_throw</source>
         <target>Jet de sauvegarde</target>
       </trans-unit>
@@ -605,7 +605,7 @@
         <source>weapon</source>
         <target>Arme</target>
       </trans-unit>
-      <trans-unit id="yo.vGrr" resname="weapons">
+      <trans-unit id="Fnp5tdQ" resname="weapons">
         <source>weapons</source>
         <target>Armes</target>
       </trans-unit>
@@ -681,25 +681,45 @@
         <source>increase</source>
         <target>Augmenter</target>
       </trans-unit>
-      <trans-unit id="4gpUjyQ" resname="character_conditions.updated">
+      <trans-unit id="6rtxnRt" resname="character_conditions.updated">
         <source>character_conditions.updated</source>
         <target>États préjudiciables mis à jour</target>
       </trans-unit>
-      <trans-unit id="4gpUjyA" resname="item.powers">
+      <trans-unit id=".2un7Sm" resname="item.powers">
         <source>item.powers</source>
         <target>Pouvoirs d'objet</target>
       </trans-unit>
-      <trans-unit id="4gpUjyB" resname="equipment.powers">
+      <trans-unit id="qWx4hRw" resname="equipment.powers">
         <source>equipment.powers</source>
         <target>Pouvoirs d'équipement</target>
       </trans-unit>
-      <trans-unit id="so.vGrr" resname="users">
+      <trans-unit id="fftM9nd" resname="users">
         <source>users</source>
         <target>Utilisateurs</target>
       </trans-unit>
-      <trans-unit id="zo.vGrr" resname="users.groups">
+      <trans-unit id="iB6iNu5" resname="users.groups">
         <source>users.groups</source>
         <target>Utilisateurs et Groupes</target>
+      </trans-unit>
+      <trans-unit id="bLV0_hC" resname="languages">
+        <source>languages</source>
+        <target>Langues</target>
+      </trans-unit>
+      <trans-unit id="tiNNLqD" resname="english">
+        <source>english</source>
+        <target>English</target>
+      </trans-unit>
+      <trans-unit id="Ibs2rQY" resname="french">
+        <source>french</source>
+        <target>français</target>
+      </trans-unit>
+      <trans-unit id="UOzS1pi" resname="sleep.spell.slots">
+        <source>sleep.spell.slots</source>
+        <target>Emplacements de niveau %level%</target>
+      </trans-unit>
+      <trans-unit id="yDocc9K" resname="sleep.spell.level">
+        <source>sleep.spell.level</source>
+        <target>Sorts de niveau %level%</target>
       </trans-unit>
     </body>
   </file>

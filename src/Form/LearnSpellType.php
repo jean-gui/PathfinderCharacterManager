@@ -6,6 +6,7 @@ use App\Entity\Characters\Character;
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassSpell;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -64,9 +65,9 @@ class LearnSpellType extends AbstractType
 
                 $event->getForm()->add(
                     'spell',
-                    'entity',
+                    EntityType::class,
                     array(
-                        'class'   => 'App\Entity\ClassSpell',
+                        'class'   => ClassSpell::class,
                         'mapped'  => false,
                         'choices' => $groupedLearnableSpells
                     )

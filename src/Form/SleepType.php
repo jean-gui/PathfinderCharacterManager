@@ -163,26 +163,26 @@ class SleepType extends AbstractType
                                                 ->from(ClassSpell::class, 'cs')
                                                 ->join(Spell::class, 'sp', Join::WITH,
                                                     'sp = cs.spell')
+                                                ->leftJoin('sp.translations', 't')
                                                 ->andWhere('cs.class = ?1')
                                                 ->andWhere('cs.spellLevel <= 0')
                                                 ->addOrderBy('cs.spellLevel', 'ASC')
-                                                ->addOrderBy('sp.name', 'ASC');
+                                                ->addOrderBy('t.name', 'ASC');
                                             $qb->setParameter(1, $class);
 
                                             /** @var ClassSpell[] $spells */
                                             $spells = $qb->getQuery()->execute();
                                             if ($spells) {
                                                 foreach ($spells as $cs) {
-                                                    $spellsForClassForSpellLevel['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                                    $spellsForClassForSpellLevel[$cs->getSpellLevel()][] = $cs->getSpell();
                                                 }
                                             }
                                         }
 
                                         foreach ($r as $k => $v) {
-                                            $spellsForClassForSpellLevel['Level ' . $k . ' spells'] = $v;
+                                            $spellsForClassForSpellLevel[$k] = $v;
                                         }
                                     }
-                                    $spellsForClassForSpellLevel = array_reverse($spellsForClassForSpellLevel);
                                 } else { // this class knows all spells (divine magic)
                                     // TODO: order
                                     $qb = $em->createQueryBuilder()->select('cs')
@@ -190,7 +190,7 @@ class SleepType extends AbstractType
                                         ->join(Spell::class, 'sp', Join::WITH, 'sp = cs.spell')
                                         ->andWhere('cs.class = ?1')
                                         ->andWhere('cs.spellLevel <= ?2')
-                                        ->addOrderBy('cs.spellLevel', 'DESC')
+                                        ->addOrderBy('cs.spellLevel', 'ASC')
                                         //->addOrderBy('sp.name', 'ASC')
                                     ;
                                     $qb->setParameter(1, $class)
@@ -200,14 +200,14 @@ class SleepType extends AbstractType
                                     $spells = $qb->getQuery()->execute();
                                     if ($spells) {
                                         foreach ($spells as $cs) {
-                                            $spellsForClassForSpellLevel['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                            $spellsForClassForSpellLevel[$cs->getSpellLevel()][] = $cs->getSpell();
                                         }
                                     }
                                 }
 
                                 if (count($spellsForClassForSpellLevel) > 0) {
                                     for ($i = 0; $i < $totalSpells; $i++) {
-                                        $choices[$spellLevel][] = $spellsForClassForSpellLevel;
+                                        $choices[] = $spellsForClassForSpellLevel;
                                     }
                                 }
 
@@ -251,13 +251,13 @@ class SleepType extends AbstractType
                                         }
                                         if ($hasSpells) {
                                             foreach ($subClassesClassSpells as $cs) {
-                                                $subClassSpells['Level ' . $cs->getSpellLevel() . ' spells'][] = $cs->getSpell();
+                                                $subClassSpells[$cs->getSpellLevel()][] = $cs->getSpell();
                                             }
                                             krsort($subClassSpells);
-                                            $choices[$spellLevel][] = $subClassSpells;
+                                            $choices[] = $subClassSpells;
                                         }
                                     } else {
-                                        $choices[$spellLevel][] = $spellsForClassForSpellLevel;
+                                        $choices[] = $spellsForClassForSpellLevel;
                                     }
 
                                     if ($hasSpells) {
@@ -267,7 +267,7 @@ class SleepType extends AbstractType
                                             // Should most likely be the last prepared spell, hence array_reverse
                                             $reverse = array_reverse($previouslyPreparedSpellsByLevel[$spellLevel]);
                                             while ($pps = array_shift($reverse)) {
-                                                foreach ($choices[$spellLevel][count($choices[$spellLevel]) - 1] as $s) {
+                                                foreach ($choices[count($choices) - 1] as $s) {
                                                     if (in_array($pps->getSpell(), $s)) {
                                                         $spell = $pps->getSpell();
                                                         break 2;

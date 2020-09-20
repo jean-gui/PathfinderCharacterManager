@@ -7,7 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class PreparedSpellType
@@ -16,45 +19,56 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PreparedSpellType extends AbstractType
 {
-        /**
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $translator = $this->translator;
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($options) {
+            function (FormEvent $event) use ($options, $translator) {
                 $form          = $event->getForm();
 
                 $allChoices = $options['choices'];
                 $slotNumber = (int) $form->getName();
-                $level      = 0;
-                $choices    = array();
 
                 // Compute spell level and pick the right choice list from $allChoices
-                foreach ($allChoices as $spellLevel => $slots) {
-                    if ($slotNumber < count($slots)) {
-                        $level = $spellLevel;
-                        $choices = $slots[$slotNumber];
-                        break;
-                    } else {
-                        $slotNumber -= count($slots);
-                    }
-                }
+                $choices = $allChoices[$slotNumber];
+
+                $choicesKeys = array_map(
+                    function ($level) use ($translator) {
+                        return $translator->trans('sleep.spell.level', ['%level%' => $level]);
+                    },
+                    array_keys($choices)
+                );
+                $choices = array_reverse(array_combine($choicesKeys, $choices));
 
                 $form->add(
                     'spell',
                     null,
                     array(
-                        'label' => 'Level ' . $level . ' Slot',
                         'choices' => $choices,
                     )
                 );
             }
         );
     }
-    
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $slotNumber = (int)$form->getName();
+        $view->vars['level'] = max(array_keys($options['choices'][$slotNumber]));
+    }
+
     /**
      * @param OptionsResolver $resolver
      */

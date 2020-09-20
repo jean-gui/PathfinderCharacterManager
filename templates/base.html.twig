@@ -27,7 +27,8 @@
                     <a class="nav-link" href="{{ path('characters_show', routeParams) }}">{{ 'main.profile'|trans }}</a>
                 </li>
                 <li class="nav-item{% if route in ['character_inventory', 'character_inventory_edit'] %} active{% endif %}">
-                    <a class="nav-link" href="{{ path('character_inventory', routeParams) }}">{{ 'inventory'|trans }}</a>
+                    <a class="nav-link"
+                       href="{{ path('character_inventory', routeParams) }}">{{ 'inventory'|trans }}</a>
                 </li>
                 <li class="nav-item{% if route == 'character_spells' %} active{% endif %}">
                     <a class="nav-link" href="{{ path('character_spells', routeParams) }}">{{ 'spells'|trans }}</a>
@@ -66,14 +67,14 @@
                         <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 </li>
-
             {% else %}
                 <li class="nav-item dropdown">
                     <a href="#" class="bg-light nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" id="login-dropdown">
                         Login
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="login-dropdown" style="width: 15rem">
+                    <ul class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="login-dropdown"
+                        style="width: 15rem">
                         <li class="px-3 py-2">
                             <form class="form" role="form" method="post" action="{{ path('app_login') }}">
                                 <div class="form-group">
@@ -108,6 +109,22 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">Register</a></li>
             {% endif %}
+            <li class="nav-item dropdown">
+                <a class="bg-light nav-link dropdown-toggle" href="#" id="lang-dropdown" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {% trans %}languages{% endtrans %}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="lang-dropdown">
+                    <a class="dropdown-item"
+                       href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}">
+                        {% trans %}english{% endtrans %}
+                    </a>
+                    <a class="dropdown-item"
+                       href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}">
+                        {% trans %}french{% endtrans %}
+                    </a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

@@ -25,10 +25,6 @@ class AddCharacterFeatType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //$featTransformer = new FeatToCharacterFeatTransformer($options['level']);
-        //$builder->addModelTransformer($featTransformer);
-        dump($options['choices']);
-
         $builder->add(
             'feat',
             EntityType::class,
