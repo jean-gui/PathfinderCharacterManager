@@ -721,6 +721,10 @@
         <source>sleep.spell.level</source>
         <target>Level %level% Spells</target>
       </trans-unit>
+      <trans-unit id="l6Ae1Jk" resname="mean.hp.level">
+        <source>mean.hp.level</source>
+        <target>Mean HP per Level</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

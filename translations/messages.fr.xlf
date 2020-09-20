@@ -721,6 +721,10 @@
         <source>sleep.spell.level</source>
         <target>Sorts de niveau %level%</target>
       </trans-unit>
+      <trans-unit id="l6Ae1Jk" resname="mean.hp.level">
+        <source>mean.hp.level</source>
+        <target>Moyenne de PV par niveau</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
