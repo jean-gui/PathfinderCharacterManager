@@ -24,18 +24,15 @@ class EditInventoryType extends AbstractType
     {
         $builder
             ->add(
-                'inventory_items',
+                'inventoryItems',
                 CollectionType::class,
                 array(
                     'allow_add'    => true,
                     'allow_delete' => true,
                     'by_reference' => false,
-                    'entry_type'         => EditInventoryItemType::class,
+                    'entry_type'   => EditInventoryItemType::class,
                     'label'        => 'items',
-                    'entry_options'      => array('label' => false),
-                    'widget_add_btn' => array('icon' => 'plus-sign', 'label' => 'add.item'),
-                    'widget_remove_btn' => array('icon' => 'trash', 'label' => 'remove.item'),
-                    'show_legend' => false
+                    'entry_options'   => ['label' => false, 'attr' => ['class' => 'entry']],
                 )
             )
         ;

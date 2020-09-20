@@ -24,7 +24,7 @@ class InventoryType extends AbstractType
     {
         $builder
             ->add(
-                'unequipped_inventory',
+                'unequippedInventory',
                 CollectionType::class,
                 array(
                     'entry_type' => EquipmentInventoryItemType::class,

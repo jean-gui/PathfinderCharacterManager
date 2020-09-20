@@ -89,6 +89,10 @@
         <source>Subclass</source>
         <target>Sous-classe</target>
       </trans-unit>
+      <trans-unit id="5gpUjyB" resname="subclasses">
+        <source>subclasses</source>
+        <target>Sous-classes</target>
+      </trans-unit>
       <trans-unit id="l4NU2ww" resname="Target">
         <source>Target</source>
         <target>Cible</target>
@@ -601,6 +605,10 @@
         <source>weapon</source>
         <target>Arme</target>
       </trans-unit>
+      <trans-unit id="yo.vGrr" resname="weapons">
+        <source>weapons</source>
+        <target>Armes</target>
+      </trans-unit>
       <trans-unit id="CETfj_6" resname="weight">
         <source>weight</source>
         <target>Poids</target>
@@ -672,6 +680,26 @@
       <trans-unit id="4gpUjyP" resname="increase">
         <source>increase</source>
         <target>Augmenter</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyQ" resname="character_conditions.updated">
+        <source>character_conditions.updated</source>
+        <target>États préjudiciables mis à jour</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyA" resname="item.powers">
+        <source>item.powers</source>
+        <target>Pouvoirs d'objet</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyB" resname="equipment.powers">
+        <source>equipment.powers</source>
+        <target>Pouvoirs d'équipement</target>
+      </trans-unit>
+      <trans-unit id="so.vGrr" resname="users">
+        <source>users</source>
+        <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="zo.vGrr" resname="users.groups">
+        <source>users.groups</source>
+        <target>Utilisateurs et Groupes</target>
       </trans-unit>
     </body>
   </file>

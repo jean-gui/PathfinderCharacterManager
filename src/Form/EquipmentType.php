@@ -3,9 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Characters\CharacterEquipment;
+use App\Entity\Items\Item;
 use App\Form\Type\EquippedItemType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -21,24 +25,63 @@ class EquipmentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('headband', EquippedItemType::class, array('label' => 'headband'))
-            ->add('head', EquippedItemType::class, array('label' => 'head'))
-            ->add('eyes', EquippedItemType::class, array('label' => 'eyes'))
-            ->add('neck', EquippedItemType::class, array('label' => 'neck'))
-            ->add('shoulders', EquippedItemType::class, array('label' => 'shoulders'))
-            ->add('armor', EquippedItemType::class, array('label' => 'armor'))
-            ->add('body', EquippedItemType::class, array('label' => 'body'))
-            ->add('chest', EquippedItemType::class, array('label' => 'chest'))
-            ->add('belt', EquippedItemType::class, array('label' => 'belt'))
-            ->add('mainWeapon', EquippedItemType::class, array('label' => 'main.weapon'))
-            ->add('offhandWeapon', EquippedItemType::class, array('label' => 'offhand.weapon'))
-            ->add('wrists', EquippedItemType::class, array('label' => 'wrists'))
-            ->add('hands', EquippedItemType::class, array('label' => 'hands'))
-            ->add('leftFinger', EquippedItemType::class, array('label' => 'left.finger'))
-            ->add('rightFinger', EquippedItemType::class, array('label' => 'right.finger'))
-            ->add('feet', EquippedItemType::class, array('label' => 'feet'))
-        ;
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                /** @var $characterEquipment CharacterEquipment */
+                $characterEquipment = $event->getData();
+                $form = $event->getForm();
+
+                if ($characterEquipment->getMainWeapon()) {
+                    $form->add('mainWeapon', EquippedItemType::class, ['label' => 'main.weapon']);
+                }
+                if ($characterEquipment->getOffhandWeapon()) {
+                    $form->add('offhandWeapon', EquippedItemType::class, ['label' => 'offhand.weapon']);
+                }
+                if ($characterEquipment->getArmor()) {
+                    $form->add('armor', EquippedItemType::class, ['label' => 'armor']);
+                }
+                if ($characterEquipment->getBelt()) {
+                    $form->add('belt', EquippedItemType::class, ['label' => 'belt']);
+                }
+                if ($characterEquipment->getBody()) {
+                    $form->add('body', EquippedItemType::class, ['label' => 'body']);
+                }
+                if ($characterEquipment->getChest()) {
+                    $form->add('chest', EquippedItemType::class, ['label' => 'chest']);
+                }
+                if ($characterEquipment->getEyes()) {
+                    $form->add('eyes', EquippedItemType::class, ['label' => 'eyes']);
+                }
+                if ($characterEquipment->getFeet()) {
+                    $form->add('feet', EquippedItemType::class, ['label' => 'feet']);
+                }
+                if ($characterEquipment->getHands()) {
+                    $form->add('hands', EquippedItemType::class, ['label' => 'hands']);
+                }
+                if ($characterEquipment->getHead()) {
+                    $form->add('head', EquippedItemType::class, ['label' => 'head']);
+                }
+                if ($characterEquipment->getHeadband()) {
+                    $form->add('headband', EquippedItemType::class, ['label' => 'headband']);
+                }
+                if ($characterEquipment->getLeftFinger()) {
+                    $form->add('leftFinger', EquippedItemType::class, ['label' => 'left.finger']);
+                }
+                if ($characterEquipment->getRightFinger()) {
+                    $form->add('rightFinger', EquippedItemType::class, ['label' => 'right.finger']);
+                }
+                if ($characterEquipment->getNeck()) {
+                    $form->add('neck', EquippedItemType::class, ['label' => 'neck']);
+                }
+                if ($characterEquipment->getShoulders()) {
+                    $form->add('shoulders', EquippedItemType::class, ['label' => 'shoulders']);
+                }
+                if ($characterEquipment->getWrists()) {
+                    $form->add('wrists', EquippedItemType::class, ['label' => 'wrists']);
+                }
+            }
+        );
     }
     
     /**

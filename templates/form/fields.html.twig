@@ -1,42 +1,22 @@
 {# Inventory and equipment #}
-{% block equipment_widget %}
-    <dl {{ block('widget_container_attributes') }}>
-        {% for child in form %}
-            {{ form_row(child) }}
-        {% endfor %}
-    </dl>
+{% block _inventory_unequippedInventory_entry_row %}
+    <div class="row mb-2">
+        <div class="col-auto my-auto mr-auto">
+            {{ block('_inventory_unequippedInventory_entry_label') }}
+        </div>
+        <div class="col-auto">
+            {{ block('_inventory_unequippedInventory_entry_widget') }}
+        </div>
+    </div>
 {% endblock %}
 
-{% block equippeditem_row %}
-        <dt>{{ form_label(form) }}</dt>
-        {% if form.vars.data %}
-            <dd>
-                {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
-                {% for child in form %}
-                    {{ form_widget(child) }}
-                    {{ form_label(child) }}
-                {% endfor %}
-            </dd>
-        {% endif %}
+{% block _inventory_unequippedInventory_entry_label %}
+    <label for="{{ form.vars.id }}" class="my-0">{{ form.vars.data }}</label>
 {% endblock %}
 
-{% block _inventory_unequipped_inventory_widget %}
-    <ul>
-        {{ form_rest(form) }}
-    </ul>
-{% endblock %}
-
-{% block unequippeditem_row %}
-    <li>
-        {{ form_label(form, form.vars.data, { 'label_attr': { 'style': 'font-weight: inherit' } }) }}
-        {% if form.vars.data.quantity > 1 %}
-            ({{ form.vars.data.quantity }})
-        {% endif %}
-        {% if form.equip is defined %}
-            {{ form_widget(form.equip) }}
-        {% endif %}
-        {{ form_widget(form.drop) }}
-    </li>
+{% block _inventory_unequippedInventory_entry_widget %}
+    {{ form_widget(form.equip) }}
+    {{ form_widget(form.drop) }}
 {% endblock %}
 
 {# Spells #}

@@ -4,22 +4,36 @@
 
 {% block body %}
     {% include('character/character_h1.html.twig') %}
-<div class="row">
-    <div class="col-xs-6">
-        <h2>{{ 'equipment'|trans }}</h2>
-        {{ form(equipmentForm) }}
+    <div class="row">
+        <div class="col-6">
+            <h2>{{ 'equipment'|trans }}</h2>
+            {{ form_start(equipmentForm) }}
+            <dl>
+                {% for child in equipmentForm|filter(f => f.vars.name != '_token') %}
+                    <dt>
+                        {{ form_label(child, null, {label_attr: {class: 'px-0'}}) }}</dt>
+                    <dd class="row">
+                        <div class="col-auto my-auto mr-auto">{{ child.vars.data }}</div>
+                        <div class="col-auto">{{ form_widget(child.unequip) }}</div>
+                    </dd>
+                {% endfor %}
+            </dl>
+            {{ form_end(equipmentForm) }}
+        </div>
+        <div class="col-6">
+            <h2>
+                {{ 'inventory'|trans }}
+                <small>
+                    <a href="{{ path('character_inventory_edit', { 'id': entity.id }) }}"
+                       title="{{ 'inventory.edit'|trans }}">
+                        <span class="fas fa-plus"></span>
+                    </a>
+                </small>
+            </h2>
+            {{ form_start(inventoryForm) }}
+            {{ form_widget(inventoryForm.unequippedInventory) }}
+            {{ form_end(inventoryForm) }}
+            {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'inventory' })) }}
+        </div>
     </div>
-    <div class="col-xs-6">
-        <h2>
-            {{ 'inventory'|trans }}
-            <small>
-                <a href="{{ path('character_inventory_edit', { 'id': entity.id }) }}" title="{{ 'inventory.edit'|trans }}">
-                    <span class="fas fa-plus"></span>
-                </a>
-            </small>
-        </h2>
-        {{ form(inventoryForm) }}
-        {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'inventory' })) }}
-    </div>
-</div>
 {% endblock %}

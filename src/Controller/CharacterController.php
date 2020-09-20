@@ -372,7 +372,7 @@ class CharacterController extends AbstractController
             array('method' => 'PUT')
         );
         if ($request->getMethod() === 'PUT' && $request->request->get('equipment')) {
-            foreach ($request->request->get('troulite_pathfinderbundle_equipment') as $slot => $unequip) {
+            foreach ($request->request->get('equipment') as $slot => $unequip) {
                 if ($slot !== '_token') {
                     $characterEquipment->unequipSlot($character, $slot);
                     $em->flush();
@@ -390,7 +390,7 @@ class CharacterController extends AbstractController
         if ($request->getMethod() === 'PUT' && $request->request->get('inventory')) {
             $inventoryForm->handleRequest($request);
 
-            foreach($inventoryForm->get('unequipped_inventory')->all() as $child) {
+            foreach($inventoryForm->get('unequippedInventory')->all() as $child) {
                 if ($child->has('equip')) {
                     /** @var SubmitButton $equip */
                     $equip = $child->get('equip');

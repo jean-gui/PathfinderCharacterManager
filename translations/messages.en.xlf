@@ -89,6 +89,10 @@
         <source>Subclass</source>
         <target>Subclass</target>
       </trans-unit>
+      <trans-unit id="5gpUjyB" resname="subclasses">
+        <source>subclasses</source>
+        <target>Subclasses</target>
+      </trans-unit>
       <trans-unit id="l4NU2ww" resname="Target">
         <source>Target</source>
         <target>Target</target>
@@ -599,7 +603,11 @@
       </trans-unit>
       <trans-unit id="xo.vGrr" resname="weapon">
         <source>weapon</source>
-        <target>Arme</target>
+        <target>Weapon</target>
+      </trans-unit>
+      <trans-unit id="yo.vGrr" resname="weapons">
+        <source>weapons</source>
+        <target>Weapons</target>
       </trans-unit>
       <trans-unit id="CETfj_6" resname="weight">
         <source>weight</source>
@@ -672,6 +680,26 @@
       <trans-unit id="4gpUjyP" resname="increase">
         <source>increase</source>
         <target>Increase</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyQ" resname="character_conditions.updated">
+        <source>character_conditions.updated</source>
+        <target>Character conditions updated</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyA" resname="item.powers">
+        <source>item.powers</source>
+        <target>Item Powers</target>
+      </trans-unit>
+      <trans-unit id="4gpUjyB" resname="equipment.powers">
+        <source>equipment.powers</source>
+        <target>Equipment Powers</target>
+      </trans-unit>
+      <trans-unit id="so.vGrr" resname="users">
+        <source>users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="zo.vGrr" resname="users.groups">
+        <source>users.groups</source>
+        <target>Users &amp; Groups</target>
       </trans-unit>
     </body>
   </file>

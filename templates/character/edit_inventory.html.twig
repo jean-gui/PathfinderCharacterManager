@@ -1,11 +1,50 @@
+{% import _self as formMacros %}
 {% extends 'base.html.twig' %}
 
-{% block subtitle entity %}
+{% macro printInventoryForm(form) %}
+    <div class="row js-group-item mb-2">
+        {{ form_errors(form) }}
+        <div class="col-auto">
+            {{ form_label(form.item) }}
+        </div>
+        <div class="col-auto">
+            {{ form_widget(form.item) }}
+        </div>
+        <div class="col-auto">
+            {{ form_label(form.quantity) }}
+        </div>
+        <div class="col-auto">
+            {{ form_widget(form.quantity) }}
+        </div>
+        <div class="col-auto my-auto">
+            <a href="#" class="js-remove-group pull-right">
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                <span class="sr-only">Remove</span>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
 
 {% block body %}
     {% include('character/character_h1.html.twig') %}
 
     <h2>{{ 'inventory'|trans }}</h2>
-    {{ form(inventoryForm) }}
+
+
+    {{ form_start(inventoryForm) }}
+    <div id="calendartype" class="js-groups-wrapper"
+         data-prototype="{{ formMacros.printInventoryForm(inventoryForm.inventoryItems.vars.prototype)|e('html_attr') }}">
+        {% for item in inventoryForm.inventoryItems %}
+            {{ formMacros.printInventoryForm(item) }}
+        {% endfor %}
+        <a href="#" class="js-group-add">
+            <i class="fa fa-plus-circle"></i>
+            Add Another Item
+        </a>
+    {{ form_end(inventoryForm) }}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('inventory') }}
+{% endblock %}
