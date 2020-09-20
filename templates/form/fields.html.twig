@@ -117,10 +117,10 @@
             {%- endif -%}
         {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            {{ label|trans({}, translation_domain) }}
             <a data-toggle="collapse" href="#{{ form.vars.id }}_desc" aria-expanded="false"
                aria-controls="{{ form.vars.id ~ '_desc' }}">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="{{ 'description'|trans }}"></span>
+                <span class="fas fa-info-circle" aria-hidden="true" title="{{ 'description'|trans }}"></span>
+                {{ label|trans({}, translation_domain) }}
             </a>
         </label>
     {%- endif -%}
@@ -133,52 +133,52 @@
             {{ form_widget(form.targets) }}
         </div>
             {{ form_widget(form.id) }}
-        <div class="collapse" id="{{ form.vars.id }}_desc" style="margin-top: 3em">
-            <div class="well">
+        <div class="collapse mt-2" id="{{ form.vars.id }}_desc">
+            <div class="card card-body">
                 {% if form.vars.data.shortDescription %}
                     <p><em>{{ form.vars.data.shortDescription|raw }}</em></p>
                 {% endif %}
 
                 <dl class="dl-horizontal">
-                    <dt>Casting Time</dt>
+                    <dt>{% trans %}casting_time{% endtrans %}</dt>
                     <dd>{{ form.vars.data.castingTime }}</dd>
 
-                    <dt>Components</dt>
+                    <dt>{% trans %}components{% endtrans %}</dt>
                     <dd>{{ form.vars.data.components }}</dd>
 
-                    <dt>Range</dt>
+                    <dt>{% trans %}range{% endtrans %}</dt>
                     <dd>{{ form.vars.data.range }}</dd>
 
-                    <dt>Duration</dt>
+                    <dt>{% trans %}duration{% endtrans %}</dt>
                     <dd>{{ form.vars.data.duration }}</dd>
 
-                    <dt>Saving throw</dt>
+                    <dt>{% trans %}saving_throw{% endtrans %}</dt>
                     <dd>{{ form.vars.data.savingThrow|default('None') }}</dd>
 
-                    <dt>Spell Resistance</dt>
+                    <dt>{% trans %}spell_resistance{% endtrans %}</dt>
                     <dd>{{ form.vars.data.spellResistance ? 'Yes' : 'No' }}</dd>
 
                     {% if form.vars.data.targets %}
-                        <dt>Targets</dt>
+                        <dt>{% trans %}targets{% endtrans %}</dt>
                         <dd>{{ form.vars.data.targets }}</dd>
                     {% endif %}
 
                     {% if form.vars.data.effects %}
-                        <dt>Effects</dt>
+                        <dt>{% trans %}effects{% endtrans %}</dt>
                         {% for key, effect in form.vars.data.effects %}
                             <dd>{{ key }}: {{ effect.value }} ({{ effect.type }})</dd>
                         {% endfor %}
                     {% endif %}
 
                     {% if form.vars.data.conditions %}
-                        <dt>Conditions</dt>
+                        <dt>{% trans %}conditions{% endtrans %}</dt>
                         {% for key, condition in form.vars.data.condition %}
                             <dd>{{ key }}: {{ condition }}</dd>
                         {% endfor %}
                     {% endif %}
 
                     {% if form.vars.data.externalConditions %}
-                        <dt>Externalconditions</dt>
+                        <dt>{% trans %}external_conditions{% endtrans %}</dt>
                         {% for key, conditions in form.vars.data.externalConditions %}
                             <dd>{{ key }}: {{ condition }}</dd>
                         {% endfor %}

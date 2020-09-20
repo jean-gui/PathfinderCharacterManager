@@ -11,8 +11,14 @@ import 'bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import $ from 'jquery';
 
 require('@fortawesome/fontawesome-free/css/all.css');
 
 bsCustomFileInput.init();
+
+$('.mypopover').popover({
+    placement: 'auto',
+    html: true,
+    container: 'body'
+});

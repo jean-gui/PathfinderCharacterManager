@@ -27,13 +27,14 @@ class AddCharacterFeatType extends AbstractType
     {
         //$featTransformer = new FeatToCharacterFeatTransformer($options['level']);
         //$builder->addModelTransformer($featTransformer);
+        dump($options['choices']);
 
         $builder->add(
             'feat',
             EntityType::class,
             array(
                 'class'   => Feat::class,
-                'choices' => $options['choices'][$builder->getName()],
+                'choices' => $options['choices'],
                 'label'   => false
             )
         );

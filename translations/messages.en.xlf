@@ -505,8 +505,8 @@
         <source>ring</source>
         <target>Ring</target>
       </trans-unit>
-      <trans-unit id="Z.j9YBO" resname="savieng_throw">
-        <source>savieng_throw</source>
+      <trans-unit id="Z.j9YBO" resname="saving_throw">
+        <source>saving_throw</source>
         <target>Saving Throw</target>
       </trans-unit>
       <trans-unit id="pXW3mGi" resname="score">

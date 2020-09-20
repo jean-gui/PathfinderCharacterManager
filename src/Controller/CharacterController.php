@@ -236,8 +236,8 @@ class CharacterController extends AbstractController
         $powersActivationForm->handleRequest($request);
 
         if ($powersActivationForm->isSubmitted() && $powersActivationForm->isValid()) {
-            if (array_key_exists('class_powers', $request->request->get('classpoweractivation'))) {
-                foreach ($request->request->get('classpoweractivation')['class_powers'] as $key => $value) {
+            if (array_key_exists('class_powers', $request->request->get('powers_activation'))) {
+                foreach ($request->request->get('powers_activation')['class_powers'] as $key => $value) {
                     /** @var $ccp CharacterClassPower */
                     $ccp = $powersActivationForm->get('class_powers')->get($key)->getData();
 

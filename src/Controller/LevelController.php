@@ -56,52 +56,54 @@ class LevelController extends AbstractController
         $level->setClassDefinition($character->getFavoredClass());
         $character->addLevel($level);
 
-        $flow->bind($level);
-
         if ($level->getClassDefinition() && $level->getClassDefinition()->isPrestige()) {
             $level->setParentClass($character->getFavoredClass());
+        }
+
+        $flow->bind($level);
+
+        foreach ($level->getClassDefinition()->getPowers(
+            $character->getLevel($level->getClassDefinition())
+        ) as $power) {
+            $alreadyAdded = false;
+            foreach ($level->getClassPowers() as $classPower) {
+                if ($classPower->getClassPower() === $power) {
+                    $alreadyAdded = true;
+                    break;
+                }
+            }
+            if (!$alreadyAdded) {
+                $level->addClassPower((new CharacterClassPower())->setClassPower($power));
+            }
+        }
+
+        // Add powers coming from subclasses
+        foreach ($character->getLevels() as $lowerLevel) {
+            if (
+                $lowerLevel->getClassDefinition() === $level->getClassDefinition()
+                && $lowerLevel->getSubClasses()->count() > 0
+            ) {
+                $levelValue = $character->getLevel($level->getClassDefinition());
+                foreach ($lowerLevel->getSubClasses() as $subClass) {
+                    $alreadyAdded = false;
+                    foreach ($subClass->getPowers($levelValue) as $power) {
+                        foreach ($level->getClassPowers() as $classPower) {
+                            if ($classPower->getClassPower() === $power) {
+                                $alreadyAdded = true;
+                                break;
+                            }
+                        }
+                        if (!$alreadyAdded) {
+                            $level->addClassPower((new CharacterClassPower())->setClassPower($power));
+                        }
+                    }
+                }
+            }
         }
 
         // form of the current step
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
-            foreach ($level->getClassDefinition()->getPowers($character->getLevel($level->getClassDefinition())) as $power) {
-                $alreadyAdded = false;
-                foreach ($level->getClassPowers() as $classPower) {
-                    if ($classPower->getClassPower() === $power) {
-                        $alreadyAdded = true;
-                        break;
-                    }
-                }
-                if (!$alreadyAdded) {
-                    $level->addClassPower((new CharacterClassPower())->setClassPower($power));
-                }
-            }
-
-            // Add powers coming from subclasses
-            foreach ($character->getLevels() as $lowerLevel) {
-                if (
-                    $lowerLevel->getClassDefinition() === $level->getClassDefinition()
-                    && $lowerLevel->getSubClasses()->count() > 0
-                ) {
-                    $levelValue = $character->getLevel($level->getClassDefinition());
-                    foreach ($lowerLevel->getSubClasses() as $subClass) {
-                        $alreadyAdded = false;
-                        foreach ($subClass->getPowers($levelValue) as $power) {
-                            foreach ($level->getClassPowers() as $classPower) {
-                                if ($classPower->getClassPower() === $power) {
-                                    $alreadyAdded = true;
-                                    break;
-                                }
-                            }
-                            if (!$alreadyAdded) {
-                                $level->addClassPower((new CharacterClassPower())->setClassPower($power));
-                            }
-                        }
-                    }
-                }
-            }
-
             $flow->saveCurrentStepData($form);
 
             if ($flow->nextStep()) {
@@ -134,9 +136,16 @@ class LevelController extends AbstractController
                         array_key_exists('feat', $effects) &&
                         $effects['feat']['type'] !== 'oneof'
                     ) {
-                        // TODO: weird and broken
-                        $feat = $em->getRepository(Feat::class)
-                            ->findOneBy(array('name' => $effects['feat']['value']));
+                        // TODO: weird
+                        $qb = $em->getRepository(Feat::class)->createQueryBuilder('f');
+                        $qb
+                            ->leftJoin('f.translations', 't')
+                            ->where('t.locale = :locale')
+                            ->andWhere('t.name = :name')
+                            ->setParameter('locale', 'en')
+                            ->setParameter('name', $effects['feat']['value'])
+                        ;
+                        $feat = $qb->getQuery()->getSingleResult();
                         if ($feat) {
                             $level->addFeat((new CharacterFeat())->setFeat($feat));
                         }

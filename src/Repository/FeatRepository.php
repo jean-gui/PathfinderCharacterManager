@@ -28,6 +28,7 @@ class FeatRepository extends EntityRepository
         $feats          = array();
 
         $qb = $this->_em->createQueryBuilder()->select('f')->from(Feat::class, 'f');
+        $qb->indexBy('f', 'f.id');
         foreach ($characterFeats as $characterFeat) {
             if ($characterFeat->getFeat() && $characterFeat->getId()) {
                 $feats[] = $characterFeat->getFeat()->getId();
@@ -43,12 +44,13 @@ class FeatRepository extends EntityRepository
     /**
      * Find all available feats for a character to pick from
      *
-     * @param Character $Character
+     * @param Character $character
      *
      * @return Feat[]
-     */public function findByAvailableFor(Character $Character)
+     */
+    public function findByAvailableFor(Character $character)
     {
-        $query = $this->queryAvailableFor($Character)->getQuery();
+        $query = $this->queryAvailableFor($character)->getQuery();
         return $query->getResult();
     }
 } 

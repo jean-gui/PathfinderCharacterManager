@@ -27,6 +27,7 @@ class LevelUpFlow extends FormFlow
     {
         $this->advancement = $advancement;
         $this->em = $em;
+        $this->revalidatePreviousSteps = false;
     }
 
     /**

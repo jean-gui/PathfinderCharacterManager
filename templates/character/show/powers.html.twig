@@ -1,3 +1,5 @@
+{% import 'popovers.html.twig' as popovers %}
+
 {% if
 powers_activation_form.feats|length > 0 or
 powers_activation_form.class_powers|length > 0 or
@@ -15,7 +17,7 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat) }}
+                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat, false) }}
                     {{ form_label(power.active, power.vars.value.feat.name) }}
                 </td>
                 <td>{{ form_widget(power.active) }}</td>
@@ -27,11 +29,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
-                    {{ form_label(power.active, power.vars.value.classPower.name) }}
+                    <label for="{{ power.active.vars.id }}">
+                        {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
+                    </label>
                 </td>
                 <td>
-                    {{ form_widget(power.active) }}
+                    {{ form_widget(power.active, {label: false}) }}
                     {% if power.cancel is defined %}
                         {{ form_row(power.cancel) }}
                     {% endif %}

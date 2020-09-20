@@ -10,6 +10,7 @@ use App\Entity\Rules\Feat;
 use App\ExpressionLanguage\ExpressionLanguage;
 use App\Form\Type\AddCharacterFeatType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -98,10 +99,25 @@ class LevelUpFeatsType extends AbstractType
                                 $featsToAdd += $value;
                             } elseif (array_key_exists('feat', $effects)) {
                                 if ($effects['feat']['type'] === 'oneof') {
-                                    $choices[] = $em->getRepository(Feat::class)->findBy(
-                                        array('name' => $effects['feat']['value'])
-                                    );
-
+                                    /** @var QueryBuilder $qb */
+                                    $qb = $em->getRepository(Feat::class)->createQueryBuilder('f');
+                                    $qb
+                                        ->leftJoin('f.translations', 't')
+                                        ->where('t.locale = :locale')
+                                        ->andWhere($qb->expr()->in('t.name', ':feats'))
+                                        ->setParameter('locale', 'en')
+                                        ->setParameter('feats', $effects['feat']['value'])
+                                    ;
+/*
+                                    $choices = array_flip(array_map(function (Feat
+                                    $feat) {
+                                        return $feat->__toString();
+                                    }, $qb->getQuery()->getResult()));
+*/
+                                    $feats = $qb->getQuery()->getResult();
+                                    foreach ($feats as $key => $feat) {
+                                        $choices[$feat->__toString()] = $feat;
+                                    }
                                     $featsToAdd += 1;
                                 }
                             }

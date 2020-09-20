@@ -1,12 +1,15 @@
-{% macro description(title, object) %}
+{% macro description(title, object, linkText=true) %}
     {% if
     object.longDescription or
     object.shortDescription or
     (object.prerequisities is defined and object.prerequisities|length > 0) or
     (object.conditions is defined and object.conditions|length > 0) or
     (object.externalConditions is defined and object.externalConditions|length > 0) %}
-        <a class="mypopover" data-toggle="popover"
+        <a class="mypopover"
+           data-toggle="popover"
            title="{{ title }}"
+           data-trigger="focus"
+           tabindex="0"
            data-content="
             {% if object.shortDescription %}
             <p><em>{{ object.shortDescription }}</em></p>
@@ -34,13 +37,27 @@
             </ul>
             {% endif %}
        ">
-            <span class="glyphicon glyphicon-info-sign"></span></a>
+            <span class="fas fa-info-circle"></span>
+            {% if linkText is same as(true) %}
+                {{ title }}
+            {% elseif linkText %}
+                {{ linkText }}
+            {% endif %}
+        </a>
+        {% else %}
+            {% if linkText is same as(true) %}
+                {{ title }}
+            {% elseif linkText %}
+                {{ linkText }}
+            {% endif %}
     {% endif %}
 {% endmacro %}
 
 {% macro bonuses(bonuses) %}
     {% if bonuses.bonuses|length != 0 %}
         <a class="mypopover" data-toggle="popover"
+           data-trigger="focus"
+           tabindex="0"
            title="Bonuses"
            data-content="
                 {% set ab = bonuses.applicableBonuses %}
@@ -68,6 +85,6 @@
                 </ul>
                 {% endif %}
            ">
-            <span class="glyphicon glyphicon-info-sign"></span></a>
+            <span class="fas fa-info-circle"></span></a>
     {% endif %}
 {% endmacro bonuses %}

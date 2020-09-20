@@ -1,3 +1,5 @@
+{% import 'popovers.html.twig' as popovers %}
+
 <table class="table table-hover table-striped table-sm">
     <thead>
     <tr>
@@ -19,9 +21,9 @@
         <tr>
             <td>
                 {% if entity.hasClassBonus(skill) -%}
-                    <span class="glyphicon glyphicon-check"></span>
+                    <i class="far fa-check-square"></i>
                 {% else %}
-                    <span class="glyphicon glyphicon-unchecked"></span>
+                    <i class="far fa-square"></i>
                 {% endif %}
                 {{ skill }}{% if not skill.untrained %}*{% endif %}
             </td>

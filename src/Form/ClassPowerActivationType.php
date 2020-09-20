@@ -43,7 +43,6 @@ class ClassPowerActivationType extends AbstractType
                             'choices'  => $choices,
                             'mapped'   => false,
                             'required' => false,
-                            'translation_domain' => 'classpowers'
                         )
                     )
                     ->add(
@@ -60,7 +59,7 @@ class ClassPowerActivationType extends AbstractType
                     $form->add(
                         'active',
                         null,
-                        array("required" => false, 'horizontal_label_class' => null, 'translation_domain' => 'classpowers')
+                        ["required" => false]
                     );
                 }
             }
