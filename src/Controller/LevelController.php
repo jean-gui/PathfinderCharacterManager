@@ -104,7 +104,6 @@ class LevelController extends AbstractController
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData($form);
-            dump($flow->getFormData());
 
             if ($flow->nextStep()) {
                 // form for the next step
