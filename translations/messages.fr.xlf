@@ -653,6 +653,10 @@
         <source>password</source>
         <target>Mot de passe</target>
       </trans-unit>
+      <trans-unit id="XohImNv" resname="repeat.password">
+        <source>repeat.password</source>
+        <target>Répétez le mot de passe</target>
+      </trans-unit>
       <trans-unit id="sSJ75Q9" resname="agree_terms">
         <source>agree_terms</source>
         <target>Accepter les conditions d'utilisation</target>

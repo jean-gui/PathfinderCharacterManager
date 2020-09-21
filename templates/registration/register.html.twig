@@ -10,12 +10,12 @@
     <h1>{{ 'register'|trans }}</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email, {label: 'email'|trans}) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'password'|trans
-        }) }}
-        {{ form_row(registrationForm.agreeTerms, {label: 'agree_terms'|trans}) }}
+    {{ form_row(registrationForm.email, {label: 'email'|trans}) }}
+    {{ form_row(registrationForm.name, {label: 'name'|trans}) }}
+    {{ form_row(registrationForm.plainPassword, {
+        label: 'password'|trans
+    }) }}
 
-        <button type="submit" class="btn btn-primary">{{ 'register'|trans }}</button>
+    <button type="submit" class="btn btn-primary">{{ 'register'|trans }}</button>
     {{ form_end(registrationForm) }}
 {% endblock %}
