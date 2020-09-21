@@ -2,7 +2,10 @@
 
 {% import 'popovers.html.twig' as popovers %}
 
-{% block subtitle entity %}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('character_sheet') }}
+{% endblock %}
 
 {% block body -%}
     {% include('character/character_h1.html.twig') %}

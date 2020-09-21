@@ -39,8 +39,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\WebLink\Link;
 
 /**
  * Character controller.
@@ -132,7 +135,7 @@ class CharacterController extends AbstractController
             [
                 'entity'         => $character,
                 'form'           => $form->createView(),
-                'ability_scores' => $ability_scores
+                'ability_scores' => $ability_scores,
             ]
         );
     }
@@ -144,14 +147,15 @@ class CharacterController extends AbstractController
      * @Template()
      * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
-     * @param Character $character
-     * @param Request   $request
+     * @param Character          $character
+     * @param Request            $request
+     * @param PublisherInterface $publisher
      *
      * @return array|RedirectResponse
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function showAction(Character $character, Request $request)
+    public function showAction(Character $character, Request $request, PublisherInterface $publisher)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -249,6 +253,8 @@ class CharacterController extends AbstractController
                                     break;
                                 }
                             }
+
+                            $this->publishCharacterUpdate($publisher, $target);
                         }
                     }
 
@@ -268,7 +274,10 @@ class CharacterController extends AbstractController
                                             ->setCaster($character)
                                             ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
                                     );
+
+                                    $this->publishCharacterUpdate($publisher, $target);
                                 }
+
                                 break;
                             default:
                                 /** @var $target Character */
@@ -280,6 +289,8 @@ class CharacterController extends AbstractController
                                             ->setCaster($character)
                                             ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
                                     );
+
+                                    $this->publishCharacterUpdate($publisher, $target);
                                 }
                                 break;
                         }
@@ -344,7 +355,7 @@ class CharacterController extends AbstractController
             'character/edit_inventory.html.twig',
             [
                 'entity'        => $character,
-                'inventoryForm' => $inventoryForm->createView()
+                'inventoryForm' => $inventoryForm->createView(),
             ]
         );
     }
@@ -429,7 +440,7 @@ class CharacterController extends AbstractController
             [
                 'entity' => $character,
                 'equipmentForm' => $equipmentForm->createView(),
-                'inventoryForm' => $inventoryForm->createView()
+                'inventoryForm' => $inventoryForm->createView(),
             ]
         );
     }
@@ -441,15 +452,20 @@ class CharacterController extends AbstractController
      * @Template()
      * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
-     * @param Character    $character
-     * @param Request      $request
-     *
-     * @param SpellCasting $spellCasting
+     * @param Character          $character
+     * @param Request            $request
+     * @param SpellCasting       $spellCasting
+     * @param PublisherInterface $publisher
      *
      * @return array|RedirectResponse
      * @throws Exception
-*/
-    public function showCharacterSpells(Character $character, Request $request, SpellCasting $spellCasting)
+     */
+    public function showCharacterSpells(
+        Character $character,
+        Request $request,
+        SpellCasting $spellCasting,
+        PublisherInterface $publisher
+    )
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -526,7 +542,10 @@ class CharacterController extends AbstractController
                 if ($f->getData()['uncast'] === true) {
                     /** @var $spellEffect SpellEffect */
                     $spellEffect = $f->getConfig()->getOption('spellEffect');
-                    $spellEffect->getCharacter()->removeSpellEffect($spellEffect);
+                    $target = $spellEffect->getCharacter();
+                    $target->removeSpellEffect($spellEffect);
+
+                    $this->publishCharacterUpdate($publisher, $target);
                 }
             }
             $em->flush();
@@ -709,7 +728,7 @@ class CharacterController extends AbstractController
         }
 
         return array(
-            'form' => $sleepForm->createView()
+            'form' => $sleepForm->createView(),
         );
     }
 
@@ -720,12 +739,13 @@ class CharacterController extends AbstractController
      * @Template()
      * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
-     * @param Character $character
-     * @param Request $request
+     * @param Character          $character
+     * @param Request            $request
+     * @param PublisherInterface $publisher
      *
      * @return Response
      */
-    public function hitPoints(Character $character, Request $request)
+    public function hitPoints(Character $character, Request $request, PublisherInterface $publisher)
     {
         $hpForm = $this->createForm(
             ChangeHpType::class,
@@ -741,6 +761,8 @@ class CharacterController extends AbstractController
             $character->changeHp($hpForm->get('hp_mod')->getData());
             $this->getDoctrine()->getManager()->flush();
 
+            $this->publishCharacterUpdate($publisher, $character);
+
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
@@ -748,7 +770,7 @@ class CharacterController extends AbstractController
             'character/hit_points.html.twig',
             [
                 'character' => $character,
-                'form'      => $hpForm->createView()
+                'form'      => $hpForm->createView(),
             ]
         );
     }
@@ -857,5 +879,19 @@ class CharacterController extends AbstractController
         }
 
         return array('form' => $form->createView());
+    }
+
+    /**
+     * @param PublisherInterface $publisher
+     * @param Character          $character
+     */
+    protected function publishCharacterUpdate(PublisherInterface $publisher, Character $character): void
+    {
+        $publisher(
+            new Update(
+                'https://pathfinder.troulite.fr/characters/' . $character->getId(),
+                json_encode(['character' => $character->getId()])
+            )
+        );
     }
 }

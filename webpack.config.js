@@ -25,6 +25,8 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('inventory', './assets/js/inventory.js')
+    .addEntry('character_sheet', './assets/js/character_sheet.js')
+    .addEntry('dm', './assets/js/dm.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

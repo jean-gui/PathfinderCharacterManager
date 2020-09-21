@@ -10,6 +10,8 @@ use App\Entity\Rules\Spell;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Mercure\PublisherInterface;
+use Symfony\Component\Mercure\Update;
 
 /**
  * Class SpellCasting
@@ -19,10 +21,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SpellCasting
 {
     private $em;
+    private $publisher;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, PublisherInterface $publisher)
     {
         $this->em = $em;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -116,5 +120,15 @@ class SpellCasting
         }
 
         $this->em->flush();
+
+        $publisher = $this->publisher;
+        foreach ($targets as $target) {
+            $publisher(
+                new Update(
+                    'https://pathfinder.troulite.fr/characters/' . $target->getId(),
+                    json_encode(['character' => $target->getId()])
+                )
+            );
+        }
     }
 } 

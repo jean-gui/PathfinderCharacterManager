@@ -1,5 +1,5 @@
 {% block character_h1 %}
-<h1>
+<h1 data-character-id="{{ entity.id }}">
     {{ entity }}
     <small>
         {{ 'level'|trans({'%level%': entity.level}) }}
