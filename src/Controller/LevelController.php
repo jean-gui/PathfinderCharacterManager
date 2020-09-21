@@ -60,8 +60,6 @@ class LevelController extends AbstractController
             $level->setParentClass($character->getFavoredClass());
         }
 
-        $flow->bind($level);
-
         foreach ($level->getClassDefinition()->getPowers(
             $character->getLevel($level->getClassDefinition())
         ) as $power) {
@@ -100,11 +98,13 @@ class LevelController extends AbstractController
                 }
             }
         }
+        $flow->bind($level);
 
         // form of the current step
         $form = $flow->createForm();
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData($form);
+            dump($flow->getFormData());
 
             if ($flow->nextStep()) {
                 // form for the next step
