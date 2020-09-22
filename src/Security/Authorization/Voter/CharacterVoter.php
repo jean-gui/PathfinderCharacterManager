@@ -74,6 +74,7 @@ class CharacterVoter extends Voter
                 return
                     $user->getId() === $character->getUser()->getId() ||
                     (
+                        $character->getParty() &&
                         $character->getParty()->getDungeonMaster() &&
                         $user->getId() === $character->getParty()->getDungeonMaster()->getId()
                     )
