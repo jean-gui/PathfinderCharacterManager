@@ -17,8 +17,7 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat, false) }}
-                    {{ form_label(power.active, power.vars.value.feat.name) }}
+                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat) }}
                 </td>
                 <td>{{ form_widget(power.active) }}</td>
             </tr>
