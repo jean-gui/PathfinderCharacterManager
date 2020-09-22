@@ -52,25 +52,6 @@ use Symfony\Component\WebLink\Link;
  */
 class CharacterController extends AbstractController
 {
-
-    /**
-     * Lists all Character entities.
-     *
-     * @Route("/", name="characters")
-     * @Template()
-     * @Security("is_granted('ROLE_ADMIN')")
-     */
-    public function index()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository(Character::class)->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
-
     /**
      * Creates a form to create a Character entity.
      *
