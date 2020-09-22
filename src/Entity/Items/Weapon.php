@@ -12,6 +12,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Weapon extends Item
 {
+    const CATEGORIES = [
+        'Simple'  => 'simple',
+        'Martial' => 'martial',
+        'Exotic'  => 'exotic',
+    ];
+
+    const TYPES = [
+        'Great Sword' => 'greatsword',
+        'Longbow'     => 'longbow',
+        'Long Sword'  => 'longsword',
+        'Polearm'     => 'polearm',
+        'Short Sword' => 'shortsword',
+        'Whip'        => 'whip',
+        'Kukri'       => 'kukri'
+    ];
+
     /**
      * @var string
      *
