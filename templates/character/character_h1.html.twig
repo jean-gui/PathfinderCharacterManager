@@ -6,14 +6,17 @@
         <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
         <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
             {%- if entity.favoredClass.subClasses -%}
+                {% set firstSubClasses = true %}
                 {% for level in entity.levels(entity.favoredClass)|filter(level => level.favoredClass and level.subClasses|length > 0) %}
                     ({%- for subclass in level.SubClasses -%}
+                    {%- if loop.first and not firstSubClasses -%}, {%- endif -%}
+                    {%- set hasSubClasses = false -%}
                     <a href="{{ path('subclasses_show', {'id': subclass.id}) }}">{{ subclass }}</a>
-                    {%- if loop.index <= entity.levels(entity.favoredClass)|length -%}, {% endif %}
+                    {%- if not loop.last -%}, {% endif %}
                     {%- endfor -%})
                 {% endfor %}
-            {%- endif -%}
-        <a href="{{ path('characters_edit', {'id': entity.id}) }}"><span
+            {%- endif %}
+        <a href="{{ path('characters_edit', {'id': entity.id}) }}" title="{{ 'edit'|trans }}"><span
                     class="fas fa-edit"></span></a>
         <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
                     class="fas fa-plus"></span></a>
