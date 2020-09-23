@@ -871,7 +871,7 @@ class CharacterController extends AbstractController
         $publisher(
             new Update(
                 'https://pathfinder.troulite.fr/characters/' . $character->getId(),
-                json_encode(['character' => $character->getId()])
+                json_encode(['character' => $character->getId(), 'message' => $character->getName() . ' changed'])
             )
         );
     }

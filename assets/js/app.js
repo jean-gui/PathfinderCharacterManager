@@ -22,3 +22,11 @@ $('.mypopover').popover({
     html: true,
     container: 'body'
 });
+
+if (("Notification" in window) && Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+        if (!('permission' in Notification)) {
+            Notification.permission = permission;
+        }
+    });
+}

@@ -126,7 +126,7 @@ class SpellCasting
             $publisher(
                 new Update(
                     'https://pathfinder.troulite.fr/characters/' . $target->getId(),
-                    json_encode(['character' => $target->getId()])
+                    json_encode(['character' => $target->getId(), 'message' => $spell . ' cast on ' . $target])
                 )
             );
         }
