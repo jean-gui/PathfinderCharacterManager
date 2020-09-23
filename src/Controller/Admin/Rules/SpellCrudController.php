@@ -23,8 +23,13 @@ class SpellCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
-            ->addFormTheme('bundles/A2lixTranslationFormBundle/bootstrap_4_layout.html.twig');
+        $c = parent::configureCrud($crud);
+
+        $searchFields = $c->getAsDto()->getSearchFields();
+        $c->setSearchFields(array_merge($searchFields, ['translations.name']));
+        $c->addFormTheme('bundles/A2lixTranslationFormBundle/bootstrap_4_layout.html.twig');
+
+        return $c;
     }
 
     public function configureActions(Actions $actions): Actions

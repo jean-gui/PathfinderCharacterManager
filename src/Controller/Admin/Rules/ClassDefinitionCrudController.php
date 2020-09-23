@@ -30,11 +30,17 @@ class ClassDefinitionCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
+        $c = parent::configureCrud($crud);
+
+        $searchFields = $c->getAsDto()->getSearchFields();
+        $c
+            ->setSearchFields(array_merge($searchFields, ['translations.name']))
             ->addFormTheme('bundles/A2lixTranslationFormBundle/bootstrap_4_layout.html.twig')
             ->overrideTemplate('crud/new', 'admin/class_definition/new.html.twig')
             ->overrideTemplate('crud/edit', 'admin/class_definition/edit.html.twig')
-            ;
+        ;
+
+        return $c;
     }
 
     public function configureActions(Actions $actions): Actions
