@@ -268,7 +268,7 @@ class SleepType extends AbstractType
                                             $reverse = array_reverse($previouslyPreparedSpellsByLevel[$spellLevel]);
                                             while ($pps = array_shift($reverse)) {
                                                 foreach ($choices[count($choices) - 1] as $s) {
-                                                    if (in_array($pps->getSpell(), $s)) {
+                                                    if (in_array($pps->getSpell(), $s, true)) {
                                                         $spell = $pps->getSpell();
                                                         break 2;
                                                     }

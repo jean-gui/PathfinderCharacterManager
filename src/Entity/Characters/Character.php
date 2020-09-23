@@ -1568,7 +1568,7 @@ class Character extends BaseCharacter
     {
         $classes = array();
         foreach ($this->getLevels() as $level) {
-            if (!in_array($level->getClassDefinition(), $classes)) {
+            if (!in_array($level->getClassDefinition(), $classes, true)) {
                 $classes[] = $level->getClassDefinition();
             }
         }
