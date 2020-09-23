@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Armor extends Item
 {
+    const CATEGORIES = ['Light' => 'light', 'Medium' => 'medium', 'Heavy' => 'heavy'];
+
     /**
      * @var int
      *
