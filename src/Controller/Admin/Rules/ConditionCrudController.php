@@ -32,8 +32,7 @@ class ConditionCrudController extends AbstractCrudController
     }
 
     public function configureActions(Actions $actions): Actions
-    {
-        return parent::configureActions($actions)->add(Crud::PAGE_INDEX, Action::DETAIL);
+    {        return parent::configureActions($actions)->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
     public function configureFields(string $pageName): iterable

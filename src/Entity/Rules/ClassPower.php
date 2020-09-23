@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ClassPower
@@ -22,6 +23,11 @@ class ClassPower implements TranslatableInterface
 {
     use PowerTrait;
     use TranslatableTrait;
+
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
 
     /**
      * @var integer

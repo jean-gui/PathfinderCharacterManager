@@ -6,6 +6,7 @@ use App\Entity\Traits\PowerTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Feat
@@ -18,6 +19,11 @@ class Feat implements TranslatableInterface
 {
     use PowerTrait;
     use TranslatableTrait;
+
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
 
     /**
      * @var integer

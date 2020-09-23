@@ -5,6 +5,8 @@ namespace App\Entity\Rules;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Skill
@@ -30,6 +32,7 @@ class SkillTranslation implements TranslationInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank
      */
     protected $name;
 
@@ -48,5 +51,14 @@ class SkillTranslation implements TranslationInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getLocale() == 'en' && !$this->getName()) {
+            $context->buildViolation('You need to set at least the English name')
+                    ->atPath('name')
+                    ->addViolation();
+        }
     }
 }

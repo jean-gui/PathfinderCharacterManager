@@ -46,7 +46,7 @@ class SkillCrudController extends AbstractCrudController
             BooleanField::new('untrained'),
             BooleanField::new('armorCheckPenalty'),
             ChoiceField::new('keyAbility')->setChoices(Abilities::ABILITIES),
-            TranslationField::new('translations')->onlyOnForms()
+            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true)
         ];
     }
 }

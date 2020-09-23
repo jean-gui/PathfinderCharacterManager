@@ -49,7 +49,7 @@ class SubClassCrudController extends AbstractCrudController
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
             AssociationField::new('parent'),
             BooleanField::new('extraSpellSlot'),
-            TranslationField::new('translations')->onlyOnForms(),
+            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true),
             CollectionField::new('spells')
                            ->hideOnIndex()
                            ->setEntryIsComplex(true)

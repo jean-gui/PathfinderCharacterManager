@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SubClass
@@ -18,6 +19,11 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 class SubClass implements TranslatableInterface
 {
     use TranslatableTrait;
+
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
 
     /**
      * @var integer

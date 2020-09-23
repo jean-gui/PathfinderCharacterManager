@@ -4,6 +4,7 @@ namespace App\Entity\Rules;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Condition
@@ -16,6 +17,11 @@ use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 class Condition implements TranslatableInterface
 {
     use TranslatableTrait;
+
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
 
     /**
      * @var integer

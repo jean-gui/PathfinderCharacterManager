@@ -26,7 +26,7 @@ class EquipmentPowerCrudController extends ItemPowerCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
-            TranslationField::new('translations')->onlyOnForms(),
+            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true),
             BooleanField::new('passive'),
             JsonField::new('effects')->hideOnIndex(),
             JsonField::new('conditions')->hideOnIndex(),

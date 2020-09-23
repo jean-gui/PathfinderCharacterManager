@@ -22,6 +22,11 @@ class ClassDefinition implements TranslatableInterface
     use TranslatableTrait;
 
     /**
+     * @Assert\Valid
+     */
+    protected $translations;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer")

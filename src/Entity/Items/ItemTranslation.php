@@ -5,6 +5,7 @@ namespace App\Entity\Items;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -32,6 +33,7 @@ class ItemTranslation implements TranslationInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     protected $name;
 

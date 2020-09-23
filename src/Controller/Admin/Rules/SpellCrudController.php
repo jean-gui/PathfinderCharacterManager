@@ -56,7 +56,7 @@ class SpellCrudController extends AbstractCrudController
             JsonField::new('conditions')->hideOnIndex(),
             JsonField::new('externalConditions')->hideOnIndex(),
             JsonField::new('prerequisities')->hideOnIndex(),
-            TranslationField::new('translations')->onlyOnForms()
+            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true)
         ];
     }
 }
