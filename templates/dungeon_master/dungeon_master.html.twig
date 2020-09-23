@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% form_theme form _self %}
 
+{% block subtitle entity ~ ' - Dungeon Master' %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('dm') }}
