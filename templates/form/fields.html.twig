@@ -74,7 +74,9 @@
                 {{ 'dc'|trans }}: {{ 10 + spellLevel + modifier }}
             </small>
         </h4>
-        {{ form_widget(form) }}
+        {% for child in form.children %}
+            {{ form_widget(child) }}
+        {% endfor %}
     </div>
 {% endblock %}
 
@@ -108,11 +110,13 @@
 
 {% block cast_spell_row %}
     <div class="form-group form-inline">
-        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-6 col-sm-5' } }) }}
-        <div class="col-xs-4 col-sm-4">
+        {{ form_label(form, form.vars.data.name, { 'label_attr': { 'class': 'control-label col-xs-6 col-sm-5 justify-content-start' } }) }}
+        <div class="col-xs-4 col-sm-5">
             {{ form_widget(form.targets) }}
         </div>
+        <div class="col-xs-2 col-sm-2">
             {{ form_widget(form.id) }}
+        </div>
         <div class="collapse mt-2" id="{{ form.vars.id }}_desc">
             <div class="card card-body">
                 {% if form.vars.data.shortDescription %}
