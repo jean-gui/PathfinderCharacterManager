@@ -25,6 +25,11 @@ parameters:
         bluff
         climb
         craft
+        craft-armors
+        craft-weapons
+        craft-bows
+        craft-traps
+        craft-alchemy
         diplomacy
         disable-device
         disguise
