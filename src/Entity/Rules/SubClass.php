@@ -223,6 +223,26 @@ class SubClass implements TranslatableInterface
         return $this->spells;
     }
 
+    /**
+     * @param Spell $spell
+     *
+     * @return ClassSpell|null
+     */
+    public function getClassSpell(Spell $spell)
+    {
+        $found = $this->getSpells()->filter(
+            function (ClassSpell $classSpell) use ($spell) {
+                return $classSpell->getSpell() === $spell;
+            }
+        );
+
+        if ($found->count() === 1) {
+            return $found->first();
+        }
+
+        return null;
+    }
+
     public function __get($name)
     {
         $method    = 'get' . ucfirst($name);

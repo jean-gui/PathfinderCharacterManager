@@ -4,6 +4,7 @@ namespace App\Entity\Characters;
 
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\Spell;
+use App\Entity\Rules\SubClass;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -189,8 +190,22 @@ class PreparedSpell
     public function getSpellLevel()
     {
         if ($this->getSpell()) {
-            return $this->getClass()->getClassSpell($this->getSpell())->getSpellLevel();
+            $classSpell = $this->getClass()->getClassSpell($this->getSpell());
+            if ($classSpell) {
+                return $this->getClass()->getClassSpell($this->getSpell())->getSpellLevel();
+            } else {
+                /** @var SubClass[] $subClasses */
+                $subClasses = $this->getCharacter()->getSubClassesFor($this->getClass());
+                foreach ($subClasses as $subClass) {
+                    $classSpell = $subClass->getClassSpell($this->getSpell());
+
+                    if ($classSpell && $classSpell->getSpellLevel()) {
+                        return $classSpell->getSpellLevel();
+                    }
+                }
+            }
         }
+
         return null;
     }
 
