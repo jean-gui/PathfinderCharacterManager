@@ -34,7 +34,7 @@ class ClassPowerActivationType extends AbstractType
                 if ($ccp->getClassPower()->isCastable() && !$ccp->isActive()) {
                     $choices = array('Other' => 'other', 'Allies' => 'allies');
                     foreach ($ccp->getCharacter()->getParty()->getCharacters() as $ally) {
-                        $choices[$ally->getId()] = $ally->getName();
+                        $choices[$ally->getName()] = $ally->getId();
                     }
                     $form->add(
                         'active',
@@ -51,7 +51,6 @@ class ClassPowerActivationType extends AbstractType
                         array(
                             'mapped' => false,
                             'required' => false,
-                            'widget_checkbox_label' => 'widget',
                             'label_attr' => array('class' => null)
                         )
                     );
