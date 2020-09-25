@@ -60,6 +60,8 @@ class LevelController extends AbstractController
             $level->setParentClass($character->getFavoredClass());
         }
 
+        $flow->bind($level);
+
         foreach ($level->getClassDefinition()->getPowers(
             $character->getLevel($level->getClassDefinition())
         ) as $power) {
