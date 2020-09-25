@@ -128,7 +128,7 @@
         </ul>
     </div>
 </nav>
-<main class="container">
+<main class="{% block container_classes %}container{% endblock %}">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}" role="alert">{{ message }}</div>

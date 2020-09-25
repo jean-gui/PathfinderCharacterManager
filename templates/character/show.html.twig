@@ -7,6 +7,8 @@
     {{ encore_entry_script_tags('character_sheet') }}
 {% endblock %}
 
+{% block container_classes %}container-fluid{% endblock %}
+
 {% block body -%}
     {% include('character/character_h1.html.twig') %}
     <div class="row">
