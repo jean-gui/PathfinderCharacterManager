@@ -46,7 +46,7 @@ class SubClass implements TranslatableInterface
     /**
      * @var Collection|ClassPower[]
      *
-     * @ORM\OneToMany(targetEntity=ClassPower::class, mappedBy="subClass", cascade={"all"})
+     * @ORM\OneToMany(targetEntity=ClassPower::class, mappedBy="subClass", cascade={"all"}, orphanRemoval=true)
      * @ORM\Cache()
      */
     protected $powers;
