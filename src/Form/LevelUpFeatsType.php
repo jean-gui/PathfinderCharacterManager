@@ -108,16 +108,14 @@ class LevelUpFeatsType extends AbstractType
                                         ->setParameter('locale', 'en')
                                         ->setParameter('feats', $effects['feat']['value'])
                                     ;
-/*
-                                    $choices = array_flip(array_map(function (Feat
-                                    $feat) {
-                                        return $feat->__toString();
-                                    }, $qb->getQuery()->getResult()));
-*/
+
                                     $feats = $qb->getQuery()->getResult();
+
+                                    $extraFeats = [];
                                     foreach ($feats as $key => $feat) {
-                                        $choices[$feat->__toString()] = $feat;
+                                        $extraFeats[$feat->__toString()] = $feat;
                                     }
+                                    $choices[] = $extraFeats;
                                     $featsToAdd += 1;
                                 }
                             }

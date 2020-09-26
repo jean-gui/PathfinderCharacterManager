@@ -12,6 +12,7 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
+    "@ttskch/select2-bootstrap4-theme": "^1.4.0",
     "ckeditor": "^4.12.1",
     "select2": "^4.0.13"
   }

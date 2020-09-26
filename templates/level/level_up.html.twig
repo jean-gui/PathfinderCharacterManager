@@ -63,10 +63,14 @@
             <td>{{ form_row(child, {'attr':{'class':'collection-item' }}) }}</td>
         </tr>
     {% endfor %}
-{% endblock skills_collection_rows %}
+{% endblock %}
 
-{% block _troulite_pathfinderbundle_level_feats_widget %}
-    {{ form_rest(form) }}
+{% block _level_up_feats_feats_widget %}
+    {% for child in form %}
+        <div class="form-group">
+            {{ form_widget(child.feat) }}
+        </div>
+    {% endfor %}
     <script class="select2_descriptions" type="text/javascript">
         var select2_descriptions = {
         {% for child in form %}
@@ -83,10 +87,19 @@
         }
 
     </script>
-{% endblock _troulite_pathfinderbundle_level_feats_widget %}
+{% endblock %}
 
-{% block _troulite_pathfinderbundle_level_classPowers_row %}
-    <div class="form-group">
+{% block _level_up_class_summary_hp_classPowers_row %}
+    {% for child in form %}
+        <div class="form-group">
+            {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{#
+{% block _level_up_class_summary_hp_classPowers_row %}
+    <div class="form-group row">
         {% for child in form.children %}
             {% if
                 child.vars.data.classPower.children.count > 0 or
@@ -98,18 +111,19 @@
     </div>
 {% endblock %}
 
-{% block _troulite_pathfinderbundle_level_classPowers_entry_label %}
+{% block _level_up_class_summary_hp_classPowers_entry_label %}
     {{ form_label(form, form.vars.data) }}
 {% endblock %}
 
-{% block _troulite_pathfinderbundle_level_classPowers_entry_childPower_row %}
+{% block _level_up_class_summary_hp_classPowers_entry_childPower_row %}
     <div class="col-sm-9">
         {{ form_widget(form) }}
     </div>
 {% endblock %}
 
-{% block _troulite_pathfinderbundle_level_classPowers_entry_extraInformation_row %}
+{% block _level_up_class_summary_hp_classPowers_entry_extraInformation_row %}
     <div class="col-sm-9">
         {{ form_widget(form) }}
     </div>
 {% endblock %}
+#}

@@ -30,7 +30,7 @@ class AddCharacterFeatType extends AbstractType
             EntityType::class,
             array(
                 'class'   => Feat::class,
-                'choices' => $options['choices'],
+                'choices' => $options['choices'][$builder->getName()],
                 'label'   => false
             )
         );
