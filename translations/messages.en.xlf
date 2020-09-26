@@ -729,6 +729,10 @@
         <source>mean.hp.level</source>
         <target>Mean HP per Level</target>
       </trans-unit>
+      <trans-unit id="l6Ae1Jl" resname="admin.class.powers">
+        <source>admin.class.powers</source>
+        <target>Class Powers</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

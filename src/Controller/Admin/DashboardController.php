@@ -21,6 +21,7 @@ use App\Entity\Items\Shoulders;
 use App\Entity\Items\Weapon;
 use App\Entity\Items\Wrists;
 use App\Entity\Rules\ClassDefinition;
+use App\Entity\Rules\ClassPower;
 use App\Entity\Rules\Condition;
 use App\Entity\Rules\Feat;
 use App\Entity\Rules\Race;
@@ -63,6 +64,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('feats', '', Feat::class),
             MenuItem::linkToCrud('classes', '', ClassDefinition::class),
             MenuItem::linkToCrud('subclasses', '', SubClass::class),
+            MenuItem::linkToCrud('admin.class.powers', '', ClassPower::class),
             MenuItem::linkToCrud('conditions', '', Condition::class),
             MenuItem::linkToCrud('spells', '', Spell::class),
             MenuItem::linkToCrud('item.powers', '', ItemPower::class),
@@ -70,21 +72,21 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section('items', 'fas fa-gift'),
             MenuItem::linkToCrud('items', '', Item::class),
+            MenuItem::linkToCrud('weapons', '', Weapon::class),
             MenuItem::linkToCrud('armor', '', Armor::class),
+            MenuItem::linkToCrud('ring', '', Ring::class),
+            MenuItem::linkToCrud('shield', '', Shield::class),
             MenuItem::linkToCrud('belt', '', Belt::class),
-            MenuItem::linkToCrud('body', '', Body::class),
-            MenuItem::linkToCrud('chest', '', Chest::class),
             MenuItem::linkToCrud('eyes', '', Eyes::class),
             MenuItem::linkToCrud('feet', '', Feet::class),
             MenuItem::linkToCrud('hands', '', Hands::class),
             MenuItem::linkToCrud('head', '', Head::class),
             MenuItem::linkToCrud('headband', '', Headband::class),
             MenuItem::linkToCrud('neck', '', Neck::class),
-            MenuItem::linkToCrud('ring', '', Ring::class),
-            MenuItem::linkToCrud('shield', '', Shield::class),
             MenuItem::linkToCrud('shoulders', '', Shoulders::class),
-            MenuItem::linkToCrud('weapons', '', Weapon::class),
             MenuItem::linkToCrud('wrists', '', Wrists::class),
+            MenuItem::linkToCrud('body', '', Body::class),
+            MenuItem::linkToCrud('chest', '', Chest::class),
         ];
     }
 }
