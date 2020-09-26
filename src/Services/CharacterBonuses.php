@@ -472,7 +472,11 @@ class CharacterBonuses
                 continue;
             }
 
-            $type = $effect['type'];
+            $type = null;
+            if (array_key_exists('type', $effect)) {
+                $type = $effect['type'];
+            }
+
             $bonus = new Bonus($source, $value, $type);
 
             switch ($stat) {
