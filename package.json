@@ -11,5 +11,8 @@
     "sass-loader": "^9.0.0",
     "webpack-notifier": "^1.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ckeditor": "^4.12.1",
+    "select2": "^4.0.13"
+  }
 }

@@ -3,6 +3,7 @@
 namespace App\Form\Notes;
 
 use App\Entity\Characters\Character;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +27,17 @@ class NotesType extends AbstractType
         $builder
             ->add(
                 'notes',
-                TextareaType::class,
+                CKEditorType::class,
                 array(
                     'property_path' => $options['type'] . 'Notes',
                     'required'      => false,
+                    'config'        => [
+                        'uiColor' => '#bfb38e',
+                        'toolbarCanCollapse' => true,
+                        'toolbarStartupExpanded' => false,
+                        'bodyClass' => 'ck_bg',
+                        'contentsCss' => 'build/ck_editor.css'
+                    ]
                 )
             )
         ;

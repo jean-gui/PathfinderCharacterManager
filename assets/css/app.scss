@@ -1,21 +1,4 @@
-$body-bg: #cdc4a7;
-$link-color: #8e3426;
-$link-hover-color: #7a2c20;
-$body-color: #453B2F;
-//$font-size-base: 0.9rem;
-$navbar-light-color: #3a3228;
-$navbar-light-brand-color: #3a3228;
-$table-border-width: 0;
-$table-striped-order: even;
-$table-bg: #bfb38e;
-$table-odd: #dbd5c0;
-
-$theme-colors: (
-        "primary": #df543f,
-        "light": #3cb194,
-        "danger": #ff3d4f
-);
-
+@import 'variables.scss';
 @import '~bootstrap/scss/bootstrap';
 
 h1, h2, h3, h4, h5, h6 {
