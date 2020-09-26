@@ -42,11 +42,14 @@ class SkillCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name')->hideOnForm(),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             TextField::new('shortname'),
             BooleanField::new('untrained'),
             BooleanField::new('armorCheckPenalty'),
             ChoiceField::new('keyAbility')->setChoices(Abilities::ABILITIES),
-            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true)
         ];
     }
 }

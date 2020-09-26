@@ -5,9 +5,8 @@
         <ul class="a2lix_translationsLocales nav nav-tabs" role="tablist">
         {% for translationsFields in form %}
             {% set locale = translationsFields.vars.name %}
-
-            <li class="nav-item {% if app.request.locale == locale %}active{% endif %}">
-                <a href="#" class="nav-link" data-toggle="tab"
+            <li class="nav-item">
+                <a href="#" class="nav-link {% if app.request.locale == locale %}active{% endif %}" data-toggle="tab"
                    data-target=".{{ translationsFields.vars.id }}_a2lix_translationsFields-{{ locale }}" role="tab">
                     {{ translationsFields.vars.label|default(locale|humanize)|trans }}
                     {% if form.vars.default_locale == locale %}{{ '[Default]'|trans }}{% endif %}

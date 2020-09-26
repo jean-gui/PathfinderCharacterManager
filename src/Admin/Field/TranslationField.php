@@ -15,6 +15,7 @@ class TranslationField implements FieldInterface
         return (new self())
             ->setProperty($propertyName)
             ->setLabel($label)
-            ->setFormType(TranslationsType::class);
+            ->setFormType(TranslationsType::class)
+        ;
     }
 }

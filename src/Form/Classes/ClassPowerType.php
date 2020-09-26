@@ -26,7 +26,7 @@ class ClassPowerType extends AbstractType
         $arrayToJsonTransformer = new ArrayToJsonTransformer();
 
         $builder
-            ->add('translations', TranslationsType::class)
+            ->add('translations', TranslationsType::class, ['label' => false])
             ->add('level')
             ->add('castable', null, ['required' => false])
             ->add('passive', null, ['required' => false])

@@ -17,6 +17,7 @@ class JsonField implements FieldInterface
             ->setLabel($label)
             ->setFormType(JsonType::class)
             ->setTemplatePath('admin/fields/json.html.twig')
+            ->addCssClass('code-json')
         ;
     }
 }

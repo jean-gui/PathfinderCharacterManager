@@ -42,8 +42,11 @@ class ConditionCrudController extends AbstractCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             JsonField::new('effects')->hideOnIndex(),
-            TranslationField::new('translations')->onlyOnForms()
         ];
     }
 }

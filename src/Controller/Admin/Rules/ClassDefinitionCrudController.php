@@ -55,7 +55,10 @@ class ClassDefinitionCrudController extends AbstractCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
-            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true),
+            TranslationField::new('translations')
+                ->onlyOnForms()
+                ->setFormTypeOption('required', true)
+                ->setFormTypeOption('label',false),
             IntegerField::new('hpDice')->hideOnIndex(),
             IntegerField::new('skillPoints')->hideOnIndex(),
             AssociationField::new('classSkills')->hideOnIndex(),
@@ -74,12 +77,14 @@ class ClassDefinitionCrudController extends AbstractCrudController
                 ->hideOnIndex()
                 ->setEntryIsComplex(true)
                 ->setEntryType(ClassSpellType::class)
-                ->setFormTypeOption('by_reference', false),
+                ->setFormTypeOption('by_reference', false)
+                ->setFormTypeOption('label', false),
             CollectionField::new('powers')
                 ->hideOnIndex()
                 ->setEntryIsComplex(true)
                 ->setEntryType(ClassPowerType::class)
-                ->setFormTypeOption('by_reference', false),
+                ->setFormTypeOption('by_reference', false)
+                ->setFormTypeOption('label', false),
             CollectionField::new('subClasses')->onlyOnDetail(),
         ];
     }

@@ -46,7 +46,10 @@ class ClassPowerCrudController extends AbstractCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
-            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             IntegerField::new('level'),
             BooleanField::new('castable'),
             BooleanField::new('passive'),

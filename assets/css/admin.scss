@@ -1,0 +1,36 @@
+.form-group label, div > legend.col-form-label {
+  flex: 10% 0 0;
+}
+
+.form-widget {
+  flex: 0 0 89%;
+}
+
+.form-widget-compound {
+  width: 100%;
+}
+
+.form-widget input.form-control[type=text], .form-widget textarea.form-control {
+  width: 100%;
+  max-width: 100%;
+}
+
+.form-group label, .form-group legend.col-form-label {
+  text-align: left;
+}
+
+.a2lix_translationsFields.tab-content {
+  background-color: var(--form-bg);
+}
+
+.field-boolean .form-widget {
+  margin-left: 0;
+}
+
+.select2.select2-container.select2-container--bootstrap {
+  width: inherit !important;
+}
+
+.a2lix_translations .tab-pane .form-widget {
+  padding-left: 0;
+}

@@ -29,14 +29,23 @@ use App\Entity\Rules\Skill;
 use App\Entity\Rules\Spell;
 use App\Entity\Rules\SubClass;
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
 class DashboardController extends AbstractDashboardController
 {
+    private $webpack;
+
+    public function __construct(EntrypointLookupInterface $webpack)
+    {
+        $this->webpack = $webpack;
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
@@ -88,5 +97,18 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('body', '', Body::class),
             MenuItem::linkToCrud('chest', '', Chest::class),
         ];
+    }
+
+    public function configureAssets(): Assets
+    {
+        $assets = parent::configureAssets();
+        foreach ($this->webpack->getJavaScriptFiles('admin') as $file) {
+            $assets->addJsFile($file);
+        }
+        foreach ($this->webpack->getCssFiles('admin') as $file) {
+            $assets->addCssFile($file);
+        }
+
+        return $assets;
     }
 }

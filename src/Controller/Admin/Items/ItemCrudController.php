@@ -65,7 +65,10 @@ class ItemCrudController extends AbstractCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
-            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             IntegerField::new('cost'),
             NumberField::new('weight'),
             AssociationField::new('powers'),

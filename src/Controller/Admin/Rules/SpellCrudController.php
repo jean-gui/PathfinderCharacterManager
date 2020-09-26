@@ -44,6 +44,10 @@ class SpellCrudController extends AbstractCrudController
             TextField::new('name')->hideOnForm(),
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             TextField::new('castingTime')->onlyOnDetail(),
             TextField::new('components')->onlyOnDetail(),
             TextField::new('range')->onlyOnDetail(),
@@ -56,7 +60,6 @@ class SpellCrudController extends AbstractCrudController
             JsonField::new('conditions')->hideOnIndex(),
             JsonField::new('externalConditions')->hideOnIndex(),
             JsonField::new('prerequisities')->hideOnIndex(),
-            TranslationField::new('translations')->onlyOnForms()->setFormTypeOption('required', true)
         ];
     }
 }
