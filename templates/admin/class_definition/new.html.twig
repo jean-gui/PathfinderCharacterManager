@@ -3,63 +3,69 @@
 {% block main %}
     {% block new_form %}
         {{ form_start(new_form) }}
-        <ul class="nav nav-tabs nav-fill" id="wizard" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="base-tab" data-toggle="tab" href="#base" aria-controls="base"
-                   aria-selected="true">
-                    Base
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" aria-controls="stats"
-                   aria-selected="false">
-                    Stats
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#magic" data-toggle="tab" aria-controls="magic" aria-selected="false">
-                    Magic
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#spells" data-toggle="tab" aria-controls="spells" aria-selected="false">
-                    Spells
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#powers" data-toggle="tab" aria-controls="powers" aria-selected="false">
-                    Powers
-                </a>
-            </li>
-        </ul>
+        <div class="content-panel">
+            <div class="content-panel-body with-background without-header without-footer">
+                <ul class="nav nav-tabs nav-fill" id="wizard" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="base-tab" data-toggle="tab" href="#base" aria-controls="base"
+                           aria-selected="true">
+                            Base
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" aria-controls="stats"
+                           aria-selected="false">
+                            Stats
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#magic" data-toggle="tab" aria-controls="magic" aria-selected="false">
+                            Magic
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#spells" data-toggle="tab" aria-controls="spells"
+                           aria-selected="false">
+                            Spells
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#powers" data-toggle="tab" aria-controls="powers"
+                           aria-selected="false">
+                            Powers
+                        </a>
+                    </li>
+                </ul>
 
-        <div class="tab-content">
-            <div id="base" class="tab-pane active" role="tabpanel" aria-labelledby="base-tab">
-                {{ form_row(new_form.translations) }}
-                {{ form_row(new_form.hpDice) }}
-                {{ form_row(new_form.skillPoints) }}
-                {{ form_row(new_form.classSkills) }}
-                {{ form_row(new_form.prestige) }}
-            </div>
-            <div id="stats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
-                {{ form_row(new_form.bab) }}
-                {{ form_row(new_form.reflexes) }}
-                {{ form_row(new_form.will) }}
-                {{ form_row(new_form.fortitude) }}
-            </div>
-            <div id="magic" class="tab-pane" role="tabpanel" aria-labelledby="magic-tab">
-                {{ form_row(new_form.castingAbility) }}
-                {{ form_row(new_form.preparationNeeded) }}
-                {{ form_row(new_form.ableToLearnLowerLevelSpells) }}
-                {{ form_row(new_form.ableToLearnNewSpells) }}
-                {{ form_row(new_form.spellsPerDay) }}
-                {{ form_row(new_form.knownSpellsPerLevel) }}
-            </div>
-            <div id="spells" class="tab-pane" role="tabpanel" aria-labelledby="spells-tab">
-                {{ form_row(new_form.spells) }}
-            </div>
-            <div id="powers" class="tab-pane" role="tabpanel" aria-labelledby="powers-tab">
-                {{ form_row(new_form.powers) }}
+                <div class="tab-content">
+                    <div id="base" class="tab-pane active" role="tabpanel" aria-labelledby="base-tab">
+                        {{ form_row(new_form.translations) }}
+                        {{ form_row(new_form.hpDice) }}
+                        {{ form_row(new_form.skillPoints) }}
+                        {{ form_row(new_form.classSkills) }}
+                        {{ form_row(new_form.prestige) }}
+                    </div>
+                    <div id="stats" class="tab-pane" role="tabpanel" aria-labelledby="stats-tab">
+                        {{ form_row(new_form.bab) }}
+                        {{ form_row(new_form.reflexes) }}
+                        {{ form_row(new_form.will) }}
+                        {{ form_row(new_form.fortitude) }}
+                    </div>
+                    <div id="magic" class="tab-pane" role="tabpanel" aria-labelledby="magic-tab">
+                        {{ form_row(new_form.castingAbility) }}
+                        {{ form_row(new_form.preparationNeeded) }}
+                        {{ form_row(new_form.ableToLearnLowerLevelSpells) }}
+                        {{ form_row(new_form.ableToLearnNewSpells) }}
+                        {{ form_row(new_form.spellsPerDay) }}
+                        {{ form_row(new_form.knownSpellsPerLevel) }}
+                    </div>
+                    <div id="spells" class="tab-pane" role="tabpanel" aria-labelledby="spells-tab">
+                        {{ form_row(new_form.spells) }}
+                    </div>
+                    <div id="powers" class="tab-pane" role="tabpanel" aria-labelledby="powers-tab">
+                        {{ form_row(new_form.powers) }}
+                    </div>
+                </div>
             </div>
         </div>
         {{ form_end(new_form) }}
