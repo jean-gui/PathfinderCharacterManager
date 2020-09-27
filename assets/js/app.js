@@ -61,7 +61,3 @@ var select2_options = {
 };
 
 $("select").select2(select2_options);
-
-$(window).on('add.mopa-collection-item', function (event, $collection, $row) {
-    $('select', $row).select2(select2_options);
-});

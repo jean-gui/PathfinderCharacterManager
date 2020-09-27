@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 import '../css/admin.scss'
+import '@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css';
 
 import CodeMirror from 'codemirror/lib/codemirror.js';
 import 'codemirror/mode/javascript/javascript';
@@ -12,7 +13,7 @@ function isHidden(el) {
 }
 
 $(".code-json textarea, textarea.code-json").each(function (index, element) {
-    const cm = CodeMirror.fromTextArea(element, {
+    CodeMirror.fromTextArea(element, {
         "mode": "application/json",
         "lineNumbers": true,
         "lineWrapping": true,
@@ -25,4 +26,4 @@ $(".code-json textarea, textarea.code-json").each(function (index, element) {
 });
 
 // for some reason this only works if the code is in another file
-import './codemirror';
+import './additional_admin.js';
