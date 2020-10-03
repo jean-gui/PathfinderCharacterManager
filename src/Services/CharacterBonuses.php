@@ -346,7 +346,7 @@ class CharacterBonuses
                             return false;
                         }
                     }
-                    if (($condition === 'light-weapon' && !$weapon->isLight()) && $weapon->getType() !== $condition) {
+                    if (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !== $condition) {
                         return false;
                     }
                     break;
