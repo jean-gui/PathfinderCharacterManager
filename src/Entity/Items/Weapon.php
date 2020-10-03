@@ -22,6 +22,7 @@ class Weapon extends Item
         'Great Sword' => 'greatsword',
         'Longbow'     => 'longbow',
         'Long Sword'  => 'longsword',
+        'One-handed'  => 'one-handed',
         'Polearm'     => 'polearm',
         'Piercing'    => 'piercing',
         'Short Sword' => 'shortsword',
