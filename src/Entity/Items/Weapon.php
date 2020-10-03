@@ -26,6 +26,7 @@ class Weapon extends Item
         'One-handed'  => 'one-handed',
         'Polearm'     => 'polearm',
         'Piercing'    => 'piercing',
+        'Rapier'      => 'rapier',
         'Short Sword' => 'shortsword',
         'Whip'        => 'whip',
         'Kukri'       => 'kukri'
