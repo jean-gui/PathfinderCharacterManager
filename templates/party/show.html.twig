@@ -46,8 +46,8 @@
             </tbody>
         </table>
 
-        <ul class="record_actions">
-            <li>{{ form(delete_form) }}</li>
-        </ul>
+        {{ form_start(delete_form) }}
+        {{ form_widget(delete_form.submit) }}
+        {{ form_end(delete_form) }}
     </div>
 {% endblock %}

@@ -125,12 +125,10 @@ class PartyController extends AbstractController
     public function editAction(Party $party)
     {
         $editForm = $this->createEditForm($party);
-        $deleteForm = $this->createDeleteForm($party);
 
         return array(
             'entity' => $party,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -173,7 +171,6 @@ class PartyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($party);
         $editForm = $this->createEditForm($party);
         $editForm->handleRequest($request);
 
@@ -186,7 +183,6 @@ class PartyController extends AbstractController
         return array(
             'entity' => $party,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
