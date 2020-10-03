@@ -339,14 +339,15 @@ class CharacterBonuses
                         return false;
                     }
                     if (is_array($condition)) {
+
                         if (!(
                             in_array($weapon->getType(), $condition) ||
                             (in_array('light-weapon', $condition) && $weapon->isLight())
                         )) {
                             return false;
                         }
-                    }
-                    if (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !== $condition) {
+                    } elseif (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !==
+                        $condition) {
                         return false;
                     }
                     break;
