@@ -73,6 +73,22 @@ class CounterController extends AbstractController
 
                         return $this->redirectToRoute('characters_show', array('id' => $character->getId()));
                     }
+
+                    if ($child->get('decrease')->isClicked()) {
+                        /** @var Counter $counter */
+                        $counter = $child->getData();
+
+                        if ($counter->getCurrent() > 0) {
+                            $counter->decrease();
+
+                            $em->flush();
+                        } else {
+                            $this->addFlash('error', 'counter.error.min_reached');
+                        }
+
+                        return $this->redirectToRoute('characters_show', ['id' => $character->getId()]);
+                    }
+
                     if ($child->get('delete')->isClicked()) {
                         $em->remove($child->getData());
                         $em->flush();

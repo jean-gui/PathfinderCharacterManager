@@ -60,6 +60,7 @@ class Counter
      * @var int
      *
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0, maxPropertyPath="max")
      */
     protected $current = 0;
 
@@ -185,6 +186,20 @@ class Counter
     public function increase() {
         if ($this->current < $this->max) {
             $this->current++;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Decrease counter by 1
+     *
+     * @return $this
+     */
+    public function decrease()
+    {
+        if ($this->current > 0) {
+            $this->current--;
         }
 
         return $this;

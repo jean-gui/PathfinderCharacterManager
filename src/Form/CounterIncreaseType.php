@@ -23,6 +23,7 @@ class CounterIncreaseType extends AbstractType
     {
         $builder
             ->add('increase', SubmitType::class)
+            ->add('decrease', SubmitType::class)
             ->add('delete', SubmitType::class)
         ;
     }

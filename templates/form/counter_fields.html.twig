@@ -24,10 +24,18 @@
 {% endblock %}
 
 {% block counters_increase %}
-    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0 float-right"
+    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0"
             style="font-size: inherit">
         <i class="fas fa-arrow-up"></i>
         <span class="sr-only">{{ 'increase'|trans }}</span>
+    </button>
+{% endblock %}
+
+{% block counters_decrease %}
+    <button name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" type="submit" class="btn btn-link p-0"
+            style="font-size: inherit">
+        <i class="fas fa-arrow-down"></i>
+        <span class="sr-only">{{ 'decrease'|trans }}</span>
     </button>
 {% endblock %}
 
@@ -55,6 +63,7 @@
             </div>
             <div class="card-body">
                 <span class="d-inline-block">{{ counter.current }} / {{ counter.max }}</span>
+                <div class="float-right">
                 {% if not maxReached %}
                     {% with {
                         'form': form.increase
@@ -62,6 +71,15 @@
                         {{ block('counters_increase') }}
                     {% endwith %}
                 {% endif %}
+
+                {% if counter.current > 0 %}
+                    {% with {
+                        'form': form.decrease
+                        } %}
+                        {{ block('counters_decrease') }}
+                    {% endwith %}
+                {% endif %}
+                </div>
             </div>
         </div>
     </div>
