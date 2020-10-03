@@ -45,9 +45,7 @@
         <div class="row mt-4">
             <div class="col-6">
                 <div class="float-right">
-                {{ form_start(delete_form) }}
-                {{ form_widget(delete_form.submit) }}
-                {{ form_end(delete_form) }}
+                    {{ include('character/_delete_form.html.twig') }}
                 </div>
             </div>
         </div>

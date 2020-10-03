@@ -124,7 +124,7 @@ class CharacterController extends AbstractController
     /**
      * Finds and displays a Character entity.
      *
-     * @Route("/{id}", name="characters_show")
+     * @Route("/{id}", name="characters_show", methods={"GET", "POST"})
      * @Template()
      * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
@@ -555,12 +555,10 @@ class CharacterController extends AbstractController
     public function edit(Character $character)
     {
         $editForm = $this->createEditForm($character);
-        $deleteForm = $this->createDeleteForm($character);
 
         return array(
             'entity' => $character,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -590,7 +588,7 @@ class CharacterController extends AbstractController
     /**
      * Edits an existing Character entity.
      *
-     * @Route("/{id}/update", name="characters_update")
+     * @Route("/{id}/update", name="characters_update", methods={"GET", "POST"})
      * @Template("character/edit.html.twig")
      * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
@@ -603,7 +601,6 @@ class CharacterController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $deleteForm = $this->createDeleteForm($character);
         $editForm = $this->createEditForm($character);
         $editForm->handleRequest($request);
 
@@ -618,14 +615,13 @@ class CharacterController extends AbstractController
         return array(
             'entity' => $character,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
      * Deletes a Character entity.
      *
-     * @Route("/{id}", name="characters_delete")
+     * @Route("/{id}", name="characters_delete", methods={"DELETE"})
      * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
      * @param Request $request
@@ -633,44 +629,19 @@ class CharacterController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function delete(Request $request, Character $character)
+    public function delete(Request $request, Character $character): Response
     {
-        $form = $this->createDeleteForm($character);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $character = $em->getRepository(Character::class)->find($character->getId());
-
-            if (!$character) {
-                throw $this->createNotFoundException('Unable to find Character entity.');
-            }
-
-            $em->remove($character);
-            $em->flush();
+        if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($character);
+            $entityManager->flush();
         }
 
-        return $this->redirect($this->generateUrl('characters'));
+        return $this->redirectToRoute('index');
     }
 
     /**
-     * Creates a form to delete a Character entity by id.
-     *
-     * @param mixed $character The entity id
-     *
-     * @return FormInterface The form
-     */
-    private function createDeleteForm(Character $character)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('characters_delete', array('id' => $character->getId())))
-            ->setMethod('DELETE')
-            ->add('submit', SubmitType::class, array('label' => 'Delete'))
-            ->getForm();
-    }
-
-    /**
-     * Deletes a Character entity.
+     * Make character sleep.
      *
      * @Route("/{id}/sleep", name="characters_sleep")
      * @Template()

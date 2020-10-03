@@ -1,0 +1,8 @@
+<form method="post"
+      action="{{ path('characters_delete', {'id': entity.id}) }}"
+      onsubmit="return confirm('Are you sure you want to delete this character?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token"
+           value="{{ csrf_token('delete' ~ entity.id) }}">
+    <button class="btn btn-primary">Delete</button>
+</form>
