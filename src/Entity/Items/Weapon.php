@@ -23,6 +23,7 @@ class Weapon extends Item
         'Longbow'     => 'longbow',
         'Long Sword'  => 'longsword',
         'Polearm'     => 'polearm',
+        'Piercing'    => 'piercing',
         'Short Sword' => 'shortsword',
         'Whip'        => 'whip',
         'Kukri'       => 'kukri'
