@@ -20,6 +20,7 @@ class Weapon extends Item
 
     const TYPES = [
         'Great Sword' => 'greatsword',
+        'Light Blade' => 'light-blade',
         'Longbow'     => 'longbow',
         'Long Sword'  => 'longsword',
         'One-handed'  => 'one-handed',
