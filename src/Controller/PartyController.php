@@ -93,7 +93,7 @@ class PartyController extends AbstractController
     /**
      * Finds and displays a Party entity.
      *
-     * @Route("/{id}", name="parties_show")
+     * @Route("/{id}", name="parties_show", methods={"GET"})
      * @Template()
      * @Security("request.isMethodSafe() or is_granted('PARTY_EDIT', party) or is_granted('ROLE_ADMIN')")
      *
@@ -146,7 +146,6 @@ class PartyController extends AbstractController
             $party,
             array(
                 'action' => $this->generateUrl('parties_update', array('id' => $party->getId())),
-                'method' => 'PUT',
             )
         );
 
@@ -158,7 +157,7 @@ class PartyController extends AbstractController
     /**
      * Edits an existing Party entity.
      *
-     * @Route("/{id}", name="parties_update")
+     * @Route("/{id}", name="parties_update", methods={"POST"})
      * @Template("party/edit.html.twig")
      * @Security("is_granted('PARTY_EDIT', party) or is_granted('ROLE_ADMIN')")
      *
@@ -189,7 +188,7 @@ class PartyController extends AbstractController
     /**
      * Deletes a Party entity.
      *
-     * @Route("/{id}", name="parties_delete")
+     * @Route("/{id}", name="parties_delete", methods={"DELETE"})
      * @Security("is_granted('PARTY_EDIT', party) or is_granted('ROLE_ADMIN')")
      *
      * @param Request $request
