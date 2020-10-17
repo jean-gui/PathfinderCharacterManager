@@ -733,6 +733,14 @@
         <source>admin.class.powers</source>
         <target>Pouvoirs de classe</target>
       </trans-unit>
+        <trans-unit id="0">
+            <source>cmb</source>
+            <target>BMO</target>
+        </trans-unit>
+      <trans-unit id="1">
+        <source>cmd</source>
+        <target>DMD</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

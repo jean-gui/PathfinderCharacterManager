@@ -507,22 +507,6 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @return array
-     */
-    public function getMeleeAttackRoll()
-    {
-        return $this->getAttackRoll("melee", $this->getModifierByAbility('strength'));
-    }
-
-    /**
-     * @return array
-     */
-    public function getRangedAttackRoll()
-    {
-        return $this->getAttackRoll("ranged", $this->getModifierByAbility('dexterity'));
-    }
-
-    /**
      * @return int
      */
     public function getMainDamageRoll()
@@ -552,22 +536,6 @@ class Character extends BaseCharacter
         }
 
         return $this->attackBonuses->offhandDamage->getBonus() + $mod;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMeleeDamageRoll()
-    {
-        return $this->attackBonuses->meleeDamage->getBonus() + $this->getModifierByAbility('strength');
-    }
-
-    /**
-     * @return int
-     */
-    public function getRangedDamageRoll()
-    {
-        return $this->attackBonuses->rangedDamage->getBonus();
     }
 
     /**
@@ -691,42 +659,6 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @param $type
-     * @param $modifier
-     *
-     * @return array
-     */
-    private function getAttackRoll($type, $modifier)
-    {
-        $bab          = $this->getBab();
-        $ar           = $bab + $modifier;
-        $bonusAttacks = 0;
-        $ars          = array();
-
-        switch ($type) {
-            case 'ranged':
-                $ar += $this->attackBonuses->rangedAttackRolls->getBonus();
-                $bonusAttacks = $this->attackBonuses->rangedAttacks->getBonus();
-                break;
-            case 'melee':
-                $ar += $this->attackBonuses->meleeAttackRolls->getBonus();
-                $bonusAttacks = $this->attackBonuses->meleeAttacks->getBonus();
-        }
-
-        /** @noinspection PhpExpressionResultUnusedInspection */
-        for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
-            $ars[] = $ar;
-        }
-        /** @noinspection PhpExpressionResultUnusedInspection */
-        for ($bab; $bab > 0; $bab -= 5) {
-            $ars[] = $ar;
-            $ar -= 5;
-        }
-
-        return $ars;
-    }
-
-    /**
      * @return int
      */
     public function getBab()
@@ -739,6 +671,24 @@ class Character extends BaseCharacter
         }
 
         return $bab;
+    }
+
+    public function getCmb(): int
+    {
+        return $this->getBab()
+            + $this->getModifierByAbility('strength')
+            + $this->getAttackBonuses()->cmb->getBonus()
+            + $this->attackBonuses->mainAttackRolls->getBonus();
+    }
+
+    public function getCmd(): int
+    {
+        return 10
+            + $this->getBab()
+            + $this->getModifierByAbility('strength')
+            + $this->getModifierByAbility('dexterity')
+            + $this->getAttackBonuses()->cmd->getBonus()
+            + $this->getDodgeBonus();
     }
 
     /**

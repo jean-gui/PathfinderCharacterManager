@@ -733,6 +733,14 @@
         <source>admin.class.powers</source>
         <target>Class Powers</target>
       </trans-unit>
+        <trans-unit id="0">
+            <source>cmb</source>
+            <target>CMB</target>
+        </trans-unit>
+      <trans-unit id="1">
+        <source>cmd</source>
+        <target>CMD</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
