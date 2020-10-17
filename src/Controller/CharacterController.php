@@ -583,7 +583,7 @@ class CharacterController extends AbstractController
     /**
      * Edits an existing Character entity.
      *
-     * @Route("/{id}/update", name="characters_update", methods={"GET", "POST"})
+     * @Route("/{id}/update", name="characters_update", methods={"GET", "POST", "PUT"})
      * @Template("character/edit.html.twig")
      * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
