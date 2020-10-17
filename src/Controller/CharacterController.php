@@ -487,25 +487,20 @@ class CharacterController extends AbstractController
             }
             // Is isset appropriate?
             if (isset($target, $spell, $class)) {
-                switch ($target) {
-                    case 'other':
-                        $spellCasting->cast($character, $spell, $class);
-                        break;
-                    case 'allies':
-                        $spellCasting->cast(
-                            $character,
-                            $spell,
-                            $class,
-                            $character->getParty()->getCharacters()
-                        );
-                        break;
-                    default:
-                        $target = $em->getRepository(Character::class)->find($target);
-                        if ($target) {
-                            $spellCasting->cast($character, $spell, $class,
-                                array($target));
-                        }
-                        break;
+                if (in_array('other', $target)) {
+                    $spellCasting->cast($character, $spell, $class);
+                } elseif (in_array('allies', $target)) {
+                    $spellCasting->cast(
+                        $character,
+                        $spell,
+                        $class,
+                        $character->getParty()->getCharacters()
+                    );
+                } else {
+                    $targets = $em->getRepository(Character::class)->findBy(['id' => $target]);
+                    if ($target) {
+                        $spellCasting->cast($character, $spell, $class, $targets);
+                    }
                 }
 
                 return $this->redirect($this->generateUrl('character_spells', array('id' => $character->getId())));

@@ -33,6 +33,7 @@ class CastSpellType extends AbstractType
                     'placeholder' => 'Target',
                     'mapped'      => false,
                     'required'    => false,
+                    'multiple'    => true,
                 )
             )
             ->add('id', SubmitType::class, array('label' => 'cast'));
