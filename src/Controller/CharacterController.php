@@ -242,38 +242,35 @@ class CharacterController extends AbstractController
                     if (
                         $ccp instanceof CharacterClassPower &&
                         $ccp->getClassPower()->isCastable() &&
-                        $value['active']
+                        array_key_exists('active', $value)
                     ) {
-                        switch ($value['active']) {
-                            case 'other':
-                                break;
-                            case 'allies':
-                                foreach ($character->getParty()->getCharacters() as $target) {
-                                    $target->addPowerEffect(
-                                        (new PowerEffect())
-                                            ->setPower($ccp->getClassPower())
-                                            ->setCaster($character)
-                                            ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
-                                    );
+                        $target = $value['active'];
+                        if (in_array('other', $target)) {
 
-                                    $this->publishCharacterUpdate($publisher, $target);
-                                }
+                        } elseif (in_array('allies', $target)) {
+                            foreach ($character->getParty()->getCharacters() as $target) {
+                                $target->addPowerEffect(
+                                    (new PowerEffect())
+                                        ->setPower($ccp->getClassPower())
+                                        ->setCaster($character)
+                                        ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
+                                );
 
-                                break;
-                            default:
-                                /** @var $target Character */
-                                $target = $em->getRepository(Character::class)->find($value['active']);
-                                if ($target) {
-                                    $target->addPowerEffect(
-                                        (new PowerEffect())
-                                            ->setPower($ccp->getClassPower())
-                                            ->setCaster($character)
-                                            ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
-                                    );
+                                $this->publishCharacterUpdate($publisher, $target);
+                            }
+                        } else {
+                            /** @var $target Character */
+                            $targets = $em->getRepository(Character::class)->findBy(['id' => $value['active']]);
+                            foreach ($targets as $target) {
+                                $target->addPowerEffect(
+                                    (new PowerEffect())
+                                        ->setPower($ccp->getClassPower())
+                                        ->setCaster($character)
+                                        ->setCasterLevel($character->getLevel($ccp->getClassPower()->getClass()))
+                                );
 
-                                    $this->publishCharacterUpdate($publisher, $target);
-                                }
-                                break;
+                                $this->publishCharacterUpdate($publisher, $target);
+                            }
                         }
                     }
                 }
