@@ -118,7 +118,7 @@
             <tbody>
             {% for spellClass in entity.spells %}
                 <tr>
-                    <td>{{ spellClass.spell }}</td>
+                    <td><a href="{{ path('spells_show', {id: spellClass.spell.id}) }}">{{ spellClass.spell }}</a></td>
                     <td>{{ spellClass.spell.shortDescription }}</td>
                     <td>{{ spellClass.spellLevel }}</td>
                 </tr>
