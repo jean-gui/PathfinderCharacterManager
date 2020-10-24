@@ -1005,7 +1005,7 @@ class Character extends BaseCharacter
                 $mod         = $this->getAbilityModifier($this->getDexterity());
                 $maxDexBonus = $this->getMaximumDexterityBonus();
 
-                if ($maxDexBonus) {
+                if (is_int($maxDexBonus)) {
                     return min($mod, $maxDexBonus);
                 }
                 return $mod;
