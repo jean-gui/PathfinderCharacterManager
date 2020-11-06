@@ -281,8 +281,15 @@ class CharacterController extends AbstractController
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
-        $skills = $em->getRepository(Skill::class)->findAll();
-        // Sort skills by name
+        $allSkills = $em->getRepository(Skill::class)->findAll();
+        $skills = array_filter($allSkills, function (Skill $skill) use ($character) {
+            if ($skill->getUntrained() || $character->getSkillRank($skill) > 0) {
+                return true;
+            }
+
+            return false;
+        });
+        // Sort allSkills by name
         usort($skills, function (Skill $s1, Skill $s2) {
             return strcmp($s1->name, $s2->name);
         });
