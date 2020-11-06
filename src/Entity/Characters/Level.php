@@ -77,9 +77,9 @@ class Level
     /**
      * Determines whether to add an extra skill point or HP when a favored class is chosen when leveling up
      *
-     * @var string one of 'skill', 'hp'
+     * @var string[] a combination of 'skill', 'hp', 'spell'
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      */
     protected $extraPoint;
 
@@ -278,11 +278,11 @@ class Level
     /**
      * Set extraPoint
      *
-     * @param string $extraPoint
+     * @param string[] $extraPoint
      *
      * @return $this
      */
-    public function setExtraPoint(string $extraPoint)
+    public function setExtraPoint(array $extraPoint)
     {
         $this->extraPoint = $extraPoint;
 
@@ -292,7 +292,7 @@ class Level
     /**
      * Get extraPoint
      *
-     * @return string
+     * @return string[]
      */
     public function getExtraPoint()
     {

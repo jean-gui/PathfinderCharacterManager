@@ -48,6 +48,8 @@ class LevelUpClassSummaryHpType extends AbstractType
                         ChoiceType::class,
                         [
                             'choices' => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Additional spell' => 'spell'],
+                            'multiple' => true,
+                            'required' => false
                         ]
                     );
                 }

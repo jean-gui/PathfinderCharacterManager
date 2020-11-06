@@ -7,9 +7,11 @@
         <dt>{{ 'ability.point'|trans }}</dt>
         <dd>{{ level.extraAbility|trans }}</dd>
     {% endif %}
-    {% if level.extraPoint %}
+    {% if level.extraPoint and level.extraPoint|length > 0 %}
         <dt>{{ 'favored.extra.point'|trans }}</dt>
-        <dd>{{ level.extraPoint|trans }}</dd>
+        {% for extra in level.extraPoint %}
+            <dd>{{ extra|trans }}</dd>
+        {% endfor %}
     {% endif %}
     {% if level.feats is not empty %}
         <dt>{{ 'feats'|trans }}</dt>

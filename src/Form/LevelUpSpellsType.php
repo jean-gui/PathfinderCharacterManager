@@ -56,12 +56,22 @@ class LevelUpSpellsType extends AbstractType
                 $form  = $event->getForm();
 
                 if ($class && $class->getKnownSpellsPerLevel()) {
+                    /*
+                     * Tracks if ClassSpell entities are actually being created, useful to know if such entities have
+                     * already been added previously
+                     */
+                    $spellsAdded = false;
                     $learned = $character->getLearnedSpells();
                     array_walk($learned, function (ClassSpell $s) {
                         return $s->getId();
                     });
 
+                    $maxSpellLevel = 0;
                     foreach ($class->getKnownSpellsPerLevel() as $spellLevel => $known) {
+                        if ($known[$classLevel - 1] > 0 && $spellLevel > $maxSpellLevel) {
+                            $maxSpellLevel = $spellLevel;
+                        }
+
                         $spellsToAdd = $known[$classLevel - 1];
 
                         if ($classLevel > 1) {
@@ -80,13 +90,14 @@ class LevelUpSpellsType extends AbstractType
                         }
 
                         while ($spellsToAdd > 0) {
+                            $spellsAdded = true;
                             $level->addLearnedSpell((new ClassSpell())->setClass($class)->setSpellLevel($spellLevel));
                             $spellsToAdd--;
                         }
+                    }
 
-                        if ($level->getExtraPoint() === 'spell') {
-                            $level->addLearnedSpell((new ClassSpell())->setClass($class)->setSpellLevel($spellLevel-1));
-                        }
+                    if ($spellsAdded && in_array('spell', $level->getExtraPoint())) {
+                        $level->addLearnedSpell((new ClassSpell())->setClass($class)->setSpellLevel($maxSpellLevel - 1));
                     }
 
                     $form->add(

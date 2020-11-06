@@ -703,7 +703,7 @@ class Character extends BaseCharacter
             $hp += $level->getHpRoll() + $this->getModifierByAbility('constitution');
 
             // Extra hit point if favored class
-            if ($level->getExtraPoint() === 'hp' && $level->isFavoredClass()) {
+            if (in_array('hp', $level->getExtraPoint()) && $level->isFavoredClass()) {
                 $hp += 1;
             }
         }
@@ -1119,7 +1119,7 @@ class Character extends BaseCharacter
             // Add skill bonus for favored classes
             if (
                 $level->getClassDefinition() === $this->getFavoredClass() &&
-                $level->getExtraPoint() === 'skill'
+                in_array('skill', $level->getExtraPoint())
             ) {
                 $levelPoints++;
             }
