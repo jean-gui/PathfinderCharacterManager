@@ -83,6 +83,10 @@ class LevelUpSpellsType extends AbstractType
                             $level->addLearnedSpell((new ClassSpell())->setClass($class)->setSpellLevel($spellLevel));
                             $spellsToAdd--;
                         }
+
+                        if ($level->getExtraPoint() === 'spell') {
+                            $level->addLearnedSpell((new ClassSpell())->setClass($class)->setSpellLevel($spellLevel-1));
+                        }
                     }
 
                     $form->add(

@@ -46,7 +46,9 @@ class LevelUpClassSummaryHpType extends AbstractType
                     $form->add(
                         'extraPoint',
                         ChoiceType::class,
-                        array('choices' => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Other' => null])
+                        [
+                            'choices' => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Additional spell' => 'spell'],
+                        ]
                     );
                 }
 
