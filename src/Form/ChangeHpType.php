@@ -43,7 +43,8 @@ class ChangeHpType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Character::class,
             'widget_form_group' => true,
-            'widget_form_group_attr' => array('class' => 'row')
+            'widget_form_group_attr' => array('class' => 'row'),
+            'csrf_protection' => false
         ));
     }
 }

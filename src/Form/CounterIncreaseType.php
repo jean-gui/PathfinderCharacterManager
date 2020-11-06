@@ -34,7 +34,8 @@ class CounterIncreaseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Counter::class
+            'data_class'      => Counter::class,
+            'csrf_protection' => false
         ));
     }
 }

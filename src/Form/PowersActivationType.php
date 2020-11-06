@@ -36,7 +36,7 @@ class PowersActivationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array('horizontal' => false)
+            ['horizontal' => false, 'csrf_protection' => false]
         );
     }
 } 

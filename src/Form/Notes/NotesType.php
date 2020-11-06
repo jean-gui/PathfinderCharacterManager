@@ -49,8 +49,9 @@ class NotesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Character::class,
-            'type'       => 'general'
+            'data_class'      => Character::class,
+            'type'            => 'general',
+            'csrf_protection' => false
         ));
         $resolver->setAllowedValues('type', array('general', 'power', 'inventory', 'spell'));
     }
