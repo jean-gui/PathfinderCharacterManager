@@ -961,7 +961,15 @@ class Character extends BaseCharacter
      */
     public function getAc()
     {
-        return 10 + $this->getModifierByAbility('dexterity') + $this->getDefenseBonuses()->ac->getBonus();
+        $maxDexBonus = $this->getMaximumDexterityBonus();
+
+        if (is_int($maxDexBonus)) {
+            $dexMod = min($this->getModifierByAbility('dexterity'), $maxDexBonus);
+        } else {
+            $dexMod = $this->getModifierByAbility('dexterity');
+        }
+
+        return 10 + $dexMod + $this->getDefenseBonuses()->ac->getBonus();
     }
 
     /**
@@ -1002,13 +1010,7 @@ class Character extends BaseCharacter
             case 'strength':
                 return $this->getAbilityModifier($this->getStrength());
             case 'dexterity':
-                $mod         = $this->getAbilityModifier($this->getDexterity());
-                $maxDexBonus = $this->getMaximumDexterityBonus();
-
-                if (is_int($maxDexBonus)) {
-                    return min($mod, $maxDexBonus);
-                }
-                return $mod;
+                return $this->getAbilityModifier($this->getDexterity());
             case 'constitution':
                 return $this->getAbilityModifier($this->getConstitution());
             case 'intelligence':
