@@ -43,7 +43,8 @@ use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\WebLink\Link;
+
+use function Symfony\Component\String\u;
 
 /**
  * Character controller.
@@ -246,7 +247,7 @@ class CharacterController extends AbstractController
                     ) {
                         $target = $value['active'];
                         if (in_array('other', $target)) {
-
+                            // nothing to do
                         } elseif (in_array('allies', $target)) {
                             foreach ($character->getParty()->getCharacters() as $target) {
                                 $target->addPowerEffect(
@@ -291,7 +292,7 @@ class CharacterController extends AbstractController
         });
         // Sort allSkills by name
         usort($skills, function (Skill $s1, Skill $s2) {
-            return strcmp($s1->name, $s2->name);
+            return strcmp(u($s1->name)->ascii(), u($s2->name)->ascii());
         });
 
         return array(
