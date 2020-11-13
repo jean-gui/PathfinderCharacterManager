@@ -28,7 +28,7 @@
                         <li class="list-group-item">
                             <a href="{{ path('parties_show', {'id': party.id }) }}">{{ party }}</a>
                             <span class="badge pull-right">
-                                {{ 'party.characters'|transchoice(party.characters|length) }}
+                                {{ 'party.characters'|trans({'%count%': party.characters|length}) }}
                             </span>
                         </li>
                     {% endfor %}
