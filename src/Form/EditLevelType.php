@@ -78,7 +78,11 @@ class EditLevelType extends AbstractType
                     $form->add(
                         'extraPoint',
                         ChoiceType::class,
-                        array('choices' => array('Hit Point' => 'hp', 'Skill' => 'skill'))
+                        [
+                            'choices'  => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Additional spell' => 'spell'],
+                            'multiple' => true,
+                            'required' => false
+                        ]
                     );
                 }
 
