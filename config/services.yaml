@@ -61,3 +61,7 @@ services:
         public: false
         arguments:
             $advancement: '%character_advancement%'
+
+    App\Services\SpellCasting:
+        arguments:
+            $extraSpells: '%bonus_spells%'

@@ -22,11 +22,13 @@ class SpellCasting
 {
     private $em;
     private $publisher;
+    private $extraSpells;
 
-    public function __construct(EntityManagerInterface $em, PublisherInterface $publisher)
+    public function __construct(EntityManagerInterface $em, PublisherInterface $publisher, array $extraSpells)
     {
         $this->em = $em;
         $this->publisher = $publisher;
+        $this->extraSpells = $extraSpells;
     }
 
     /**
@@ -39,8 +41,6 @@ class SpellCasting
      * @param ClassDefinition $class Class the spell will be cast as
      *
      * @return bool
-     *
-     * @todo take into account spell per day bonuses for non prepared spells
      */
     private function canCast(Character $caster, Spell $spell, ClassDefinition $class)
     {
@@ -59,14 +59,18 @@ class SpellCasting
             $cast = $caster->getNonPreparedCastSpellsCount();
 
             foreach ($caster->getLearnedSpells() as $classSpell) {
+                $spellLevel = $classSpell->getSpellLevel();
+                $modifier = $caster->getModifierByAbility($class->getCastingAbility());
+
                 if (
                     $classSpell->getSpell() === $spell &&
                     $classSpell->getClass() === $class &&
                     (
                         !$cast ||
                         !array_key_exists($class->getId(), $cast) ||
-                        !array_key_exists($classSpell->getSpellLevel(), $cast[$class->getId()]) ||
-                        $cast[$class->getId()][$classSpell->getSpellLevel()] < $class->getSpellsPerDay()[$classSpell->getSpellLevel()][$caster->getLevel($class) - 1]
+                        !array_key_exists($spellLevel, $cast[$class->getId()]) ||
+                        $cast[$class->getId()][$spellLevel] < ($class->getSpellsPerDay()
+                        [$spellLevel][$caster->getLevel($class) - 1] + $this->extraSpells[$modifier][$spellLevel])
                     )
                 ) {
                     return true;
