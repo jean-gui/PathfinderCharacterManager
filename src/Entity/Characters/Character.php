@@ -1369,7 +1369,10 @@ class Character extends BaseCharacter
     public function getPreparedSpell(Spell $spell, ClassDefinition $class)
     {
         foreach ($this->getPreparedSpells() as $preparedSpell) {
-            if ($preparedSpell->getSpell() === $spell && $preparedSpell->getClass() === $class) {
+            if (
+                $preparedSpell->getSpell() === $spell && $preparedSpell->getClass() === $class &&
+                !$preparedSpell->isAlreadyCast()
+            ) {
                 return $preparedSpell;
             }
         }
