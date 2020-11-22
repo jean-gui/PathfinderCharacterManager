@@ -92,7 +92,7 @@ class SpellCasting
     public function cast(Character $caster, Spell $spell, ClassDefinition $class, $targets = null)
     {
         if (!$this->canCast($caster, $spell, $class)) {
-            throw new NotFoundHttpException($caster . ' cannot cast ' . $spell);
+            throw new Exception($caster . ' cannot cast ' . $spell);
         }
 
         if ($targets) {
