@@ -9,7 +9,6 @@
     },
     "entrypoints": {
         "app": "app.js",
-        "ck_editor": "js/ck_editor.js",
         "character_sheet": "js/character_sheet.js",
         "dm": "js/dm.js",
         "admin": "js/admin.js"
