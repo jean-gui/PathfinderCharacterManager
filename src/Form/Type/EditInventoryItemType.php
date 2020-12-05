@@ -21,7 +21,7 @@ class EditInventoryItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item')
+            ->add('item', null, ['attr' => ['data-controller' => 'select2']])
             ->add('quantity')
         ;
     }

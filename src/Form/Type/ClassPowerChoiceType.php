@@ -37,13 +37,14 @@ class ClassPowerChoiceType extends AbstractType
                     $form->add(
                         'extraInformation',
                         ChoiceType::class,
-                        array(
+                        [
                             'label' => $characterClassPower->getClassPower(),
                             'choices' => array_combine(
                                 $characterClassPower->getClassPower()->getEffects()['choice'],
                                 $characterClassPower->getClassPower()->getEffects()['choice']
-                            )
-                        )
+                            ),
+                            'attr'    => ['data-controller' => 'select2']
+                        ]
                     );
                 } elseif ($characterClassPower->getClassPower()->getChildren()->count() > 0) {
                     $form->add(

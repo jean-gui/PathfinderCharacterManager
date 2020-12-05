@@ -1,6 +1,9 @@
 <h2 id="{{ form.vars.htmlid }}">{{ form.notes.vars.name|trans|capitalize }}</h2>
-{{ form_start(form) }}
-{{ form_widget(form.notes, {attr: {style: 'height: 10rem'}, id: form.notes.vars.id ~ '_' ~ form.vars.type}) }}
+{{ form_start(form, {attr: {'data-controller': 'wysiwyg', 'data-action': 'submit->wysiwyg#submit'}}) }}
+<div class="wysiwyg_content">
+    {{ form.notes.vars.data|raw }}
+</div>
+{{ form_widget(form.notes, {attr: {style: 'display:none'}, id: form.notes.vars.id ~ '_' ~ form.vars.type}) }}
 {{ form_widget(form.submit, {attr: {class: 'btn-block btn-primary mt-2'}}) }}
 {{ form_rest(form) }}
 {{ form_end(form) }}

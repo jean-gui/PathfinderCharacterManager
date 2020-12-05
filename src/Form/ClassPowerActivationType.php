@@ -44,6 +44,7 @@ class ClassPowerActivationType extends AbstractType
                             'mapped'   => false,
                             'required' => false,
                             'multiple' => true,
+                            'attr'     => ['data-controller' => 'select2']
                         )
                     )
                     ->add(

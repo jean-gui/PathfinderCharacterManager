@@ -81,7 +81,8 @@ class EditLevelType extends AbstractType
                         [
                             'choices'  => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Additional spell' => 'spell'],
                             'multiple' => true,
-                            'required' => false
+                            'required' => false,
+                            'attr'     => ['data-controller' => 'select2']
                         ]
                     );
                 }
@@ -100,16 +101,17 @@ class EditLevelType extends AbstractType
                     $form->add(
                         'extraAbility',
                         ChoiceType::class,
-                        array(
-                            'choices' => array(
+                        [
+                            'choices' => [
                                 Abilities::STRENGTH     => Abilities::STRENGTH,
                                 Abilities::DEXTERITY    => Abilities::DEXTERITY,
                                 Abilities::CONSTITUTION => Abilities::CONSTITUTION,
                                 Abilities::INTELLIGENCE => Abilities::INTELLIGENCE,
                                 Abilities::WISDOM       => Abilities::WISDOM,
                                 Abilities::CHARISMA     => Abilities::CHARISMA
-                            )
-                        )
+                            ],
+                            'attr'    => ['data-controller' => 'select2']
+                        ]
                     );
                 }
 

@@ -49,7 +49,8 @@ class LevelUpClassSummaryHpType extends AbstractType
                         [
                             'choices' => ['Hit Point' => 'hp', 'Skill' => 'skill', 'Additional spell' => 'spell'],
                             'multiple' => true,
-                            'required' => false
+                            'required' => false,
+                            'attr'     => ['data-controller' => 'select2']
                         ]
                     );
                 }

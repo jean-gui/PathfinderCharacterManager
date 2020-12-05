@@ -8,8 +8,8 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body data-controller="myswup @symfony/ux-swup/swup" data-containers="#nav #swup">
+<nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ path('index') }}">
         Pathfinder Character Manager
     </a>
@@ -128,14 +128,16 @@
         </ul>
     </div>
 </nav>
-<main class="{% block container_classes %}container{% endblock %}">
+<main id="swup" class="{% block container_classes %}container{% endblock %}">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}" role="alert">{{ message }}</div>
         {% endfor %}
     {% endfor %}
 
-    {% block body %}{% endblock %}
+    <div data-controller="popover">
+        {% block body %}{% endblock %}
+    </div>
 </main>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

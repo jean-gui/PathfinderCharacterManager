@@ -1,9 +1,3 @@
-function notify(message) {
-    if (("Notification" in window) && Notification.permission === "granted") {
-        var notification = new Notification(message);
-    }
-}
-
 fetch('/en/hub-url')
     .then(response => {
         const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];

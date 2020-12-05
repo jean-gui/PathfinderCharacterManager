@@ -28,7 +28,8 @@ class CastPreparedSpellType extends AbstractType
             array(
                 'label'       => $options['spell'] . ' (' . $options['class'] . ')',
                 'choices'     => $options['targets'],
-                'placeholder' => 'Target'
+                'placeholder' => 'Target',
+                'attr'        => ['data-controller' => 'select2']
             )
         );
     }

@@ -14,23 +14,6 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
-    /*
-     * ENTRY CONFIG
-     *
-     * Add 1 entry for each "page" of your app
-     * (including one that's included on every page - e.g. "app")
-     *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
-     */
-    .addEntry('app', './assets/js/app.js')
-    .addEntry('ck_editor', './assets/js/ck_editor.js')
-    .addEntry('inventory', './assets/js/inventory.js')
-    .addEntry('character_sheet', './assets/js/character_sheet.js')
-    .addEntry('dm', './assets/js/dm.js')
-    .addEntry('admin', './assets/js/admin.js')
-    //.addEntry('page2', './assets/js/page2.js')
-
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -57,6 +40,10 @@ Encore
         config.corejs = 3;
     })
 
+    .configureBabel(function (babelConfig) {
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties');
+    })
+
     // enables Sass/SCSS support
     .enableSassLoader()
 
@@ -68,24 +55,13 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
 
-    .copyFiles([
-        {
-            from: './node_modules/ckeditor/',
-            to: 'ckeditor/[path][name].[ext]',
-            pattern: /\.(js|css)$/,
-            includeSubdirectories: false
-        },
-        {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
-        {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
-        {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
-        {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'},
-    ])
+    .enableStimulusBridge('./assets/controllers.json')
 ;
 
 module.exports = Encore.getWebpackConfig();
