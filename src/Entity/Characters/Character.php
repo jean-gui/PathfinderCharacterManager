@@ -459,12 +459,10 @@ class Character extends BaseCharacter
         $ar += $this->attackBonuses->mainAttackRolls->getBonus();
         $bonusAttacks = $this->attackBonuses->mainAttacks->getBonus();
 
-        /** @noinspection PhpExpressionResultUnusedInspection */
-        for ($bonusAttacks; $bonusAttacks > 0; $bonusAttacks--) {
+        for (; $bonusAttacks > 0; $bonusAttacks--) {
             $ars[] = $ar;
         }
-        /** @noinspection PhpExpressionResultUnusedInspection */
-        for ($bab; $bab >= 0; $bab -= 5) {
+        for (; $bab > 0; $bab -= 5) {
             $ars[] = $ar;
             $ar -= 5;
         }
