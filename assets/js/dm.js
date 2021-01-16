@@ -9,7 +9,7 @@ fetch('/en/hub-url')
 
         eventSource.onmessage = event => {
             const data = JSON.parse(event.data);
-            notify(data['message']);
+            //notify(data['message']);
             document.location.reload(true);
         }
     });
