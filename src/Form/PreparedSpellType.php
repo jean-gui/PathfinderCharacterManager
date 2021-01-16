@@ -57,6 +57,7 @@ class PreparedSpellType extends AbstractType
                     null,
                     array(
                         'choices' => $choices,
+                        'attr'    => ['data-controller' => 'select2']
                     )
                 );
             }

@@ -31,7 +31,8 @@ class AddCharacterFeatType extends AbstractType
             array(
                 'class'   => Feat::class,
                 'choices' => $options['choices'][$builder->getName()],
-                'label'   => false
+                'label'   => false,
+                'attr'    => ['data-controller' => 'select2']
             )
         );
     }

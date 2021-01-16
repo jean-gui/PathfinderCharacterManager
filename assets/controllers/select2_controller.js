@@ -14,7 +14,7 @@ export default class extends Controller {
     connect() {
         let select2_options = {
             theme: "bootstrap4",
-            minimumResultsForSearch: 1,
+            minimumResultsForSearch: 5,
             templateResult: function (feat) {
                 if (typeof select2_descriptions == 'undefined') return feat.text;
 

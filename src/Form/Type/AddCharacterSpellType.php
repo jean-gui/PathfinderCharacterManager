@@ -88,7 +88,8 @@ class AddCharacterSpellType extends AbstractType
                     EntityType::class,
                     array(
                         'class'   => Spell::class,
-                        'choices' => $spells
+                        'choices' => $spells,
+                        'attr' => ['data-controller' => 'select2']
                     )
                 );
             }

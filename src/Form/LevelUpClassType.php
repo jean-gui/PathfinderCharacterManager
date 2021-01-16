@@ -38,7 +38,7 @@ class LevelUpClassType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('classDefinition')
+            ->add('classDefinition', null, ['attr' => ['data-controller' => 'select2']])
         ;
 
         $builder->addEventListener(
