@@ -860,7 +860,12 @@ class Character extends BaseCharacter
                 $id = $class;
             }
 
-            return $this->getLevelPerClass()[$id]['level'];
+            $levelPerClass = $this->getLevelPerClass();
+            if (array_key_exists($id, $levelPerClass)) {
+                return $levelPerClass[$id]['level'];
+            }
+
+            return 0;
         }
 
         return $this->getLevels()->count();

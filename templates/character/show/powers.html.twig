@@ -17,9 +17,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'feats'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat) }}
+                    {{ popovers.description(power.vars.value.feat.name, power.vars.value.feat, false) }}
+                    <label for="{{ power.active.vars.id }}">
+                        {{ power.vars.value.feat.name }}
+                    </label>
                 </td>
-                <td>{{ form_widget(power.active) }}</td>
+                <td>{{ form_widget(power.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
         {% for power in powers_activation_form.class_powers %}
@@ -28,8 +31,9 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'class.powers'|trans }}</th>
                 {% endif %}
                 <td>
+                    {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower, false) }}
                     <label for="{{ power.active.vars.id }}">
-                        {{ popovers.description(power.vars.value.classPower.name, power.vars.value.classPower) }}
+                        {{ power.vars.value.classPower.name }}
                     </label>
                 </td>
                 <td>
@@ -46,10 +50,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'spells'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(spellEffect.vars.value.spell.name, spellEffect.vars.value.spell) }}
-                    {{ form_label(spellEffect.active, spellEffect.vars.value.spell.name) }}
+                    {{ popovers.description(spellEffect.vars.value.spell.name, spellEffect.vars.value.spell, false) }}
+                    <label for="{{ spellEffect.active.vars.id }}">
+                        {{ spellEffect.vars.value.spell.name }}
+                    </label>
                 </td>
-                <td>{{ form_widget(spellEffect.active) }}</td>
+                <td>{{ form_widget(spellEffect.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
         {% for powerEffect in powers_activation_form.power_effects %}
@@ -58,10 +64,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'powers'|trans }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
-                    {{ form_label(powerEffect.active, powerEffect.vars.value.power.name) }}
+                    {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power, false) }}
+                    <label for="{{ powerEffect.active.vars.id }}">
+                        {{ powerEffect.vars.value.power.name }}
+                    </label>
                 </td>
-                <td>{{ form_widget(powerEffect.active) }}</td>
+                <td>{{ form_widget(powerEffect.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
         {% for powerEffect in powers_activation_form.item_power_effects %}
@@ -70,10 +78,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                     <th rowspan="{{ loop.length }}">{{ 'item_powers'|trans|capitalize }}</th>
                 {% endif %}
                 <td>
-                    {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power) }}
-                    {{ form_label(powerEffect.active, powerEffect.vars.value.power.name|trans|capitalize) }}
+                    {{ popovers.description(powerEffect.vars.value.power.name, powerEffect.vars.value.power, false) }}
+                    <label for="{{ powerEffect.active.vars.id }}">
+                        {{ powerEffect.vars.value.power.name|trans|capitalize }}
+                    </label>
                 </td>
-                <td>{{ form_widget(powerEffect.active) }}</td>
+                <td>{{ form_widget(powerEffect.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,10 +1,10 @@
 {% macro description(title, object, linkText=true) %}
     {% if
-    object.longDescription or
-    object.shortDescription or
-    (object.prerequisities is defined and object.prerequisities|length > 0) or
-    (object.conditions is defined and object.conditions|length > 0) or
-    (object.externalConditions is defined and object.externalConditions|length > 0) %}
+        object.longDescription or
+        object.shortDescription or
+        (object.prerequisities is defined and object.prerequisities|length > 0) or
+        (object.conditions is defined and object.conditions|length > 0) or
+        (object.externalConditions is defined and object.externalConditions|length > 0) %}
         <a class="mypopover"
            data-toggle="popover"
            title="{{ title }}"
@@ -24,8 +24,8 @@
             </ul>
             {% endif %}
             {% if
-           (object.conditions is defined and object.conditions|length > 0) or
-           (object.externalConditions is defined and object.externalConditions|length > 0) %}
+               (object.conditions is defined and object.conditions|length > 0) or
+               (object.externalConditions is defined and object.externalConditions|length > 0) %}
             {{ 'conditions'|trans }}:
             <ul>
                 {% for key, value in object.conditions %}
@@ -44,12 +44,12 @@
                 {{ linkText }}
             {% endif %}
         </a>
-        {% else %}
-            {% if linkText is same as(true) %}
-                {{ title }}
-            {% elseif linkText %}
-                {{ linkText }}
-            {% endif %}
+    {% else %}
+        {% if linkText is same as(true) %}
+            {{ title }}
+        {% elseif linkText %}
+            {{ linkText }}
+        {% endif %}
     {% endif %}
 {% endmacro %}
 
