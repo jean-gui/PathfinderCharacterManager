@@ -485,27 +485,35 @@ class CharacterController extends AbstractController
                                 ->get($spellKey)
                                 ->getData();
 
+                            if ($class->isPreparationNeeded()) {
+                                $level = null;
+                            } else {
+                                $level = (int)$spellValue['level'];
+                            }
+
                             // Should probably break here
                         }
                     }
                 }
             }
+
             // Is isset appropriate?
             if (isset($target, $spell, $class)) {
                 try {
                     if (in_array('other', $target)) {
-                        $spellCasting->cast($character, $spell, $class);
+                        $spellCasting->cast($character, $spell, $class, null, $level);
                     } elseif (in_array('allies', $target)) {
                         $spellCasting->cast(
                             $character,
                             $spell,
                             $class,
-                            $character->getParty()->getCharacters()
+                            $character->getParty()->getCharacters(),
+                            $level
                         );
                     } else {
                         $targets = $em->getRepository(Character::class)->findBy(['id' => $target]);
                         if ($target) {
-                            $spellCasting->cast($character, $spell, $class, $targets);
+                            $spellCasting->cast($character, $spell, $class, $targets, $level);
                         }
                     }
                 } catch (Exception $e) {

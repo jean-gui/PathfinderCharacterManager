@@ -36,13 +36,14 @@ class SpellCasting
      * $caster can cast a spell if $class has to prepare spells and $caster memorized it enough times
      * or if $class doesn't need to prepare spells and $caster knows the spell with $class and can cast spells of this level
      *
-     * @param Character $caster
-     * @param Spell $spell
+     * @param Character       $caster
+     * @param Spell           $spell
      * @param ClassDefinition $class Class the spell will be cast as
+     * @param int|null        $spellLevel
      *
      * @return bool
      */
-    private function canCast(Character $caster, Spell $spell, ClassDefinition $class)
+    private function canCast(Character $caster, Spell $spell, ClassDefinition $class, int $spellLevel = null)
     {
         // The spell needs to be prepared in advance
         if ($class->isPreparationNeeded()) {
@@ -59,7 +60,10 @@ class SpellCasting
             $cast = $caster->getNonPreparedCastSpellsCount();
 
             foreach ($caster->getLearnedSpells() as $classSpell) {
-                $spellLevel = $classSpell->getSpellLevel();
+                if (!$spellLevel) {
+                    $spellLevel = $classSpell->getSpellLevel();
+                }
+
                 $modifier = $caster->getModifierByAbility($class->getCastingAbility());
 
                 if (
@@ -69,8 +73,11 @@ class SpellCasting
                         !$cast ||
                         !array_key_exists($class->getId(), $cast) ||
                         !array_key_exists($spellLevel, $cast[$class->getId()]) ||
-                        $cast[$class->getId()][$spellLevel] < ($class->getSpellsPerDay()
-                        [$spellLevel][$caster->getLevel($class) - 1] + $this->extraSpells[$modifier][$spellLevel])
+                        (
+                            $class->getSpellsPerDay()[$spellLevel][$caster->getLevel($class) - 1] >= 0 &&
+                            $cast[$class->getId()][$spellLevel] < ($class->getSpellsPerDay()
+                            [$spellLevel][$caster->getLevel($class) - 1] + $this->extraSpells[$modifier][$spellLevel])
+                        )
                     )
                 ) {
                     return true;
@@ -82,16 +89,24 @@ class SpellCasting
     }
 
     /**
-     * @param Character $caster
+     * @param Character        $caster
+     * @param Spell            $spell
+     * @param ClassDefinition  $class Class the spell is cast as
      * @param Character[]|null $targets
-     * @param Spell $spell
-     * @param ClassDefinition $class Class the spell is cast as
+     * @param int|null $spellLevel to cast the spell from a higher level slot (only useful for classes that
+     *                             don't require preparing spells)
      *
      * @throws Exception
      */
-    public function cast(Character $caster, Spell $spell, ClassDefinition $class, $targets = null)
+    public function cast(
+        Character $caster,
+        Spell $spell,
+        ClassDefinition $class,
+        array $targets = null,
+        int $spellLevel = null
+    )
     {
-        if (!$this->canCast($caster, $spell, $class)) {
+        if (!$this->canCast($caster, $spell, $class, $spellLevel)) {
             throw new Exception($caster . ' cannot cast ' . $spell);
         }
 
@@ -115,10 +130,16 @@ class SpellCasting
         } else {
             $cast = $caster->getNonPreparedCastSpellsCount();
             $classSpell = $caster->getLearnedSpell($spell, $class);
-            if (!$cast || !array_key_exists($class->getId(), $cast) || !array_key_exists($classSpell->getSpellLevel(), $cast[$class->getId()])) {
-                $cast[$class->getId()][$classSpell->getSpellLevel()] = 1;
+            if (!$spellLevel || $spellLevel < $classSpell->getSpellLevel()) {
+                $spellLevel = $classSpell->getSpellLevel();
+            }
+            if (!$cast ||
+                !array_key_exists($class->getId(), $cast) ||
+                !array_key_exists($spellLevel, $cast[$class->getId()])
+            ) {
+                $cast[$class->getId()][$spellLevel] = 1;
             } else {
-                $cast[$class->getId()][$classSpell->getSpellLevel()]++;
+                $cast[$class->getId()][$spellLevel]++;
             }
             $caster->setNonPreparedCastSpellsCount($cast);
         }
