@@ -39,7 +39,7 @@ class ItemPowerEffect
     /**
      * PowerTrait that triggered this power effect
      *
-     * @var Character|null Target of the power or null if the corresponding power
+     * @var ItemPower|null Target of the power or null if the corresponding power
      *
      * @ORM\ManyToOne(targetEntity=ItemPower::class)
      * @ORM\JoinColumn(name="power_id", referencedColumnName="id", nullable=false)
@@ -69,7 +69,7 @@ class ItemPowerEffect
      */
     public function __toString()
     {
-        return $this->getPower()->getName();
+        return $this->getPower()->__toString();
     }
 
     /**
@@ -85,7 +85,7 @@ class ItemPowerEffect
     }
 
     /**
-     * @return Character|null
+     * @return ItemPower|null
      */
     public function getPower()
     {
