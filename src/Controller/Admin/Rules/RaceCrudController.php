@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Rules;
 
 use App\Admin\Field\JsonField;
+use App\Admin\Field\TranslationField;
 use App\Entity\Rules\Race;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -18,6 +19,17 @@ class RaceCrudController extends AbstractCrudController
         return Race::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        $c = parent::configureCrud($crud);
+
+        $searchFields = $c->getAsDto()->getSearchFields();
+        $c->setSearchFields(array_merge($searchFields, ['translations.name']));
+        $c->addFormTheme('bundles/A2lixTranslationFormBundle/bootstrap_4_layout.html.twig');
+
+        return $c;
+    }
+
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)->add(Crud::PAGE_INDEX, Action::DETAIL);
@@ -27,7 +39,11 @@ class RaceCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('name'),
+            TextField::new('name')->hideOnForm(),
+            TranslationField::new('translations')
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             JsonField::new('traits')->hideOnIndex()
         ];
     }

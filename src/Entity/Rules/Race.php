@@ -3,6 +3,9 @@
 namespace App\Entity\Rules;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Race
@@ -11,8 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Cache()
  */
-class Race
+class Race implements TranslatableInterface
 {
+    use TranslatableTrait;
+
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
+
     /**
      * @var integer
      *
@@ -21,13 +31,6 @@ class Race
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
-     */
-    protected $name;
 
     /**
      * @var array
@@ -47,35 +50,11 @@ class Race
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Race
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->__get('name') . "";
     }
 
     /**
@@ -100,5 +79,18 @@ class Race
     public function getTraits()
     {
         return $this->traits;
+    }
+
+    public function __get($name)
+    {
+        $method    = 'get'.ucfirst($name);
+        $arguments = [];
+
+        return $this->proxyCurrentLocaleTranslation($method, $arguments);
+    }
+
+    public function __isset($name)
+    {
+        return in_array($name, ['name']);
     }
 }
