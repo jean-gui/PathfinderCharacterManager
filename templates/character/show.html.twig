@@ -9,6 +9,8 @@
 
 {% block container_classes %}container-fluid{% endblock %}
 
+{% block subtitle %}{{ entity }}{% endblock %}
+
 {% block body -%}
     {% include('character/character_h1.html.twig') %}
     <div class="row">
