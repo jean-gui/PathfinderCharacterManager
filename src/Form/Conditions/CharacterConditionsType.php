@@ -23,7 +23,8 @@ class CharacterConditionsType extends AbstractType
         $builder
             ->add(
                 'conditions',
-                null
+                null,
+                ['attr' => ['data-controller' => 'select2']]
             )
         ;
     }
