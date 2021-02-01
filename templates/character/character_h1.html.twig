@@ -3,7 +3,7 @@
     {{ entity }}
     <small>
         {{ 'level'|trans({'%level%': entity.level}) }}
-        <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race }}</a>
+        <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race|preg_replace('/ - .*/', '') }}</a>,
         <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
             {%- if entity.favoredClass.subClasses -%}
                 {% set firstSubClasses = true %}
