@@ -16,26 +16,6 @@
                 {%- endfor -%})
                 {% endfor %}
             {%- endif %}
-            <a href="{{ path('characters_edit', {'id': entity.id}) }}" title="{{ 'edit'|trans }}">
-                <span class="fas fa-edit"></span>
-            </a>
-            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}">
-                <span class="fas fa-plus"></span>
-            </a>
-            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}">
-                <span class="fas fa-bed"></span>
-            </a>
-            {% if entity.canLearnSpells %}
-                <a href="{{ path('characters_learn_spell', {'id': entity.id}) }}" title="{{ 'learn_spell'|trans }}">
-                    <span class="fas fa-feather-alt"></span>
-                </a>
-            {% endif %}
-            {% if entity.canPrepareSpells %}
-                <a href="{{ path('characters_prepare_spells', {'id': entity.id}) }}"
-                   title="{{ 'prepare_spells'|trans }}">
-                    <span class="fas fa-book-reader"></span>
-                </a>
-            {% endif %}
         </small>
     </h1>
 {% endblock %}

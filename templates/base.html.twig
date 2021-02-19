@@ -21,17 +21,64 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         {% set route = app.request.attributes.get('_route') %}
         {% set routeParams = app.request.attributes.get('_route_params') %}
-        {% if route in ['characters_show', 'character_inventory', 'character_inventory_edit', 'character_spells'] %}
+        {% if route in [
+            'characters_show', 'character_inventory', 'character_inventory_edit', 'character_spells',
+            'characters_sleep', 'characters_prepare_spells', 'characters_levelup', 'characters_edit'
+        ] %}
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item{% if route == 'characters_show' %} active{% endif %}">
-                    <a class="nav-link" href="{{ path('characters_show', routeParams) }}">{{ 'main.profile'|trans }}</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="characterDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ entity }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="characterDropdown">
+                        <a class="dropdown-item{% if route == 'characters_show' %} active{% endif %}" href="{{ path('characters_show', routeParams) }}">
+                            <span class="fas fa-user"></span>&nbsp;{{ 'main.profile'|trans }}
+                        </a>
+                        <a class="dropdown-item{% if route == 'characters_levelup' %} active{% endif %}" href="{{ path('characters_levelup', { 'id': entity.id }) }}"
+                           title="{{ 'level.up'|trans }}">
+                            <span class="fas fa-plus"></span>&nbsp;{{ 'level.up'|trans }}
+                        </a>
+                        <a class="dropdown-item{% if route == 'characters_edit' %} active{% endif %}" href="{{ path('characters_edit', {'id': entity.id}) }}"
+                           title="{{ 'edit'|trans }}">
+                            <span class="fas fa-user-edit"></span>&nbsp;{{ 'edit'|trans }}
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="magicDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fas fa-hat-wizard"></span>&nbsp;{{ 'magic'|trans }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="magicDropdown">
+                        <a class="dropdown-item{% if route == 'character_spells' %} active{% endif %}" href="{{ path('character_spells', routeParams) }}">
+                            <span class="fas fa-magic"></span>&nbsp;{{ 'cast.spells'|trans }}
+                        </a>
+
+                        {% if entity.canPrepareSpells %}
+                            <a class="dropdown-item{% if route == 'characters_prepare_spells' %} active{% endif %}" href="{{ path('characters_prepare_spells', {'id': entity.id}) }}"
+                               title="{{ 'prepare_spells'|trans }}">
+                                <span class="fas fa-book-reader"></span>&nbsp;{{ 'prepare_spells'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if entity.canLearnSpells %}
+                            <a class="dropdown-item{% if route == 'characters_learn_spells' %} active{% endif %}" href="{{ path('characters_learn_spell', {'id': entity.id}) }}"
+                               title="{{ 'learn_spell'|trans }}">
+                                <span class="fas fa-feather-alt"></span>&nbsp;{{ 'learn_spell'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
                 </li>
                 <li class="nav-item{% if route in ['character_inventory', 'character_inventory_edit'] %} active{% endif %}">
-                    <a class="nav-link"
-                       href="{{ path('character_inventory', routeParams) }}">{{ 'inventory'|trans }}</a>
+                    <a class="nav-link text-nowrap"
+                       href="{{ path('character_inventory', routeParams) }}">
+                        <span class="fas fa-shield-alt"></span>&nbsp;{{ 'inventory'|trans }}
+                    </a>
                 </li>
-                <li class="nav-item{% if route == 'character_spells' %} active{% endif %}">
-                    <a class="nav-link" href="{{ path('character_spells', routeParams) }}">{{ 'spells'|trans }}</a>
+                <li class="nav-item{% if route == 'characters_sleep' %} active{% endif %}">
+                    <a class="nav-link text-nowrap" href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}">
+                        <span class="fas fa-bed"></span>&nbsp;{{ 'sleep'|trans }}
+                    </a>
                 </li>
             </ul>
         {% else %}

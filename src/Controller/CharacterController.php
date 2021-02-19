@@ -21,7 +21,6 @@ use App\Form\LearnSpellType;
 use App\Form\Notes\NotesType;
 use App\Form\PowersActivationType;
 use App\Form\PrepareSpellsType;
-use App\Form\SleepType;
 use App\Form\UncastSpellsType;
 use App\Services\CharacterEquipment;
 use App\Services\SpellCasting;
@@ -463,7 +462,7 @@ class CharacterController extends AbstractController
         );
 
         if ($request->getMethod() === 'PUT') {
-            $values = $request->request->get('cast_spells');
+            $values = $request->request->all('cast_spells');
             foreach ($values['castable_spells_by_class_by_spell_level'] as $classKey => $classValue) {
                 foreach ($classValue['spells_by_level'] as $levelKey => $levelValue) {
                     foreach ($levelValue['spells'] as $spellKey => $spellValue) {
@@ -692,7 +691,7 @@ class CharacterController extends AbstractController
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
-        return $this->render('character/sleep.html.twig', ['form' => $form->createView()]);
+        return $this->render('character/sleep.html.twig', ['form' => $form->createView(), 'entity' => $character]);
     }
 
     /**
@@ -722,7 +721,10 @@ class CharacterController extends AbstractController
             return $this->redirect($this->generateUrl('characters_show', ['id' => $character->getId()]));
         }
 
-        return $this->render('character/prepare_spells.html.twig', ['form' => $form->createView()]);
+        return $this->render(
+            'character/prepare_spells.html.twig',
+            ['form' => $form->createView(), 'entity' => $character]
+        );
     }
 
     /**
