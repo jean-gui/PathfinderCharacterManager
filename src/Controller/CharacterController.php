@@ -20,6 +20,7 @@ use App\Form\InventoryType;
 use App\Form\LearnSpellType;
 use App\Form\Notes\NotesType;
 use App\Form\PowersActivationType;
+use App\Form\PrepareSpellsType;
 use App\Form\SleepType;
 use App\Form\UncastSpellsType;
 use App\Services\CharacterEquipment;
@@ -656,24 +657,24 @@ class CharacterController extends AbstractController
      * Make character sleep.
      *
      * @Route("/{id}/sleep", name="characters_sleep")
-     * @Template()
      * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
-     * @param Character $character
-     * @param Request $request
+     * @param Character    $character
+     * @param Request      $request
+     * @param SpellCasting $spellCasting
      *
-     * @return array|RedirectResponse
+     * @return Response
      */
-    public function sleep(Character $character, Request $request)
+    public function sleep(Character $character, Request $request, SpellCasting $spellCasting): Response
     {
+        $spellCasting->fixPreparedSpells($character);
         $em = $this->getDoctrine()->getManager();
-        $sleepForm = $this->createForm(
-            SleepType::class,
-            $character, array('em' => $em)
-        );
 
-        $sleepForm->handleRequest($request);
-        if ($sleepForm->isSubmitted() && $sleepForm->isValid()) {
+        $form = $this->createForm(PrepareSpellsType::class, $character);
+        $form->add('sleep', SubmitType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $character->setNonPreparedCastSpellsCount(null);
             foreach ($character->getPreparedSpells() as $preparedSpell) {
                 $preparedSpell->setAlreaydCast(false);
@@ -691,9 +692,37 @@ class CharacterController extends AbstractController
             return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
         }
 
-        return array(
-            'form' => $sleepForm->createView(),
-        );
+        return $this->render('character/sleep.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * Make character prepare spells.
+     *
+     * @Route("/{id}/prepare_spells", name="characters_prepare_spells")
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
+     *
+     * @param Character    $character
+     * @param Request      $request
+     * @param SpellCasting $spellCasting
+     *
+     * @return Response
+     */
+    public function prepareSpells(Character $character, Request $request, SpellCasting $spellCasting): Response
+    {
+        $spellCasting->fixPreparedSpells($character);
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(PrepareSpellsType::class, $character, ['disable_not_empty' => true]);
+        $form->add('prepare_spells', SubmitType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('characters_show', ['id' => $character->getId()]));
+        }
+
+        return $this->render('character/prepare_spells.html.twig', ['form' => $form->createView()]);
     }
 
     /**

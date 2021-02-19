@@ -1,0 +1,231 @@
+'(De)Activate Powers': '(De)Activate Powers'
+Ability:
+    increase: Ability.increase
+Base: Base
+'Class Summary': 'Class Summary'
+Confirmation: Confirmation
+Create: Create
+Delete: Delete
+Fast: Fast
+Feats: Feats
+'Hit Point': 'Hit Point'
+'Learn Spell': 'Learn Spell'
+Level: Level
+Medium: Medium
+New:
+    feat: New Feat
+'Save notes': 'Save notes'
+Skill: Skill
+Skills: Skills
+Slow: Slow
+Spells: Spells
+Subclass: Subclass
+subclasses: Subclasses
+Target: Target
+Update: Update
+'[Default]': '[Default]'
+ability: Ability
+ability.modifier.short: 'Ability Mod.'
+ability.point: 'Ability Point'
+ability.score.cost: 'Ability Score Cost'
+ac: AC
+add:
+    item: Add
+advancement: Advancement
+all_items: 'All items'
+applied:
+    bonuses: 'Applied Bonuses'
+arcane_spell_failure: 'Arcane Spell Failure'
+armor: Armor
+armor_check_penalty: 'Armor Check Penalty'
+bab: BAB
+belt: Belt
+body: Body
+campain:
+    type: 'Campain Type'
+cast: Cast
+cast.spells: 'Cast Spells'
+casting_time: 'Casting Time'
+category: Category
+charisma: Charisma
+chest: Chest
+class: Class
+class.powers: Class
+classes: Classes
+combat: Combat
+components: components
+conditions: Conditions
+constitution: Constitution
+cost: Cost
+counter:
+    new: 'New Counter'
+counters: Counters
+critical: Critical
+damages: Damages
+dc: DC
+description: Description
+dexterity: Dexterity
+drop: Drop
+duration: Duration
+edit: Edit
+edit.level: 'Edit Level'
+edit.levels: 'Edit Levels'
+effects: Effects
+equip: Equip
+equipment: Equipment
+external_conditions: 'External Conditions'
+eyes: Eyes
+fantasy: Fantasy
+favored:
+    extra:
+        point: 'Extra point'
+feats: Feats
+feet: Feet
+flat:
+    footed:
+        ac: 'Flat-Footed AC'
+fortitude: Fortitude
+granted:
+    powers: 'Granted Powers'
+hands: Hands
+head: Head
+headband: Headband
+heal:
+    harm: Heal/Harm
+hit:
+    points: 'Hit Points'
+hp:
+    roll: 'HP roll'
+initiative: Initiative
+intelligence: Intelligence
+inventory: Inventory
+inventory.edit: 'Edit Inventory'
+item_powers: Items
+items: Items
+known:
+    spells: 'Knownw Spells'
+learn_spell: 'Learn Spell'
+learned:
+    spells: 'Learned spells'
+left:
+    finger: 'Left Finger'
+level: 'Level %level%'
+level.up: 'Level Up'
+level_value: 'Level %level%'
+main:
+    attack:
+        rolls: 'Main Attack Rolls'
+    damage:
+        bonus: 'Main Damage Bonus'
+    profile: 'Main Profile'
+    weapon: 'Main Weapon'
+maximum_dexterity_bonus: 'Maximum Dexterity Bonus'
+misc:
+    modifiers: 'Misc Mod.'
+name: Name
+neck: Neck
+new:
+    character: 'New Character'
+    party: 'New Party'
+'no': 'no'
+offhand:
+    attack:
+        rolls: 'Offhand Attack Rolls'
+    damage:
+        bonus: 'Offhand Damage Bonus'
+    weapon: 'Offhand Weapon'
+other:
+    bonuses: 'Other Bonuses'
+parties: Parties
+party:
+    characters: '%count% character|%count% characters'
+passive:
+    powers: 'Passive Powers'
+points: Points
+powers: Powers
+prerequisities: Prerequisities
+races: Races
+range: Range
+ranks: Ranks
+reflexes: Reflexes
+remove:
+    item: Delete
+right:
+    finger: 'Right Finger'
+ring: Ring
+saving_throw: 'Saving Throw'
+score: Score
+shield: Shield
+shoulders: Shoulders
+skill: Skill
+skills: Skills
+sleep: Sleep
+spell:
+    level: 'Spell Level'
+spell_resistance: 'Spell Resistance'
+spells: Spells
+strength: Strength
+tables: Tables
+targets: Targets
+total:
+    bonus: 'Total Bonus'
+touch:
+    ac: 'Touch AC'
+two_handed: Two-handed
+type: Type
+uncast: Uncast
+uncast.spells: 'Cancel Spells'
+unequip: Unequip
+unmanaged:
+    powers: 'Unmanaged Powers'
+untrained: Untrained
+value: Value
+weapon: Weapon
+weapons: Weapons
+weight: Weight
+will: Will
+wisdom: Wisdom
+wrists: Wrists
+'yes': 'yes'
+your_characters: 'Your Characters'
+your_groups: 'Your Groups'
+your_parties: 'Your Parties'
+register: Register
+email: Email
+password: Password
+repeat:
+    password: 'Repeat Password'
+agree_terms: 'Agree terms'
+forgot_password: 'Forgot Password?'
+remember_me: 'Remember me'
+login: Login
+increase_all: Increase_all
+delete: Delete
+increase: Increase
+character_conditions:
+    updated: 'Character conditions updated'
+item:
+    powers: 'Item Powers'
+equipment.powers: 'Equipment Powers'
+users: Users
+users.groups: 'Users & Groups'
+languages: Languages
+english: English
+french: français
+prepare_spells: 'Prepare Spells'
+prepare_spells.spell:
+    level: 'Level %level% Spells'
+prepare_spells.slot:
+    level: 'Level %level% slots'
+    leave_unprepared: 'Leave unprepared'
+prepare_spells.class_spells: '%class% Spells'
+mean:
+    hp:
+        level: 'Mean HP per Level'
+admin:
+    class:
+        powers: 'Class Powers'
+cmb: CMB
+cmd: CMD
+decrease: Decrease
+

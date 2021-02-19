@@ -1,10 +1,10 @@
 {% block character_h1 %}
-<h1 data-character-id="{{ entity.id }}">
-    {{ entity }}
-    <small>
-        {{ 'level'|trans({'%level%': entity.level}) }}
-        <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race|preg_replace('/ - .*/', '') }}</a>,
-        <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
+    <h1 data-character-id="{{ entity.id }}">
+        <a href="{{ path('characters_show', {'id': entity.id}) }}">{{ entity }}</a>
+        <small>
+            {{ 'level'|trans({'%level%': entity.level}) }}
+            <a href="{{ path('races_show', {'id': entity.race.id}) }}">{{ entity.race|preg_replace('/ - .*/', '') }}</a>,
+            <a href="{{ path('classes_show', {'id': entity.favoredClass.id}) }}">{{ entity.favoredClass }}</a>
             {%- if entity.favoredClass.subClasses -%}
                 {% set firstSubClasses = true %}
                 {% for level in entity.levels(entity.favoredClass)|filter(level => level.favoredClass and level.subClasses|length > 0) %}
@@ -13,19 +13,29 @@
                     {%- set hasSubClasses = false -%}
                     <a href="{{ path('subclasses_show', {'id': subclass.id}) }}">{{ subclass }}</a>
                     {%- if not loop.last -%}, {% endif %}
-                    {%- endfor -%})
+                {%- endfor -%})
                 {% endfor %}
             {%- endif %}
-        <a href="{{ path('characters_edit', {'id': entity.id}) }}" title="{{ 'edit'|trans }}"><span
-                    class="fas fa-edit"></span></a>
-        <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}"><span
-                    class="fas fa-plus"></span></a>
-        <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}"><span
-                    class="fas fa-bed"></span></a>
-        {% if entity.canLearnSpells %}
-            <a href="{{ path('characters_learn_spell', {'id': entity.id}) }}" title="{{ 'learn_spell'|trans }}"><span
-                        class="fas fa-book"></span></a>
-        {% endif %}
-    </small>
-</h1>
+            <a href="{{ path('characters_edit', {'id': entity.id}) }}" title="{{ 'edit'|trans }}">
+                <span class="fas fa-edit"></span>
+            </a>
+            <a href="{{ path('characters_levelup', { 'id': entity.id }) }}" title="{{ 'level.up'|trans }}">
+                <span class="fas fa-plus"></span>
+            </a>
+            <a href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}">
+                <span class="fas fa-bed"></span>
+            </a>
+            {% if entity.canLearnSpells %}
+                <a href="{{ path('characters_learn_spell', {'id': entity.id}) }}" title="{{ 'learn_spell'|trans }}">
+                    <span class="fas fa-feather-alt"></span>
+                </a>
+            {% endif %}
+            {% if entity.canPrepareSpells %}
+                <a href="{{ path('characters_prepare_spells', {'id': entity.id}) }}"
+                   title="{{ 'prepare_spells'|trans }}">
+                    <span class="fas fa-book-reader"></span>
+                </a>
+            {% endif %}
+        </small>
+    </h1>
 {% endblock %}

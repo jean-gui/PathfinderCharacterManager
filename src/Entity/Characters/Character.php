@@ -11,6 +11,7 @@ use App\Entity\Rules\ClassSpell;
 use App\Entity\Rules\Feat;
 use App\Entity\Rules\Skill;
 use App\Entity\Rules\Spell;
+use App\Entity\Rules\SubClass;
 use App\Model\AbilitiesBonuses;
 use App\Model\AttackBonuses;
 use App\Model\Bonus;
@@ -50,6 +51,7 @@ class Character extends BaseCharacter
      * @var Collection|PreparedSpell[]
      *
      * @ORM\OneToMany(targetEntity=PreparedSpell::class, mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"level" = "ASC", "subClassSlot" = "ASC"})
      */
     protected $preparedSpells;
 
@@ -722,7 +724,7 @@ class Character extends BaseCharacter
     }
 
     /**
-     * @return array
+     * @return array {class_id: {class: ClassDefinition, level: int}}
      */
     public function getLevelPerClass()
     {
@@ -1339,10 +1341,12 @@ class Character extends BaseCharacter
                 $spells[$castableClassSpells->getId()] = (new CastableClassSpells())->setClass($castableClassSpells);
             }
 
-            $spells[$castableClassSpells->getId()]->addSpellToLevel(
-                $preparedSpell->getSpell(),
-                $preparedSpell->getSpellLevel()
-            );
+            if ($preparedSpell->getSpell()) {
+                $spells[$castableClassSpells->getId()]->addSpellToLevel(
+                    $preparedSpell->getSpell(),
+                    $preparedSpell->getSpellLevel()
+                );
+            }
         }
 
         foreach ($this->getLearnedSpells() as $learnedSpell) {
@@ -1536,9 +1540,9 @@ class Character extends BaseCharacter
     /**
      * @param ClassDefinition|null $class
      *
-     * @return array
+     * @return SubClass[]
      */
-    public function getSubClassesFor(ClassDefinition $class)
+    public function getSubClassesFor(ClassDefinition $class): array
     {
         $res = array();
         foreach ($this->getLevels() as $l) {
@@ -1619,6 +1623,17 @@ class Character extends BaseCharacter
     {
         foreach ($this->getClasses() as $class) {
             if ($class->isAbleToLearnNewSpells()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function canPrepareSpells(): bool
+    {
+        foreach ($this->getClasses() as $class) {
+            if ($class->isPreparationNeeded()) {
                 return true;
             }
         }

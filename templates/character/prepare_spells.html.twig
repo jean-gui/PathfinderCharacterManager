@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% form_theme form _self %}
+
+{% block body -%}
+    <div class="container">
+        {% include 'character/character_h1.html.twig' with {'entity': form.vars.data} %}
+        <h2>{% block title %}{% trans %}prepare_spells{% endtrans %}{% endblock %}</h2>
+        {{ form_start(form) }}
+        {% set class = -1 %}
+        {% for ps in form.preparedSpells %}
+            {% if not (class is same as(ps.vars.data.class)) %}
+                {% set class = ps.vars.data.class %}
+                {% set level = -1 %}
+                <h3>{% trans with {'%class%': class} %}prepare_spells.class_spells{% endtrans %}</h3>
+            {% endif %}
+
+            {% if level != ps.vars.level %}
+                {% set level = ps.vars.level %}
+                <h4>{% trans with {'%level%': level} %}prepare_spells.slot.level{% endtrans %}</h4>
+            {% endif %}
+
+            <div class="form-group">
+                {{ form_widget(ps.spell) }}
+            </div>
+        {% endfor %}
+
+        {% block submit %}
+            {{ form_widget(form.prepare_spells, {attr: {class: 'btn-block btn btn-primary'}}) }}
+        {% endblock %}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

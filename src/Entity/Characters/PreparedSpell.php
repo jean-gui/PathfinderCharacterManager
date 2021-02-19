@@ -3,6 +3,7 @@
 namespace App\Entity\Characters;
 
 use App\Entity\Rules\ClassDefinition;
+use App\Entity\Rules\ClassSpell;
 use App\Entity\Rules\Spell;
 use App\Entity\Rules\SubClass;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,6 +46,13 @@ class PreparedSpell
     protected $spell;
 
     /**
+     * @var int slot level (max spell level this slot can be used for)
+     *
+     * @ORM\Column(name="level", type="integer")
+     */
+    protected $level;
+
+    /**
      * @var ClassDefinition Class this spell is prepared as
      *
      * @ORM\ManyToOne(targetEntity=ClassDefinition::class)
@@ -54,28 +62,33 @@ class PreparedSpell
     protected $class;
 
     /**
+     * @var bool slot associated with subclass
+     *
+     * @ORM\Column(name="subclass_slot", type="boolean")
+     */
+    protected $subClassSlot = false;
+
+    /**
      * @var bool Has the spell already been cast today?
      *
      * @ORM\Column(type="boolean")
      */
     protected $alreadyCast = false;
 
-    /**
-     * @param Character|null       $character
-     * @param Spell|null           $spell
-     * @param ClassDefinition|null $class
-     * @param bool                 $alreadyCast
-     */
     public function __construct(
         Character $character = null,
         Spell $spell = null,
         ClassDefinition $class = null,
-        $alreadyCast = false
+        $alreadyCast = false,
+        $subClassSlot = false,
+        $level = null
     ) {
         $this->character = $character;
         $this->spell = $spell;
         $this->class = $class;
         $this->alreadyCast = $alreadyCast;
+        $this->subClassSlot = $subClassSlot;
+        $this->level = $level;
     }
 
     /**
@@ -184,6 +197,38 @@ class PreparedSpell
         return $this->class;
     }
 
+    public function setSubClassSlot(bool $subClassSlot): self
+    {
+        $this->subClassSlot = $subClassSlot;
+
+        return $this;
+    }
+
+    public function isSubclassSlot(): bool
+    {
+        return $this->subClassSlot;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int|null $level
+     *
+     * @return PreparedSpell
+     */
+    public function setLevel(?int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
     /**
      * @return int|null
      */
@@ -207,6 +252,53 @@ class PreparedSpell
         }
 
         return null;
+    }
+
+    /**
+     * @return ClassSpell[][]
+     */
+    public function getAvailableSpells(): array
+    {
+        /** @var ClassSpell[] $spells */
+        $spells = [];
+        if ($this->isSubclassSlot()) {
+            foreach ($this->getCharacter()->getSubClassesFor($this->getClass()) as $subclass) {
+                $subClassSpells = $subclass->getSpells()->toArray();
+                $subClassSpells = array_filter($subClassSpells, function (ClassSpell $classSpell) {
+                    return $classSpell->getSpellLevel() <= $this->getLevel();
+                });
+                $spells = array_merge($spells, $subClassSpells);
+            }
+        } else {
+            if ($this->getClass()->getKnownSpellsPerLevel()) { // character has to learn spells
+                $classSpells = $this->getCharacter()->getLearnedSpells();
+            } else { // character knows all spells provided by this class
+                $classSpells = $this->getClass()->getSpells()->toArray();
+            }
+            $classSpells = array_filter(
+                $classSpells,
+                function (ClassSpell $classSpell) {
+                    return $classSpell->getSpellLevel() <= $this->getLevel();
+                }
+            );
+            $spells      = array_merge($spells, $classSpells);
+        }
+
+        usort($spells, function (ClassSpell $a, ClassSpell $b) {
+            if ($a->getSpellLevel() === $b->getSpellLevel()) {
+                return strcmp($a->__toString(), $b->__toString());
+            }
+
+            return $a->getSpellLevel() > $b->getSpellLevel() ? -1 : 1;
+        });
+
+        $res = [];
+
+        foreach ($spells as $spell) {
+            $res[$spell->getSpellLevel()][] = $spell->getSpell();
+        }
+
+        return $res;
     }
 
     /**

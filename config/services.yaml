@@ -50,10 +50,6 @@ services:
         arguments:
             $advancement: '%character_advancement%'
 
-    App\Form\SleepType:
-        arguments:
-            $extra_spells: '%bonus_spells%'
-
     App\Form\LevelUpFlow:
         parent: craue.form.flow
         autowire: true
@@ -63,5 +59,9 @@ services:
             $advancement: '%character_advancement%'
 
     App\Services\SpellCasting:
+        arguments:
+            $extraSpells: '%bonus_spells%'
+
+    App\EntityListener\CharacterEntitySubscriber:
         arguments:
             $extraSpells: '%bonus_spells%'

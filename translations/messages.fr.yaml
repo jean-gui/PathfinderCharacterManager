@@ -1,0 +1,230 @@
+'(De)Activate Powers': '(Dés)Activer pouvoirs'
+Ability:
+    increase: Ability.increase
+Base: Base
+'Class Summary': 'Résumé de classe'
+Confirmation: Confirmation
+Create: Créer
+Delete: Supprimer
+Fast: Fast
+Feats: Dons
+'Hit Point': 'Points de vie'
+'Learn Spell': 'Learn Spell'
+Level: Level
+Medium: Medium
+New:
+    feat: New.feat
+'Save notes': 'Sauver les notes'
+Skill: Compétence
+Skills: Compétences
+Slow: Slow
+Spells: Sorts
+Subclass: Sous-classe
+subclasses: Sous-classes
+Target: Cible
+Update: Sauver
+'[Default]': '[Défaut]'
+ability: Caractéristique
+ability.modifier.short: 'Mod. carac.'
+ability.point: 'Point de caractéristique'
+ability.score.cost: 'Coût des caractéristiques'
+ac: CA
+add:
+    item: Ajouter
+advancement: Progression
+all_items: 'Tous les objets'
+applied:
+    bonuses: 'Bonus appliqués'
+arcane_spell_failure: 'Risque d''échec des sorts profanes'
+armor: Armure
+armor_check_penalty: 'Malus d''armure aux tests'
+bab: BBA
+belt: Ceinture
+body: Corps
+campain:
+    type: 'Type de campagne'
+cast: Lancer
+cast.spells: 'Lancer des sorts'
+casting_time: 'Temps d''incantation'
+category: Catégorie
+charisma: Charisme
+chest: Torse
+class: Classe
+class.powers: Classe
+classes: Classes
+combat: Combat
+components: Composantes
+conditions: Conditions
+constitution: Constitution
+cost: Coût
+counter:
+    new: 'Nouveau compteur'
+counters: Compteurs
+critical: Critique
+damages: Dégâts
+dc: DD
+description: Description
+dexterity: Dexterité
+drop: Lâcher
+duration: Durée
+edit: Éditer
+edit.level: 'Éditer niveau'
+edit.levels: 'Édition de niveaux'
+effects: Effets
+equip: Équiper
+equipment: Equipement
+external_conditions: 'Conditions externes'
+eyes: Yeux
+fantasy: Fantaisie
+favored:
+    extra:
+        point: 'Point bonus'
+feats: Dons
+feet: Pieds
+flat:
+    footed:
+        ac: 'Pris au dépourvu'
+fortitude: Vigueur
+granted:
+    powers: 'Pouvoirs accordés'
+hands: Mains
+head: Tête
+headband: Bandeau
+heal:
+    harm: Soigner/Blesser
+hit:
+    points: 'Points de vie'
+hp:
+    roll: 'Jet de vie'
+initiative: Initiative
+intelligence: Intelligence
+inventory: Inventaire
+inventory.edit: 'Modifier l''inventaire'
+item_powers: Objets
+items: Objets
+known:
+    spells: 'Sorts connus'
+learn_spell: 'Apprendre un sort'
+learned:
+    spells: 'Sorts appris'
+left:
+    finger: 'Doigt gauche'
+level: 'Niveau %level%'
+level.up: 'Passer un niveau'
+level_value: 'Niveau %level%'
+main:
+    attack:
+        rolls: 'Attaque main principale'
+    damage:
+        bonus: 'Bonus aux dégats main principale'
+    profile: 'Profil principal'
+    weapon: 'Arme principale'
+maximum_dexterity_bonus: 'Bonus de dextérité maximal'
+misc:
+    modifiers: 'Mod. divers'
+name: Nom
+neck: Cou
+new:
+    character: 'Nouveau personnage'
+    party: 'Nouveau groupe'
+'no': non
+offhand:
+    attack:
+        rolls: 'Attaque main secondaire'
+    damage:
+        bonus: 'Bonus aux dégats main secondaire'
+    weapon: 'Arme secondaire'
+other:
+    bonuses: 'Autres bonus'
+parties: Groupes
+party:
+    characters: '%count% personnage|%count% personnages'
+passive:
+    powers: 'Pouvoirs passifs'
+points: Points
+powers: Pouvoirs
+prerequisities: Prérequis
+races: Races
+range: Portée
+ranks: Rangs
+reflexes: Réflexes
+remove:
+    item: Supprimer
+right:
+    finger: 'Doigt droit'
+ring: Anneaux
+saving_throw: 'Jet de sauvegarde'
+score: Score
+shield: Bouclier
+shoulders: Epaules
+skill: Compétence
+skills: Compétences
+sleep: Se reposer
+spell:
+    level: 'Niveau de sort'
+spell_resistance: 'Résistance à la magie'
+spells: Sorts
+strength: Force
+tables: Tables
+targets: Cibles
+total:
+    bonus: 'Bonus total'
+touch:
+    ac: Contact
+two_handed: 'A deux mains'
+type: Type
+uncast: Annuler
+uncast.spells: 'Annuler des sorts'
+unequip: Déséquiper
+unmanaged:
+    powers: 'Pouvoirs non gérés'
+untrained: 'Sans formation'
+value: Valeur
+weapon: Arme
+weapons: Armes
+weight: Poids
+will: Volonté
+wisdom: Sagesse
+wrists: Poignets
+'yes': oui
+your_characters: 'Vos personnages'
+your_groups: 'Vos groupes'
+your_parties: 'Vos groupes de jeu'
+register: 'Créer un compte'
+email: Email
+password: 'Mot de passe'
+repeat:
+    password: 'Répétez le mot de passe'
+agree_terms: 'Accepter les conditions d''utilisation'
+forgot_password: 'Mot de passe oublié ?'
+remember_me: 'Se souvenir de moi'
+login: 'Se connecter'
+increase_all: 'Tout augmenter'
+delete: Supprimer
+increase: Augmenter
+character_conditions:
+    updated: 'États préjudiciables mis à jour'
+item:
+    powers: 'Pouvoirs d''objet'
+equipment.powers: 'Pouvoirs d''équipement'
+users: Utilisateurs
+users.groups: 'Utilisateurs et Groupes'
+languages: Langues
+english: English
+french: français
+prepare_spells: 'Préparer des sorts'
+prepare_spells.spell:
+    level: 'Sorts de niveau %level%'
+prepare_spells.slot:
+    level: 'Emplacements de niveau %level%'
+    leave_unprepared: 'Ne pas préparer'
+prepare_spells.class_spells: 'Sorts de %class%'
+mean:
+    hp:
+        level: 'Moyenne de PV par niveau'
+admin:
+    class:
+        powers: 'Pouvoirs de classe'
+cmb: BMO
+cmd: DMD
+decrease: Décrémenter

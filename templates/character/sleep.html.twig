@@ -1,29 +1,7 @@
-{% extends 'base.html.twig' %}
-{% form_theme form _self %}
+{% extends 'character/prepare_spells.html.twig' %}
 
-{% block body -%}
-    <div class="container">
-        <h1>Sleep</h1>
-        {{ form_start(form) }}
-        {% set class = -1 %}
-        {% for ps in form.preparedSpells %}
-            {% if not (class is same as(ps.vars.data.class)) %}
-                {% set class = ps.vars.data.class %}
-                {% set level = -1 %}
-                <h2>{{ class }}</h2>
-            {% endif %}
+{% block title %}{% trans %}sleep{% endtrans %}{% endblock %}
 
-            {% if level != ps.vars.level %}
-                {% set level = ps.vars.level %}
-                <h3>{% trans with {'%level%': level} %}sleep.spell.slots{% endtrans %}</h3>
-            {% endif %}
-
-            <div class="form-group">
-                {{ form_widget(ps.spell) }}
-            </div>
-        {% endfor %}
-
-        {{ form_widget(form.Sleep, {attr: {class: 'btn-block btn btn-primary'}}) }}
-        {{ form_end(form) }}
-    </div>
+{% block submit %}
+    {{ form_widget(form.sleep, {attr: {class: 'btn-block btn btn-primary'}}) }}
 {% endblock %}

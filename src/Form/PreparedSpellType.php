@@ -37,27 +37,29 @@ class PreparedSpellType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options, $translator) {
                 $form          = $event->getForm();
-
-                $allChoices = $options['choices'];
-                $slotNumber = (int) $form->getName();
+                /** @var PreparedSpell $preparedSpell */
+                $preparedSpell = $event->getData();
 
                 // Compute spell level and pick the right choice list from $allChoices
-                $choices = $allChoices[$slotNumber];
+                $choices = $preparedSpell->getAvailableSpells();
 
                 $choicesKeys = array_map(
                     function ($level) use ($translator) {
-                        return $translator->trans('sleep.spell.level', ['%level%' => $level]);
+                        return $translator->trans('prepare_spells.spell.level', ['%level%' => $level]);
                     },
                     array_keys($choices)
                 );
-                $choices = array_reverse(array_combine($choicesKeys, $choices));
+                $choices = array_combine($choicesKeys, $choices);
 
                 $form->add(
                     'spell',
                     null,
                     array(
                         'choices' => $choices,
-                        'attr'    => ['data-controller' => 'select2']
+                        'attr'    => ['data-controller' => 'select2'],
+                        'disabled' => $options['disable_not_empty'] && $preparedSpell->getSpell(),
+                        'required' => false,
+                        'placeholder' => 'prepare_spells.slot.leave_unprepared'
                     )
                 );
             }
@@ -66,8 +68,7 @@ class PreparedSpellType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $slotNumber = (int)$form->getName();
-        $view->vars['level'] = max(array_keys($options['choices'][$slotNumber]));
+        $view->vars['level'] = $form->getData()->getLevel();
     }
 
     /**
@@ -78,6 +79,6 @@ class PreparedSpellType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => PreparedSpell::class
         ));
-        $resolver->setRequired(array('choices'));
+        $resolver->setDefaults(['disable_not_empty' => false]);
     }
 }
