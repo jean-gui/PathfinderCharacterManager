@@ -507,7 +507,7 @@ class CharacterController extends AbstractController
                             $character,
                             $spell,
                             $class,
-                            $character->getParty()->getCharacters(),
+                            $character->getParty()->getCharacters()->toArray(),
                             $level
                         );
                     } else {
@@ -543,7 +543,7 @@ class CharacterController extends AbstractController
             }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
+            return $this->redirect($this->generateUrl('character_spells', ['id' => $character->getId()]));
         }
 
         return array(
@@ -852,15 +852,15 @@ class CharacterController extends AbstractController
         $form = $this->createForm(
             LearnSpellType::class,
             $character,
-            array(
+            [
                 'method' => 'PUT',
                 'action' => $this->generateUrl(
                     'characters_learn_spell',
-                    array('id' => $character->getId())
+                    ['id' => $character->getId()]
                 ),
-            )
+            ]
         );
-        $form->add('submit', SubmitType::class, array('label' => 'Learn Spell'));
+        $form->add('submit', SubmitType::class, ['label' => 'Learn Spell']);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -870,7 +870,8 @@ class CharacterController extends AbstractController
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', $spell . ' learned  successfully');
-            return $this->redirect($this->generateUrl('characters_show', array('id' => $character->getId())));
+
+            return $this->redirect($this->generateUrl('characters_learn_spell', ['id' => $character->getId()]));
         }
 
         return array('form' => $form->createView());
@@ -882,11 +883,13 @@ class CharacterController extends AbstractController
      */
     protected function publishCharacterUpdate(PublisherInterface $publisher, Character $character): void
     {
-        $publisher(
-            new Update(
-                'https://pathfinder.troulite.fr/characters/' . $character->getId(),
-                json_encode(['character' => $character->getId(), 'message' => $character->getName() . ' changed'])
-            )
-        );
+        try {
+            $publisher(
+                new Update(
+                    'https://pathfinder.troulite.fr/characters/'.$character->getId(),
+                    json_encode(['character' => $character->getId(), 'message' => $character->getName().' changed'])
+                )
+            );
+        } catch (Exception $e) {}
     }
 }
