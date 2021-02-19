@@ -29,7 +29,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="characterDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ entity }}
+                        {{ 'character_sheet'|trans }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="characterDropdown">
                         <a class="dropdown-item{% if route == 'characters_show' %} active{% endif %}" href="{{ path('characters_show', routeParams) }}">
