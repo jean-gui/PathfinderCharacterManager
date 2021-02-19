@@ -146,14 +146,18 @@ class SpellCasting
 
         $this->em->flush();
 
-        $publisher = $this->publisher;
-        foreach ($targets as $target) {
-            $publisher(
-                new Update(
-                    'https://pathfinder.troulite.fr/characters/' . $target->getId(),
-                    json_encode(['character' => $target->getId(), 'message' => $spell . ' cast on ' . $target])
-                )
-            );
+        if ($targets) {
+            $publisher = $this->publisher;
+            foreach ($targets as $target) {
+                try {
+                    $publisher(
+                        new Update(
+                            'https://pathfinder.troulite.fr/characters/'.$target->getId(),
+                            json_encode(['character' => $target->getId(), 'message' => $spell.' cast on '.$target])
+                        )
+                    );
+                } catch (Exception $e) {}
+            }
         }
     }
 
