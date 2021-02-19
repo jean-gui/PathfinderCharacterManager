@@ -1640,4 +1640,15 @@ class Character extends BaseCharacter
 
         return false;
     }
+
+    public function canCastSpells(): bool
+    {
+        foreach ($this->getClasses() as $class) {
+            if ($class->getCastingAbility()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

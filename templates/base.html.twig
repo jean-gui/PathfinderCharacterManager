@@ -45,6 +45,7 @@
                         </a>
                     </div>
                 </li>
+                {% if entity.canCastSpells %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="magicDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,6 +70,7 @@
                         {% endif %}
                     </div>
                 </li>
+                {% endif %}
                 <li class="nav-item{% if route in ['character_inventory', 'character_inventory_edit'] %} active{% endif %}">
                     <a class="nav-link text-nowrap"
                        href="{{ path('character_inventory', routeParams) }}">
