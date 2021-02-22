@@ -92,7 +92,7 @@
         <th>{{ 'main.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.mainAttackRolls) }}</th>
         {% for ar in entity.mainAttackRoll %}
             <td style="width: 12%"
-                data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}"
+                data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }};{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
                 data-roll-type-value="{{ 'main.attack.rolls'|trans }}">
                 {{ ar }}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
@@ -104,7 +104,7 @@
     <tr>
         <th>{{ 'offhand.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.offhandAttackRolls) }}</th>
         {% for ar in entity.offhandAttackRoll %}
-            <td data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}"
+            <td data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}{{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}"
                 data-roll-type-value="{{ 'offhand.attack.rolls'|trans }}">
                 {{ ar }}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
