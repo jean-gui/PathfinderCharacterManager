@@ -234,5 +234,5 @@ modifier: Modifier
 roll: Roll
 rolled: '%character% rolls %dice%'
 roll.result: 'Result'
-roll.raw: 'Roll'
+roll.raw: 'Raw'
 

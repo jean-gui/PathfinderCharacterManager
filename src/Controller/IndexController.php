@@ -116,45 +116,57 @@ class IndexController extends AbstractController
         $expression = $request->query->get('e');
         $character = $this->getDoctrine()->getRepository(Character::class)->find($characterId);
 
-        Random::$queue = "random_int";
-        $calc          = new DiceRoll($expression);
-        $rawRollResult = preg_replace(['/.*:(.+)].*/', '/ \+ /'], ['$1', ', '], $calc->infix());
-
         $message = new ChatMessage('');
         $message->transport('discord');
+        $discordOptions = (new DiscordOptions())->username('Pathfinder Character Manager');
+        $embed = new DiscordEmbed();
+        $embed
+            ->color(2021216)
+            ->title(
+              $translator->trans(
+                  'rolled',
+                  [
+                      '%character%' => $character->getName(),
+                      '%dice%'      => $expression,
+                  ]
+              )
+        );
+        Random::$queue = "random_int";
 
-        $discordOptions = (new DiscordOptions())
-            ->username('Pathfinder Character Manager')
-            ->addEmbed(
-                (new DiscordEmbed())
-                    ->color(2021216)
-                    ->title(
-                        $translator->trans(
-                            'rolled',
-                            [
-                                '%character%' => $character->getName(),
-                                '%dice%'      => $expression,
-                            ]
-                        )
-                    )
-                    ->addField(
-                        (new DiscordFieldEmbedObject())
-                            ->name($translator->trans('roll.result'))
-                            ->value($calc())
-                            ->inline(true)
-                    )
-                    ->addField(
-                        (new DiscordFieldEmbedObject())
-                            ->name($translator->trans('roll.raw'))
-                            ->value($rawRollResult)
-                            ->inline(true)
-                    )
-            );
+        $rolls = explode(';', $expression);
 
+        foreach ($rolls as $roll) {
+            $calc          = new DiceRoll($roll);
+            $results[]     = ['result' => $calc(), 'details' => $calc->infix()];
+            $rawRollResult = preg_replace(['/.*:(.+)].*/', '/ \+ /'], ['$1', ', '], $calc->infix());
+
+            $embed
+                ->addField(
+                    (new DiscordFieldEmbedObject())
+                        ->name($translator->trans('roll'))
+                        ->value($roll)
+                        ->inline(true)
+                )
+                ->addField(
+                    (new DiscordFieldEmbedObject())
+                        ->name($translator->trans('roll.raw'))
+                        ->value($rawRollResult)
+                        ->inline(true)
+                )
+                ->addField(
+                    (new DiscordFieldEmbedObject())
+                        ->name($translator->trans('roll.result'))
+                        ->value('**' . $calc() . '**')
+                        ->inline(true)
+                )
+            ;
+        }
+
+        $discordOptions->addEmbed($embed);
         $message->options($discordOptions);
 
         $chatter->send($message);
 
-        return new JsonResponse(['result' => $calc(), 'details' => $calc->infix()]);
+        return new JsonResponse($results);
     }
 }

@@ -234,4 +234,4 @@ modifier: Modificateur
 roll: Jet
 rolled: '%character% lance %dice%'
 roll.result: 'Résultat'
-roll.raw: 'Jet'
+roll.raw: 'Brut'
