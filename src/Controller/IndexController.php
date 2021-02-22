@@ -2,12 +2,31 @@
 
 namespace App\Controller;
 
+use App\Entity\Characters\Character;
 use App\Entity\User;
+use DiceCalc\Calc as DiceRoll;
+use DiceCalc\Random;
+use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
+use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
+use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
+use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFooterEmbedObject;
+use Symfony\Component\Notifier\ChatterInterface;
+use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
+use Symfony\Component\Notifier\Message\ChatMessage;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\WebLink\Link;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_string;
 
 class IndexController extends AbstractController
 {
@@ -55,5 +74,87 @@ class IndexController extends AbstractController
         $this->addLink($request, new Link('mercure', $hubUrl));
 
         return new Response('');
+    }
+
+    /**
+     * @Route("/roll", name="roll")
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request             $request
+     * @param RouterInterface     $router
+     * @param ChatterInterface    $chatter
+     * @param TranslatorInterface $translator
+     *
+     * @return Response
+     * @throws TransportExceptionInterface
+     */
+    public function roll(Request $request, RouterInterface $router, ChatterInterface $chatter, TranslatorInterface $translator)
+    : Response
+    {
+        $referer = $request->headers->get('referer');
+        if (!is_string($referer) || !$referer) {
+            echo 'Referer is invalid or empty.';
+
+            throw new BadRequestHttpException();
+        }
+
+        if (!$request->query->has('e')) {
+            throw new BadRequestHttpException();
+        }
+
+        $refererPathInfo = Request::create($referer)->getPathInfo();
+        $routeInfos = $router->match($refererPathInfo);
+        $refererRoute = $routeInfos['_route'] ?? '';
+
+        if ($refererRoute !== 'characters_show') {
+            echo sprintf('No route found for the "%s" referer.', $referer);
+
+            throw new BadRequestHttpException();
+        }
+
+        $characterId = $routeInfos['id'];
+        $expression = $request->query->get('e');
+        $character = $this->getDoctrine()->getRepository(Character::class)->find($characterId);
+
+        Random::$queue = "random_int";
+        $calc          = new DiceRoll($expression);
+        $rawRollResult = preg_replace(['/.*:(.+)].*/', '/ \+ /'], ['$1', ', '], $calc->infix());
+
+        $message = new ChatMessage('');
+        $message->transport('discord');
+
+        $discordOptions = (new DiscordOptions())
+            ->username('Pathfinder Character Manager')
+            ->addEmbed(
+                (new DiscordEmbed())
+                    ->color(2021216)
+                    ->title(
+                        $translator->trans(
+                            'rolled',
+                            [
+                                '%character%' => $character->getName(),
+                                '%dice%'      => $expression,
+                            ]
+                        )
+                    )
+                    ->addField(
+                        (new DiscordFieldEmbedObject())
+                            ->name($translator->trans('roll.result'))
+                            ->value($calc())
+                            ->inline(true)
+                    )
+                    ->addField(
+                        (new DiscordFieldEmbedObject())
+                            ->name($translator->trans('roll.raw'))
+                            ->value($rawRollResult)
+                            ->inline(true)
+                    )
+            );
+
+        $message->options($discordOptions);
+
+        $chatter->send($message);
+
+        return new JsonResponse(['result' => $calc(), 'details' => $calc->infix()]);
     }
 }

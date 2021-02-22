@@ -230,4 +230,9 @@ cmd: CMD
 decrease: Decrease
 magic: Magic
 character_sheet: Character Sheet
+modifier: Modifier
+roll: Roll
+rolled: '%character% rolls %dice%'
+roll.result: 'Result'
+roll.raw: 'Roll'
 

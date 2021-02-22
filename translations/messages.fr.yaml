@@ -230,3 +230,8 @@ cmd: DMD
 decrease: Décrémenter
 magic: Magie
 character_sheet: Feuille de personnage
+modifier: Modificateur
+roll: Jet
+rolled: '%character% lance %dice%'
+roll.result: 'Résultat'
+roll.raw: 'Jet'
