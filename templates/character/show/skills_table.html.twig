@@ -20,7 +20,9 @@
             {% set bonus = attribute(entity.skillsBonuses, shortname).bonus %}
         {% endif %}
         <tr data-controller="roll"
-            data-roll-expression-value="1d20{{ entity.skillValue(skill) >= 0 ? '+'~entity.skillValue(skill) : entity.skillValue(skill) }}">
+            data-roll-expression-value="1d20{{ entity.skillValue(skill) >= 0 ? '+'~entity.skillValue(skill) : entity.skillValue(skill) }}"
+            data-roll-type-value="{{ skill }}"
+        >
             <td>
                 {% if entity.hasClassBonus(skill) -%}
                     <i class="far fa-check-square"></i>

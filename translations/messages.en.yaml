@@ -232,7 +232,7 @@ magic: Magic
 character_sheet: Character Sheet
 modifier: Modifier
 roll: Roll
-rolled: '%character% rolls %dice%'
+roll.rolling: '%character% makes a %type% (%dice%) roll'
 roll.result: 'Result'
 roll.raw: 'Raw'
 

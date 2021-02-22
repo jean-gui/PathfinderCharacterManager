@@ -101,6 +101,7 @@ class IndexController extends AbstractController
         $refererPathInfo = Request::create($referer)->getPathInfo();
         $routeInfos = $router->match($refererPathInfo);
         $refererRoute = $routeInfos['_route'] ?? '';
+        $locale = $routeInfos['_locale'];
 
         if ($refererRoute !== 'characters_show') {
             echo sprintf('No route found for the "%s" referer.', $referer);
@@ -110,6 +111,7 @@ class IndexController extends AbstractController
 
         $characterId = $routeInfos['id'];
         $expression = $request->query->get('e');
+        $type       = $request->query->get('t', null);
         $character = $this->getDoctrine()->getRepository(Character::class)->find($characterId);
 
         $message = new ChatMessage('');
@@ -120,11 +122,14 @@ class IndexController extends AbstractController
             ->color(2021216)
             ->title(
               $translator->trans(
-                  'rolled',
+                  'roll.rolling',
                   [
                       '%character%' => $character->getName(),
                       '%dice%'      => $expression,
-                  ]
+                      '%type%'      => $type
+                  ],
+                  null,
+                  $locale
               )
         );
         Random::$queue = "random_int";
@@ -140,19 +145,19 @@ class IndexController extends AbstractController
             $embed
                 ->addField(
                     (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll'))
+                        ->name($translator->trans('roll', [], null, $locale))
                         ->value($roll)
                         ->inline(true)
                 )
                 ->addField(
                     (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll.raw'))
+                        ->name($translator->trans('roll.raw', [], null, $locale))
                         ->value($rawRollResult)
                         ->inline(true)
                 )
                 ->addField(
                     (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll.result'))
+                        ->name($translator->trans('roll.result', [], null, $locale))
                         ->value('**' . $calc() . '**')
                         ->inline(true)
                 )

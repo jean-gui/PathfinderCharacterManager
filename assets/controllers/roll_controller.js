@@ -5,13 +5,14 @@ const httpRequest = new XMLHttpRequest();
 export default class extends Controller {
     static targets = ["result"]
     static values = {
-        expression: String
+        expression: String,
+        type: String
     }
 
     roll(event) {
         var self = this;
         self.resultTarget.innerText = '';
-        httpRequest.open('GET', '/en/roll?e='+ encodeURIComponent(this.expressionValue), true);
+        httpRequest.open('GET', '/en/roll?e=' + encodeURIComponent(this.expressionValue) + '&t=' + encodeURIComponent(this.typeValue), true);
         httpRequest.send();
 
 

@@ -11,7 +11,8 @@
     </tr>
     </thead>
     {% set mod = entity.modifierByAbility('strength') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'strength'|trans }}">
         <th>{{ 'strength'|trans }}</th>
         <td>
             {{ entity.strength }}
@@ -24,7 +25,8 @@
         </td>
     </tr>
     {% set mod = entity.modifierByAbility('dexterity') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'dexterity'|trans }}">
         <th>{{ 'dexterity'|trans }}</th>
         <td>
             {{ entity.dexterity }}
@@ -37,7 +39,8 @@
         </td>
     </tr>
     {% set mod = entity.modifierByAbility('constitution') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'constitution'|trans }}">
         <th>{{ 'constitution'|trans }}</th>
         <td>
             {{ entity.constitution }}
@@ -50,7 +53,8 @@
         </td>
     </tr>
     {% set mod = entity.modifierByAbility('intelligence') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'intelligence'|trans }}">
         <th>{{ 'intelligence'|trans }}</th>
         <td>
             {{ entity.intelligence }}
@@ -63,7 +67,8 @@
         </td>
     </tr>
     {% set mod = entity.modifierByAbility('wisdom') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'wisdom'|trans }}">
         <th>{{ 'wisdom'|trans }}</th>
         <td>
             {{ entity.wisdom }}
@@ -76,7 +81,8 @@
         </td>
     </tr>
     {% set mod = entity.modifierByAbility('charisma') %}
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'charisma'|trans }}">
         <th>{{ 'charisma'|trans }}</th>
         <td>
             {{ entity.charisma }}

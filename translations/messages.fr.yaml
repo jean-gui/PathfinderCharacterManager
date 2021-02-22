@@ -232,6 +232,6 @@ magic: Magie
 character_sheet: Feuille de personnage
 modifier: Modificateur
 roll: Jet
-rolled: '%character% lance %dice%'
+roll.rolling: '%character% fait un jet de %type% (%dice%)'
 roll.result: 'Résultat'
 roll.raw: 'Brut'

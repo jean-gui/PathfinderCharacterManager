@@ -20,7 +20,8 @@
 </table>
 
 <table id="saving-throws" class="table table-striped table-sm">
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.reflexes >= 0 ? '+'~entity.reflexes : entity.reflexes }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.reflexes >= 0 ? '+'~entity.reflexes : entity.reflexes }}"
+        data-roll-type-value="{{ 'reflexes'|trans }}">
         <th>{{ 'reflexes'|trans }}</th>
         <td>{{ entity.reflexes }}</td>
         <td>=</td>
@@ -37,7 +38,8 @@
             <span data-roll-target="result"></span>
         </td>
     </tr>
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.fortitude >= 0 ? '+'~entity.fortitude : entity.fortitude }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.fortitude >= 0 ? '+'~entity.fortitude : entity.fortitude }}"
+        data-roll-type-value="{{ 'fortitude'|trans }}">
         <th>{{ 'fortitude'|trans }}</th>
         <td>{{ entity.fortitude }}</td>
         <td>=</td>
@@ -54,7 +56,8 @@
             <span data-roll-target="result"></span>
         </td>
     </tr>
-    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.will >= 0 ? '+'~entity.will : entity.will }}">
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ entity.will >= 0 ? '+'~entity.will : entity.will }}"
+        data-roll-type-value="{{ 'will'|trans }}">
         <th>{{ 'will'|trans }}</th>
         <td>{{ entity.will }}</td>
         <td>=</td>
@@ -89,7 +92,8 @@
         <th>{{ 'main.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.mainAttackRolls) }}</th>
         {% for ar in entity.mainAttackRoll %}
             <td style="width: 12%"
-                data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}">
+                data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}"
+                data-roll-type-value="{{ 'main.attack.rolls'|trans }}">
                 {{ ar }}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
                 <span data-roll-target="result"></span>
@@ -100,7 +104,8 @@
     <tr>
         <th>{{ 'offhand.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.offhandAttackRolls) }}</th>
         {% for ar in entity.offhandAttackRoll %}
-            <td data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}">
+            <td data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }}"
+                data-roll-type-value="{{ 'offhand.attack.rolls'|trans }}">
                 {{ ar }}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
                 <span data-roll-target="result"></span>
