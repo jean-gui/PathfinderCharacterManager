@@ -6,7 +6,6 @@ use App\Entity\Characters\Character;
 use App\Entity\User;
 use DiceCalc\Calc as DiceRoll;
 use DiceCalc\Random;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,12 +15,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
 use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
 use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
-use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFooterEmbedObject;
 use Symfony\Component\Notifier\ChatterInterface;
 use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
-use Symfony\Component\Notifier\Notification\Notification;
-use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\WebLink\Link;
@@ -134,6 +130,7 @@ class IndexController extends AbstractController
         Random::$queue = "random_int";
 
         $rolls = explode(';', $expression);
+        $results = [];
 
         foreach ($rolls as $roll) {
             $calc          = new DiceRoll($roll);
