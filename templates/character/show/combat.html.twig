@@ -116,7 +116,8 @@
     <tr>
         <th>{{ 'cmb'|trans }}</th>
         <td colspan="{{ entity.mainAttackRoll|length }}"
-            data-controller="roll" data-roll-expression-value="1d20{{ entity.cmb > 0 ? '+'~entity.cmb : entity.cmb }}">
+            data-controller="roll" data-roll-expression-value="1d20{{ entity.cmb > 0 ? '+'~entity.cmb : entity.cmb }}"
+            data-roll-type-value="{{ 'cmb'|trans }}">
             {{ entity.cmb }}
             <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
             <span data-roll-target="result"></span>
@@ -159,7 +160,8 @@
 </table>
 <table id="initiative" class="table table-hover table-sm">
     <tr data-controller="roll"
-        data-roll-expression-value="1d20{{ entity.initiative > 0 ? '+'~entity.initiative : entity.initiative }}">
+        data-roll-expression-value="1d20{{ entity.initiative > 0 ? '+'~entity.initiative : entity.initiative }}"
+        data-roll-type-value="{{ 'initiative'|trans }}">
         <th>{{ 'initiative'|trans }}</th>
         <td>{{ entity.initiative }}</td>
         <td>=</td>
