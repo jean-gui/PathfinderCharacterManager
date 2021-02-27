@@ -9,12 +9,39 @@ export default class extends Controller {
         type: String
     }
 
-    roll(event) {
+    customRoll(event) {
+        event.preventDefault();
         var self = this;
-        self.resultTarget.innerText = '';
-        httpRequest.open('GET', '/en/roll?e=' + encodeURIComponent(this.expressionValue) + '&t=' + encodeURIComponent(this.typeValue), true);
-        httpRequest.send();
+        httpRequest.open(event.target.method, event.target.action, true);
+        httpRequest.send(new FormData(event.target));
 
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    self.resultTarget.innerHTML = httpRequest.responseText;
+                } else {
+                    self.resultTarget.innerText = '!';
+                }
+            }
+        };
+    }
+
+    roll(event) {
+        const self = this;
+        let characterId = null;
+        let locale = 'en';
+        const pieces = window.location.pathname.split('/');
+        if (pieces.length > 3 && pieces[2] === 'characters') {
+            characterId = parseInt(pieces[3]);
+            locale = pieces[1];
+        }
+        self.resultTarget.innerText = '';
+        const formData = new FormData();
+        formData.append('form[expression]', this.expressionValue);
+        formData.append('form[type]', this.typeValue);
+        httpRequest.open('POST', '/' + locale + '/characters/' + characterId + '/roll', true);
+        httpRequest.setRequestHeader('Accept', 'application/json');
+        httpRequest.send(formData);
 
         httpRequest.onreadystatechange = function () {
             if (httpRequest.readyState === XMLHttpRequest.DONE) {

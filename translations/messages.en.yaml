@@ -235,4 +235,7 @@ roll: Roll
 roll.rolling: '%character% makes a %type% (%dice%) roll'
 roll.result: 'Result'
 roll.raw: 'Raw'
-
+roll.expression: 'Expression'
+roll.type: 'Type'
+custom_roll:
+    title: 'Custom Roll'

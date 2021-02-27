@@ -82,6 +82,12 @@
                         <span class="fas fa-bed"></span>&nbsp;{{ 'sleep'|trans }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#customRollModal"
+                       title="{{ 'custom_roll.title'|trans }}" data-toggle="modal" data-target="#customRollModal">
+                        <span class="fas fa-dice-d20"></span>&nbsp;{{ 'custom_roll.title'|trans }}
+                    </a>
+                </li>
             </ul>
         {% else %}
             <div class="navbar-nav mr-auto"></div>
@@ -188,6 +194,7 @@
         {% block body %}{% endblock %}
     </div>
 </main>
+{% block body_end %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

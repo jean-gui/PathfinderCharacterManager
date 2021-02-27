@@ -1,0 +1,181 @@
+{% block body_end %}
+    <div class="modal fade" id="customRollModal" tabindex="-1" role="dialog" aria-labelledby="customRollModalLabel"
+         aria-hidden="true" data-controller="roll">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h5 modal-title" id="customRollModalLabel">{{ 'custom_roll.title'|trans }}</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{ form_start(form, {attr: {'data-action': 'roll#customRoll'}}) }}
+                <div class="modal-body">
+                    {{ form_row(form.expression) }}
+                    {{ form_row(form.type) }}
+                    <div data-roll-target="result"></div>
+                </div>
+                <div class="modal-footer">
+                    <a data-toggle="collapse" href="#roll-help" role="button" aria-expanded="false"
+                       aria-controls="roll-help">
+                        Help
+                    </a>
+                    {{ form_widget(form.roll) }}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="collapse" id="roll-help">
+                        <dl class="row">
+                            <dt class="col-sm-3">d6</dt>
+                            <dd class="col-sm-9">roll a six-sided die</dd>
+                            <dt class="col-sm-3">d20</dt>
+                            <dd class="col-sm-9">roll a twenty-sided die</dd>
+                            <dt class="col-sm-3">d%</dt>
+                            <dd class="col-sm-9">roll a percentile (1-100) die</dd>
+                            <dt class="col-sm-3">df</dt>
+                            <dd class="col-sm-9">roll a fudge (-1, 0, 1) die</dd>
+                        </dl>
+                        <p>To roll multiple of the same sided die, prefix the die type with a multiplier number.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">3d6</dt>
+                            <dd class="col-sm-9">roll d6 three times, sum the result</dd>
+                            <dt class="col-sm-3">2d20</dt>
+                            <dd class="col-sm-9">roll d20 twice, sum the result</dd>
+                            <dt class="col-sm-3">6df</dt>
+                            <dd class="col-sm-9">roll six fudge dice, sum the result</dd>
+                        </dl>
+                        <p>Basic math operations are possible as expressions.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">4+4</dt>
+                            <dd class="col-sm-9">Add 4+4</dd>
+                            <dt class="col-sm-3">4*5</dt>
+                            <dd class="col-sm-9">Multiply 4*5</dd>
+                            <dt class="col-sm-3">4+4*5</dt>
+                            <dd class="col-sm-9">Multiply 4*5, then add 4 (order of operations is obeyed)</dd>
+                            <dt class="col-sm-3">(4+4)*5</dt>
+                            <dd class="col-sm-9">Add 4+4, then multiply by 5</dd>
+                        </dl>
+                        <p>Math on sets of numbers.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">2*[3,4]</dt>
+                            <dd class="col-sm-9">Multiply 2*3 and 2*4, resulting in a set [6,8]</dd>
+                            <dt class="col-sm-3">[1,2]*[3,4]</dt>
+                            <dd class="col-sm-9">Multiply these sets together, resulting in a nested set [[3,4],[6,8]]
+                            </dd>
+                        </dl>
+                        <p>Any combination of dice or constants in an expressions.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">2d6+4</dt>
+                            <dd class="col-sm-9">roll 2d6, sum the dice and add 4</dd>
+                            <dt class="col-sm-3">3d8-5</dt>
+                            <dd class="col-sm-9">roll 3d8, sum the dice and subtract 5</dd>
+                            <dt class="col-sm-3">2d4+d6</dt>
+                            <dd class="col-sm-9">roll 2d4 and d6, sum all the dice</dd>
+                        </dl>
+                        <p>Evaluate whether a result meets a certain condition or target number.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">4+4 &gt; 7</dt>
+                            <dd class="col-sm-9">returns true, because 4+4 is greater than 7</dd>
+                            <dt class="col-sm-3">5d6 &gt; 5</dt>
+                            <dd class="col-sm-9">returns true, because 5d6 is always greater than 5</dd>
+                            <dt class="col-sm-3">d20+4 &gt; 12</dt>
+                            <dd class="col-sm-9">simulates a d20 system skill value of 4 compared to a target number of
+                                12
+                            </dd>
+                        </dl>
+                        <p>Produce a set of rolls by surrounding the roll with brackets and prefixing with a
+                            multiplier.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">6[3d6]</dt>
+                            <dd class="col-sm-9">produces a set of 6 numbers created by rolling 3d6</dd>
+                            <dt class="col-sm-3">4[d%]</dt>
+                            <dd class="col-sm-9">produces a set of 4 numbers created by rolling percentile</dd>
+                        </dl>
+                        <p>Roll a custom die by specifying the dice sides in brackets after the "d".</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">d[1,2,2,3,3,4]</dt>
+                            <dd class="col-sm-9">Roll a six-sided die with custom numeric faces</dd>
+                            <dt class="col-sm-3">d[red,green,blue]</dt>
+                            <dd class="col-sm-9">Roll a three-sided die with colored faces</dd>
+                        </dl>
+                        <p>Keep only the dice in an individual roll that meet specific conditions by applying the "k"
+                            postfix.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">5d6 keep &gt; 4</dt>
+                            <dd class="col-sm-9">Role five six-sided dice, keep only the dice that are greater than 4,
+                                sum the kept
+                                dice
+                            </dd>
+                            <dt class="col-sm-3">5d6k&gt;4</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                            <dt class="col-sm-3">6d8 keep &lt; 4</dt>
+                            <dd class="col-sm-9">Roll six eight-sided dice, keep only the dice that are less than 4, sum
+                                the kept dice
+                            </dd>
+                            <dt class="col-sm-3">6d8k&lt;4</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                        </dl>
+                        <p>Keep only the dice that are the lowest or highest values rolled.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">4d6 highest 3</dt>
+                            <dd class="col-sm-9">Roll 4d6, keep only the highest 3 dice</dd>
+                            <dt class="col-sm-3">4d6h3</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                            <dt class="col-sm-3">2s20 lowest 1</dt>
+                            <dd class="col-sm-9">Roll 2d20, keep only the lowest die</dd>
+                            <dt class="col-sm-3">2d20l1</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                        </dl>
+                        <p>Reroll dice that do not meet certain conditions.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">3d6 reroll &lt; 3</dt>
+                            <dd class="col-sm-9">Roll 3d6, reroll any die that is less than 3</dd>
+                            <dt class="col-sm-3">3d6r&lt;3</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                            <dt class="col-sm-3">2d% reroll &lt; 40</dt>
+                            <dd class="col-sm-9">Roll 2d%, reroll any die that is less than 40</dd>
+                            <dt class="col-sm-3">2d%r&lt;40</dt>
+                            <dd class="col-sm-9">same as above</dd>
+                        </dl>
+                        <p>Our stupid way of rolling D&amp;D character stats.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">4d6r&lt;3h3</dt>
+                            <dd class="col-sm-9">Roll 4d6, reroll any die that is less than 3, keep the highest 3 dice,
+                                sum the kept dice
+                            </dd>
+                        </dl>
+                        <p>Produce open-ended dice using the "o" prefix.</p>
+                        <p><em>Examples:</em></p>
+                        <dl class="row">
+                            <dt class="col-sm-3">4d6o=6</dt>
+                            <dd class="col-sm-9">Roll 4d6. When any die lands on 6, roll that die again and add the
+                                result to that die.
+                                Sum
+                                all die totals.
+                            </dd>
+                        </dl>
+                        <p>A stupid example nobody would ever use, I hope:</p>
+                        <dl class="row">
+                            <dt class="col-sm-3">3d6r&lt;4o=6k&gt;6</dt>
+                            <dd class="col-sm-9">Roll 3d6. Reroll any die less than 4. When any die is a 6, reroll and
+                                add the new value
+                                to
+                                the original one. Sum the die totals of only those dice that are greater than 6.
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -235,3 +235,7 @@ roll: Jet
 roll.rolling: '%character% fait un jet de %type% (%dice%)'
 roll.result: 'Résultat'
 roll.raw: 'Brut'
+roll.expression: 'Expression'
+roll.type: 'Type'
+custom_roll:
+    title: 'Jet personnalisé'

@@ -46,3 +46,7 @@
         {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'general' })) }}
     </div>
 {% endblock %}
+
+{% block body_end %}
+    {{ render(controller('App\\Controller\\DiceRollController:roll', { 'id': entity.id })) }}
+{% endblock %}

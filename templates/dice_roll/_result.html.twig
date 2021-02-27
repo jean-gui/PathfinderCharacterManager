@@ -1,0 +1,14 @@
+<table class="table table-sm table-striped table-hover">
+    <tr>
+        <th>{{ 'roll'|trans }}</th>
+        <th>{{ 'roll.raw'|trans }}</th>
+        <th>{{ 'roll.result'|trans }}</th>
+    </tr>
+    {% for result in results %}
+        <tr>
+            <th>{{ result.roll }}</th>
+            <td>{{ result.details|raw }}</td>
+            <td>{{ result.result }}</td>
+        </tr>
+    {% endfor %}
+</table>
