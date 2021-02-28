@@ -239,3 +239,4 @@ roll.expression: 'Expression'
 roll.type: 'Type'
 custom_roll:
     title: 'Jet personnalisé'
+help: 'Aide'
