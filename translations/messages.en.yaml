@@ -237,6 +237,8 @@ roll.result: 'Result'
 roll.raw: 'Raw'
 roll.expression: 'Expression'
 roll.type: 'Type'
+roll.submit: 'Roll'
 custom_roll:
     title: 'Custom Roll'
 help: 'Help'
+close: 'Close'

@@ -46,7 +46,7 @@ class DiceRollController extends AbstractController
             ->createFormBuilder([], ['csrf_protection' => false])
             ->add('expression', null, ['label' => 'roll.expression'])
             ->add('type', TextType::class, ['label' => 'roll.type', 'required' => false])
-            ->add('roll', SubmitType::class)
+            ->add('roll', SubmitType::class, ['label' => 'roll.submit'])
             ->setMethod('POST')
             ->setAction($this->generateUrl('roll', ['id' => $character->getId()]))
             ->getForm();

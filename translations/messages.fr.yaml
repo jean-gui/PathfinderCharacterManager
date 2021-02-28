@@ -237,6 +237,8 @@ roll.result: 'Résultat'
 roll.raw: 'Brut'
 roll.expression: 'Expression'
 roll.type: 'Type'
+roll.submit: 'Lancer'
 custom_roll:
     title: 'Jet personnalisé'
 help: 'Aide'
+close: 'Fermer'
