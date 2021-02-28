@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Party;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,8 +22,17 @@ class PartyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('dungeonMaster');
+            ->add('name', null, ['label' => 'party.name'])
+            ->add('dungeonMaster', null, ['label' => 'party.dm'])
+            ->add(
+                'discordDsn',
+                UrlType::class,
+                [
+                    'default_protocol' => 'discord',
+                    'label'            => 'party.discord_dsn.label',
+                    'help'             => 'party.discord_dsn.help'
+                ]
+            );
     }
 
     /**

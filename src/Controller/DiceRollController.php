@@ -13,12 +13,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
+use Symfony\Component\Notifier\Bridge\Discord\DiscordTransportFactory;
 use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
 use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
-use Symfony\Component\Notifier\ChatterInterface;
+use Symfony\Component\Notifier\Chatter;
 use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
+use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DiceRollController extends AbstractController
@@ -27,10 +31,11 @@ class DiceRollController extends AbstractController
      * @Route("/characters/{id}/roll", name="roll")
      * @IsGranted("ROLE_USER")
      *
-     * @param Character           $character
-     * @param Request             $request
-     * @param TranslatorInterface $translator
-     * @param ChatterInterface    $chatter
+     * @param Character                $character
+     * @param Request                  $request
+     * @param TranslatorInterface      $translator
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param HttpClientInterface      $client
      *
      * @return Response
      * @throws TransportExceptionInterface
@@ -39,7 +44,8 @@ class DiceRollController extends AbstractController
         Character $character,
         Request $request,
         TranslatorInterface $translator,
-        ChatterInterface $chatter
+        EventDispatcherInterface $eventDispatcher,
+        HttpClientInterface $client
     ) {
         $results = [];
         $form    = $this
@@ -54,7 +60,7 @@ class DiceRollController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             ['expression' => $expression, 'type' => $type] = $form->getData();
-            $results = $this->rollDice($translator, $expression, $type, $character, $chatter);
+            $results = $this->rollDice($translator, $expression, $type, $character, $eventDispatcher, $client);
 
             if ($request->getAcceptableContentTypes()[0] === 'application/json') {
                 return new JsonResponse($results);
@@ -67,11 +73,12 @@ class DiceRollController extends AbstractController
     }
 
     /**
-     * @param TranslatorInterface $translator
-     * @param string              $expression
-     * @param string              $type
-     * @param Character           $character
-     * @param ChatterInterface    $chatter
+     * @param TranslatorInterface       $translator
+     * @param string                    $expression
+     * @param string                    $type
+     * @param Character                 $character
+     * @param EventDispatcherInterface  $eventDispatcher
+     * @param HttpClientInterface       $client
      *
      * @return array
      * @throws TransportExceptionInterface
@@ -81,25 +88,32 @@ class DiceRollController extends AbstractController
         string $expression,
         string $type,
         Character $character,
-        ChatterInterface $chatter
+        EventDispatcherInterface $eventDispatcher,
+        HttpClientInterface $client
     ): array {
-        $message = new ChatMessage('');
-        $message->transport('discord');
-        $discordOptions = (new DiscordOptions())->username('Pathfinder Character Manager');
-        $embed          = new DiscordEmbed();
-        $embed
-            ->color(2021216)
-            ->title(
-                $translator->trans(
-                    'roll.rolling',
-                    [
-                        '%character%' => $character->getName(),
-                        '%dice%'      => $expression,
-                        '%type%'      => $type
-                    ],
-                    null
-                )
-            );
+        $discordDsn = $character->getParty()->getDiscordDsn();
+        $chatter = null;
+        $transport = null;
+        if ($discordDsn) {
+            $message = new ChatMessage('');
+            $message->transport('discord');
+            $discordOptions = (new DiscordOptions())->username('Pathfinder Character Manager');
+            $embed          = new DiscordEmbed();
+            $embed
+                ->color(2021216)
+                ->title(
+                    $translator->trans(
+                        'roll.rolling',
+                        [
+                            '%character%' => $character->getName(),
+                            '%dice%'      => $expression,
+                            '%type%'      => $type
+                        ],
+                        null
+                    )
+                );
+        }
+
         Random::$queue = "random_int";
 
         $rolls   = explode(';', $expression);
@@ -110,31 +124,39 @@ class DiceRollController extends AbstractController
             $rawRollResult = preg_replace(['/.*:(.+)].*/', '/ \+ /'], ['$1', ', '], $calc->infix());
             $results[]     = ['roll' => $roll, 'result' => $calc(), 'details' => $rawRollResult];
 
-            $embed
-                ->addField(
-                    (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll', [], null))
-                        ->value($roll)
-                        ->inline(true)
-                )
-                ->addField(
-                    (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll.raw', [], null))
-                        ->value(preg_replace(['/<s>/', '/<\/s>/'], '~~', $rawRollResult))
-                        ->inline(true)
-                )
-                ->addField(
-                    (new DiscordFieldEmbedObject())
-                        ->name($translator->trans('roll.result', [], null))
-                        ->value('**'.$calc().'**')
-                        ->inline(true)
-                );
+            if ($discordDsn) {
+                $embed
+                    ->addField(
+                        (new DiscordFieldEmbedObject())
+                            ->name($translator->trans('roll', [], null))
+                            ->value($roll)
+                            ->inline(true)
+                    )
+                    ->addField(
+                        (new DiscordFieldEmbedObject())
+                            ->name($translator->trans('roll.raw', [], null))
+                            ->value(preg_replace(['/<s>/', '/<\/s>/'], '~~', $rawRollResult))
+                            ->inline(true)
+                    )
+                    ->addField(
+                        (new DiscordFieldEmbedObject())
+                            ->name($translator->trans('roll.result', [], null))
+                            ->value('**'.$calc().'**')
+                            ->inline(true)
+                    );
+            }
         }
 
-        $discordOptions->addEmbed($embed);
-        $message->options($discordOptions);
+        if ($discordDsn) {
+            $factory   = new DiscordTransportFactory($eventDispatcher, $client);
+            $transport = $factory->create(Dsn::fromString($discordDsn));
+            $chatter   = new Chatter($transport);
 
-        $chatter->send($message);
+            $discordOptions->addEmbed($embed);
+            $message->options($discordOptions);
+
+            $chatter->send($message);
+        }
 
         return $results;
     }

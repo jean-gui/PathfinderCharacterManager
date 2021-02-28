@@ -379,3 +379,8 @@ roll.help: >
   <dd class="col-sm-9">lance 4d6. Quand un dé fait 6, le relance et ajoute le résultat à ce dé. Additionne les résultats
   </dd>
   </dl>
+party.edit: 'Editer groupe'
+party.dm: 'Maître de jeu'
+party.name: 'Nom'
+party.discord_dsn.label: 'URL du Webhook Discord'
+party.discord_dsn.help: 'Format : discord://{token}@default?webhook_id={webhook_id}'

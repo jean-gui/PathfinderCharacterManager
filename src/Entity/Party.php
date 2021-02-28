@@ -47,6 +47,14 @@ class Party
     protected $characters;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="discord_dsn", type="string", nullable=true)
+     * @Assert\Url(protocols={"discord"})
+     */
+    protected $discordDsn;
+
+    /**
      * Add characters
      *
      * @param Character $character
@@ -152,5 +160,25 @@ class Party
     public function getDungeonMaster()
     {
         return $this->dungeonMaster;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDiscordDsn(): ?string
+    {
+        return $this->discordDsn;
+    }
+
+    /**
+     * @param string|null $discordDsn
+     *
+     * @return Party
+     */
+    public function setDiscordDsn(?string $discordDsn): Party
+    {
+        $this->discordDsn = $discordDsn;
+
+        return $this;
     }
 }
