@@ -148,14 +148,18 @@ class DiceRollController extends AbstractController
         }
 
         if ($discordDsn) {
-            $factory   = new DiscordTransportFactory($eventDispatcher, $client);
-            $transport = $factory->create(Dsn::fromString($discordDsn));
-            $chatter   = new Chatter($transport);
+            try {
+                $factory   = new DiscordTransportFactory($eventDispatcher, $client);
+                $transport = $factory->create(Dsn::fromString($discordDsn));
+                $chatter   = new Chatter($transport);
 
-            $discordOptions->addEmbed($embed);
-            $message->options($discordOptions);
+                $discordOptions->addEmbed($embed);
+                $message->options($discordOptions);
 
-            $chatter->send($message);
+                $chatter->send($message);
+            } catch (\Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
+            }
         }
 
         return $results;
