@@ -30,7 +30,8 @@ class PartyType extends AbstractType
                 [
                     'default_protocol' => 'discord',
                     'label'            => 'party.discord_dsn.label',
-                    'help'             => 'party.discord_dsn.help'
+                    'help'             => 'party.discord_dsn.help',
+                    'required'         => false
                 ]
             );
     }
