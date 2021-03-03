@@ -21,7 +21,6 @@ class CastableClassSpellsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add(
             'spells_by_level',
             CollectionType::class,

@@ -3,7 +3,6 @@
 
 namespace App\Form\Type;
 
-
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassSpell;
 use App\Entity\Rules\Spell;

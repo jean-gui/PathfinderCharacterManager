@@ -27,9 +27,9 @@ class SkillController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $skills = $em->getRepository(Skill::class)->findAll();
+        $skills  = $em->getRepository(Skill::class)->findAll();
         $classes = $em->getRepository(ClassDefinition::class)->findAll();
 
         return $this->render('skill/index.html.twig', ['skills' => $skills, 'classes' => $classes]);
     }
-} 
+}

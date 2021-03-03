@@ -593,7 +593,7 @@ class ClassDefinition implements TranslatableInterface
         for ($i = 0; $i < 10; $i++) {
             $spellsByLevel[$i] = array();
         }
-        foreach($this->getSpells() as $spell) {
+        foreach ($this->getSpells() as $spell) {
             $spellsByLevel[$spell->getSpellLevel()][] = $spell->getSpell();
         }
 

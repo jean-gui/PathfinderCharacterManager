@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class AttackBonuses
  *
@@ -33,7 +32,7 @@ class AttackBonuses
     /**
      * @var Bonuses
      */
-    public $rangedAttackRolls = 0;
+    public $rangedAttackRolls;
 
     /**
      * @var Bonuses
@@ -110,4 +109,4 @@ class AttackBonuses
         $this->cmb = new Bonuses();
         $this->cmd = new Bonuses();
     }
-} 
+}

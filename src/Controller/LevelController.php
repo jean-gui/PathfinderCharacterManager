@@ -163,7 +163,8 @@ class LevelController extends AbstractController
                         $classSpell = $csRepo->findByNameAndClass(
                             $effects['spell']['value'],
                             $level->getClassDefinition(),
-                            $character->getSubClassesFor($level->getClassDefinition()));
+                            $character->getSubClassesFor($level->getClassDefinition())
+                        );
                         if ($classSpell && !$character->getLearnedSpell($classSpell->getSpell(), $level->getClassDefinition())) {
                             $level->addLearnedSpell($classSpell);
                         }
@@ -214,12 +215,13 @@ class LevelController extends AbstractController
         $form = $this->createForm(
             EditLevelType::class,
             $level,
-            array(
+            [
                 'action' => $this->generateUrl(
                     'characters_levels_edit',
-                    array('character' => $character->getId(), 'level' => $level->getValue())),
+                    ['character' => $character->getId(), 'level' => $level->getValue()]
+                ),
                 'method' => 'PUT',
-            )
+            ]
         );
         $form->add('submit', SubmitType::class, array('label' => 'Update'));
 

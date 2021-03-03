@@ -95,5 +95,4 @@ class ConditionTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

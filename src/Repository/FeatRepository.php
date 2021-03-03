@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-
 use App\Entity\Characters\Character;
 use App\Entity\Rules\Feat;
 use Doctrine\ORM\EntityRepository;
@@ -34,7 +33,7 @@ class FeatRepository extends EntityRepository
                 $feats[] = $characterFeat->getFeat()->getId();
             }
         }
-        if(count($feats) > 0) {
+        if (count($feats) > 0) {
             $qb->where($qb->expr()->notIn('f.id', $feats));
         }
 
@@ -51,6 +50,7 @@ class FeatRepository extends EntityRepository
     public function findByAvailableFor(Character $character)
     {
         $query = $this->queryAvailableFor($character)->getQuery();
+
         return $query->getResult();
     }
-} 
+}

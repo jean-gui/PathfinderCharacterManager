@@ -10,8 +10,8 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 
-class CharacterEntitySubscriber implements EventSubscriber {
-
+class CharacterEntitySubscriber implements EventSubscriber
+{
     protected $characterBonuses;
     protected $extraSpells;
 

@@ -1,0 +1,33 @@
+{% block body_end %}
+    <div class="modal fade" id="customRollModal" tabindex="-1" role="dialog" aria-labelledby="customRollModalLabel"
+         aria-hidden="true" data-controller="roll">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h5 modal-title" id="customRollModalLabel">{{ 'custom_roll.title'|trans }}</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{ form_start(form, {attr: {'data-action': 'roll#customRoll'}}) }}
+                <div class="modal-body">
+                    {{ form_row(form.expression) }}
+                    {{ form_row(form.type) }}
+                    <div data-roll-target="result"></div>
+                </div>
+                <div class="modal-footer">
+                    <a data-toggle="collapse" href="#roll-help" role="button" aria-expanded="false"
+                       aria-controls="roll-help">
+                        {{ 'help'|trans }}
+                    </a>
+                    {{ form_widget(form.roll) }}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'close'|trans }}</button>
+                    <div class="collapse" id="roll-help">
+                        {{ 'roll.help'|trans|raw }}
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

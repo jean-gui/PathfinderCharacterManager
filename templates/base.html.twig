@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% block subtitle "Home" %}{% endblock %} - Pathfinder Character Manager</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -80,6 +84,12 @@
                 <li class="nav-item{% if route == 'characters_sleep' %} active{% endif %}">
                     <a class="nav-link text-nowrap" href="{{ path('characters_sleep', {'id': entity.id}) }}" title="{{ 'sleep'|trans }}">
                         <span class="fas fa-bed"></span>&nbsp;{{ 'sleep'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#customRollModal"
+                       title="{{ 'custom_roll.title'|trans }}" data-toggle="modal" data-target="#customRollModal">
+                        <span class="fas fa-dice-d20"></span>&nbsp;{{ 'custom_roll.title'|trans }}
                     </a>
                 </li>
             </ul>
@@ -188,6 +198,7 @@
         {% block body %}{% endblock %}
     </div>
 </main>
+{% block body_end %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

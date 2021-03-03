@@ -95,5 +95,4 @@ class FeatTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

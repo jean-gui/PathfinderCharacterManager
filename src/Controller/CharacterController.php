@@ -90,7 +90,7 @@ class CharacterController extends AbstractController
         $character = new Character();
         $form = $this->createCreateForm($character);
 
-        if($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -333,8 +333,12 @@ class CharacterController extends AbstractController
         if ($inventoryForm->isSubmitted() && $inventoryForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirect($this->generateUrl('character_inventory',
-                array('id' => $character->getId())));
+            return $this->redirect(
+                $this->generateUrl(
+                    'character_inventory',
+                    ['id' => $character->getId()]
+                )
+            );
         }
 
         return $this->render(
@@ -373,8 +377,13 @@ class CharacterController extends AbstractController
                 if ($slot !== '_token') {
                     $characterEquipment->unequipSlot($character, $slot);
                     $em->flush();
-                    return $this->redirect($this->generateUrl('character_inventory',
-                        array('id' => $character->getId())));
+
+                    return $this->redirect(
+                        $this->generateUrl(
+                            'character_inventory',
+                            ['id' => $character->getId()]
+                        )
+                    );
                 }
             }
         }
@@ -387,7 +396,7 @@ class CharacterController extends AbstractController
         if ($request->getMethod() === 'PUT' && $request->request->get('inventory')) {
             $inventoryForm->handleRequest($request);
 
-            foreach($inventoryForm->get('unequippedInventory')->all() as $child) {
+            foreach ($inventoryForm->get('unequippedInventory')->all() as $child) {
                 if ($child->has('equip')) {
                     /** @var SubmitButton $equip */
                     $equip = $child->get('equip');
@@ -402,10 +411,15 @@ class CharacterController extends AbstractController
 
                             $em->flush();
                         } catch (Exception $e) {
-                            $this->addFlash('danger', $child->getData() . ' is not equippable');
+                            $this->addFlash('danger', $child->getData().' is not equippable');
                         }
-                        return $this->redirect($this->generateUrl('character_inventory',
-                            array('id' => $character->getId())));
+
+                        return $this->redirect(
+                            $this->generateUrl(
+                                'character_inventory',
+                                ['id' => $character->getId()]
+                            )
+                        );
                     }
                 }
 
@@ -415,8 +429,12 @@ class CharacterController extends AbstractController
                     $character->removeInventoryItem($child->getData());
                     $em->flush();
 
-                    return $this->redirect($this->generateUrl('character_inventory',
-                        array('id' => $character->getId())));
+                    return $this->redirect(
+                        $this->generateUrl(
+                            'character_inventory',
+                            ['id' => $character->getId()]
+                        )
+                    );
                 }
             }
         }
@@ -451,14 +469,13 @@ class CharacterController extends AbstractController
         Request $request,
         SpellCasting $spellCasting,
         PublisherInterface $publisher
-    )
-    {
+    ) {
         $em = $this->getDoctrine()->getManager();
 
         $castSpellsForm = $this->createForm(
             CastSpellsType::class,
             $character,
-            array('method' => 'PUT')
+            ['method' => 'PUT']
         );
 
         if ($request->getMethod() === 'PUT') {
@@ -798,7 +815,8 @@ class CharacterController extends AbstractController
                 'method' => 'PUT',
                 'action' => $this->generateUrl(
                     'characters_notes',
-                    array('id' => $character->getId(), 'type' => $type)),
+                    array('id' => $character->getId(), 'type' => $type)
+                ),
             )
         );
         $form->add('submit', SubmitType::class, array('label' => 'Save notes'));
@@ -807,7 +825,7 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            switch($type) {
+            switch ($type) {
                 case 'inventory':
                     $route = 'character_inventory';
                     break;
@@ -817,6 +835,7 @@ class CharacterController extends AbstractController
                 default:
                     $route = 'characters_show';
             }
+
             return $this->redirect($this->generateUrl($route, array('id' => $character->getId())));
         }
 
@@ -890,6 +909,7 @@ class CharacterController extends AbstractController
                     json_encode(['character' => $character->getId(), 'message' => $character->getName().' changed'])
                 )
             );
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
     }
 }

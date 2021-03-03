@@ -1,4 +1,5 @@
 $body-bg: #cdc4a7;
+$head-bg: #3cb194;
 $link-color: #8e3426;
 $link-hover-color: #7a2c20;
 $body-color: #453B2F;
@@ -12,6 +13,6 @@ $table-odd: #dbd5c0;
 
 $theme-colors: (
         "primary": #df543f,
-        "light": #3cb194,
+        "light": $head-bg,
         "danger": #ff3d4f
 );

@@ -52,7 +52,7 @@ class SubClass implements TranslatableInterface
     protected $powers;
 
     /**
-     * @var int
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
      */

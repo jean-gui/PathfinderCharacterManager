@@ -92,9 +92,7 @@ class CharacterBonuses
                     'main-attack-roll'    => ['type' => null, 'value' => -4],
                     'offhand-attack-roll' => ['type' => null, 'value' => -8],
                 ];
-
-            }
-            else {
+            } else {
                 $malus = [
                     'main-attack-roll'    => ['type' => null, 'value' => -6],
                     'offhand-attack-roll' => ['type' => null, 'value' => -10],
@@ -256,7 +254,6 @@ class CharacterBonuses
     {
         $effects = array();
         foreach ($powerEffect->getPower()->getEffects() as $stat => $effect) {
-
             if ($powerEffect->getCaster() !== $character &&
                 !in_array($powerEffect->getCaster()->getId(), self::$alreadyApplied) &&
                 !in_array($powerEffect->getCaster()->getId(), self::$applying)
@@ -332,18 +329,19 @@ class CharacterBonuses
         }
 
         foreach ($power->getConditions() as $type => $condition) {
-            switch($type) {
+            switch ($type) {
                 case 'weapon-type':
                     $weapon = $character->getEquipment()->getMainWeapon();
                     if (!$weapon) {
                         return false;
                     }
                     if (is_array($condition)) {
-
-                        if (!(
+                        if (
+                        !(
                             in_array($weapon->getType(), $condition) ||
                             (in_array('light-weapon', $condition) && $weapon->isLight())
-                        )) {
+                        )
+                        ) {
                             return false;
                         }
                     } elseif (($condition === 'light-weapon' && !$weapon->isLight()) || $weapon->getType() !==
@@ -422,17 +420,17 @@ class CharacterBonuses
             }
 
             // Armor check penalty
-            if ($item instanceof Armor or $item instanceof Shield) {
+            if ($item instanceof Armor || $item instanceof Shield) {
                 /** @var $item Armor|Shield */
                 $skills = $this->em->getRepository(Skill::class)->findAll();
 
-                $effects = array();
+                $effects = [];
                 /** @var Skill $skill */
                 foreach ($skills as $skill) {
                     if ($skill->getArmorCheckPenalty()) {
                         $effects[$skill->getShortname()] = array(
-                            'type' => 'armor-check-penalty',
-                            'value' => $item->getArmorCheckPenalty()
+                            'type'  => 'armor-check-penalty',
+                            'value' => $item->getArmorCheckPenalty(),
                         );
                     }
                 }
@@ -685,4 +683,4 @@ class CharacterBonuses
             $this->applyEffects($character, $condition->getEffects(), $condition);
         }
     }
-} 
+}

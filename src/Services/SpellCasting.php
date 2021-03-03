@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Entity\Characters\Character;
 use App\Entity\Characters\PreparedSpell;
 use App\Entity\Characters\SpellEffect;
@@ -104,10 +103,9 @@ class SpellCasting
         ClassDefinition $class,
         array $targets = null,
         int $spellLevel = null
-    )
-    {
+    ) {
         if (!$this->canCast($caster, $spell, $class, $spellLevel)) {
-            throw new Exception($caster . ' cannot cast ' . $spell);
+            throw new Exception($caster.' cannot cast '.$spell);
         }
 
         if ($targets) {
@@ -156,7 +154,8 @@ class SpellCasting
                             json_encode(['character' => $target->getId(), 'message' => $spell.' cast on '.$target])
                         )
                     );
-                } catch (Exception $e) {}
+                } catch (Exception $e) {
+                }
             }
         }
     }
@@ -191,7 +190,12 @@ class SpellCasting
                 /* First, add slots granted by the class */
                 for ($i = 0; $i < $slotCount; $i++) {
                     $newSlots[] = new PreparedSpell(
-                        $character, null, $class, false, false, $spellLevel
+                        $character,
+                        null,
+                        $class,
+                        false,
+                        false,
+                        $spellLevel
                     );
                 }
 
@@ -200,7 +204,12 @@ class SpellCasting
                 $extraSpellsCount = $this->extraSpells[$abilityMod][$spellLevel];
                 for ($i = 0; $i < $extraSpellsCount; $i++) {
                     $newSlots[] = new PreparedSpell(
-                        $character, null, $class, false, false, $spellLevel
+                        $character,
+                        null,
+                        $class,
+                        false,
+                        false,
+                        $spellLevel
                     );
                 }
 
@@ -212,7 +221,12 @@ class SpellCasting
                             foreach ($l->getSubClasses() as $sc) {
                                 if ($sc->getExtraSpellSlot()) {
                                     $newSlots[] = new PreparedSpell(
-                                        $character, null, $class, false, true, $spellLevel
+                                        $character,
+                                        null,
+                                        $class,
+                                        false,
+                                        true,
+                                        $spellLevel
                                     );
 
                                     // end both loops, meaning we only add 1 unique slot for all subclasses (I think
@@ -266,4 +280,4 @@ class SpellCasting
             }
         }
     }
-} 
+}

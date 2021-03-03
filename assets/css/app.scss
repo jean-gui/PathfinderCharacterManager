@@ -38,3 +38,15 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   cursor: help;
 }
+
+.modal-body, .modal-footer {
+  background-color: $body-bg;
+}
+
+.modal-header {
+  background-color: $head-bg;
+}
+
+.modal-title {
+  margin-top: 0;
+}

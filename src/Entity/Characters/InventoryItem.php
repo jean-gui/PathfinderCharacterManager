@@ -122,7 +122,6 @@ class InventoryItem
      */
     public function setQuantity(int $quantity)
     {
-
         if ($quantity == 0) {
             $this->getCharacter()->removeInventoryItem($this);
         } else {

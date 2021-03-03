@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Characters\Character;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +42,6 @@ class UncastSpellsType extends AbstractType
                                     UncastSpellType::class,
                                     array(
                                         'mapped'      => false,
-                                        // @todo Wow that's ugly!
                                         'label'       => $spellEffect->getSpell() . ' (' . $spellEffect->getCharacter() . ')',
                                         'spellEffect' => $spellEffect,
                                     )

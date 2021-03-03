@@ -230,3 +230,157 @@ cmd: DMD
 decrease: Décrémenter
 magic: Magie
 character_sheet: Feuille de personnage
+modifier: Modificateur
+roll: Jet
+roll.rolling: '%character% fait un jet de %type% (%dice%)'
+roll.result: 'Résultat'
+roll.raw: 'Brut'
+roll.expression: 'Expression'
+roll.type: 'Type'
+roll.submit: 'Lancer'
+custom_roll:
+    title: 'Jet personnalisé'
+help: 'Aide'
+close: 'Fermer'
+roll.help: >
+  <dl class="row">
+  <dt class="col-sm-3">d6</dt>
+  <dd class="col-sm-9">lance un dé à 6 faces</dd>
+  <dt class="col-sm-3">d20</dt>
+  <dd class="col-sm-9">lance un dé à 20 faces</dd>
+  <dt class="col-sm-3">d%</dt>
+  <dd class="col-sm-9">lance un dé de pourcentage (1-100)</dd>
+  <dt class="col-sm-3">df</dt>
+  <dd class="col-sm-9">lance un dé fudge (-1, 0, 1)</dd>
+  </dl>
+  <p>Pour lancer plusieurs fois le même dé, préfixez le type de dé avec un nombre.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">3d6</dt>
+  <dd class="col-sm-9">lance 3 dés 6, additionne les résultats</dd>
+  <dt class="col-sm-3">2d20</dt>
+  <dd class="col-sm-9">lance 2 dés 20, additionne les résultats</dd>
+  <dt class="col-sm-3">6df</dt>
+  <dd class="col-sm-9">lance 6 dés fudge, additionne les résultats</dd>
+  </dl>
+  <p>Pour faire plusieurs lancers indépendants, séparez-les avec un point-virgule (;).</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">1d20+4;1d8+3</dt>
+  <dt class="col-sm-9">lance 1d20 et ajoute 4, puis lance 1d8 et ajoute 3</dt>
+  </dl>
+  <p>Des opérations mathématiques basiques sont possibles.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">4+4</dt>
+  <dd class="col-sm-9">additionne 4+4</dd>
+  <dt class="col-sm-3">4*5</dt>
+  <dd class="col-sm-9">multiplie 4*5</dd>
+  <dt class="col-sm-3">4+4*5</dt>
+  <dd class="col-sm-9">multiplie 4*5, puis ajoute 4 (l'ordre des opérations est géré)</dd>
+  <dt class="col-sm-3">(4+4)*5</dt>
+  <dd class="col-sm-9">ajoute 4+4, puis multiplie par 5</dd>
+  </dl>
+  <p>Maths sur des ensembles de nombres.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">2*[3,4]</dt>
+  <dd class="col-sm-9">multiplie 2*3 et 2*4, résultant en un ensemble [6,8]</dd>
+  <dt class="col-sm-3">[1,2]*[3,4]</dt>
+  <dd class="col-sm-9">multiplie ces ensembles, résultant en un un ensemble imbriqué [[3,4],[6,8]]
+  </dd>
+  </dl>
+  <p>Combinez des dés et constantes.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">2d6+4</dt>
+  <dd class="col-sm-9">lance 2d6, les additionne et ajoute 4</dd>
+  <dt class="col-sm-3">3d8-5</dt>
+  <dd class="col-sm-9">lance 3d8, les additionne et soustrait 5</dd>
+  <dt class="col-sm-3">2d4+d6</dt>
+  <dd class="col-sm-9">lance 2d4 et un d6, additionne tous les résultats</dd>
+  </dl>
+  <p>Evaluer si un résultat vérifie une condition ou valeur cible.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">4+4 &gt; 7</dt>
+  <dd class="col-sm-9">renvoie true, car 4+4 est plus grand que 7</dd>
+  <dt class="col-sm-3">5d6 &gt; 5</dt>
+  <dd class="col-sm-9">renvoie true, parce que 5d6 est toujours plus grand que 5</dd>
+  <dt class="col-sm-3">d20+4 &gt; 12</dt>
+  <dd class="col-sm-9">simule un test de compétence à +4 dans un système d20 comparé à la valeur cible 12
+  </dd>
+  </dl>
+  <p>Produire un ensemble de jets en les entourant de crochets ([]) et préfixant avec un multiplicateur.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">6[3d6]</dt>
+  <dd class="col-sm-9">génère un ensemble de 6 nombres créés en lançant 3d6</dd>
+  <dt class="col-sm-3">4[d%]</dt>
+  <dd class="col-sm-9">génère un ensemble de 4 nombres en lançant des d100</dd>
+  </dl>
+  <p>Lancer un dé personnalisé en spécifiant les faces entre corchets après le &quot;d&quot;.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">d[1,2,2,3,3,4]</dt>
+  <dd class="col-sm-9">lance un dé à 6 faces avec des faces personnalisées</dd>
+  <dt class="col-sm-3">d[red,green,blue]</dt>
+  <dd class="col-sm-9">Lance un dé à 3 faces colorées</dd>
+  </dl>
+  <p>Conserver seulement les dés vérifiant des conditions spécifiques en utilise le postfixe &quot;k&quot;.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">5d6 keep &gt; 4</dt>
+  <dd class="col-sm-9">lance 5 dés 6, garde uniquement les résultats supérieurs à 4 et les additionne
+  </dd>
+  <dt class="col-sm-3">5d6k&gt;4</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  <dt class="col-sm-3">6d8 keep &lt; 4</dt>
+  <dd class="col-sm-9">lance 6 dés 8, conserve les résultats inférieurs à 4 et les additionne
+  </dd>
+  <dt class="col-sm-3">6d8k&lt;4</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  </dl>
+  <p>Conserver uniquement les dés qui ont les plus petites ou grandes valeurs.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">4d6 highest 3</dt>
+  <dd class="col-sm-9">lance 4d6, conserve uniquement les 3 dés avec les valeurs les plus élevées</dd>
+  <dt class="col-sm-3">4d6h3</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  <dt class="col-sm-3">2s20 lowest 1</dt>
+  <dd class="col-sm-9">lance 2d20, conserve uniquement le résultat le plus bas</dd>
+  <dt class="col-sm-3">2d20l1</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  </dl>
+  <p>Relancer les dés ne vérifiant pas une condition.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">3d6 reroll &lt; 3</dt>
+  <dd class="col-sm-9">lance 3d6, relance tout dé inférieur à 3</dd>
+  <dt class="col-sm-3">3d6r&lt;3</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  <dt class="col-sm-3">2d% reroll &lt; 40</dt>
+  <dd class="col-sm-9">lance 2d%, relance tout dé inférieur à 40</dd>
+  <dt class="col-sm-3">2d%r&lt;40</dt>
+  <dd class="col-sm-9">comme au-dessus</dd>
+  </dl>
+  <p>Une façon stupide de lancer des statistiques de personnage pour D&amp;D.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">4d6r&lt;3h3</dt>
+  <dd class="col-sm-9">lance 4d6, relance tout dé inférieur à 3, conserve les 3 plus grands résultats et les additionne
+  </dd>
+  </dl>
+  <p>Créer des dés explosifs en utilisant le préfixe &quot;o&quot;.</p>
+  <p><em>Examples:</em></p>
+  <dl class="row">
+  <dt class="col-sm-3">4d6o=6</dt>
+  <dd class="col-sm-9">lance 4d6. Quand un dé fait 6, le relance et ajoute le résultat à ce dé. Additionne les résultats
+  </dd>
+  </dl>
+party.edit: 'Editer groupe'
+party.dm: 'Maître de jeu'
+party.name: 'Nom'
+party.discord_dsn.label: 'URL du Webhook Discord'
+party.discord_dsn.help: 'Format : discord://{token}@default?webhook_id={webhook_id}'

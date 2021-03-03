@@ -56,9 +56,9 @@ class ClassDefinitionCrudController extends AbstractCrudController
             TextareaField::new('shortDescription')->onlyOnDetail()->renderAsHtml(),
             TextareaField::new('longDescription')->onlyOnDetail()->renderAsHtml(),
             TranslationField::new('translations')
-                ->onlyOnForms()
-                ->setFormTypeOption('required', true)
-                ->setFormTypeOption('label',false),
+                            ->onlyOnForms()
+                            ->setFormTypeOption('required', true)
+                            ->setFormTypeOption('label', false),
             IntegerField::new('hpDice')->hideOnIndex(),
             IntegerField::new('skillPoints')->hideOnIndex(),
             AssociationField::new('classSkills')->hideOnIndex(),

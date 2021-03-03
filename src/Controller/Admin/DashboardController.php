@@ -67,7 +67,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('users.groups', 'fa fa-user'),
             MenuItem::linkToCrud('users', '', User::class),
 
-            MenuItem::section('rules','fa fa-book'),
+            MenuItem::section('rules', 'fa fa-book'),
             MenuItem::linkToCrud('races', '', Race::class),
             MenuItem::linkToCrud('skills', '', Skill::class),
             MenuItem::linkToCrud('feats', '', Feat::class),

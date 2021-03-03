@@ -9,7 +9,8 @@ use App\Entity\Rules\Spell;
  *
  * @package App\Model
  */
-class CastableLevelSpells {
+class CastableLevelSpells
+{
     /**
      * @var int
      */
@@ -71,5 +72,4 @@ class CastableLevelSpells {
 
         return $this;
     }
-
 }

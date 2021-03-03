@@ -39,4 +39,4 @@ class PowersActivationType extends AbstractType
             ['horizontal' => false, 'csrf_protection' => false]
         );
     }
-} 
+}

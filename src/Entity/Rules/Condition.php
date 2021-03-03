@@ -91,7 +91,7 @@ class Condition implements TranslatableInterface
 
     public function __get($name)
     {
-        $method    = 'get' . ucfirst($name);
+        $method    = 'get'.ucfirst($name);
         $arguments = [];
 
         return $this->proxyCurrentLocaleTranslation($method, $arguments);
@@ -101,4 +101,4 @@ class Condition implements TranslatableInterface
     {
         return in_array($name, ['name', 'shortDescription', 'longDescription']);
     }
-} 
+}

@@ -14,10 +14,5 @@ import 'select2';
 
 require('@fortawesome/fontawesome-free/css/all.css');
 
-/*
-function init() {
-    bsCustomFileInput.init();
-}*/
-
 // start the Stimulus application
 import { app } from './bootstrap';

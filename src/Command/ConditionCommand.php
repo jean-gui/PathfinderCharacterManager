@@ -32,13 +32,13 @@ class ConditionCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         foreach (['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as $ability) {
-            for($i=-1; $i >=-10; $i--) {
+            for ($i = -1; $i >= -10; $i--) {
                 $condition = new Condition();
                 $condition->setEffects([$ability => ['type' => null, 'value' => $i]]);
                 $condition
                     ->translate('en')
                     ->setName(
-                        $i . ' ' .
+                        $i.' '.
                         ucfirst($this->translator->trans($ability, [], null, 'en'))
                     );
                 $condition

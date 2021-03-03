@@ -10,7 +10,8 @@ use Doctrine\Common\Collections\Collection;
  *
  * @package App\Model
  */
-class Bonuses {
+class Bonuses
+{
 
     /**
      * @var Collection|Bonus[] List of all bonuses
@@ -165,6 +166,7 @@ class Bonuses {
             }
         }
         $finalBonus += min(0, $acp + $acpBonus);
+
         return $finalBonus;
     }
 
@@ -173,6 +175,6 @@ class Bonuses {
      */
     public function __toString()
     {
-        return '' . $this->getBonus();
+        return ''.$this->getBonus();
     }
-} 
+}

@@ -66,11 +66,12 @@ class UnmanagedToManagedClassSpellTransformer implements DataTransformerInterfac
 
         /** @var ClassSpell|null $classSpell */
         $classSpell = $this->em->getRepository(ClassSpell::class)->findOneBy(
-            array(
+            [
                 'spell' => $spell->getSpell(),
-                'class' => $this->classDefinition
-            )
+                'class' => $this->classDefinition,
+            ]
         );
+
         return $classSpell;
     }
-} 
+}

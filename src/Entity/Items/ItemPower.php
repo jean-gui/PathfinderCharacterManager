@@ -68,4 +68,4 @@ class ItemPower implements TranslatableInterface
     {
         return $this->__get('name');
     }
-} 
+}

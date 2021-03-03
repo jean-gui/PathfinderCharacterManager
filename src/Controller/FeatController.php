@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Rules\Feat;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

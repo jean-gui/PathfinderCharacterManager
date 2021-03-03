@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\Spell;
 use Symfony\Component\Form\AbstractType;

@@ -118,7 +118,7 @@ class PreparedSpell
     /**
      * Get alreadyCast
      *
-     * @return integer 
+     * @return integer
      */
     public function isAlreadyCast()
     {
@@ -142,7 +142,7 @@ class PreparedSpell
     /**
      * Get character
      *
-     * @return Character 
+     * @return Character
      */
     public function getCharacter()
     {
@@ -166,7 +166,7 @@ class PreparedSpell
     /**
      * Get spell
      *
-     * @return Spell 
+     * @return Spell
      */
     public function getSpell()
     {

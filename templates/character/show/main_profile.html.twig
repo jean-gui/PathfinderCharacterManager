@@ -6,56 +6,93 @@
     <tr>
         <th>{{ 'ability'|trans }}</th>
         <th>{{ 'value'|trans }}</th>
-        <th>{{ 'modifier' }}</th>
+        <th>{{ 'modifier'|trans }}</th>
+        <th style="min-width: 10%">{{ 'roll'|trans }}</th>
     </tr>
     </thead>
-    <tr>
+    {% set mod = entity.modifierByAbility('strength') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'strength'|trans }}">
         <th>{{ 'strength'|trans }}</th>
         <td>
             {{ entity.strength }}
             {{ popovers.bonuses(entity.abilitiesBonuses.strength) }}
         </td>
-        <td>{{ entity.modifierByAbility('strength') }}</td>
+        <td>{{ mod }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
-    <tr>
+    {% set mod = entity.modifierByAbility('dexterity') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'dexterity'|trans }}">
         <th>{{ 'dexterity'|trans }}</th>
         <td>
             {{ entity.dexterity }}
             {{ popovers.bonuses(entity.abilitiesBonuses.dexterity) }}
         </td>
-        <td>{{ entity.modifierByAbility('dexterity') }}</td>
+        <td>{{ mod }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
-    <tr>
+    {% set mod = entity.modifierByAbility('constitution') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'constitution'|trans }}">
         <th>{{ 'constitution'|trans }}</th>
         <td>
             {{ entity.constitution }}
             {{ popovers.bonuses(entity.abilitiesBonuses.constitution) }}
         </td>
         <td>{{ entity.modifierByAbility('constitution') }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
-    <tr>
+    {% set mod = entity.modifierByAbility('intelligence') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'intelligence'|trans }}">
         <th>{{ 'intelligence'|trans }}</th>
         <td>
             {{ entity.intelligence }}
             {{ popovers.bonuses(entity.abilitiesBonuses.intelligence) }}
         </td>
         <td>{{ entity.modifierByAbility('intelligence') }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
-    <tr>
+    {% set mod = entity.modifierByAbility('wisdom') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'wisdom'|trans }}">
         <th>{{ 'wisdom'|trans }}</th>
         <td>
             {{ entity.wisdom }}
             {{ popovers.bonuses(entity.abilitiesBonuses.wisdom) }}
         </td>
         <td>{{ entity.modifierByAbility('wisdom') }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
-    <tr>
+    {% set mod = entity.modifierByAbility('charisma') %}
+    <tr data-controller="roll" data-roll-expression-value="1d20{{ mod >= 0 ? '+'~mod : mod }}"
+        data-roll-type-value="{{ 'charisma'|trans }}">
         <th>{{ 'charisma'|trans }}</th>
         <td>
             {{ entity.charisma }}
             {{ popovers.bonuses(entity.abilitiesBonuses.charisma) }}
         </td>
         <td>{{ entity.modifierByAbility('charisma') }}</td>
+        <td>
+            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+            <span data-roll-target="result"></span>
+        </td>
     </tr>
 </table>
 {{ render_esi(controller('App\\Controller\\CharacterController:hitPoints', { 'id': entity.id })) }}

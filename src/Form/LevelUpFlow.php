@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\Characters\Level;
 use Craue\FormFlowBundle\Form\FormFlow;
 use Craue\FormFlowBundle\Form\FormFlowInterface;
@@ -80,4 +79,4 @@ class LevelUpFlow extends FormFlow
             ),
         );
     }
-} 
+}
