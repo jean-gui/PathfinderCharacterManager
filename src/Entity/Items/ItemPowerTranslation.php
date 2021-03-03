@@ -98,5 +98,4 @@ class ItemPowerTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

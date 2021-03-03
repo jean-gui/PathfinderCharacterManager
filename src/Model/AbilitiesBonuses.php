@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class AbilitiesBonuses
  *
@@ -50,12 +49,12 @@ class AbilitiesBonuses
      */
     public function __construct()
     {
-        $this->strength = new Bonuses();
-        $this->dexterity = new Bonuses();
-        $this->constitution = new Bonuses();
-        $this->intelligence = new Bonuses();
-        $this->wisdom = new Bonuses();
-        $this->charisma = new Bonuses();
+        $this->strength            = new Bonuses();
+        $this->dexterity           = new Bonuses();
+        $this->constitution        = new Bonuses();
+        $this->intelligence        = new Bonuses();
+        $this->wisdom              = new Bonuses();
+        $this->charisma            = new Bonuses();
         $this->maxDexterityBonuses = new Bonuses();
     }
-} 
+}

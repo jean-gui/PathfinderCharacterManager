@@ -29,7 +29,6 @@ use Exception;
  */
 class CharacterEquipment
 {
-
     public function equip(Character $character, Item $item): \App\Entity\Characters\CharacterEquipment
     {
         $equipment = $character->getEquipment();
@@ -98,7 +97,7 @@ class CharacterEquipment
     {
         $equipment = $character->getEquipment();
         $item = null;
-        switch($slot) {
+        switch ($slot) {
             case 'headband':
                 $item = $equipment->getHeadband();
                 $equipment->setHeadband();
@@ -173,7 +172,6 @@ class CharacterEquipment
             }
         }
 
-
         return $character;
     }
-} 
+}

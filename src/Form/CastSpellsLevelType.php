@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Model\CastableLevelSpells;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

@@ -143,13 +143,27 @@ class Character extends BaseCharacter
      */
     public function postLoad()
     {
-        if (!$this->abilitiesBonuses) $this->abilitiesBonuses = new AbilitiesBonuses();
-        if (!$this->defenseBonuses)   $this->defenseBonuses   = new DefenseBonuses();
-        if (!$this->attackBonuses)    $this->attackBonuses    = new AttackBonuses();
-        if (!$this->hpBonuses)        $this->hpBonuses        = new Bonuses();
-        if (!$this->skillsBonuses)    $this->skillsBonuses    = array();
-        if (!$this->speedBonuses)     $this->speedBonuses     = new Bonuses();
-        if (!$this->spellSlotBonuses) $this->spellSlotBonuses = new SpellSlotBonuses();
+        if (!$this->abilitiesBonuses) {
+            $this->abilitiesBonuses = new AbilitiesBonuses();
+        }
+        if (!$this->defenseBonuses) {
+            $this->defenseBonuses = new DefenseBonuses();
+        }
+        if (!$this->attackBonuses) {
+            $this->attackBonuses = new AttackBonuses();
+        }
+        if (!$this->hpBonuses) {
+            $this->hpBonuses = new Bonuses();
+        }
+        if (!$this->skillsBonuses) {
+            $this->skillsBonuses = [];
+        }
+        if (!$this->speedBonuses) {
+            $this->speedBonuses = new Bonuses();
+        }
+        if (!$this->spellSlotBonuses) {
+            $this->spellSlotBonuses = new SpellSlotBonuses();
+        }
     }
 
     /**
@@ -245,7 +259,6 @@ class Character extends BaseCharacter
     {
         foreach ($this->getInventoryItems() as $inventoryItem) {
             if ($inventoryItem->getItem() === $item) {
-
                 if ($inventoryItem->getQuantity() <= $quantity) {
                     $this->getInventoryItems()->removeElement($inventoryItem);
                 } else {
@@ -939,7 +952,7 @@ class Character extends BaseCharacter
     public function getFeats()
     {
         $feats = array();
-        foreach($this->getLevels() as $level) {
+        foreach ($this->getLevels() as $level) {
             $feats = array_merge($feats, $level->getFeats()->toArray());
         }
 
@@ -1421,7 +1434,7 @@ class Character extends BaseCharacter
     /**
      * Get nonPreparedCastSpellsCount
      *
-     * @return array 
+     * @return array
      */
     public function getNonPreparedCastSpellsCount()
     {
@@ -1570,8 +1583,8 @@ class Character extends BaseCharacter
      */
     public function setUnequippedInventory(
         /** @noinspection PhpUnusedParameterInspection */
-        Collection $inventory)
-    {
+        Collection $inventory
+    ) {
         return $this;
     }
 

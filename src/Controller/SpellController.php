@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Rules\Spell;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

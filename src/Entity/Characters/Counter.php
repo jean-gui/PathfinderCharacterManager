@@ -183,7 +183,8 @@ class Counter
      *
      * @return $this
      */
-    public function increase() {
+    public function increase()
+    {
         if ($this->current < $this->max) {
             $this->current++;
         }

@@ -129,18 +129,18 @@ class EditLevelType extends AbstractType
 
                 if ($level->getClassDefinition()->getKnownSpellsPerLevel()) {
                     $form->add(
-                            'learnedSpells',
-                            CollectionType::class,
-                            array(
-                                'label' => 'New Spell' . ($level->getLearnedSpells()->count() > 1 ? 's' : ''),
-                                'entry_type' => AddCharacterSpellType::class,
-                                'entry_options' => array(
-                                    'learned' => $learned->toArray(),
-                                    'em'      => $this->em,
-                                    'class-definition' => $level->getClassDefinition(),
-                                    'label'   => false
-                                )
-                            )
+                        'learnedSpells',
+                        CollectionType::class,
+                        [
+                            'label'         => 'New Spell'.($level->getLearnedSpells()->count() > 1 ? 's' : ''),
+                            'entry_type'    => AddCharacterSpellType::class,
+                            'entry_options' => [
+                                'learned'          => $learned->toArray(),
+                                'em'               => $this->em,
+                                'class-definition' => $level->getClassDefinition(),
+                                'label'            => false,
+                            ],
+                        ]
                     );
                 }
 

@@ -95,5 +95,4 @@ class SubClassTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

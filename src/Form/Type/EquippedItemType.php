@@ -3,7 +3,6 @@
 
 namespace App\Form\Type;
 
-
 use App\Entity\Items\Item;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -50,9 +49,9 @@ class EquippedItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => Item::class
-            )
+            [
+                'data_class' => Item::class,
+            ]
         );
     }
-} 
+}

@@ -87,7 +87,7 @@ class ClassSpell
     /**
      * Get level
      *
-     * @return integer 
+     * @return integer
      */
     public function getSpellLevel()
     {
@@ -111,7 +111,7 @@ class ClassSpell
     /**
      * Get class
      *
-     * @return ClassDefinition 
+     * @return ClassDefinition
      */
     public function getClass()
     {
@@ -154,7 +154,7 @@ class ClassSpell
     /**
      * Get spell
      *
-     * @return Spell 
+     * @return Spell
      */
     public function getSpell()
     {

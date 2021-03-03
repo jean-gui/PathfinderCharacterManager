@@ -3,7 +3,6 @@
 
 namespace App\Form\Type;
 
-
 use App\Entity\Characters\CharacterFeat;
 use App\Entity\Rules\Feat;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -57,6 +56,4 @@ class AddCharacterFeatType extends AbstractType
         );
         $resolver->setRequired(array('level', 'choices'));
     }
-
-
-} 
+}

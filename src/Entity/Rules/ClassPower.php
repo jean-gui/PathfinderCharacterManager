@@ -2,7 +2,6 @@
 
 namespace App\Entity\Rules;
 
-
 use App\Entity\Traits\PowerTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -246,4 +245,4 @@ class ClassPower implements TranslatableInterface
     {
         return $this->__get('name');
     }
-} 
+}

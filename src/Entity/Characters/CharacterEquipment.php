@@ -620,22 +620,54 @@ class CharacterEquipment
     public function isEquipped(Item $item)
     {
         $equipped = 0;
-        if ($item === $this->getMainWeapon()) $equipped++;
-        if ($item === $this->getOffhandWeapon()) $equipped++;
-        if ($item === $this->getRightFinger()) $equipped++;
-        if ($item === $this->getLeftFinger()) $equipped++;
-        if ($item === $this->getArmor()) $equipped++;
-        if ($item === $this->getBelt()) $equipped++;
-        if ($item === $this->getBody()) $equipped++;
-        if ($item === $this->getChest()) $equipped++;
-        if ($item === $this->getEyes()) $equipped++;
-        if ($item === $this->getFeet()) $equipped++;
-        if ($item === $this->getHands()) $equipped++;
-        if ($item === $this->getHead()) $equipped++;
-        if ($item === $this->getHeadband()) $equipped++;
-        if ($item === $this->getNeck()) $equipped++;
-        if ($item === $this->getShoulders()) $equipped++;
-        if ($item === $this->getWrists()) $equipped++;
+        if ($item === $this->getMainWeapon()) {
+            $equipped++;
+        }
+        if ($item === $this->getOffhandWeapon()) {
+            $equipped++;
+        }
+        if ($item === $this->getRightFinger()) {
+            $equipped++;
+        }
+        if ($item === $this->getLeftFinger()) {
+            $equipped++;
+        }
+        if ($item === $this->getArmor()) {
+            $equipped++;
+        }
+        if ($item === $this->getBelt()) {
+            $equipped++;
+        }
+        if ($item === $this->getBody()) {
+            $equipped++;
+        }
+        if ($item === $this->getChest()) {
+            $equipped++;
+        }
+        if ($item === $this->getEyes()) {
+            $equipped++;
+        }
+        if ($item === $this->getFeet()) {
+            $equipped++;
+        }
+        if ($item === $this->getHands()) {
+            $equipped++;
+        }
+        if ($item === $this->getHead()) {
+            $equipped++;
+        }
+        if ($item === $this->getHeadband()) {
+            $equipped++;
+        }
+        if ($item === $this->getNeck()) {
+            $equipped++;
+        }
+        if ($item === $this->getShoulders()) {
+            $equipped++;
+        }
+        if ($item === $this->getWrists()) {
+            $equipped++;
+        }
 
         return $equipped;
     }
@@ -654,5 +686,4 @@ class CharacterEquipment
         $this->getHeadband()          || $this->getNeck()          ||
         $this->getShoulders()         || $this->getWrists();
     }
-
 }

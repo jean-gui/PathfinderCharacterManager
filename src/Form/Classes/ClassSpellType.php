@@ -29,15 +29,17 @@ class ClassSpellType extends AbstractType
                 EntityType::class,
                 [
                     'class'       => Spell::class,
-                    'choice_name' => ChoiceList::fieldName($this,'name'),
-                    'attr'        => ['class' => 'select2']
+                    'choice_name' => ChoiceList::fieldName($this, 'name'),
+                    'attr'        => ['class' => 'select2'],
                 ]
             )
-            ->add('spellLevel', null,
-                array(
+            ->add(
+                'spellLevel',
+                null,
+                [
                     'required' => false,
-                    'label' => false,
-                )
+                    'label'    => false,
+                ]
             );
     }
 

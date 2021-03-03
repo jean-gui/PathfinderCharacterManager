@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class Bonus
  *
@@ -68,4 +67,4 @@ class Bonus
     {
         return $this->type;
     }
-} 
+}

@@ -14,8 +14,7 @@ class ExpressionLanguage extends BaseExpressionLanguage
         EntityManagerInterface $em,
         CacheItemPoolInterface $cache = null,
         array $providers = []
-    )
-    {
+    ) {
         $this->em = $em;
 
         // prepends the default provider to let users override it

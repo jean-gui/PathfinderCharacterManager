@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Characters\Character;
 use App\Entity\Characters\Counter;
 use App\Form\CountersIncreaseType;
@@ -49,7 +48,7 @@ class CounterController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
 
                 if ($form->has('increase_all') && $form->get('increase_all')->isClicked()) {
-                    foreach($character->getCounters() as $counter) {
+                    foreach ($character->getCounters() as $counter) {
                         $counter->increase();
                     }
 

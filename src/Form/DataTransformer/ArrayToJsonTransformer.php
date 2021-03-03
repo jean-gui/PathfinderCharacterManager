@@ -43,4 +43,4 @@ class ArrayToJsonTransformer implements DataTransformerInterface
 
         return json_decode($json, true);
     }
-} 
+}

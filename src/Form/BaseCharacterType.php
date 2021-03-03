@@ -52,5 +52,4 @@ class BaseCharacterType extends AbstractType
             'data_class' => Character::class
         ));
     }
-
 }

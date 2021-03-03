@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class SpellSlotBonuses
  *
@@ -50,7 +49,7 @@ class SpellSlotBonuses
         if (!array_key_exists($level, $this->slots)) {
             return 0;
         }
+
         return $this->slots[$level];
     }
-
-} 
+}

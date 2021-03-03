@@ -95,5 +95,4 @@ class ClassPowerTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

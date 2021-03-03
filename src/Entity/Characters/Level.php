@@ -364,7 +364,7 @@ class Level
     /**
      * Get extraAbility
      *
-     * @return string 
+     * @return string
      */
     public function getExtraAbility()
     {
@@ -455,7 +455,7 @@ class Level
      * Add learnedSpells
      *
      * @param ClassSpell $learnedSpell
-     * 
+     *
      * @return $this
      */
     public function addLearnedSpell(ClassSpell $learnedSpell)
@@ -516,6 +516,4 @@ class Level
 
         return $this;
     }
-
-
 }

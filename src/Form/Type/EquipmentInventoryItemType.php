@@ -3,7 +3,6 @@
 
 namespace App\Form\Type;
 
-
 use App\Entity\Characters\InventoryItem;
 use App\Entity\Items\Item;
 use Symfony\Component\Form\AbstractType;
@@ -56,9 +55,9 @@ class EquipmentInventoryItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'data_class' => InventoryItem::class
-            )
+            [
+                'data_class' => InventoryItem::class,
+            ]
         );
     }
-} 
+}

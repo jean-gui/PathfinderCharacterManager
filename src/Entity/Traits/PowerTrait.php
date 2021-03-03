@@ -4,7 +4,8 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait PowerTrait {
+trait PowerTrait
+{
     /**
      * @var boolean
      *
@@ -175,4 +176,4 @@ trait PowerTrait {
     {
         return $this->prerequisities;
     }
-} 
+}

@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\Spell;
 
@@ -11,7 +10,8 @@ use App\Entity\Rules\Spell;
  *
  * @package App\Model
  */
-class CastableClassSpells {
+class CastableClassSpells
+{
     /**
      * @var ClassDefinition
      */

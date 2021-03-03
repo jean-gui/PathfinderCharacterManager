@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class AttackBonuses
  *
@@ -110,4 +109,4 @@ class AttackBonuses
         $this->cmb = new Bonuses();
         $this->cmd = new Bonuses();
     }
-} 
+}

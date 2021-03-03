@@ -95,5 +95,4 @@ class ClassDefinitionTranslation implements TranslationInterface
     {
         return $this->shortDescription;
     }
-
 }

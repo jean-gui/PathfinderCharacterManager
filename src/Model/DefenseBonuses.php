@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-
 /**
  * Class DefenseBonuses
  *
@@ -40,10 +39,10 @@ class DefenseBonuses
      */
     public function __construct()
     {
-        $this->ac = new Bonuses();
-        $this->reflexes = new Bonuses();
-        $this->fortitude = new Bonuses();
-        $this->will = new Bonuses();
+        $this->ac             = new Bonuses();
+        $this->reflexes       = new Bonuses();
+        $this->fortitude      = new Bonuses();
+        $this->will           = new Bonuses();
         $this->spellResitance = new Bonuses();
     }
-} 
+}
