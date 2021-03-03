@@ -24,11 +24,6 @@ class SubClassCrudController extends GenericCrudController
         return SubClass::class;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return parent::configureActions($actions)->add(Crud::PAGE_INDEX, Action::DETAIL);
-    }
-
     public function configureFields(string $pageName): iterable
     {
         return [
