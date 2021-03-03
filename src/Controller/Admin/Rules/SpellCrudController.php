@@ -4,32 +4,21 @@ namespace App\Controller\Admin\Rules;
 
 use App\Admin\Field\JsonField;
 use App\Admin\Field\TranslationField;
+use App\Controller\Admin\GenericCrudController;
 use App\Entity\Rules\Spell;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class SpellCrudController extends AbstractCrudController
+class SpellCrudController extends GenericCrudController
 {
     public static function getEntityFqcn(): string
     {
         return Spell::class;
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        $c = parent::configureCrud($crud);
-
-        $searchFields = $c->getAsDto()->getSearchFields();
-        $c->setSearchFields(array_merge($searchFields, ['translations.name']));
-        $c->addFormTheme('bundles/A2lixTranslationFormBundle/bootstrap_4_layout.html.twig');
-
-        return $c;
     }
 
     public function configureActions(Actions $actions): Actions
