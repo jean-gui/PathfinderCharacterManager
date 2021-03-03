@@ -96,34 +96,3 @@
         </div>
     {% endfor %}
 {% endblock %}
-
-{#
-{% block _level_up_class_summary_hp_classPowers_row %}
-    <div class="form-group row">
-        {% for child in form.children %}
-            {% if
-                child.vars.data.classPower.children.count > 0 or
-                child.vars.data.classPower.effects['choice'] is defined %}
-                {{ form_label(child) }}
-                {{ form_widget(child) }}
-            {% endif %}
-        {% endfor %}
-    </div>
-{% endblock %}
-
-{% block _level_up_class_summary_hp_classPowers_entry_label %}
-    {{ form_label(form, form.vars.data) }}
-{% endblock %}
-
-{% block _level_up_class_summary_hp_classPowers_entry_childPower_row %}
-    <div class="col-sm-9">
-        {{ form_widget(form) }}
-    </div>
-{% endblock %}
-
-{% block _level_up_class_summary_hp_classPowers_entry_extraInformation_row %}
-    <div class="col-sm-9">
-        {{ form_widget(form) }}
-    </div>
-{% endblock %}
-#}
