@@ -420,17 +420,17 @@ class CharacterBonuses
             }
 
             // Armor check penalty
-            if ($item instanceof Armor or $item instanceof Shield) {
+            if ($item instanceof Armor || $item instanceof Shield) {
                 /** @var $item Armor|Shield */
                 $skills = $this->em->getRepository(Skill::class)->findAll();
 
-                $effects = array();
+                $effects = [];
                 /** @var Skill $skill */
                 foreach ($skills as $skill) {
                     if ($skill->getArmorCheckPenalty()) {
                         $effects[$skill->getShortname()] = array(
-                            'type' => 'armor-check-penalty',
-                            'value' => $item->getArmorCheckPenalty()
+                            'type'  => 'armor-check-penalty',
+                            'value' => $item->getArmorCheckPenalty(),
                         );
                     }
                 }
