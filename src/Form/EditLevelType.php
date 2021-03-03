@@ -49,7 +49,6 @@ class EditLevelType extends AbstractType
         $this->advancement = $advancement;
         $this->em = $em;
 
-        // TODO: order
         $this->skills = $this->em->getRepository(Skill::class)->findAll();
         usort($this->skills, function (Skill $s1, Skill $s2) {
             return strcmp($s1->name, $s2->name);

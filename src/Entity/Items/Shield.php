@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
- *
- * @todo Really implement that class
  */
 class Shield extends Item
 {

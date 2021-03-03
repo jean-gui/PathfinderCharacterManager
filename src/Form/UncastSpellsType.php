@@ -42,7 +42,6 @@ class UncastSpellsType extends AbstractType
                                     UncastSpellType::class,
                                     array(
                                         'mapped'      => false,
-                                        // @todo Wow that's ugly!
                                         'label'       => $spellEffect->getSpell() . ' (' . $spellEffect->getCharacter() . ')',
                                         'spellEffect' => $spellEffect,
                                     )
