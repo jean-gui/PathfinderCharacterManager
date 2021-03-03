@@ -7,7 +7,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Translation implements TranslationInterface
+abstract class Translation implements TranslationInterface
 {
     use TranslationTrait;
 
