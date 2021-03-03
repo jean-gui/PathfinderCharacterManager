@@ -33,7 +33,7 @@ class AttackBonuses
     /**
      * @var Bonuses
      */
-    public $rangedAttackRolls = 0;
+    public $rangedAttackRolls;
 
     /**
      * @var Bonuses
