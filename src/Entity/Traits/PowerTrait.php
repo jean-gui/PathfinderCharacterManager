@@ -2,6 +2,7 @@
 
 namespace App\Entity\Traits;
 
+use App\Entity\PowerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 trait PowerTrait
@@ -48,7 +49,7 @@ trait PowerTrait
      *
      * @return $this
      */
-    public function setPassive(bool $passive)
+    public function setPassive(bool $passive): PowerInterface
     {
         $this->passive = $passive;
 
@@ -60,7 +61,7 @@ trait PowerTrait
      *
      * @return boolean
      */
-    public function isPassive()
+    public function isPassive(): bool
     {
         return $this->passive;
     }
@@ -72,7 +73,7 @@ trait PowerTrait
      *
      * @return $this
      */
-    public function setEffects(array $effect)
+    public function setEffects(array $effect): PowerInterface
     {
         $this->effects = $effect;
 
@@ -84,7 +85,7 @@ trait PowerTrait
      *
      * @return array
      */
-    public function getEffects()
+    public function getEffects(): ?array
     {
         return $this->effects;
     }
@@ -92,7 +93,7 @@ trait PowerTrait
     /**
      * @return bool
      */
-    public function hasEffects()
+    public function hasEffects(): bool
     {
         return $this->getEffects() && count($this->getEffects()) > 0;
     }
@@ -104,7 +105,7 @@ trait PowerTrait
      *
      * @return $this
      */
-    public function setConditions(array $conditions)
+    public function setConditions(array $conditions): PowerInterface
     {
         $this->conditions = $conditions;
 
@@ -116,7 +117,7 @@ trait PowerTrait
      *
      * @return array
      */
-    public function getConditions()
+    public function getConditions(): ?array
     {
         return $this->conditions;
     }
@@ -128,7 +129,7 @@ trait PowerTrait
      *
      * @return $this
      */
-    public function setExternalConditions(array $externalConditions)
+    public function setExternalConditions(array $externalConditions): PowerInterface
     {
         $this->externalConditions = $externalConditions;
 
@@ -140,7 +141,7 @@ trait PowerTrait
      *
      * @return array
      */
-    public function getExternalConditions()
+    public function getExternalConditions(): ?array
     {
         return $this->externalConditions;
     }
@@ -148,7 +149,7 @@ trait PowerTrait
     /**
      * @return bool
      */
-    public function hasExternalConditions()
+    public function hasExternalConditions(): bool
     {
         return count($this->externalConditions) > 0;
     }
@@ -160,7 +161,7 @@ trait PowerTrait
      *
      * @return $this
      */
-    public function setPrerequisities(array $prerequisities)
+    public function setPrerequisities(array $prerequisities): PowerInterface
     {
         $this->prerequisities = $prerequisities;
 
@@ -172,7 +173,7 @@ trait PowerTrait
      *
      * @return array
      */
-    public function getPrerequisities()
+    public function getPrerequisities(): ?array
     {
         return $this->prerequisities;
     }

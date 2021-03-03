@@ -2,6 +2,7 @@
 
 namespace App\Entity\Rules;
 
+use App\Entity\PowerInterface;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package App\Entity
  */
-class ClassPower implements TranslatableInterface
+class ClassPower implements PowerInterface, TranslatableInterface
 {
     use PowerTrait;
     use TranslatableTrait;
@@ -91,8 +92,8 @@ class ClassPower implements TranslatableInterface
 
     public function __construct()
     {
-        $this->effects = [];
-        $this->parents = new ArrayCollection();
+        $this->effects  = [];
+        $this->parents  = new ArrayCollection();
         $this->children = new ArrayCollection();
     }
 
@@ -209,7 +210,7 @@ class ClassPower implements TranslatableInterface
      */
     public function addParent(ClassPower $parent)
     {
-        $this->parents[] = $parent;
+        $this->parents[]    = $parent;
         $parent->children[] = $this;
 
         return $this;

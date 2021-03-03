@@ -3,6 +3,7 @@
 namespace App\Entity\Characters;
 
 use App\Entity\Items\ItemPower;
+use App\Entity\PowerInterface;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Cache()
  */
-class ItemPowerEffect
+class ItemPowerEffect implements PowerInterface
 {
     use PowerTrait;
 

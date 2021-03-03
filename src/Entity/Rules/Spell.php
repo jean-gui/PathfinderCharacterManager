@@ -2,6 +2,7 @@
 
 namespace App\Entity\Rules;
 
+use App\Entity\PowerInterface;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Cache()
  */
-class Spell implements TranslatableInterface
+class Spell implements PowerInterface, TranslatableInterface
 {
     use PowerTrait;
     use TranslatableTrait;

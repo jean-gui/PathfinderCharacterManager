@@ -2,6 +2,7 @@
 
 namespace App\Entity\Characters;
 
+use App\Entity\PowerInterface;
 use App\Entity\Rules\Spell;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table()
  * @ORM\Entity
  */
-class SpellEffect
+class SpellEffect implements PowerInterface
 {
     use PowerTrait;
 

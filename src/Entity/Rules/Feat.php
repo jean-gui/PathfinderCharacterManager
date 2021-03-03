@@ -2,6 +2,7 @@
 
 namespace App\Entity\Rules;
 
+use App\Entity\PowerInterface;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\FeatRepository")
  * @ORM\Cache()
  */
-class Feat implements TranslatableInterface
+class Feat implements PowerInterface, TranslatableInterface
 {
     use PowerTrait;
     use TranslatableTrait;

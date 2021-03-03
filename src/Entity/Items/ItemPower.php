@@ -2,6 +2,7 @@
 
 namespace App\Entity\Items;
 
+use App\Entity\PowerInterface;
 use App\Entity\Traits\PowerTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
@@ -22,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package App\Entity
  */
-class ItemPower implements TranslatableInterface
+class ItemPower implements PowerInterface, TranslatableInterface
 {
     use TranslatableTrait;
     use PowerTrait;

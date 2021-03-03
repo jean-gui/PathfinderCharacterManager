@@ -12,6 +12,7 @@ use App\Entity\Items\Armor;
 use App\Entity\Items\Item;
 use App\Entity\Items\Shield;
 use App\Entity\Items\Weapon;
+use App\Entity\PowerInterface;
 use App\Entity\Rules\ClassPower;
 use App\Entity\Rules\Skill;
 use App\ExpressionLanguage\ExpressionLanguage;
@@ -376,12 +377,12 @@ class CharacterBonuses
     /**
      * Apply feat effects to a character
      *
-     * @param Character $character
-     * @param mixed $power anything with the PowerTrait trait
+     * @param Character      $character
+     * @param PowerInterface $power anything with the PowerTrait trait
      *
      * @return Character
      */
-    private function applyPower(Character $character, $power)
+    private function applyPower(Character $character, PowerInterface $power)
     {
         return $this->applyEffects($character, $power->getEffects(), $power);
     }
