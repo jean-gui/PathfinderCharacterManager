@@ -77,7 +77,7 @@ class CharacterEquipment
             throw new Exception('Cannot equip a non-wearable item');
         }
 
-        $character->removeInventory($item, 1);
+        $character->removeInventory($item);
 
         foreach ($item->getPowers() as $power) {
             if ((!$power->isPassive() || $power->hasExternalConditions()) && $power->getEffects()) {

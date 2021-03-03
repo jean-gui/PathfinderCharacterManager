@@ -1286,7 +1286,7 @@ class Character extends BaseCharacter
     public function removePreparedSpell(PreparedSpell $preparedSpell)
     {
         $this->preparedSpells->removeElement($preparedSpell);
-        $preparedSpell->setCharacter(null);
+        $preparedSpell->setCharacter();
     }
 
     /**

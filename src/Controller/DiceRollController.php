@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Characters\Character;
 use DiceCalc\Calc as DiceRoll;
 use DiceCalc\Random;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -108,8 +109,7 @@ class DiceRollController extends AbstractController
                             '%character%' => $character->getName(),
                             '%dice%'      => $expression,
                             '%type%'      => $type
-                        ],
-                        null
+                        ]
                     )
                 );
         }
@@ -128,19 +128,19 @@ class DiceRollController extends AbstractController
                 $embed
                     ->addField(
                         (new DiscordFieldEmbedObject())
-                            ->name($translator->trans('roll', [], null))
+                            ->name($translator->trans('roll', []))
                             ->value($roll)
                             ->inline(true)
                     )
                     ->addField(
                         (new DiscordFieldEmbedObject())
-                            ->name($translator->trans('roll.raw', [], null))
+                            ->name($translator->trans('roll.raw', []))
                             ->value(preg_replace(['/<s>/', '/<\/s>/'], '~~', $rawRollResult))
                             ->inline(true)
                     )
                     ->addField(
                         (new DiscordFieldEmbedObject())
-                            ->name($translator->trans('roll.result', [], null))
+                            ->name($translator->trans('roll.result', []))
                             ->value('**'.$calc().'**')
                             ->inline(true)
                     );
@@ -157,7 +157,7 @@ class DiceRollController extends AbstractController
                 $message->options($discordOptions);
 
                 $chatter->send($message);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
             }
         }

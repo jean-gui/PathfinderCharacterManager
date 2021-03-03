@@ -241,7 +241,7 @@ class CharacterEquipment
     {
         // Unequip right-hand weapon if this weapon is dual-weilded
         if ($weapon instanceof Weapon && $weapon->isTwoHanded()) {
-            $this->setOffhandWeapon(null);
+            $this->setOffhandWeapon();
         }
         $this->character->addInventory($this->getMainWeapon());
         $this->mainWeapon = $weapon;

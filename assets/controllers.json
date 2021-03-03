@@ -3,7 +3,7 @@
         "@symfony/ux-swup": {
             "swup": {
                 "enabled": true,
-                "webpackMode": "eager"
+                "fetch": "eager"
             }
         }
     },
