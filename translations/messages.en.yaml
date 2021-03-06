@@ -115,8 +115,7 @@ level_value: 'Level %level%'
 main:
     attack:
         rolls: 'Main Attack Rolls'
-    damage:
-        bonus: 'Main Damage Bonus'
+    damage: 'Main Damage'
     profile: 'Main Profile'
     weapon: 'Main Weapon'
 maximum_dexterity_bonus: 'Maximum Dexterity Bonus'
@@ -131,8 +130,7 @@ new:
 offhand:
     attack:
         rolls: 'Offhand Attack Rolls'
-    damage:
-        bonus: 'Offhand Damage Bonus'
+    damage: 'Offhand Damage'
     weapon: 'Offhand Weapon'
 other:
     bonuses: 'Other Bonuses'

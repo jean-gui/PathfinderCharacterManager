@@ -115,8 +115,7 @@ level_value: 'Niveau %level%'
 main:
     attack:
         rolls: 'Attaque main principale'
-    damage:
-        bonus: 'Bonus aux dégats main principale'
+    damage: 'Dégâts main principale'
     profile: 'Profil principal'
     weapon: 'Arme principale'
 maximum_dexterity_bonus: 'Bonus de dextérité maximal'
@@ -131,8 +130,7 @@ new:
 offhand:
     attack:
         rolls: 'Attaque main secondaire'
-    damage:
-        bonus: 'Bonus aux dégats main secondaire'
+    damage: 'Dégâts main secondaire'
     weapon: 'Arme secondaire'
 other:
     bonuses: 'Autres bonus'

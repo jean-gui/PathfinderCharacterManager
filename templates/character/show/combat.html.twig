@@ -147,8 +147,8 @@
     {% if entity.dualWielding %}
         <tr data-controller="roll"
             data-roll-expression-value="{{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}"
-            data-roll-type-value="{{ 'offhand.damage.bonus'|trans }}">
-            <th>{{ 'offhand.damage.bonus'|trans }}</th>
+            data-roll-type-value="{{ 'offhand.damage'|trans }}">
+            <th>{{ 'offhand.damage'|trans }}</th>
             <td>
                 {{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}
                 {{ popovers.bonuses(entity.attackBonuses.offhandDamage) }}
