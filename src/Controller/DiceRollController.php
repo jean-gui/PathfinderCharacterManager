@@ -95,13 +95,14 @@ class DiceRollController extends AbstractController
         $discordDsn = $character->getParty()->getDiscordDsn();
         $chatter = null;
         $transport = null;
+
         if ($discordDsn) {
             $message = new ChatMessage('');
             $message->transport('discord');
             $discordOptions = (new DiscordOptions())->username('Pathfinder Character Manager');
             $embed          = new DiscordEmbed();
             $embed
-                ->color(2021216)
+                ->color(hexdec(substr($character->getColor(), 1)))
                 ->title(
                     $translator->trans(
                         'roll.rolling',

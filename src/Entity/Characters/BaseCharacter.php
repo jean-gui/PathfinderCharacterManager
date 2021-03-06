@@ -147,14 +147,27 @@ class BaseCharacter
     protected $conditions;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=7, nullable=false, options={"default": "#1ed760"})
+     */
+    protected $color;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->abilities = new Abilities();
-        $this->equipment = new CharacterEquipment();
+        $this->abilities   = new Abilities();
+        $this->equipment   = new CharacterEquipment();
         $this->extraSpells = new ArrayCollection();
-        $this->conditions = new ArrayCollection();
+        $this->conditions  = new ArrayCollection();
+        $this->color       = '#'.$this->random_color_part().$this->random_color_part().$this->random_color_part();
+    }
+
+    private function random_color_part()
+    {
+        return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -533,6 +546,26 @@ class BaseCharacter
     public function removeCondition(Condition $condition)
     {
         $this->conditions->removeElement($condition);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): string
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     *
+     * @return BaseCharacter
+     */
+    public function setColor(string $color): BaseCharacter
+    {
+        $this->color = $color;
 
         return $this;
     }

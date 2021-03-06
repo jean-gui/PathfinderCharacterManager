@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Characters\Character;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,6 +41,7 @@ class BaseCharacterType extends AbstractType
             ->add('favoredClass')
             ->add('abilities', AbilitiesType::class)
             ->add('party')
+            ->add('color', ColorType::class, ['required' => true, 'html5' => true])
         ;
     }
     
