@@ -133,8 +133,8 @@
 <table id="damage-bonus" class="table table-striped table-hover table-sm">
     <tr data-controller="roll"
         data-roll-expression-value="{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
-        data-roll-type-value="{{ 'main.damage.bonus'|trans }}">
-        <th>{{ 'main.damage.bonus'|trans }}</th>
+        data-roll-type-value="{{ 'main.damage'|trans }}">
+        <th>{{ 'main.damage'|trans }}</th>
         <td>
             {{ entity.equipment.mainWeapon.damages }}{% if entity.mainDamageRoll >= 0 %}+{% endif %}{{ entity.mainDamageRoll }}
             {{ popovers.bonuses(entity.attackBonuses.mainDamage) }}
