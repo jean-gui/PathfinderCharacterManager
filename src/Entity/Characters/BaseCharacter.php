@@ -150,6 +150,7 @@ class BaseCharacter
      * @var string
      *
      * @ORM\Column(name="color", type="string", length=7, nullable=false, options={"default": "#1ed760"})
+     * @Assert\NotBlank
      */
     protected $color;
 
