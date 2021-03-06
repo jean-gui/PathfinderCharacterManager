@@ -132,7 +132,8 @@
 </table>
 <table id="damage-bonus" class="table table-striped table-hover table-sm">
     <tr data-controller="roll"
-        data-roll-expression-value="{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}">
+        data-roll-expression-value="{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
+        data-roll-type-value="{{ 'main.damage.bonus'|trans }}">
         <th>{{ 'main.damage.bonus'|trans }}</th>
         <td>
             {{ entity.equipment.mainWeapon.damages }}{% if entity.mainDamageRoll >= 0 %}+{% endif %}{{ entity.mainDamageRoll }}
@@ -144,18 +145,19 @@
         </td>
     </tr>
     {% if entity.dualWielding %}
-    <tr data-controller="roll"
-        data-roll-expression-value="{{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}">
-        <th>{{ 'offhand.damage.bonus'|trans }}</th>
-        <td>
-            {{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}
-            {{ popovers.bonuses(entity.attackBonuses.offhandDamage) }}
-        </td>
-        <td style="min-width: 20%">
-            <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
-            <span data-roll-target="result"></span>
-        </td>
-    </tr>
+        <tr data-controller="roll"
+            data-roll-expression-value="{{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}"
+            data-roll-type-value="{{ 'offhand.damage.bonus'|trans }}">
+            <th>{{ 'offhand.damage.bonus'|trans }}</th>
+            <td>
+                {{ entity.equipment.offhandWeapon.damages }}{{ entity.offhandDamageRoll >= 0 ? '+' : '' }}{{ entity.offhandDamageRoll }}
+                {{ popovers.bonuses(entity.attackBonuses.offhandDamage) }}
+            </td>
+            <td style="min-width: 20%">
+                <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
+                <span data-roll-target="result"></span>
+            </td>
+        </tr>
     {% endif %}
 </table>
 <table id="initiative" class="table table-hover table-sm">
