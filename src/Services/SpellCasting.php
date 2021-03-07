@@ -59,7 +59,7 @@ class SpellCasting
             $cast = $caster->getNonPreparedCastSpellsCount();
 
             foreach ($caster->getLearnedSpells() as $classSpell) {
-                if (!$spellLevel) {
+                if ($spellLevel === null) {
                     $spellLevel = $classSpell->getSpellLevel();
                 }
 
@@ -72,10 +72,13 @@ class SpellCasting
                         !$cast ||
                         !array_key_exists($class->getId(), $cast) ||
                         !array_key_exists($spellLevel, $cast[$class->getId()]) ||
+                        $spellLevel === 0 ||
                         (
                             $class->getSpellsPerDay()[$spellLevel][$caster->getLevel($class) - 1] >= 0 &&
                             $cast[$class->getId()][$spellLevel] < ($class->getSpellsPerDay()
-                            [$spellLevel][$caster->getLevel($class) - 1] + $this->extraSpells[$modifier][$spellLevel])
+                                [$spellLevel][$caster->getLevel(
+                                    $class
+                                ) - 1] + $this->extraSpells[$modifier][$spellLevel])
                         )
                     )
                 ) {
@@ -104,9 +107,12 @@ class SpellCasting
         array $targets = null,
         int $spellLevel = null
     ) {
+        dump('rofl');
         if (!$this->canCast($caster, $spell, $class, $spellLevel)) {
+            dump('rofl');
             throw new Exception($caster.' cannot cast '.$spell);
         }
+        dump('rofl');
 
         if ($targets) {
             foreach ($targets as $target) {
