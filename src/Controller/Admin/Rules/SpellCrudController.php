@@ -40,10 +40,11 @@ class SpellCrudController extends GenericCrudController
             TextField::new('targets')->onlyOnDetail(),
             BooleanField::new('passive'),
             CollectionField::new('classes')
-                           ->setEntryIsComplex(true)
+                           ->onlyOnForms()
                            ->allowAdd(true)
                            ->allowDelete(true)
-                           ->setEntryType(ClassSpellType::class),
+                           ->setEntryType(ClassSpellType::class)
+                           ->setFormTypeOption('by_reference', false),
             JsonField::new('effects')->hideOnIndex(),
             JsonField::new('conditions')->hideOnIndex(),
             JsonField::new('externalConditions')->hideOnIndex(),

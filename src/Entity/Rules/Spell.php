@@ -52,7 +52,7 @@ class Spell implements PowerInterface, TranslatableInterface
     /**
      * @var Collection|ClassSpell[]
      *
-     * @ORM\OneToMany(targetEntity=ClassSpell::class, mappedBy="spell")
+     * @ORM\OneToMany(targetEntity=ClassSpell::class, mappedBy="spell", cascade={"persist"}, orphanRemoval=true)
      * @ORM\Cache()
      */
     protected $classes;
@@ -118,13 +118,15 @@ class Spell implements PowerInterface, TranslatableInterface
     /**
      * Add class
      *
-     * @param ClassSpell $class
+     * @param ClassSpell $classSpell
      *
      * @return Spell
      */
-    public function addClass(ClassSpell $class)
+    public function addClass(ClassSpell $classSpell)
     {
-        $this->classes[] = $class;
+        dump('ok');
+        $this->classes[] = $classSpell;
+        $classSpell->setSpell($this);
 
         return $this;
     }
