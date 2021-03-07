@@ -107,12 +107,9 @@ class SpellCasting
         array $targets = null,
         int $spellLevel = null
     ) {
-        dump('rofl');
         if (!$this->canCast($caster, $spell, $class, $spellLevel)) {
-            dump('rofl');
             throw new Exception($caster.' cannot cast '.$spell);
         }
-        dump('rofl');
 
         if ($targets) {
             foreach ($targets as $target) {
