@@ -69,8 +69,8 @@
                 </td>
                 <td>
                     {% for spellClass in entity.classes %}
-                        {{ spellClass.class }} {{ spellClass.spellLevel }}
-                        {% if loop.index != loop.length %}, {% endif %}
+                        {{ spellClass.subClass ? spellClass.subClass : spellClass.class }} {{ spellClass.spellLevel }}
+                        {%- if loop.index != loop.length -%}, {% endif %}
                     {% endfor %}
                 </td>
             </tr>
