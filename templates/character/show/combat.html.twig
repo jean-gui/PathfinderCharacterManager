@@ -75,6 +75,7 @@
         </td>
     </tr>
 </table>
+{% set mainDamages = entity.equipment.mainWeapon ? entity.equipment.mainWeapon : '1d3' %}
 <table id="attack-rolls" class="table table-striped table-hover table-sm">
     <tr>
         <th>{{ 'bab'|trans }}</th>
@@ -92,7 +93,8 @@
         <th>{{ 'main.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.mainAttackRolls) }}</th>
         {% for ar in entity.mainAttackRoll %}
             <td style="width: 15%" class="{% if loop.index0 == 0 %}pr-0{% else %}px-0{% endif %}"
-                data-controller="roll" data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }};{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
+                data-controller="roll"
+                data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }};{{ mainDamages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
                 data-roll-type-value="{{ 'main.attack.rolls'|trans }}">
                 {{ ar }}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
@@ -132,11 +134,11 @@
 </table>
 <table id="damage-bonus" class="table table-striped table-hover table-sm">
     <tr data-controller="roll"
-        data-roll-expression-value="{{ entity.equipment.mainWeapon.damages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
+        data-roll-expression-value="{{ mainDamages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
         data-roll-type-value="{{ 'main.damage'|trans }}">
         <th>{{ 'main.damage'|trans }}</th>
         <td>
-            {{ entity.equipment.mainWeapon.damages }}{% if entity.mainDamageRoll >= 0 %}+{% endif %}{{ entity.mainDamageRoll }}
+            {{ mainDamages }}{% if entity.mainDamageRoll >= 0 %}+{% endif %}{{ entity.mainDamageRoll }}
             {{ popovers.bonuses(entity.attackBonuses.mainDamage) }}
         </td>
         <td style="min-width: 20%">
