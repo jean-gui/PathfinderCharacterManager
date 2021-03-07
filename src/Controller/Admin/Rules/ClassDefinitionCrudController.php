@@ -7,7 +7,6 @@ use App\Admin\Field\TranslationField;
 use App\Entity\Rules\Abilities;
 use App\Entity\Rules\ClassDefinition;
 use App\Form\Classes\ClassPowerType;
-use App\Form\Classes\ClassSpellType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -73,18 +72,13 @@ class ClassDefinitionCrudController extends AbstractCrudController
             BooleanField::new('ableToLearnNewSpells')->hideOnIndex(),
             JsonField::new('spellsPerDay')->hideOnIndex(),
             JsonField::new('knownSpellsPerLevel')->hideOnIndex(),
-            CollectionField::new('spells')
-                ->hideOnIndex()
-                ->setEntryIsComplex(true)
-                ->setEntryType(ClassSpellType::class)
-                ->setFormTypeOption('by_reference', false)
-                ->setFormTypeOption('label', false),
+            CollectionField::new('spells')->onlyOnDetail(),
             CollectionField::new('powers')
-                ->hideOnIndex()
-                ->setEntryIsComplex(true)
-                ->setEntryType(ClassPowerType::class)
-                ->setFormTypeOption('by_reference', false)
-                ->setFormTypeOption('label', false),
+                           ->hideOnIndex()
+                           ->setEntryIsComplex(true)
+                           ->setEntryType(ClassPowerType::class)
+                           ->setFormTypeOption('by_reference', false)
+                           ->setFormTypeOption('label', false),
             CollectionField::new('subClasses')->onlyOnDetail(),
         ];
     }

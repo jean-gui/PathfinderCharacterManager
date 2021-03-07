@@ -24,12 +24,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#spells" data-toggle="tab" aria-controls="spells"
-                           aria-selected="false">
-                            Spells
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#powers" data-toggle="tab" aria-controls="powers"
                            aria-selected="false">
                             Powers
@@ -58,9 +52,6 @@
                         {{ form_row(edit_form.ableToLearnNewSpells) }}
                         {{ form_row(edit_form.spellsPerDay) }}
                         {{ form_row(edit_form.knownSpellsPerLevel) }}
-                    </div>
-                    <div id="spells" class="tab-pane" role="tabpanel" aria-labelledby="spells-tab">
-                        {{ form_row(edit_form.spells) }}
                     </div>
                     <div id="powers" class="tab-pane" role="tabpanel" aria-labelledby="powers-tab">
                         {{ form_row(edit_form.powers) }}
