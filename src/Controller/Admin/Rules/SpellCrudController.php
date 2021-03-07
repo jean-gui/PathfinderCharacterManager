@@ -6,7 +6,9 @@ use App\Admin\Field\JsonField;
 use App\Admin\Field\TranslationField;
 use App\Controller\Admin\GenericCrudController;
 use App\Entity\Rules\Spell;
+use App\Form\Admin\ClassSpellType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -37,6 +39,11 @@ class SpellCrudController extends GenericCrudController
             BooleanField::new('spellResistance'),
             TextField::new('targets')->onlyOnDetail(),
             BooleanField::new('passive'),
+            CollectionField::new('classes')
+                           ->setEntryIsComplex(true)
+                           ->allowAdd(true)
+                           ->allowDelete(true)
+                           ->setEntryType(ClassSpellType::class),
             JsonField::new('effects')->hideOnIndex(),
             JsonField::new('conditions')->hideOnIndex(),
             JsonField::new('externalConditions')->hideOnIndex(),
