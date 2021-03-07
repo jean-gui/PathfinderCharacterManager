@@ -20,23 +20,25 @@ class ClassSpellRepository extends EntityRepository
     /**
      * Find a class spell by name and class
      *
-     * @param string $name
+     * @param int             $spellId
      * @param ClassDefinition $class
-     * @param SubClass[] $subClasses
+     * @param SubClass[]      $subClasses
      *
      * @return null|ClassSpell
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByNameAndClass(string $name, ClassDefinition $class, array $subClasses = null)
+    public function findByNameAndClass(int $spellId, ClassDefinition $class, array $subClasses = null)
     {
         if ($subClasses && count($subClasses) > 0) {
-            $query = 'SELECT cs FROM ' . ClassSpell::class . ' cs LEFT JOIN cs.spell s WHERE s.name = :name AND cs.subClass IN (:cid)';
+            $query = 'SELECT cs FROM '.ClassSpell::class.' cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.subClass IN (:cid)';
 
-            $res = $this->_em->createQuery($query)->setParameters([
-                'name' => $name,
-                'cid'  => $subClasses,
-            ])->getResult();
+            $res = $this->_em->createQuery($query)->setParameters(
+                [
+                    'sid' => $spellId,
+                    'cid' => $subClasses,
+                ]
+            )->getResult();
 
             if ($res && count($res) > 0) {
                 return $res[0];
@@ -45,11 +47,12 @@ class ClassSpellRepository extends EntityRepository
 
         // No spell for subclass, let's try for class
 
-        $query = 'SELECT cs FROM ' . ClassSpell::class . ' cs LEFT JOIN cs.spell s WHERE s.name = :name AND cs.class = :cid';
+        $query = 'SELECT cs FROM '.ClassSpell::class.' cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.class = :cid';
 
-        return $this->_em->createQuery($query)->setParameters([
-            'name' => $name,
-            'cid'  => $class->getId(),
-        ])->getSingleResult();
+        return $this->_em->createQuery($query)->setParameters(
+            [
+                'sid' => $spellId,
+                'cid' => $class->getId(),
+            ])->getSingleResult();
     }
 }
