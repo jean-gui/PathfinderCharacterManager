@@ -124,7 +124,6 @@ class Spell implements PowerInterface, TranslatableInterface
      */
     public function addClass(ClassSpell $classSpell)
     {
-        dump('ok');
         $this->classes[] = $classSpell;
         $classSpell->setSpell($this);
 
