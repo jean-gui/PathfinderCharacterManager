@@ -31,7 +31,7 @@ class ClassSpellRepository extends EntityRepository
     public function findByNameAndClass(int $spellId, ClassDefinition $class, array $subClasses = null)
     {
         if ($subClasses && count($subClasses) > 0) {
-            $query = 'SELECT cs FROM '.ClassSpell::class.' cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.subClass IN (:cid)';
+            $query = 'SELECT cs FROM Rules:ClassSpell cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.subClass IN (:cid)';
 
             $res = $this->_em->createQuery($query)->setParameters(
                 [
@@ -47,7 +47,7 @@ class ClassSpellRepository extends EntityRepository
 
         // No spell for subclass, let's try for class
 
-        $query = 'SELECT cs FROM '.ClassSpell::class.' cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.class = :cid';
+        $query = 'SELECT cs FROM Rules:ClassSpell cs LEFT JOIN cs.spell s WHERE s.id = :sid AND cs.class = :cid';
 
         return $this->_em->createQuery($query)->setParameters(
             [

@@ -28,7 +28,9 @@ class SpellController extends AbstractController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery('SELECT s, cs, c FROM ' . Spell::class . ' s LEFT JOIN s.classes cs LEFT JOIN cs.class c LEFT JOIN s.translations t ORDER BY t.name');
+        $query = $em->createQuery(
+            'SELECT s, cs, c FROM Rules:Spell s LEFT JOIN s.classes cs LEFT JOIN cs.class c LEFT JOIN s.translations t ORDER BY t.name'
+        );
 
         $query->enableResultCache(3600);
 

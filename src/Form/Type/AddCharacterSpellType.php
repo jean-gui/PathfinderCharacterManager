@@ -55,7 +55,7 @@ class AddCharacterSpellType extends AbstractType
                     }
                 );
 
-                $queryString = 'SELECT cs, s FROM ' . ClassSpell::class . ' cs
+                $queryString = 'SELECT cs, s FROM Rules:ClassSpell cs
                             JOIN cs.spell s
                             WHERE cs.class = ?2';
                 if ($this->class->isAbleToLearnLowerLevelSpells()) {

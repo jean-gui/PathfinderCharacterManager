@@ -29,7 +29,7 @@ class FeatController extends AbstractController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery('SELECT f FROM ' . Feat::class . ' f LEFT JOIN f.translations t ORDER BY t.name');
+        $query = $em->createQuery('SELECT f FROM Rules:Feat f LEFT JOIN f.translations t ORDER BY t.name');
 
         $query->enableResultCache(3600);
 
