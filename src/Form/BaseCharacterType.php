@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class BaseCharacterType
  *
  * @package App\Form
- * @todo For some reason, xdebug.max_nesting_level needs to be set to at least 104 in dev environment
  */
 class BaseCharacterType extends AbstractType
 {
