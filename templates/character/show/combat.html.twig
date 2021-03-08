@@ -75,7 +75,7 @@
         </td>
     </tr>
 </table>
-{% set mainDamages = entity.equipment.mainWeapon ? entity.equipment.mainWeapon : '1d3' %}
+{% set mainDamages = entity.equipment.mainWeapon ? entity.equipment.mainWeapon.damages : '1d3' %}
 <table id="attack-rolls" class="table table-striped table-hover table-sm">
     <tr>
         <th>{{ 'bab'|trans }}</th>
