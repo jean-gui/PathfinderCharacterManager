@@ -58,7 +58,6 @@ class SpellEffect implements PowerInterface
      *
      * @ORM\ManyToOne(targetEntity=Spell::class)
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache()
      */
     protected $spell;
 

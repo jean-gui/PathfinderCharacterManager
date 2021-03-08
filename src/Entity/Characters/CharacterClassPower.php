@@ -37,7 +37,6 @@ class CharacterClassPower
      *
      * @ORM\ManyToOne(targetEntity=ClassPower::class)
      * @ORM\JoinColumn(name="class_power", referencedColumnName="id")
-     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     protected $classPower;
@@ -61,7 +60,6 @@ class CharacterClassPower
      *
      * @ORM\ManyToOne(targetEntity=ClassPower::class)
      * @ORM\JoinColumn(name="child_power", referencedColumnName="id", nullable=true)
-     * @ORM\Cache()
      */
     protected $childPower;
 

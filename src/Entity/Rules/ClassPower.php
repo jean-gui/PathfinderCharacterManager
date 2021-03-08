@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class ClassPower
  *
  * @ORM\Entity()
- * @ORM\Cache()
  *
  * @package App\Entity
  */
@@ -43,7 +42,6 @@ class ClassPower implements PowerInterface, TranslatableInterface
      *
      * @ORM\ManyToOne(targetEntity=ClassDefinition::class, inversedBy="powers")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache()
      */
     protected $class;
 
@@ -52,7 +50,6 @@ class ClassPower implements PowerInterface, TranslatableInterface
      *
      * @ORM\ManyToOne(targetEntity=SubClass::class, inversedBy="powers")
      * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id", nullable=true)
-     * @ORM\Cache()
      */
     protected $subClass;
 
@@ -74,7 +71,6 @@ class ClassPower implements PowerInterface, TranslatableInterface
      * @var ClassPower[]|Collection
      *
      * @ORM\ManyToMany(targetEntity=ClassPower::class, mappedBy="parents", cascade={"all"})
-     * @ORM\Cache()
      */
     protected $children;
 
@@ -86,7 +82,6 @@ class ClassPower implements PowerInterface, TranslatableInterface
      *      joinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="parent_id", referencedColumnName="id")}
      *      )
-     * @ORM\Cache()
      */
     protected $parents;
 

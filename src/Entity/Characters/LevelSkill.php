@@ -38,7 +38,6 @@ class LevelSkill
      * @ORM\ManyToOne(targetEntity=Skill::class)
      * @ORM\JoinColumn(name="skill_id", referencedColumnName="id")
      * @Assert\NotBlank()
-     * @ORM\Cache()
      */
     protected $skill;
 

@@ -51,7 +51,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Weapon::class)
      * @ORM\JoinColumn(name="main_weapon_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $mainWeapon;
 
@@ -60,7 +59,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Item::class)
      * @ORM\JoinColumn(name="offhand_weapon_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $offhandWeapon;
 
@@ -69,7 +67,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Armor::class)
      * @ORM\JoinColumn(name="armor_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $armor;
 
@@ -78,7 +75,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Body::class)
      * @ORM\JoinColumn(name="body_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $body;
 
@@ -87,7 +83,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Chest::class)
      * @ORM\JoinColumn(name="chest_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $chest;
 
@@ -96,7 +91,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Ring::class)
      * @ORM\JoinColumn(name="left_finger_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $leftFinger;
 
@@ -105,7 +99,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Ring::class)
      * @ORM\JoinColumn(name="right_finger_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $rightFinger;
 
@@ -114,7 +107,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Feet::class)
      * @ORM\JoinColumn(name="feet_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $feet;
 
@@ -123,7 +115,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Neck::class)
      * @ORM\JoinColumn(name="neck_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $neck;
 
@@ -132,7 +123,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Shoulders::class)
      * @ORM\JoinColumn(name="back_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $shoulders;
 
@@ -141,7 +131,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Eyes::class)
      * @ORM\JoinColumn(name="eyes_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $eyes;
 
@@ -150,7 +139,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Head::class)
      * @ORM\JoinColumn(name="head_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $head;
 
@@ -159,7 +147,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Headband::class)
      * @ORM\JoinColumn(name="headband_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $headband;
 
@@ -168,7 +155,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Belt::class)
      * @ORM\JoinColumn(name="belt_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $belt;
 
@@ -177,7 +163,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Hands::class)
      * @ORM\JoinColumn(name="hands_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $hands;
 
@@ -186,7 +171,6 @@ class CharacterEquipment
      *
      * @ORM\ManyToOne(targetEntity=Wrists::class)
      * @ORM\JoinColumn(name="wrists_item_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $wrists;
 

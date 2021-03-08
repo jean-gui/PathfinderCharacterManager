@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\Cache()
  */
 class ItemPowerEffect implements PowerInterface
 {
@@ -44,7 +43,6 @@ class ItemPowerEffect implements PowerInterface
      *
      * @ORM\ManyToOne(targetEntity=ItemPower::class)
      * @ORM\JoinColumn(name="power_id", referencedColumnName="id", nullable=false)
-     * @ORM\Cache()
      */
     protected $power;
 

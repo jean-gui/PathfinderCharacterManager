@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity()
- * @ORM\Cache()
  */
 class ClassDefinition implements TranslatableInterface
 {
@@ -40,7 +39,6 @@ class ClassDefinition implements TranslatableInterface
      * @var Collection|SubClass[]
      *
      * @ORM\OneToMany(targetEntity=SubClass::class, mappedBy="parent", cascade={"all"})
-     * @ORM\Cache()
      * @Groups({"class-definition"})
      */
     protected $subClasses;
@@ -109,7 +107,6 @@ class ClassDefinition implements TranslatableInterface
      *      joinColumns={@ORM\JoinColumn(name="class_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="id")}
      *      )
-     * @ORM\Cache()
      * @Groups({"class-definition"})
      */
     protected $classSkills;
@@ -118,7 +115,6 @@ class ClassDefinition implements TranslatableInterface
      * @var Collection|ClassPower[]
      *
      * @ORM\OneToMany(targetEntity=ClassPower::class, mappedBy="class", cascade={"all"}, orphanRemoval=true)
-     * @ORM\Cache()
      * @Groups({"class-definition"})
      */
     protected $powers;
@@ -152,7 +148,6 @@ class ClassDefinition implements TranslatableInterface
      * @var Collection|ClassSpell[]
      *
      * @ORM\OneToMany(targetEntity=ClassSpell::class, mappedBy="class", orphanRemoval=true, cascade={"all"})
-     * @ORM\Cache()
      * @Groups({"class-definition"})
      */
     protected $spells;

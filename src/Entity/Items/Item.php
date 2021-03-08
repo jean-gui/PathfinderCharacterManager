@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "neck" = "Neck", "belt" = "Belt", "wrists" = "Wrists", "feet" = "Feet", "hands" = "Hands", "eyes" = "Eyes",
  *     "head" = "Head", "headband" = "Headband", "body" = "Body", "chest" = "Chest", "item" = "Item"
  * })
- * @ORM\Cache()
  */
 class Item implements TranslatableInterface
 {
@@ -62,7 +61,6 @@ class Item implements TranslatableInterface
      *     joinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="power_id", referencedColumnName="id")}
      * )
-     * @ORM\Cache()
      */
     protected $powers;
 

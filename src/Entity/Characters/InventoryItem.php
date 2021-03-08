@@ -37,7 +37,6 @@ class InventoryItem
      *
      * @ORM\ManyToOne(targetEntity=Item::class)
      * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
-     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     protected $item;

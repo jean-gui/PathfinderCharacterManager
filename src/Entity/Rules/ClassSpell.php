@@ -29,7 +29,6 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity=ClassDefinition::class, inversedBy="spells")
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $class;
 
@@ -38,7 +37,6 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity=SubClass::class, inversedBy="spells")
      * @ORM\JoinColumn(name="subclass_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $subClass;
 
@@ -47,7 +45,6 @@ class ClassSpell
      *
      * @ORM\ManyToOne(targetEntity=Spell::class, inversedBy="classes")
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id")
-     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     protected $spell;
@@ -171,7 +168,6 @@ class ClassSpell
 
     /**
      * If this spell belongs to a subclass, assign it to its parent class as well
-     * @todo This prevents using read-only second level cache
      * @ORM\PostLoad()
      */
     public function postLoad()

@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\FeatRepository")
- * @ORM\Cache()
  */
 class Feat implements PowerInterface, TranslatableInterface
 {

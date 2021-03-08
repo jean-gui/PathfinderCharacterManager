@@ -37,7 +37,6 @@ class CharacterFeat
      *
      * @ORM\ManyToOne(targetEntity=Feat::class)
      * @ORM\JoinColumn(name="feat", referencedColumnName="id")
-     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     protected $feat;

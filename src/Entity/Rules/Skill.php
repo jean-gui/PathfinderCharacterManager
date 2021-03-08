@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table()
  * @ORM\Entity
- * @ORM\Cache()
  */
 class Skill implements TranslatableInterface
 {
@@ -66,7 +65,6 @@ class Skill implements TranslatableInterface
      * @var Collection|ClassDefinition[]
      *
      * @ORM\ManyToMany(targetEntity=ClassDefinition::class, mappedBy="classSkills")
-     * @ORM\Cache()
      */
     protected $classes;
 

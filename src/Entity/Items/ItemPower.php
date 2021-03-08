@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "item"      = ItemPower::class,
  *     "equipment" = EquipmentPower::class
  * })
- * @ORM\Cache()
  *
  * @package App\Entity
  */

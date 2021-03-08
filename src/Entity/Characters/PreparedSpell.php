@@ -40,7 +40,6 @@ class PreparedSpell
      *
      * @ORM\ManyToOne(targetEntity=Spell::class)
      * @ORM\JoinColumn(name="spell_id", referencedColumnName="id")
-     * @ORM\Cache()
      * @Assert\NotBlank()
      */
     protected $spell;
@@ -57,7 +56,6 @@ class PreparedSpell
      *
      * @ORM\ManyToOne(targetEntity=ClassDefinition::class)
      * @ORM\JoinColumn(name="class_id", referencedColumnName="id")
-     * @ORM\Cache()
      */
     protected $class;
 
