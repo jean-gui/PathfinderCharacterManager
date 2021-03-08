@@ -28,9 +28,6 @@ class LevelUpSkillsType extends AbstractType
      */
     protected $skills;
 
-    /**
-     * @param $em
-     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -41,7 +38,6 @@ class LevelUpSkillsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // TODO: sort
         $this->skills = $this->em->getRepository(Skill::class)->findAll();
 
         /** @var $level Level */

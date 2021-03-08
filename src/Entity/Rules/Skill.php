@@ -2,6 +2,7 @@
 
 namespace App\Entity\Rules;
 
+use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Skill
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=SkillRepository::class)
  */
 class Skill implements TranslatableInterface
 {

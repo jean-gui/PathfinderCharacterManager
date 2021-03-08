@@ -290,10 +290,6 @@ class CharacterController extends AbstractController
 
             return false;
         });
-        // Sort allSkills by name
-        usort($skills, function (Skill $s1, Skill $s2) {
-            return strcmp(u($s1->name)->ascii(), u($s2->name)->ascii());
-        });
 
         return array(
             'entity' => $character,
