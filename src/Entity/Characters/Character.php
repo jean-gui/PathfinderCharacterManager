@@ -474,16 +474,12 @@ class Character extends BaseCharacter
         $ar           += $this->attackBonuses->mainAttackRolls->getBonus();
         $bonusAttacks = $this->attackBonuses->mainAttacks->getBonus();
 
-        $firstAttack = true;
-
         for (; $bonusAttacks > 0; $bonusAttacks--) {
-            $ars[]       = $ar + ($firstAttack ? $this->attackBonuses->firstAttackRoll->getBonus() : 0);
-            $firstAttack = false;
+            $ars[] = $ar;
         }
         for (; $bab > 0; $bab -= 5) {
-            $ars[]       = $ar + ($firstAttack ? $this->attackBonuses->firstAttackRoll->getBonus() : 0);
-            $ar          -= 5;
-            $firstAttack = false;
+            $ars[] = $ar;
+            $ar    -= 5;
         }
 
         return $ars;

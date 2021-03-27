@@ -672,9 +672,6 @@ class CharacterBonuses
                         $bonuses->addSlots($level, $value);
                     }
                     break;
-                case 'first-attack-roll':
-                    $character->getAttackBonuses()->firstAttackRoll->add($bonus);
-                    break;
             }
         }
 
