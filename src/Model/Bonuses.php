@@ -147,14 +147,20 @@ class Bonuses
     /**
      * Get the applicable bonus value
      *
+     * @param array|null $types
+     *
      * @return int
      */
-    public function getBonus()
+    public function getBonus(array $types = null)
     {
         $finalBonus = 0;
-        $acp = 0;
-        $acpBonus = 0;
+        $acp        = 0;
+        $acpBonus   = 0;
         foreach ($this->getApplicableBonuses() as $bonus) {
+            if ($types && !in_array($bonus->getType(), $types)) {
+                continue;
+            }
+
             if ($bonus->getType() === 'armor-check-penalty') {
                 if ($bonus->getValue() < 0) {
                     $acp += $bonus->getValue();
