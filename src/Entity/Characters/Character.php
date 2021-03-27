@@ -467,19 +467,23 @@ class Character extends BaseCharacter
             $mod = $this->getModifierByAbility('dexterity');
         }
 
-        $bab          = $this->getBab();
-        $ar           = $bab + $mod;
-        $ars          = array();
+        $bab = $this->getBab();
+        $ar  = $bab + $mod;
+        $ars = [];
 
-        $ar += $this->attackBonuses->mainAttackRolls->getBonus();
+        $ar           += $this->attackBonuses->mainAttackRolls->getBonus();
         $bonusAttacks = $this->attackBonuses->mainAttacks->getBonus();
 
+        $firstAttack = true;
+
         for (; $bonusAttacks > 0; $bonusAttacks--) {
-            $ars[] = $ar;
+            $ars[]       = $ar + ($firstAttack ? $this->attackBonuses->firstAttackRoll->getBonus() : 0);
+            $firstAttack = false;
         }
         for (; $bab > 0; $bab -= 5) {
-            $ars[] = $ar;
-            $ar -= 5;
+            $ars[]       = $ar + ($firstAttack ? $this->attackBonuses->firstAttackRoll->getBonus() : 0);
+            $ar          -= 5;
+            $firstAttack = false;
         }
 
         return $ars;

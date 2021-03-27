@@ -91,12 +91,15 @@
     </tr>
     <tr>
         <th>{{ 'main.attack.rolls'|trans }} {{ popovers.bonuses(entity.attackBonuses.mainAttackRolls) }}</th>
+        {% set firstAttack = true %}
         {% for ar in entity.mainAttackRoll %}
             <td style="width: 15%" class="{% if loop.index0 == 0 %}pr-0{% else %}px-0{% endif %}"
                 data-controller="roll"
                 data-roll-expression-value="1d20{{ ar > 0 ? '+'~ar : ar }};{{ mainDamages }}{{ entity.mainDamageRoll >= 0 ? '+' : '' }}{{ entity.mainDamageRoll }}"
                 data-roll-type-value="{{ 'main.attack.rolls'|trans }}">
                 {{ ar }}
+                {% if firstAttack %} {{ popovers.bonuses(entity.attackBonuses.firstAttackRoll) }}{% endif %}
+                {% set firstAttack = false %}
                 <span class="fa fa-dice-d20" data-action="click->roll#roll"><span class="sr-only">Roll</span></span>
                 <span data-roll-target="result"></span>
             </td>

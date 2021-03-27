@@ -22,6 +22,11 @@ class AttackBonuses
     /**
      * @var Bonuses
      */
+    public $firstAttackRoll;
+
+    /**
+     * @var Bonuses
+     */
     public $mainDamage;
 
     /**
@@ -91,7 +96,8 @@ class AttackBonuses
     {
         $this->mainAttacks     = new Bonuses();
         $this->mainAttackRolls = new Bonuses();
-        $this->mainDamage = new Bonuses();
+        $this->firstAttackRoll = new Bonuses();
+        $this->mainDamage      = new Bonuses();
 
         $this->offhandAttacks     = new Bonuses();
         $this->offhandAttackRolls = new Bonuses();
