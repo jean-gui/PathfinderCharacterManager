@@ -680,12 +680,17 @@ class Character extends BaseCharacter
         foreach ($this->getLevelPerClass() as $classLevel) {
             /** @var $class ClassDefinition */
             $class = $classLevel['class'];
-            $bab += $class->getBab()[$classLevel['level'] - 1];
+            $bab   += $class->getBab()[$classLevel['level'] - 1];
         }
 
         return $bab;
     }
 
+    /**
+     * https://www.d20pfsrd.com/gamemastering/Combat/#TOC-Combat-Maneuver-Bonus
+     *
+     * @return int
+     */
     public function getCmb(): int
     {
         return $this->getBab()
@@ -694,6 +699,11 @@ class Character extends BaseCharacter
             + $this->attackBonuses->mainAttackRolls->getBonus();
     }
 
+    /**
+     * https://www.d20pfsrd.com/gamemastering/Combat/#TOC-Combat-Maneuver-Defense
+     *
+     * @return int
+     */
     public function getCmd(): int
     {
         return 10
@@ -701,7 +711,9 @@ class Character extends BaseCharacter
             + $this->getModifierByAbility('strength')
             + $this->getModifierByAbility('dexterity')
             + $this->getAttackBonuses()->cmd->getBonus()
-            + $this->getDodgeBonus();
+            + $this->getDefenseBonuses()->ac->getBonus(
+                ['circumstance', 'deflection', 'dodge', 'insight', 'luck', 'morale', 'profane', 'sacred']
+            );
     }
 
     /**
