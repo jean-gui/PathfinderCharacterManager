@@ -2,12 +2,10 @@
 
 {% block subtitle entity ~ " - " ~ "equipment"|trans %}
 
-{% block container_classes %}container-fluid{% endblock %}
-
 {% block body %}
     {% include('character/character_h1.html.twig') %}
     <div class="row">
-        <div class="col-lg-4 col-md-6">
+        <div class="col-6">
             <h2>{{ 'equipment'|trans }}</h2>
             {{ form_start(equipmentForm) }}
             <dl>
@@ -22,11 +20,9 @@
             </dl>
             {{ form_end(equipmentForm) }}
         </div>
-        <div class="col-lg-8 col-md-6">
-            <div class="row">
-                <div class="col-lg-5 col-md-12">
-                    <h2>
-                        {{ 'inventory'|trans }}
+        <div class="col-6">
+            <h2>
+                {{ 'inventory'|trans }}
                 <small>
                     <a href="{{ path('character_inventory_edit', { 'id': entity.id }) }}"
                        title="{{ 'inventory.edit'|trans }}">
@@ -37,8 +33,6 @@
             {{ form_start(inventoryForm) }}
             {{ form_widget(inventoryForm.unequippedInventory) }}
             {{ form_end(inventoryForm) }}
-                </div>
-            </div>
             {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'inventory' })) }}
         </div>
     </div>

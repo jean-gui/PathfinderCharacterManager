@@ -57,7 +57,6 @@
             b = $(b).text();
             return a.localeCompare(b);
         }
-
         function detailFormatter(index, row) {
             return $("script", $("<div>" + row["description"] + "</div>")).html();
         }
