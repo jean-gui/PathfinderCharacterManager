@@ -1,17 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body -%}
-    <div class="container">
-        <h1>Party creation</h1>
+    <h1>Party creation</h1>
 
-        {{ form(form) }}
+    {{ form(form) }}
 
-        <ul class="record_actions">
-            <li>
-                <a href="{{ path('parties') }}">
-                    Back to the list
-                </a>
-            </li>
-        </ul>
-    </div>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('parties') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
 {% endblock %}

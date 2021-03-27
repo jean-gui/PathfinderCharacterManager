@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
     <h1>{{ entity.name }}</h1>
 
     {% if entity.shortDescription %}
@@ -39,5 +38,4 @@
         </dd>
         {% block afterPowers %}{% endblock %}
     </dl>
-</div>
 {% endblock %}

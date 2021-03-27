@@ -1,43 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body -%}
-    <div class="container">
-        <h1>{{ 'parties'|trans }}</h1>
+    <h1>{{ 'parties'|trans }}</h1>
 
-        <table class="records_list">
-            <thead>
+    <table class="records_list">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
+                <td><a href="{{ path('parties_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('parties_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('parties_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            {% for entity in entities %}
-                <tr>
-                    <td><a href="{{ path('parties_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                    <td>{{ entity.name }}</td>
-                    <td>
-                        <ul>
-                            <li>
-                                <a href="{{ path('parties_show', { 'id': entity.id }) }}">show</a>
-                            </li>
-                            <li>
-                                <a href="{{ path('parties_edit', { 'id': entity.id }) }}">edit</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <ul>
-            <li>
-                <a href="{{ path('parties_new') }}">
-                    Create a new entry
-                </a>
-            </li>
-        </ul>
-    </div>
+    <ul>
+        <li>
+            <a href="{{ path('parties_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
 {% endblock %}

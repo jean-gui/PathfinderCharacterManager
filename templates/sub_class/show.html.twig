@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body -%}
-<div class="container">
     <h1>{{ entity.name }} (<a href="{{ path('classes_show', { 'id': entity.parent.id }) }}">{{ entity.parent }}</a>)</h1>
 
     <p>{{ entity.shortDescription|raw }}</p>
@@ -36,5 +35,4 @@
             </tbody>
         </table>
     {% endif %}
-</div>
 {% endblock %}

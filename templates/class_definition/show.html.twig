@@ -3,43 +3,42 @@
 {% block subtitle %}{{ entity.name }}{% endblock %}
 
 {% block body -%}
-    <div class="container">
-        <h1>{{ entity.name }}</h1>
+    <h1>{{ entity.name }}</h1>
 
-        <dl class="dl-horizontal">
-            <dt>Hit Die</dt>
-            <dd>d{{ entity.hpDice }}</dd>
-            <dt>Skill Ranks per Level</dt>
-            <dd>{{ entity.skillPoints }} + INT modifier</dd>
-            <dt>Class Skills</dt>
-            <dd>
-                {{ entity.classSkills|join(', ') }}
-            </dd>
-            {% if entity.subClasses and entity.subClasses|length > 0 %}
-                <dt>Subclasses</dt>
-                {% for subclass in entity.subClasses %}
-                    <dd><a href="{{ path('subclasses_show', { 'id': subclass.id }) }}">{{ subclass }}</a></dd>
-                {% endfor %}
-            {% endif %}
-        </dl>
+    <dl class="dl-horizontal">
+        <dt>Hit Die</dt>
+        <dd>d{{ entity.hpDice }}</dd>
+        <dt>Skill Ranks per Level</dt>
+        <dd>{{ entity.skillPoints }} + INT modifier</dd>
+        <dt>Class Skills</dt>
+        <dd>
+            {{ entity.classSkills|join(', ') }}
+        </dd>
+        {% if entity.subClasses and entity.subClasses|length > 0 %}
+            <dt>Subclasses</dt>
+            {% for subclass in entity.subClasses %}
+                <dd><a href="{{ path('subclasses_show', { 'id': subclass.id }) }}">{{ subclass }}</a></dd>
+            {% endfor %}
+        {% endif %}
+    </dl>
 
-        <table class="table table-sm table-striped table-hover table-responsive">
-            <thead>
-            <tr>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Level</th>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>BAB</th>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Reflexes</th>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Fortitude</th>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Will</th>
-                <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Special</th>
-                {% if entity.spellsPerDay %}
-                    <th colspan="{{ entity.spellsPerDay|length }}">Spells per day</th>
-                {% endif %}
-                {% if entity.knownSpellsPerLevel %}
-                    <th colspan="{{ entity.knownSpellsPerLevel|length }}">Known Spells per level</th>
-                {% endif %}
-            </tr>
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+        <tr>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Level</th>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>BAB</th>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Reflexes</th>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Fortitude</th>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Will</th>
+            <th{% if entity.spellsPerDay %} rowspan="2"{% endif %}>Special</th>
             {% if entity.spellsPerDay %}
+                <th colspan="{{ entity.spellsPerDay|length }}">Spells per day</th>
+            {% endif %}
+            {% if entity.knownSpellsPerLevel %}
+                <th colspan="{{ entity.knownSpellsPerLevel|length }}">Known Spells per level</th>
+            {% endif %}
+        </tr>
+        {% if entity.spellsPerDay %}
             <tr>
                 {% for spellLevel in entity.spellsPerDay|keys %}
                     <td>{{ spellLevel }}</td>
@@ -48,72 +47,72 @@
                     <td>{{ spellLevel }}</td>
                 {% endfor %}
             </tr>
-            {% endif %}
-            </thead>
-            <tbody>
-            {% for level in 0..(entity.bab|length - 1) %}
-                <tr>
-                    <td>{{ level + 1 }}</td>
-                    <td>{{ entity.bab[level] }}</td>
-                    <td>{{ entity.reflexes[level] }}</td>
-                    <td>{{ entity.fortitude[level] }}</td>
-                    <td>{{ entity.will[level] }}</td>
-                    <td>
-                        <ul>
+        {% endif %}
+        </thead>
+        <tbody>
+        {% for level in 0..(entity.bab|length - 1) %}
+            <tr>
+                <td>{{ level + 1 }}</td>
+                <td>{{ entity.bab[level] }}</td>
+                <td>{{ entity.reflexes[level] }}</td>
+                <td>{{ entity.fortitude[level] }}</td>
+                <td>{{ entity.will[level] }}</td>
+                <td>
+                    <ul>
                         {% for power in entity.powers|filter(p => p.level == level + 1) %}
                             <li>{{ power }}</li>
                         {% endfor %}
-                        </ul>
+                    </ul>
+                </td>
+                {% for spellLevel, spells in entity.spellsPerDay|filter(s => entity.spellsPerDay) %}
+                    <td>
+                        {% if spells[level] < 0 %}
+                            -
+                        {% else %}
+                            {{ spells[level] }}
+                        {% endif %}
                     </td>
-                    {% for spellLevel, spells in entity.spellsPerDay|filter(s => entity.spellsPerDay) %}
-                        <td>
-                            {% if spells[level] < 0 %}
-                                -
-                            {% else %}
-                                {{ spells[level] }}
-                            {% endif %}
-                        </td>
-                    {% endfor %}
-                    {% for spellLevel, spells in entity.knownSpellsPerLevel|filter(s => entity.knownSpellsPerLevel) %}
-                        <td>
-                            {% if spells[level] < 1 %}
-                                -
-                            {% else %}
-                                {{ spells[level] }}
-                            {% endif %}
-                        </td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <h2>{{ 'powers'|trans }}</h2>
-
-        {% for power in entity.powers %}
-            <h3>{{ power }}</h3>
-
-            {% if power.shortDescription %}<p>{{ power.shortDescription|raw }}</p>{% endif %}
-            {% if power.longDescription %}<p>{{ power.longDescription|raw }}</p>{% endif %}
-
-            {% if power.children and power.children|length > 0 %}
-                {% for child in power.children %}
-                    <h4>{{ child }}</h4>
-                    {% if child.shortDescription %}<p>{{ child.shortDescription|raw }}</p>{% endif %}
-                    {% if child.longDescription %}<p>{{ child.longDescription|raw }}</p>{% endif %}
                 {% endfor %}
-            {% endif %}
+                {% for spellLevel, spells in entity.knownSpellsPerLevel|filter(s => entity.knownSpellsPerLevel) %}
+                    <td>
+                        {% if spells[level] < 1 %}
+                            -
+                        {% else %}
+                            {{ spells[level] }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
         {% endfor %}
+        </tbody>
+    </table>
 
-        {% if entity.spells is defined and entity.spells|length > 0%}
+    <h2>{{ 'powers'|trans }}</h2>
+
+    {% for power in entity.powers %}
+        <h3>{{ power }}</h3>
+
+        {% if power.shortDescription %}<p>{{ power.shortDescription|raw }}</p>{% endif %}
+        {% if power.longDescription %}<p>{{ power.longDescription|raw }}</p>{% endif %}
+
+        {% if power.children and power.children|length > 0 %}
+            {% for child in power.children %}
+                <h4>{{ child }}</h4>
+                {% if child.shortDescription %}<p>{{ child.shortDescription|raw }}</p>{% endif %}
+                {% if child.longDescription %}<p>{{ child.longDescription|raw }}</p>{% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if entity.spells is defined and entity.spells|length > 0 %}
         <h2>Spells</h2>
         <table class="table table-sm table-striped table-hover table-responsive">
             <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Spell Level</th>
-                </tr>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Spell Level</th>
+            </tr>
             </thead>
             <tbody>
             {% for spellClass in entity.spells %}
@@ -125,22 +124,21 @@
             {% endfor %}
             </tbody>
         </table>
-        {% endif %}
+    {% endif %}
 
-        <ul class="list-inline">
-            <li>
-                <a href="{{ path('classes') }}" class="btn btn-primary">
-                    Back to the list
-                </a>
-            </li>
-            {#
-            <li>
-                <a href="{{ path('classes_edit', { 'id': entity.id }) }}" class="btn btn-primary">
-                    Edit
-                </a>
-            </li>
-            <li>{{ form(delete_form) }}</li>
-            #}
-        </ul>
-    </div>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('classes') }}" class="btn btn-primary">
+                Back to the list
+            </a>
+        </li>
+        {#
+        <li>
+            <a href="{{ path('classes_edit', { 'id': entity.id }) }}" class="btn btn-primary">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+        #}
+    </ul>
 {% endblock %}
