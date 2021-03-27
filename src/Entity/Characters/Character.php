@@ -706,14 +706,22 @@ class Character extends BaseCharacter
      */
     public function getCmd(): int
     {
-        return 10
+        $cmd = 10
             + $this->getBab()
             + $this->getModifierByAbility('strength')
             + $this->getModifierByAbility('dexterity')
-            + $this->getAttackBonuses()->cmd->getBonus()
-            + $this->getDefenseBonuses()->ac->getBonus(
-                ['circumstance', 'deflection', 'dodge', 'insight', 'luck', 'morale', 'profane', 'sacred']
-            );
+            + $this->getAttackBonuses()->cmd->getBonus();
+
+        // AC and CMD bonuses of same type do not stack
+        foreach (['circumstance', 'deflection', 'dodge', 'insight', 'luck', 'morale', 'profane', 'sacred'] as $type) {
+            $acBonus  = $this->getDefenseBonuses()->ac->getBonus([$type]);
+            $cmdBonus = $this->getAttackBonuses()->cmd->getBonus([$type]);
+            if ($acBonus > $cmdBonus) {
+                $cmd = $cmd + $acBonus - $cmdBonus;
+            }
+        }
+
+        return $cmd;
     }
 
     /**
