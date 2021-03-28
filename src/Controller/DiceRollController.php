@@ -74,12 +74,12 @@ class DiceRollController extends AbstractController
     }
 
     /**
-     * @param TranslatorInterface       $translator
-     * @param string                    $expression
-     * @param string                    $type
-     * @param Character                 $character
-     * @param EventDispatcherInterface  $eventDispatcher
-     * @param HttpClientInterface       $client
+     * @param TranslatorInterface      $translator
+     * @param string                   $expression
+     * @param string|null              $type
+     * @param Character                $character
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param HttpClientInterface      $client
      *
      * @return array
      * @throws TransportExceptionInterface
@@ -87,7 +87,7 @@ class DiceRollController extends AbstractController
     protected function rollDice(
         TranslatorInterface $translator,
         string $expression,
-        string $type,
+        ?string $type,
         Character $character,
         EventDispatcherInterface $eventDispatcher,
         HttpClientInterface $client
@@ -101,18 +101,30 @@ class DiceRollController extends AbstractController
             $message->transport('discord');
             $discordOptions = (new DiscordOptions())->username('Pathfinder Character Manager');
             $embed          = new DiscordEmbed();
-            $embed
-                ->color(hexdec(substr($character->getColor(), 1)))
-                ->title(
+            $embed->color(hexdec(substr($character->getColor(), 1)));
+
+            if ($type) {
+                $embed->title(
                     $translator->trans(
                         'roll.rolling',
                         [
                             '%character%' => $character->getName(),
                             '%dice%'      => $expression,
-                            '%type%'      => $type
+                            '%type%'      => $type,
                         ]
                     )
                 );
+            } else {
+                $embed->title(
+                    $translator->trans(
+                        'roll.rolling.custom',
+                        [
+                            '%character%' => $character->getName(),
+                            '%dice%'      => $expression,
+                        ]
+                    )
+                );
+            }
         }
 
         Random::$queue = "random_int";

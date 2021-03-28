@@ -231,6 +231,7 @@ character_sheet: Feuille de personnage
 modifier: Modificateur
 roll: Jet
 roll.rolling: '%character% fait un jet de %type% (%dice%)'
+roll.rolling.custom: '%character% fait un jet personnalisé (%dice%)'
 roll.result: 'Résultat'
 roll.raw: 'Brut'
 roll.expression: 'Expression'

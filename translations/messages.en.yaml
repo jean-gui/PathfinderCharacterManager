@@ -231,6 +231,7 @@ character_sheet: Character Sheet
 modifier: Modifier
 roll: Roll
 roll.rolling: '%character% makes a %type% (%dice%) roll'
+roll.rolling.custom: '%character% makes a custom (%dice%) roll'
 roll.result: 'Result'
 roll.raw: 'Raw'
 roll.expression: 'Expression'
