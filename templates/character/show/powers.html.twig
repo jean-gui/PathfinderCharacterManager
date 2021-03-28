@@ -39,7 +39,7 @@ powers_activation_form.item_power_effects|length > 0 %}
                 <td>
                     {{ form_widget(power.active, {label: false}) }}
                     {% if power.cancel is defined %}
-                        {{ form_row(power.cancel) }}
+                        {{ form_widget(power.cancel) }}
                     {% endif %}
                 </td>
             </tr>
