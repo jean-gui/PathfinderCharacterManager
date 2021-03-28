@@ -369,23 +369,30 @@ class CharacterController extends AbstractController
      * @param Request            $request
      *
      * @param CharacterEquipment $characterEquipment
+     * @param PublisherInterface $publisher
      *
      * @return RedirectResponse|Response
      */
-    public function showEquipment(Character $character, Request $request, CharacterEquipment $characterEquipment)
-    {
+    public function showEquipment(
+        Character $character,
+        Request $request,
+        CharacterEquipment $characterEquipment,
+        PublisherInterface $publisher
+    ) {
         $em = $this->getDoctrine()->getManager();
 
         $equipmentForm = $this->createForm(
             EquipmentType::class,
             $character->getEquipment(),
-            array('method' => 'PUT')
+            ['method' => 'PUT']
         );
         if ($request->getMethod() === 'PUT' && $request->request->get('equipment')) {
             foreach ($request->request->get('equipment') as $slot => $unequip) {
                 if ($slot !== '_token') {
                     $characterEquipment->unequipSlot($character, $slot);
                     $em->flush();
+
+                    $this->publishCharacterUpdate($publisher, $character);
 
                     return $this->redirect(
                         $this->generateUrl(
@@ -422,6 +429,8 @@ class CharacterController extends AbstractController
                         } catch (Exception $e) {
                             $this->addFlash('danger', $child->getData().' is not equippable');
                         }
+
+                        $this->publishCharacterUpdate($publisher, $character);
 
                         return $this->redirect(
                             $this->generateUrl(
@@ -951,13 +960,17 @@ class CharacterController extends AbstractController
      * @ParamConverter("inventoryPotion", options={"mapping": {"potion": "id"}})
      * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
      *
-     * @param Character       $character
-     * @param InventoryPotion $inventoryPotion
+     * @param Character          $character
+     * @param InventoryPotion    $inventoryPotion
+     * @param PublisherInterface $publisher
      *
      * @return Response
      */
-    public function drinkPotion(Character $character, InventoryPotion $inventoryPotion): Response
-    {
+    public function drinkPotion(
+        Character $character,
+        InventoryPotion $inventoryPotion,
+        PublisherInterface $publisher
+    ): Response {
         if ($character !== $inventoryPotion->getCharacter()) {
             throw $this->createNotFoundException();
         }
@@ -983,6 +996,7 @@ class CharacterController extends AbstractController
         }
 
         $em->flush();
+        $this->publishCharacterUpdate($publisher, $character);
 
         return $this->redirectToRoute('character_inventory', ['id' => $character->getId()]);
     }
