@@ -386,3 +386,4 @@ party.discord_dsn.help: 'Format : discord://{token}@default?webhook_id={webhook_
 potions: 'Potions'
 potions.edit: 'Editer les potions'
 cancel: 'Annuler'
+cl: NLS

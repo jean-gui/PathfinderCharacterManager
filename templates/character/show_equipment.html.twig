@@ -49,8 +49,15 @@
                         <li>
                             <form method="post"
                                   action="{{ path('character_potions_drink', {'character': entity.id, 'potion': potion.id}) }}">
-                                {{ popovers.description(potion.potion, potion.potion.spell) }}
-                                <button class="btn btn-primary btn-sm">Drink</button>
+                                <div class="row">
+                                    <div class="col-auto mr-auto">
+                                        {{ popovers.description(potion.potion, potion.potion.spell) }} -
+                                        {{ 'cl'|trans }} {{ potion.potion.casterLevel }}
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary btn-sm">Drink</button>
+                                    </div>
+                                </div>
                             </form>
                         </li>
                     {% endfor %}

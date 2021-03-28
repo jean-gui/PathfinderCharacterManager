@@ -142,6 +142,6 @@ class Potion
 
     public function __toString(): string
     {
-        return $this->classSpell->__toString().' - '.$this->getCasterLevel();
+        return $this->classSpell->__toString().'';
     }
 }

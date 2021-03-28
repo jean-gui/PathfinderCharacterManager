@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Characters\Character;
-use App\Form\Type\EditInventoryItemType;
 use App\Form\Type\EditInventoryPotionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -29,6 +28,7 @@ class EditPotionsType extends AbstractType
                     'entry_type'    => EditInventoryPotionType::class,
                     'label'         => 'potions',
                     'entry_options' => ['label' => false, 'attr' => ['class' => 'entry']],
+
                 ]
             );
     }
