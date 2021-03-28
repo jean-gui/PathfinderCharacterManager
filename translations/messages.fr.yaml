@@ -387,3 +387,4 @@ potions: 'Potions'
 potions.edit: 'Editer les potions'
 cancel: 'Annuler'
 cl: NLS
+drink: 'Boire'

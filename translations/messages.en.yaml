@@ -396,3 +396,4 @@ potions: 'Potions'
 potions.edit: 'Edit Potions'
 cancel: 'Cancel'
 cl: CL
+drink: 'Drink'
