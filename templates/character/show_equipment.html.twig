@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import 'popovers.html.twig' as popovers %}
 
 {% block subtitle entity ~ " - " ~ "equipment"|trans %}
 
@@ -42,13 +43,13 @@
                     </a>
                 </small>
             </h2>
-            <ul>
+            <ul class="list-unstyled">
                 {% for potion in entity.potions %}
                     {% for i in 1..potion.quantity %}
                         <li>
                             <form method="post"
                                   action="{{ path('character_potions_drink', {'character': entity.id, 'potion': potion.id}) }}">
-                                {{ potion }}
+                                {{ popovers.description(potion.potion, potion.potion.spell) }}
                                 <button class="btn btn-primary btn-sm">Drink</button>
                             </form>
                         </li>
