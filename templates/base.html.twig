@@ -93,6 +93,9 @@
                     </a>
                 </li>
             </ul>
+
+            {{ render(controller('App\\Controller\\DiceRollController:roll', { 'id': entity.id })) }}
+
         {% else %}
             <div class="navbar-nav mr-auto"></div>
         {% endif %}
@@ -198,7 +201,6 @@
         {% block body %}{% endblock %}
     </div>
 </main>
-{% block body_end %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
