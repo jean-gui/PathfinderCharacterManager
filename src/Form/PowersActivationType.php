@@ -27,6 +27,7 @@ class PowersActivationType extends AbstractType
             ->add('spell_effects', CollectionType::class, ['entry_type' => SpellEffectActivationType::class])
             ->add('power_effects', CollectionType::class, ['entry_type' => PowerEffectActivationType::class])
             ->add('item_power_effects', CollectionType::class, ['entry_type' => ItemPowerEffectActivationType::class])
+            ->add('potion_effects', CollectionType::class, ['entry_type' => PotionEffectActivationType::class])
             ->add('submit', SubmitType::class, ['label' => '(De)Activate Powers']);
     }
 

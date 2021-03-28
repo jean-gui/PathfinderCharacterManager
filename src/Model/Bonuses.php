@@ -96,21 +96,28 @@ class Bonuses
             } elseif ($type === 'dodge') { // Dodge bonuses stack
                 $applicable[] = $bonus;
             } elseif ($type === 'enhancement') {
-                $apply = true;
-                foreach ($applicable as $bonus2) {
+                $apply   = true;
+                $replace = false;
+                foreach ($applicable as $key => $bonus2) {
                     if (
                         $bonus !== $bonus2 &&
-                        $bonus2->getType() === 'enhancement' &&
-                        $bonus2->getSource() === $bonus->getSource()
+                        $bonus2->getType() === 'enhancement'
                     ) {
-                        if ($bonus->getValue() < $bonus2->getValue()) {
+                        if ($bonus->getValue() <= $bonus2->getValue()) {
                             $apply = false;
+                        } else {
+                            // new bonus is better than previous, we'll want to use it instead
+                            $replace = $key;
                         }
                     }
                 }
 
                 if ($apply) {
-                    $applicable[] = $bonus;
+                    if ($replace) {
+                        $applicable[$replace] = $bonus;
+                    } else {
+                        $applicable[] = $bonus;
+                    }
                 }
             } elseif ($type === 'armor-check-penalty') { // ACP stacks
                 $applicable[] = $bonus;

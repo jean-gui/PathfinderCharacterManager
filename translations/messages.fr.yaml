@@ -372,13 +372,16 @@ roll.help: >
   </dl>
   <p>Créer des dés explosifs en utilisant le préfixe &quot;o&quot;.</p>
   <p><em>Examples:</em></p>
-  <dl class="row">
-  <dt class="col-sm-3">4d6o=6</dt>
-  <dd class="col-sm-9">lance 4d6. Quand un dé fait 6, le relance et ajoute le résultat à ce dé. Additionne les résultats
-  </dd>
-  </dl>
+    <dl class="row">
+    <dt class="col-sm-3">4d6o=6</dt>
+    <dd class="col-sm-9">lance 4d6. Quand un dé fait 6, le relance et ajoute le résultat à ce dé. Additionne les résultats
+    </dd>
+    </dl>
 party.edit: 'Editer groupe'
 party.dm: 'Maître de jeu'
 party.name: 'Nom'
 party.discord_dsn.label: 'URL du Webhook Discord'
 party.discord_dsn.help: 'Format : discord://{token}@default?webhook_id={webhook_id}'
+potions: 'Potions'
+potions.edit: 'Editer les potions'
+cancel: 'Annuler'

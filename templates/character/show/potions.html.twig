@@ -1,0 +1,20 @@
+{% import 'popovers.html.twig' as popovers %}
+
+<h2>{{ 'potions'|trans }}</h2>
+<table class="table table-hover table-sm">
+    <tbody>
+    {% for potionEffect in entity.potionEffects %}
+        <tr>
+            <td>
+                {{ popovers.description(potionEffect.potion, potionEffect.potion.spell) }}
+            </td>
+            <td>
+                <form method="post"
+                      action="{{ path('character_potions_stop', {'character': entity.id, 'potion': potionEffect.id}) }}">
+                    <button class="btn btn-primary btn-sm">{{ 'cancel'|trans }}</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

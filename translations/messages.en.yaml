@@ -381,13 +381,16 @@ roll.help: >
   <p><em>Examples:</em></p>
   <dl class="row">
   <dt class="col-sm-3">4d6o=6</dt>
-  <dd class="col-sm-9">Roll 4d6. When any die lands on 6, roll that die again and add the
-  result to that die.
-  Sum all die totals.
-  </dd>
-  </dl>
+    <dd class="col-sm-9">Roll 4d6. When any die lands on 6, roll that die again and add the
+    result to that die.
+    Sum all die totals.
+    </dd>
+    </dl>
 party.edit: 'Edit Party'
 party.dm: 'Dungeon Master'
 party.name: 'Name'
 party.discord_dsn.label: 'Discord Webhook URL'
 party.discord_dsn.help: 'Format: discord://{token}@default?webhook_id={webhook_id}'
+potions: 'Potions'
+potions.edit: 'Edit Potions'
+cancel: 'Cancel'

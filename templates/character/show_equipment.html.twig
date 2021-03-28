@@ -14,7 +14,7 @@
                         {{ form_label(child, null, {label_attr: {class: 'px-0'}}) }}</dt>
                     <dd class="row">
                         <div class="col-auto my-auto mr-auto">{{ child.vars.data }}</div>
-                        <div class="col-auto">{{ form_widget(child.unequip) }}</div>
+                        <div class="col-auto">{{ form_widget(child.unequip, {attr: {class: 'btn btn-primary btn-sm'}}) }}</div>
                     </dd>
                 {% endfor %}
             </dl>
@@ -33,7 +33,30 @@
             {{ form_start(inventoryForm) }}
             {{ form_widget(inventoryForm.unequippedInventory) }}
             {{ form_end(inventoryForm) }}
-            {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'inventory' })) }}
+            <h2>
+                {{ 'potions'|trans }}
+                <small>
+                    <a href="{{ path('character_potions_edit', { 'id': entity.id }) }}"
+                       title="{{ 'potions.edit'|trans }}">
+                        <span class="fas fa-plus"></span>
+                    </a>
+                </small>
+            </h2>
+            <ul>
+                {% for potion in entity.potions %}
+                    {% for i in 1..potion.quantity %}
+                        <li>
+                            <form method="post"
+                                  action="{{ path('character_potions_drink', {'character': entity.id, 'potion': potion.id}) }}">
+                                {{ potion }}
+                                <button class="btn btn-primary btn-sm">Drink</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
         </div>
     </div>
+    {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'inventory' })) }}
+
 {% endblock %}

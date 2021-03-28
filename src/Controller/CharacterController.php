@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Characters\Character;
 use App\Entity\Characters\CharacterClassPower;
 use App\Entity\Characters\InventoryItem;
+use App\Entity\Characters\InventoryPotion;
+use App\Entity\Characters\PotionEffect;
 use App\Entity\Characters\PowerEffect;
 use App\Entity\Characters\SpellEffect;
 use App\Entity\Rules\ClassDefinition;
@@ -15,6 +17,7 @@ use App\Form\BaseCharacterType;
 use App\Form\CastSpellsType;
 use App\Form\ChangeHpType;
 use App\Form\EditInventoryType;
+use App\Form\EditPotionsType;
 use App\Form\EquipmentType;
 use App\Form\InventoryType;
 use App\Form\LearnSpellType;
@@ -29,6 +32,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -199,9 +203,17 @@ class CharacterController extends AbstractController
             }
         }
 
-        $needActivationPowerEffects = array();
-        $passivePowerEffects        = array();
-        $otherPowerEffects          = array();
+        $needActivationPotionEffects = [];
+        foreach ($character->getPotionEffects() as $potionEffect) {
+            $spell = $potionEffect->getPotion()->getSpell();
+            if ($spell->hasEffects() && (!$spell->isPassive() || $spell->hasExternalConditions())) {
+                $needActivationPotionEffects[] = $potionEffect;
+            }
+        }
+
+        $needActivationPowerEffects = [];
+        $passivePowerEffects        = [];
+        $otherPowerEffects          = [];
         foreach ($character->getPowerEffects() as $powerEffect) {
             $power = $powerEffect->getPower();
             if (!$power->hasEffects()) {
@@ -217,6 +229,7 @@ class CharacterController extends AbstractController
         $powersActivationForm->get('feats')->setData($needActivationFeats);
         $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
         $powersActivationForm->get('spell_effects')->setData($needActivationSpellEffects);
+        $powersActivationForm->get('potion_effects')->setData($needActivationPotionEffects);
         $powersActivationForm->get('power_effects')->setData($needActivationPowerEffects);
         $powersActivationForm->get('item_power_effects')->setData($character->getItemPowerEffects());
         $powersActivationForm->handleRequest($request);
@@ -884,12 +897,118 @@ class CharacterController extends AbstractController
             $character->addExtraSpell($spell);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', $spell . ' learned  successfully');
+            $this->get('session')->getFlashBag()->add('success', $spell.' learned  successfully');
 
             return $this->redirect($this->generateUrl('characters_learn_spell', ['id' => $character->getId()]));
         }
 
         return array('form' => $form->createView());
+    }
+
+    /**
+     * Edit potions
+     *
+     * @Route("/{id}/potions/edit", name="character_potions_edit")
+     * @Security("request.isMethodSafe() or is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
+     *
+     * @param Character $character
+     * @param Request   $request
+     *
+     * @return Response
+     */
+    public function editPotions(Character $character, Request $request): Response
+    {
+        $form = $this->createForm(
+            EditPotionsType::class,
+            $character,
+            ['method' => 'PUT']
+        )->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'character_inventory',
+                    ['id' => $character->getId()]
+                )
+            );
+        }
+
+        return $this->render(
+            'character/edit_potions.html.twig',
+            [
+                'entity' => $character,
+                'form'   => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{character}/potions/{potion}/drink", name="character_potions_drink", methods={"GET", "POST"})
+     * @ParamConverter("character", options={"mapping": {"character": "id"}})
+     * @ParamConverter("inventoryPotion", options={"mapping": {"potion": "id"}})
+     * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
+     *
+     * @param Character       $character
+     * @param InventoryPotion $inventoryPotion
+     *
+     * @return Response
+     */
+    public function drinkPotion(Character $character, InventoryPotion $inventoryPotion): Response
+    {
+        if ($character !== $inventoryPotion->getCharacter()) {
+            throw $this->createNotFoundException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($inventoryPotion->getQuantity() === 0) {
+            $character->removePotion($inventoryPotion);
+        } else {
+            if ($inventoryPotion->getQuantity() === 1) {
+                $character->removePotion($inventoryPotion);
+            } else {
+                $inventoryPotion->setQuantity($inventoryPotion->getQuantity() - 1);
+            }
+
+            $potion = $inventoryPotion->getPotion();
+
+            if (!$potion->isInstantaneous()) {
+                $effect = new PotionEffect();
+                $effect->setPotion($potion)->setCharacter($character);
+                $em->persist($effect);
+            }
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('character_inventory', ['id' => $character->getId()]);
+    }
+
+    /**
+     * @Route("/{character}/potions/{potion}/stop", name="character_potions_stop", methods={"GET", "POST"})
+     * @ParamConverter("character", options={"mapping": {"character": "id"}})
+     * @ParamConverter("potionEffect", options={"mapping": {"potion": "id"}})
+     * @Security("is_granted('CHARACTER_EDIT', character) or is_granted('ROLE_ADMIN')")
+     *
+     * @param Character    $character
+     * @param PotionEffect $potionEffect
+     *
+     * @return Response
+     */
+    public function stopPotion(Character $character, PotionEffect $potionEffect): Response
+    {
+        if ($character !== $potionEffect->getCharacter()) {
+            throw $this->createNotFoundException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($potionEffect);
+        $em->flush();
+
+        return $this->redirectToRoute('characters_show', ['id' => $character->getId()]);
     }
 
     /**

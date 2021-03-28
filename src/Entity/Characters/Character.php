@@ -3,12 +3,12 @@
 namespace App\Entity\Characters;
 
 use App\Entity\Items\Item;
+use App\Entity\Items\Potion;
 use App\Entity\Items\Shield;
 use App\Entity\Items\Weapon;
 use App\Entity\Rules\Abilities;
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassSpell;
-use App\Entity\Rules\Feat;
 use App\Entity\Rules\Skill;
 use App\Entity\Rules\Spell;
 use App\Entity\Rules\SubClass;
@@ -33,11 +33,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Character extends BaseCharacter
 {
     /**
-     * @var Collection|Feat[]
+     * @var Collection|InventoryItem[]
      *
      * @ORM\OneToMany(targetEntity=InventoryItem::class, mappedBy="character", cascade={"all"}, orphanRemoval=true)
      */
     protected $inventoryItems;
+
+    /**
+     * @var Collection|InventoryPotion[]
+     *
+     * @ORM\OneToMany(targetEntity=InventoryPotion::class, mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $potions;
 
     /**
      * @var Collection|Level[]
@@ -82,6 +89,13 @@ class Character extends BaseCharacter
      * @ORM\OneToMany(targetEntity=ItemPowerEffect::class, mappedBy="character", cascade={"all"}, orphanRemoval=true)
      */
     protected $itemPowerEffects;
+
+    /**
+     * @var Collection|PotionEffect[]
+     *
+     * @ORM\OneToMany(targetEntity=PotionEffect::class, mappedBy="character", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $potionEffects;
 
     /**
      * @var AbilitiesBonuses
@@ -132,10 +146,11 @@ class Character extends BaseCharacter
     {
         parent::__construct();
         $this->postLoad();
-        $this->levels = new ArrayCollection();
-        $this->spellEffects = new ArrayCollection();
+        $this->levels         = new ArrayCollection();
+        $this->spellEffects   = new ArrayCollection();
+        $this->potionEffects  = new ArrayCollection();
         $this->inventoryItems = new ArrayCollection();
-        $this->counters = new ArrayCollection();
+        $this->counters       = new ArrayCollection();
     }
 
     /**
@@ -169,9 +184,9 @@ class Character extends BaseCharacter
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getName();
+        return $this->getName().'';
     }
 
     /**
@@ -267,6 +282,34 @@ class Character extends BaseCharacter
                 break;
             }
         }
+
+        return $this;
+    }
+
+    public function getPotions()
+    {
+        return $this->potions;
+    }
+
+    public function addPotion(InventoryPotion $potion): self
+    {
+        foreach ($this->getPotions() as $i) {
+            if ($i->getPotion() === $potion->getPotion()) {
+                $i->setQuantity($i->getQuantity() + $potion->getQuantity());
+
+                return $this;
+            }
+        }
+
+        $potion->setCharacter($this);
+        $this->potions->add($potion);
+
+        return $this;
+    }
+
+    public function removePotion(InventoryPotion $potion): self
+    {
+        $this->potions->removeElement($potion);
 
         return $this;
     }
@@ -1259,12 +1302,58 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @param PotionEffect $potionEffect
+     *
+     * @return $this
+     */
+    public function addPotionEffect(PotionEffect $potionEffect): self
+    {
+        $potionEffect->setCharacter($this);
+        $this->potionEffects->add($potionEffect);
+
+        return $this;
+    }
+
+    /**
+     * @param PotionEffect $potionEffect
+     *
+     * @return $this
+     */
+    public function removePotionEffect(PotionEffect $potionEffect): self
+    {
+        $this->potionEffects->removeElement($potionEffect);
+
+        return $this;
+    }
+
+    /**
+     * @param Collection|PotionEffect[] $potionEffects
+     *
+     * @return $this
+     */
+    public function setPotionEffects($potionEffects): self
+    {
+        $this->potionEffects = $potionEffects;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PotionEffect[]
+     */
+    public function getPotionEffects()
+    {
+        return $this->potionEffects;
+    }
+
+    /**
      * Return empty array if no known spells or if no class has to learn spells
+     *
      * @return ClassSpell[]
      */
     public function getLearnedSpells()
     {
-        $known = array();
+        $known              = array();
         $spellsBySpellLevel = $this->getLearnedSpellsBySpellLevel();
         ksort($spellsBySpellLevel);
         foreach ($spellsBySpellLevel as $spells) {

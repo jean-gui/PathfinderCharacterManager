@@ -1,0 +1,45 @@
+{% import _self as formMacros %}
+{% extends 'base.html.twig' %}
+
+{% macro printPotionsForm(form) %}
+    <div class="row js-group-item mb-2">
+        {{ form_errors(form) }}
+        <div class="col-auto">
+            {{ form_label(form.potion) }}
+        </div>
+        <div class="col-auto">
+            {{ form_widget(form.potion) }}
+        </div>
+        <div class="col-auto">
+            {{ form_label(form.quantity) }}
+        </div>
+        <div class="col-auto">
+            {{ form_widget(form.quantity) }}
+        </div>
+        <div class="col-auto my-auto">
+            <a href="#" data-action="click->potions#remove" class="js-remove-group pull-right">
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                <span class="sr-only">Remove</span>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block body %}
+    {% include('character/character_h1.html.twig') %}
+
+    <h2>{{ 'potions'|trans }}</h2>
+
+    {{ form_start(form) }}
+    <div data-controller="potions"
+         data-prototype="{{ formMacros.printPotionsForm(form.potions.vars.prototype)|e('html_attr') }}">
+        {% for item in form.potions %}
+            {{ formMacros.printPotionsForm(item) }}
+        {% endfor %}
+        <a href="#" data-action="click->potions#add" class="js-group-add">
+            <i class="fa fa-plus-circle"></i>
+            Add Another Potion
+        </a>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

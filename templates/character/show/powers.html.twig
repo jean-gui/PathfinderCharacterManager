@@ -86,6 +86,20 @@ powers_activation_form.item_power_effects|length > 0 %}
                 <td>{{ form_widget(powerEffect.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
+        {% for potionEffect in powers_activation_form.potion_effects %}
+            <tr>
+                {% if loop.index == 1 %}
+                    <th rowspan="{{ loop.length }}">{{ 'potions'|trans }}</th>
+                {% endif %}
+                <td>
+                    {{ popovers.description(potionEffect.vars.value.potion.spell.name, potionEffect.vars.value.potion.spell, false) }}
+                    <label for="{{ potionEffect.active.vars.id }}">
+                        {{ potionEffect.vars.value.potion.spell.name }}
+                    </label>
+                </td>
+                <td>{{ form_widget(potionEffect.active, {label: false}) }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
     {{ form_row(powers_activation_form.submit) }}

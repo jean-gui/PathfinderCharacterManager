@@ -15,6 +15,7 @@ use App\Entity\Items\Headband;
 use App\Entity\Items\Item;
 use App\Entity\Items\ItemPower;
 use App\Entity\Items\Neck;
+use App\Entity\Items\Potion;
 use App\Entity\Items\Ring;
 use App\Entity\Items\Shield;
 use App\Entity\Items\Shoulders;
@@ -96,6 +97,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('wrists', '', Wrists::class),
             MenuItem::linkToCrud('body', '', Body::class),
             MenuItem::linkToCrud('chest', '', Chest::class),
+            MenuItem::linkToCrud('potions', '', Potion::class),
         ];
     }
 

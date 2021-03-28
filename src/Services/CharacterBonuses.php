@@ -6,6 +6,7 @@ use App\Entity\Characters\Character;
 use App\Entity\Characters\CharacterClassPower;
 use App\Entity\Characters\CharacterFeat;
 use App\Entity\Characters\ItemPowerEffect;
+use App\Entity\Characters\PotionEffect;
 use App\Entity\Characters\PowerEffect;
 use App\Entity\Characters\SpellEffect;
 use App\Entity\Items\Armor;
@@ -105,6 +106,7 @@ class CharacterBonuses
         $this->applyClassPowers($character);
         $this->applyFeats($character);
         $this->applySpellEffects($character);
+        $this->applyPotionEffects($character);
         $this->applyPowerEffects($character);
         $this->applyItemPowerEffects($character);
 
@@ -203,14 +205,53 @@ class CharacterBonuses
 
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
-                array(
-                    'caster' => $spellEffect->getCaster(),
-                    'level'  => $spellEffect->getCasterLevel()
-                )
+                [
+                    'level' => $spellEffect->getCasterLevel(),
+                ]
             );
             $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
         }
+
         return $this->applyEffects($character, $effects, $spellEffect);
+    }
+
+    /**
+     * @param Character $character
+     *
+     * @return Character
+     */
+    private function applyPotionEffects(Character $character): Character
+    {
+        foreach ($character->getPotionEffects() as $potionEffect) {
+            if ($this->isApplicable($potionEffect)) {
+                $this->applyPotionEffect($potionEffect);
+            }
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param PotionEffect $potionEffect
+     *
+     * @return Character
+     */
+    private function applyPotionEffect(PotionEffect $potionEffect): Character
+    {
+        $effects   = [];
+        $character = $potionEffect->getCharacter();
+
+        foreach ($potionEffect->getPotion()->getSpell()->getEffects() as $stat => $effect) {
+            $computedEffect = (int)$this->expressionLanguage->evaluate(
+                (string)($effect['value']),
+                [
+                    'level' => $potionEffect->getPotion()->getCasterLevel(),
+                ]
+            );
+            $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
+        }
+
+        return $this->applyEffects($character, $effects, $potionEffect);
     }
 
     /**
@@ -323,6 +364,8 @@ class CharacterBonuses
             $power = $characterPower->getPower();
         } elseif ($characterPower instanceof ItemPowerEffect) {
             $power = $characterPower->getPower();
+        } elseif ($characterPower instanceof PotionEffect) {
+            $power = $characterPower->getPotion()->getSpell();
         }
 
         if ($power === null) {

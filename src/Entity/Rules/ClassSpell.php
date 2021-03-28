@@ -161,9 +161,10 @@ class ClassSpell
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getSpell()->__toString();
+        return $this->getSpell()->__toString().' ('.$this->getClass().($this->getSubClass() ? ' - '.
+                $this->getSubClass() : '').')';
     }
 
     /**
