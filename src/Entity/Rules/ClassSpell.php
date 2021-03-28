@@ -163,8 +163,8 @@ class ClassSpell
      */
     public function __toString(): string
     {
-        return $this->getSpell()->__toString().' - '.$this->getClass().($this->getSubClass() ? ' ('.
-                $this->getSubClass().')' : '');
+        return $this->getSpell()->__toString().' ('.$this->getClass().($this->getSubClass() ? ' - '.
+                $this->getSubClass() : '').')';
     }
 
     /**
