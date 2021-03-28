@@ -26,8 +26,6 @@ export default class extends Controller {
 
     remove(event) {
         event.preventDefault();
-        event.target.closest('.js-group-item')
-            .fadeOut()
-            .remove();
+        event.target.closest('.js-group-item').remove();
     }
 }
