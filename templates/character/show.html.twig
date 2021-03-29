@@ -41,9 +41,11 @@
         <div class="col-lg-4 col-md-4">
             {{ include('character/show/passive_powers.html.twig') }}
         </div>
-        <div class="col-lg-4 col-md-4">
-            {{ include('character/show/potions.html.twig') }}
-        </div>
+        {% if entity.potionEffects|length > 0 %}
+            <div class="col-lg-4 col-md-4">
+                {{ include('character/show/potions.html.twig') }}
+            </div>
+        {% endif %}
     </div>
     <div>
         {{ render_esi(controller('App\\Controller\\CharacterController:notes', { 'id': entity.id, 'type': 'general' })) }}
