@@ -3,12 +3,12 @@
 namespace App\Entity\Characters;
 
 use App\Entity\Items\Item;
-use App\Entity\Items\Potion;
 use App\Entity\Items\Shield;
 use App\Entity\Items\Weapon;
 use App\Entity\Rules\Abilities;
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassSpell;
+use App\Entity\Rules\CommonPower;
 use App\Entity\Rules\Skill;
 use App\Entity\Rules\Spell;
 use App\Entity\Rules\SubClass;
@@ -98,6 +98,16 @@ class Character extends BaseCharacter
     protected $potionEffects;
 
     /**
+     * @var Collection|PotionEffect[]
+     *
+     * @ORM\ManyToMany(targetEntity=CommonPower::class)
+     * @ORM\JoinTable(name="characters_common_powers",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="power_id", referencedColumnName="id")})
+     */
+    protected $commonPowers;
+
+    /**
      * @var AbilitiesBonuses
      */
     public $abilitiesBonuses;
@@ -151,6 +161,7 @@ class Character extends BaseCharacter
         $this->potionEffects  = new ArrayCollection();
         $this->inventoryItems = new ArrayCollection();
         $this->counters       = new ArrayCollection();
+        $this->commonPowers   = new ArrayCollection();
     }
 
     /**
@@ -1347,13 +1358,45 @@ class Character extends BaseCharacter
     }
 
     /**
+     * @param CommonPower $commonPower
+     *
+     * @return $this
+     */
+    public function addCommonPower(CommonPower $commonPower): self
+    {
+        $this->commonPowers->add($commonPower);
+
+        return $this;
+    }
+
+    /**
+     * @param CommonPower $commonPower
+     *
+     * @return $this
+     */
+    public function removeCommonPower(CommonPower $commonPower): self
+    {
+        $this->commonPowers->removeElement($commonPower);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommonPower[]
+     */
+    public function getCommonPowers()
+    {
+        return $this->commonPowers;
+    }
+
+    /**
      * Return empty array if no known spells or if no class has to learn spells
      *
      * @return ClassSpell[]
      */
     public function getLearnedSpells()
     {
-        $known              = array();
+        $known              = [];
         $spellsBySpellLevel = $this->getLearnedSpellsBySpellLevel();
         ksort($spellsBySpellLevel);
         foreach ($spellsBySpellLevel as $spells) {

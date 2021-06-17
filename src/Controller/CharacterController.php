@@ -11,6 +11,7 @@ use App\Entity\Characters\PowerEffect;
 use App\Entity\Characters\SpellEffect;
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassSpell;
+use App\Entity\Rules\CommonPower;
 use App\Entity\Rules\Skill;
 use App\Entity\Rules\Spell;
 use App\Form\BaseCharacterType;
@@ -225,13 +226,12 @@ class CharacterController extends AbstractController
             }
         }
 
-        $powersActivationForm = $this->createForm(PowersActivationType::class);
+        $powersActivationForm = $this->createForm(PowersActivationType::class, $character);
         $powersActivationForm->get('feats')->setData($needActivationFeats);
         $powersActivationForm->get('class_powers')->setData($needActivationClassPowers);
         $powersActivationForm->get('spell_effects')->setData($needActivationSpellEffects);
         $powersActivationForm->get('potion_effects')->setData($needActivationPotionEffects);
         $powersActivationForm->get('power_effects')->setData($needActivationPowerEffects);
-        $powersActivationForm->get('item_power_effects')->setData($character->getItemPowerEffects());
         $powersActivationForm->handleRequest($request);
 
         if ($powersActivationForm->isSubmitted() && $powersActivationForm->isValid()) {

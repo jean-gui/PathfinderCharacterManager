@@ -1,4 +1,5 @@
 {% import 'popovers.html.twig' as popovers %}
+{% form_theme powers_activation_form _self %}
 
 {% if
 powers_activation_form.feats|length > 0 or
@@ -100,6 +101,12 @@ powers_activation_form.item_power_effects|length > 0 %}
                 <td>{{ form_widget(potionEffect.active, {label: false}) }}</td>
             </tr>
         {% endfor %}
+        <tr>
+            <th>{{ 'common'|trans }}</th>
+            <td>
+                {{ form_widget(powers_activation_form.common_powers) }}
+            </td>
+        </tr>
         </tbody>
     </table>
     {{ form_row(powers_activation_form.submit) }}

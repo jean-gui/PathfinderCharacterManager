@@ -388,3 +388,5 @@ potions.edit: 'Editer les potions'
 cancel: 'Annuler'
 cl: NLS
 drink: 'Boire'
+common: 'Communs'
+common.powers: 'Pouvoirs communs'

@@ -397,3 +397,5 @@ potions.edit: 'Edit Potions'
 cancel: 'Cancel'
 cl: CL
 drink: 'Drink'
+common: 'Common'
+common.powers: 'Common Powers'

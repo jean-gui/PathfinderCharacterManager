@@ -15,6 +15,7 @@ use App\Entity\Items\Shield;
 use App\Entity\Items\Weapon;
 use App\Entity\PowerInterface;
 use App\Entity\Rules\ClassPower;
+use App\Entity\Rules\CommonPower;
 use App\Entity\Rules\Skill;
 use App\ExpressionLanguage\ExpressionLanguage;
 use App\Model\Bonus;
@@ -109,6 +110,7 @@ class CharacterBonuses
         $this->applyPotionEffects($character);
         $this->applyPowerEffects($character);
         $this->applyItemPowerEffects($character);
+        $this->applyCommonPowers($character);
 
         self::$alreadyApplied[] = $character->getId();
         foreach (self::$applying as $key => $id) {
@@ -328,14 +330,46 @@ class CharacterBonuses
         foreach ($itemPowerEffect->getPower()->getEffects() as $stat => $effect) {
             $computedEffect = (int)$this->expressionLanguage->evaluate(
                 (string)($effect['value']),
-                array(
+                [
                     'c' => $itemPowerEffect->getCharacter(),
-                )
+                ]
             );
             $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
         }
 
         return $this->applyEffects($character, $effects, $itemPowerEffect);
+    }
+
+    /**
+     * @param Character $character
+     *
+     * @return Character
+     */
+    private function applyCommonPowers(Character $character): Character
+    {
+        foreach ($character->getCommonPowers() as $power) {
+            $this->applyCommonPower($character, $power);
+        }
+
+        return $character;
+    }
+
+    /**
+     * @param Character   $character
+     * @param CommonPower $power
+     *
+     * @return Character
+     */
+    private function applyCommonPower(Character $character, CommonPower $power): Character
+    {
+        $effects = [];
+
+        foreach ($power->getEffects() as $stat => $effect) {
+            $computedEffect = (int)$this->expressionLanguage->evaluate((string)($effect['value']));
+            $effects[$stat] = ['type' => $effect['type'], 'value' => $computedEffect];
+        }
+
+        return $this->applyEffects($character, $effects, $power);
     }
 
     /**

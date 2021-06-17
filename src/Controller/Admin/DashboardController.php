@@ -23,6 +23,7 @@ use App\Entity\Items\Weapon;
 use App\Entity\Items\Wrists;
 use App\Entity\Rules\ClassDefinition;
 use App\Entity\Rules\ClassPower;
+use App\Entity\Rules\CommonPower;
 use App\Entity\Rules\Condition;
 use App\Entity\Rules\Feat;
 use App\Entity\Rules\Race;
@@ -79,6 +80,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('spells', '', Spell::class),
             MenuItem::linkToCrud('item.powers', '', ItemPower::class),
             MenuItem::linkToCrud('equipment.powers', '', EquipmentPower::class),
+            MenuItem::linkToCrud('common.powers', '', CommonPower::class),
 
             MenuItem::section('items', 'fas fa-gift'),
             MenuItem::linkToCrud('items', '', Item::class),
